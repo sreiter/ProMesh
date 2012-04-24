@@ -1,0 +1,45 @@
+echo adjusting app-bundle for deployment.
+echo
+# store the path in which the script was executed
+execPath="`pwd`"
+
+#check whether the bundle exists at the given position
+mkdir ProMesh3.app/Contents/Resources
+cd ProMesh3.app/Contents/Resources
+
+if [ `pwd` != "$execPath"/ProMesh3.app/Contents/Resources ]
+then
+#  the app doesn't exist
+   echo "Can't find ProMesh3.app. Execute this script in the path in which ProMesh3.app is located."
+else
+  cd $execPath
+#check if the deploy_data directory exists
+  
+  echo adjusting for deployment
+  macdeployqt-4.6 ProMesh3.app
+  
+  cd deploy_data
+  if [ `pwd` != "$execPath"/deploy_data ]
+    then
+  #   the app doesn't exist
+      echo "Can't find deploy_data path."
+  else
+  #   copy the files
+      echo copying info files...
+      cp Info.plist ../ProMesh3.app/Contents/
+      cp AppIcon.icns ../ProMesh3.app/Contents/Resources    
+  fi
+# copy ProMesh to the Application path
+  echo copying ProMesh3.app to Applications.
+  cp -r -f "$execPath"/ProMesh3.app /Applications/
+# check if an ~/apps path exists
+  cd ~/apps
+  if [ `pwd` != ~/apps ]
+  then
+     echo couldn't find path ~/apps. Won't copy ProMesh3.app
+  else
+     echo moving ProMesh3.app to ~/apps
+     cp -r -f "$execPath"/ProMesh3.app ./
+	 rm -r -f "$execPath"/ProMesh3.app
+  fi
+fi

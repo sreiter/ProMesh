@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright 2008-2011 by Sebastian Reiter and others</string>
+	<key>CFBundleName</key>
+	<string>ProMesh3</string>
+	<key>CFBundleIconFile</key>
+	<string>AppIcon.icns</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleGetInfoString</key>
+	<string>Not for Redistribution. c Sebastian Reiter</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleExecutable</key>
+	<string>ProMesh3</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.gcsc.ProMesh3</string>
+	<key>NOTE</key>
+	<string>Not for Redistribution. c Sebastian Reiter</string>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeIconFile</key>
+			<string>AppIcon.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>ProMesh Geometry</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>txt</string>
+				<string>ele</string>
+				<string>obj</string>
+				<string>lgb</string>
+				<string>ng</string>
+				<string>lgm</string>
+				<string>ugx</string>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>

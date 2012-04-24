@@ -1,0 +1,486 @@
+Recent changes:
+
+
+
+-------------------------------------------------------------------------------
+v 4.0 alpha 1
+Changes and additions:
+- Complete rework of the ToolBrowser. Now all tool-widgets are directly integrated
+  into the browsers panel. Each section has a separate tab.
+- Restructured tools into new sections:
+  Camera GridGeneration Transform Selection Subsets Remeshing Objects Info
+- Reworked some input windows, like the matrix/vector input widget
+
+Fixes:
+- Finally supporting umlauts and other local character representations.
+
+
+
+
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+-------------------------   OLD VERSION: ProMesh 3   --------------------------
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
+
+
+
+
+-------------------------------------------------------------------------------
+v 3.5.4
+Changes and additions:
+- Added GridGeneration->CreateVertex
+- .ugx, .lgm and .ng format now support numbers with higher accuracy.
+
+Fixes:
+
+
+
+-------------------------------------------------------------------------------
+v 3.5.3
+Changes and additions:
+- Marks are now also saved to .ugx format.
+- Fixed crashes when broken .obj files were loaded. An informative error message
+  should now be displayed.
+- ProMesh now accepts command-line arguments. One can specify arbitrary files
+	separated by a space, which are then directly loaded on startup.
+	
+Fixes:
+- Fixed .lgb import for older .lgb file versions (prior to ProMesh3.5.0)
+
+
+
+-------------------------------------------------------------------------------
+v 3.5.2
+Changes and additions:
+- Added CoordinateTransform->Heightfields->ApplyHeightfield
+
+Fixes:
+
+
+
+-------------------------------------------------------------------------------
+v 3.5.1
+Changes and additions:
+- Improved subset assignement after extrusion
+- QualityGridGeneration and TriangleFill should be more robust now.
+- Mid-Mouse-Button moves the camera now.
+- Added GridGeneration::CreateSphere
+- Renamed some selection methods (Faces->ByCoordinate to Faces->FaceByCoordinate).
+  This makes things clearer in associated dialog headers.
+- Added GridGeneration->CreateSphere
+   
+Fixes:
+- Delaunay Triangulation was applied to neighbors of selected triangles, too.
+- There was an error with the automatic near and far clip-plane adjustment. Fixed now.
+
+
+
+-------------------------------------------------------------------------------
+v 3.5.0
+Changes and additions:
+- Renamed Tools->Remeshing->ConstrainedDelaunay to Tools->Remeshing->QualityGridGeneration
+- QualityGridGeneration now supports vertex insertion to fulfill a minimum angle criterion
+- Tools->GridGeneration->TriangleFill now supports a min angle criterion
+
+Fixes:
+- Improved Tools->GridGeneration->TriangleFill even if quality-grid-generation is disabled.
+
+
+
+-------------------------------------------------------------------------------
+v 3.4.2
+Changes and additions:
+- Renamed Tools->Optimization to Tools->Remeshing
+- Added ConstrainedDelaunay remeshing.
+- TriangleFill now optionally generates a constrained delaunay mesh
+- Added Selection->Edges->ByCoordinate
+- Added Selection->Volumes->ByCoordinate
+
+Fixes:
+
+
+
+-------------------------------------------------------------------------------
+v 3.4.1
+Changes and additions:
+- Added Selection->Edges->LongEdges
+- Added Info->PrintVertexDistance (for all vertices touching the selection)
+
+Fixes:
+
+
+
+-------------------------------------------------------------------------------
+v 3.4.0
+Changes and additions:
+- No Changes. Seems to work well.
+
+Fixes:
+
+
+
+-------------------------------------------------------------------------------
+v 3.3.8
+Changes and additions:
+- Improved tetrahedralization:
+  * Automatic subset separation,
+  * Volume constraint association,
+  * Retetrahedralization
+- Added GeometrGeneration-Tetgen subgroup
+
+Fixes:
+
+
+
+-------------------------------------------------------------------------------
+v 3.3.7
+Changes and additions:
+- Added more shortcuts (see help->shortcuts)
+- Introduced Marks->MarkSelection (replacing Marks->MarkSelectedVertices and ...SelectedEdges)
+
+Fixes:
+- Fixed fracture expansion, for fractures connected to elements with multiple boundary sides.
+
+
+
+-------------------------------------------------------------------------------
+v 3.3.6
+Changes and additions:
+- Added automatic subset coloring.
+- Added shortcut support for tools.
+- Added tool SelectSubsetBoundary
+- Added tool SelectAssociatedFaces
+- Added tool CloseSelection (selects all associated elements)
+- Added shortcuts file in the help-menu
+- Slightly reworked AdjustSubsetsForUG4. Less subsets are generated now.
+
+Fixes:
+- LoadFromObj now supports tabs.
+
+
+
+-------------------------------------------------------------------------------
+v 3.3.5
+Changes and additions:
+
+Fixes:
+- Fixed crash in 'AdjustEdgeLength'
+
+
+
+-------------------------------------------------------------------------------
+v 3.3.4
+Changes and additions:
+- Added SelectInner (Vertices, Edges, Faces)
+
+Fixes:
+
+
+
+-------------------------------------------------------------------------------
+v 3.3.3
+Changes and additions:
+- Added AdjustSubsetsForUG4
+- Improved vertex rendering. Vertices are now rendered with the colors of their respective subsets. Only visible vertices are rendered in selections.
+- Improved edge selection. Edges are now selected by a LineLineDistance comparision.
+
+Fixes:
+
+
+
+-------------------------------------------------------------------------------
+v 3.3.2
+Changes and additions:
+- ExpandLayers2d and ExpandLayers3d have been improved for the non degenerated case.
+  Outer boundary segments of fractures now have the same normal as the edges and vertices from which they were expanded.
+
+Fixes:
+- Fixed axis restriction bug in scaling with shortcut 's'
+
+
+
+-------------------------------------------------------------------------------
+v 3.3.1
+Changes and additions:
+- Scaling is now supported using the shortcut 's'
+- shortcuts X, Y and Z now restrict the axis along which objects are transformed
+
+Fixes:
+
+
+
+-------------------------------------------------------------------------------
+v 3.3.0
+Changes and additions:
+- Added grab (shortcut 'g').
+- Added shortcut for (de)select all (shortcut 'a')
+- Objects and subsets can now be renamed through Rename in the r-click menu of scene inspector
+
+Fixes:
+
+
+
+-------------------------------------------------------------------------------
+v 3.2.40
+Changes and additions:
+- Added Subsets->EraseEmptySubsets
+- 2d lgm number format changed to match 2d ng number format.
+- Removed unnecessary error condition from tetrahedralize.
+  This caused a problem if unconnected points were passed to tetgen.
+  
+Fixes:
+
+
+
+-------------------------------------------------------------------------------
+v 3.2.39
+Changes and additions:
+- Added some selection tools (SelectSelectionBoundary, SelectMarkedELEMS).
+- Improved AdjustEdgeLength (only slightly).
+
+Fixes:
+- Added a fix in the triangle-fill sweepline algorithm, which occured during ResolveTriangleIntersections.
+
+
+
+-------------------------------------------------------------------------------
+v 3.2.38
+Changes and additions:
+- Added "Optimization->Minimize Edge Length (Swaps)"
+- Added "Selection->Volumes->UnorientalbeVolumes"
+- Added "Selection->ELEM->Deselect All", where ELEM stands for Vertex, Edge, Face, Volume.
+
+Fixes:
+- Fixed a problem in Tetrahedralize (tetgen unexpectedley moved points).
+
+
+
+-------------------------------------------------------------------------------
+v 3.2.37
+Changes and additions:
+
+Fixes:
+- Fixed problems in TriangleFill (SweepLine). The algorithm failed on some geometries. Seems to work now.
+
+
+
+-------------------------------------------------------------------------------
+v 3.2.36
+Changes and additions:
+- Added new algorithms to CoordinateTransform: Transform and ConeTransform.
+- ToolDialog now supports input masks for matrices and vectors.
+- Added GridGeneration->CreateCircle
+
+Fixes:
+
+
+
+-------------------------------------------------------------------------------
+v 3.2.35
+
+Changes and additions:
+- Added some improved coordinate tool dialogs where appropriate.
+- Removed the old TriangleFill. TriangleFill now executes TriangleFill_SweepLine.
+- Removed Info->PrintSelfIntersections (use Selection->Faces->IntersectingTriangles instead)
+
+Fixes:
+
+
+
+-------------------------------------------------------------------------------
+v 3.2.34
+
+Changes and additions:
+- Added Selection->SelectIntersectingTriangles
+- Added MergeVertices
+- Moved CreateFace to GridGeneration
+
+Fixes:
+
+
+
+-------------------------------------------------------------------------------
+v 3.2.33
+
+Changes and additions:
+
+Fixes:
+- Resolved bug in "Expand Layers 3d".
+
+
+
+-------------------------------------------------------------------------------
+v 3.2.32
+
+Changes and additions:
+- Added support for 2d lgm file import.
+- AdjustSubsetsForUG3 now removes line-loops for 2d geometries.
+
+Fixes:
+
+
+
+-------------------------------------------------------------------------------
+v 3.2.31
+
+Changes and additions:
+
+Fixes:
+- Fixed a bug in TriangleFill_SweepLine: When searching for the left edge a special case was not handled correctly.
+
+
+
+-------------------------------------------------------------------------------
+v 3.2.30
+
+Changes and additions:
+
+Fixes:
+- fixed bug when erasing subsets.
+
+
+
+-------------------------------------------------------------------------------
+v 3.2.29
+
+Changes and additions:
+- Hanging node refinement now uses a hanging node dependency order of 1.
+- Adaptive tetrahedron refinement added.
+
+Fixes:
+- AdjustEdgeLength now workes again (broken during introduction of attachment-lists)
+- Fixed bug when deleting vertices (recently introduced, too)
+
+
+
+-------------------------------------------------------------------------------
+v 3.2.28
+
+Changes and additions:
+- Performance improvements to grid-connection-managment.
+- Added "strict subset inheritance" option to refine methods.
+
+Fixes:
+
+
+
+-------------------------------------------------------------------------------
+v 3.2.27
+
+Changes and additions:
+- Renamed Tools->Fractures to Tools->Layers.
+- Tools->Layers->ExpandLayers... now has an additional option "Expand Outer Boundaries". This option controls, whether boundaries of layers, which lie on the geometries boundary, shall be extended.
+
+Fixes:
+
+
+
+-------------------------------------------------------------------------------
+v 3.2.26
+
+Changes and additions:
+
+Fixes:
+- Fixed bug during tetrahedralization (this bug occured in tetgen. Fixed it by compiling tetgen with -O2 instead of -O3).
+
+
+
+-------------------------------------------------------------------------------
+v 3.2.25
+
+Changes and additions:
+- Added Selection->Edges->EdgeSelectionFill
+- Added Selection->Faces->FaceSelectionFill
+- Added Selection->Volumes->VolumeSelectionFill
+
+Fixes:
+
+
+
+-------------------------------------------------------------------------------
+v 3.2.24
+
+Changes and additions:
+- 2d .ng import is now supported.
+
+Fixes:
+
+
+
+-------------------------------------------------------------------------------
+v 3.2.23
+
+Changes and additions:
+- Extended SelectLinkedFlatFaces. Degenerated and flipped vertices can now be traversed.
+- Added Info->PrintSelectionInfo, which gives an overview over selected elements
+- Added Info->PrintSelectionContainingSubsets, which prints a list of all subsets which contain selected elements.
+- Updated tetgen to its latest version.
+- Enhanced the tetrahedralize dialog (min dihedral angle, preserve none, preserve bnds, peserve all)
+
+Fixes:
+- tetgen errors are now redirected to the log-window (missing in some of the previous versions.
+
+
+
+-------------------------------------------------------------------------------
+v 3.2.22
+
+Changes and additions:
+- Added Selection->Vertices->UnconnectedVertices, which allows to select vertices which are not connected to other elements.
+- Added Subsets->Separation->SeparateDegeneratedBoundaryFaceSubsets, which can be applied after AdjustSubsetsToUG3 in order to separate subsets consisting of degnerated boundary faces.
+
+Fixes:
+- Fixed a bug in ExportToUG3 which could cause a crash.
+
+
+
+-------------------------------------------------------------------------------
+v 3.2.21
+
+Changes and additions:
+- Added right-click menu to scene-inspector, introducing
+	* Show all subsets
+	* Hide all subsets
+	* Print subset contents
+- Enhanced AdjustSubsetsForLgmNg: lgm-Surfaces are now assured to be manifolds.
+- Added Subsets->Separate->SeparateIrregularManifolds.
+- Number input now works with '.' instead of ','
+
+Fixes:
+
+
+
+-------------------------------------------------------------------------------
+v 3.2.20
+
+Changes and additions:
+- Two kinds of box-selection are now supported:
+  1: All elements that cut the box.
+  2: Only elements that lie completely in the box.
+- Added icons for selection mode in the main toolbar.
+- ExpandFractures: Subsets adjacent to expanded fractures are now better preserved.
+- ExpandFractures: The specified width now relates directly to the width of the fracture.
+
+Fixes:
+- Fixed a bug where some edges after a split may not have been properly selected.
+- ExpandFractures: Normals are normalized again before using them to offset new fracture vertices.
+
+
+
+-------------------------------------------------------------------------------
+v 3.2.19
+
+Changes and additions:
+- Files can now be opened by dragging them on the ProMesh symbol or by double clicking them (At least on MacOSX).
+- Added "recent changes" file.
+- ExpandFractures2D/3D now expand fractures at the geometries boundary.
+- ExpandFractures2D/3D now support special "neumann boundaries" for degenerated elements.
+- Selecting an element with click-select now automatically selects the associated subset in the SceneInspector.
+- Added a pivot to Objects and reworked Move, Scale and Rotate accordingly.
+- AdjustSubsetsForUG3 now optionally removes all initially existing interface subsets.
+
+Fixes:
+- Fixed bug with jumping list in SceneInspector when visibility was changed.
