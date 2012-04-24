@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 2.6)
 
 ####
-# ProMesh3
+# ProMesh4
 ####
 
-project(P_PROMESH3)
+project(P_PROMESH4)
 
 # Qt4 with OpenGL support is required.
 FIND_PACKAGE(Qt4 REQUIRED)
@@ -75,93 +75,93 @@ link_directories(${UG_ROOT_PATH}/lib)
 
 
 # Now add the sources
-set(ProMeshSRC	main.cpp
-				main_window.cpp
-				main_window_input.cpp
-				scene_inspector.cpp
-				scene_item_model.cpp
-				delegates.cpp
-				clip_plane_widget.cpp
-				color_widget.cpp
-				undo.cpp
-				rclick_menu_scene_inspector.cpp
-				view3d/view3d.cpp
-				view3d/camera/quaternion.cpp
-				view3d/camera/model_viewer_camera.cpp
-				view3d/camera/matrix44.cpp
-				view3d/camera/basic_camera.cpp
-				view3d/camera/arc_ball.cpp
-				scene/lg_object.cpp
-				scene/lg_scene.cpp
-				scene/lg_tmp_methods.cpp
-				scene/plane_sphere.cpp
-				scene/scene_interface.cpp
-				tools/tool_manager.cpp
-				tools/standard_tools.cpp
-				tools/tool_dialog.cpp
-				tools/selection_tools.cpp
-				tools/mark_tools.cpp
-				tools/grid_generation_tools.cpp
-				tools/coordinate_transform_tools.cpp
-				tools/topology_tools.cpp
-				tools/info_tools.cpp
-				tools/subset_tools.cpp
-				tools/camera_tools.cpp
-				tools/fracture_tools.cpp
-				tools/refinement_tools.cpp
-				tools/object_tools.cpp
-				tools/remeshing_tools.cpp
-				tools/dialog_components/matrix_widget.cpp
-				tools/dialog_components/file_widget.cpp
-				widgets/extendible_widget.cpp
-				widgets/icon_tab_widget.cpp
-				widgets/tool_browser_widget.cpp
-				widgets/widget_container.cpp
-				widgets/widget_list.cpp)
+set(ProMeshSRC	src/main.cpp
+				src/main_window.cpp
+				src/main_window_input.cpp
+				src/scene_inspector.cpp
+				src/scene_item_model.cpp
+				src/delegates.cpp
+				src/clip_plane_widget.cpp
+				src/color_widget.cpp
+				src/undo.cpp
+				src/rclick_menu_scene_inspector.cpp
+				src/view3d/view3d.cpp
+				src/view3d/camera/quaternion.cpp
+				src/view3d/camera/model_viewer_camera.cpp
+				src/view3d/camera/matrix44.cpp
+				src/view3d/camera/basic_camera.cpp
+				src/view3d/camera/arc_ball.cpp
+				src/scene/lg_object.cpp
+				src/scene/lg_scene.cpp
+				src/scene/lg_tmp_methods.cpp
+				src/scene/plane_sphere.cpp
+				src/scene/scene_interface.cpp
+				src/tools/tool_manager.cpp
+				src/tools/standard_tools.cpp
+				src/tools/tool_dialog.cpp
+				src/tools/selection_tools.cpp
+				src/tools/mark_tools.cpp
+				src/tools/grid_generation_tools.cpp
+				src/tools/coordinate_transform_tools.cpp
+				src/tools/topology_tools.cpp
+				src/tools/info_tools.cpp
+				src/tools/subset_tools.cpp
+				src/tools/camera_tools.cpp
+				src/tools/fracture_tools.cpp
+				src/tools/refinement_tools.cpp
+				src/tools/object_tools.cpp
+				src/tools/remeshing_tools.cpp
+				src/tools/dialog_components/matrix_widget.cpp
+				src/tools/dialog_components/file_widget.cpp
+				src/widgets/extendible_widget.cpp
+				src/widgets/icon_tab_widget.cpp
+				src/widgets/tool_browser_widget.cpp
+				src/widgets/widget_container.cpp
+				src/widgets/widget_list.cpp)
 
 # Only header containing Q_OBJECTS have to be listed here
-set(ProMeshHEADERS	view3d/view3d.h
-					view3d/camera/camera.h
-					view3d/renderer3d_interface.h
-					scene/scene_interface.h
-					view3d/renderer3d_interface.h
-					scene/scene_template.h
-					scene/scene_template_impl.hpp
-					scene/lg_object.h
-					scene/lg_scene.h
-					main_window.h
-					scene/lg_include.h
-					scene/plane_sphere.h
-					scene_inspector.h
-					scene_item_model.h
-					delegates.h
-					clip_plane_widget.h
-					color_widget.h
-					QDebugStream.h
-					app.h
-					tools/tool_manager.h
-					QDebugStream.h
-					tools/standard_tools.h
-					tools/tool_dialog.h
-					view3d/camera/vec_math.h
-					view3d/camera/quaternion.h
-					view3d/camera/matrix44.h
-					view3d/camera/arc_ball.h
-					tools/tool_frac_to_layer.h
-					tools/tools_util.h
-					undo.h
-					rclick_menu_scene_inspector.h
-					tools/tool_coordinates.h
-					tools/dialog_components/matrix_widget.h
-					tools/dialog_components/file_widget.h
-					widgets/extendible_widget.h
-					widgets/icon_tab_widget.h
-					widgets/tool_browser_widget.h
-					widgets/widget_container.h
-					widgets/widget_list.h)
+set(ProMeshHEADERS	src/view3d/view3d.h
+					src/view3d/camera/camera.h
+					src/view3d/renderer3d_interface.h
+					src/scene/scene_interface.h
+					src/view3d/renderer3d_interface.h
+					src/scene/scene_template.h
+					src/scene/scene_template_impl.hpp
+					src/scene/lg_object.h
+					src/scene/lg_scene.h
+					src/main_window.h
+					src/scene/lg_include.h
+					src/scene/plane_sphere.h
+					src/scene_inspector.h
+					src/scene_item_model.h
+					src/delegates.h
+					src/clip_plane_widget.h
+					src/color_widget.h
+					src/QDebugStream.h
+					src/app.h
+					src/tools/tool_manager.h
+					src/QDebugStream.h
+					src/tools/standard_tools.h
+					src/tools/tool_dialog.h
+					src/view3d/camera/vec_math.h
+					src/view3d/camera/quaternion.h
+					src/view3d/camera/matrix44.h
+					src/view3d/camera/arc_ball.h
+					src/tools/tool_frac_to_layer.h
+					src/tools/tools_util.h
+					src/undo.h
+					src/rclick_menu_scene_inspector.h
+					src/tools/tool_coordinates.h
+					src/tools/dialog_components/matrix_widget.h
+					src/tools/dialog_components/file_widget.h
+					src/widgets/extendible_widget.h
+					src/widgets/icon_tab_widget.h
+					src/widgets/tool_browser_widget.h
+					src/widgets/widget_container.h
+					src/widgets/widget_list.h)
 
 # resources
-set(ProMeshRESOURCES	ProMesh3.qrc)
+set(ProMeshRESOURCES	ProMesh.qrc)
 
 # The ug4 libraries
 #set(UG_LIBRARIES ugscript ugbridge grid node_tree registry common)
@@ -181,9 +181,9 @@ if(UNIX)
 		SET( CMAKE_OSX_ARCHITECTURES i386 )
 		SET( CMAKE_OSX_SYSROOT /Developer/SDKs/MacOSX10.5.sdk )
 		SET( CMAKE_OSX_DEPLOYMENT_TARGET 10.5 )
-		ADD_EXECUTABLE(ProMesh3 MACOSX_BUNDLE ${allSources})
+		ADD_EXECUTABLE(ProMesh4 MACOSX_BUNDLE ${allSources})
 	else(APPLE)
-		ADD_EXECUTABLE(ProMesh3 ${allSources})
+		ADD_EXECUTABLE(ProMesh4 ${allSources})
 	endif(APPLE)
 else(UNIX)
 	if(MINGW)
@@ -191,8 +191,8 @@ else(UNIX)
 		ADD_CUSTOM_COMMAND( OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/ProMeshIcon.o
 							COMMAND windres.exe -I${CMAKE_SOURCE_DIR}/deploy_data -i${CMAKE_SOURCE_DIR}/deploy_data/ProMeshIcon.rc 
                              -o ${CMAKE_CURRENT_BINARY_DIR}/ProMeshIcon.o )
-		ADD_EXECUTABLE(ProMesh3 WIN32 ${allSources} ProMeshIcon.o)
+		ADD_EXECUTABLE(ProMesh4 WIN32 ${allSources} ProMeshIcon.o)
 	endif(MINGW)
 endif(UNIX)
 
-TARGET_LINK_LIBRARIES(ProMesh3 ${OPENGL_LIBRARIES} ${QT_LIBRARIES} ${UG_LIBRARIES} tet)
+TARGET_LINK_LIBRARIES(ProMesh4 ${OPENGL_LIBRARIES} ${QT_LIBRARIES} ${UG_LIBRARIES} tet)
