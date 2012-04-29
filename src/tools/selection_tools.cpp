@@ -416,19 +416,23 @@ class ToolSelectLinkedFlatFaces : public ITool
 			number maxDeviationAngle = 1;
 			bool traverseFlipped = false;
 			bool traverseDegeneratedFaces = false;
+			bool stopAtSelectedEdges = false;
 
 			if(dlg){
 				maxDeviationAngle = dlg->to_double(0);
 				traverseFlipped = dlg->to_bool(1);
 				traverseDegeneratedFaces = dlg->to_bool(2);
+				stopAtSelectedEdges = dlg->to_bool(3);
 			}
 
 			Selector& sel = obj->get_selector();
 			if(traverseDegeneratedFaces)
 				ug::SelectLinkedFlatAndDegeneratedFaces(sel, maxDeviationAngle,
-														traverseFlipped);
+														traverseFlipped,
+														stopAtSelectedEdges);
 			else
-				ug::SelectLinkedFlatFaces(sel, maxDeviationAngle, traverseFlipped);
+				ug::SelectLinkedFlatFaces(sel, maxDeviationAngle, traverseFlipped,
+										  stopAtSelectedEdges);
 
 			obj->selection_changed();
 		}
@@ -443,6 +447,8 @@ class ToolSelectLinkedFlatFaces : public ITool
 			dlg->addSpinBox(tr("max deviation angle:"), 0, 180, 1, 1, 6);
 			dlg->addCheckBox(tr("traverse flipped faces:"), false);
 			dlg->addCheckBox(tr("traverse degenerated faces:"), false);
+			dlg->addCheckBox(tr("stop at selected edges:"), false);
+
 			return dlg;
 		}
 };

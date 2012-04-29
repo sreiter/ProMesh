@@ -210,7 +210,7 @@ class ToolRefineSmoothBoundary2D : public ITool
 			return dlg;
 		}
 };
-
+/*
 class ToolFracturedMediaRefine : public ITool
 {
 	public:
@@ -236,16 +236,16 @@ class ToolFracturedMediaRefine : public ITool
 			Selector& sel = obj->get_selector();
 			SubsetHandler& sh = obj->get_subset_handler();
 			bool siEnabled = sh.strict_inheritance_enabled();
-			number degEdgeThreshold = SMALL;
+			number aspectRatioThreshold = SMALL;
 
 			if(dlg){
 				sh.enable_strict_inheritance(dlg->to_bool(0));
-				degEdgeThreshold = dlg->to_double(1);
+				aspectRatioThreshold = dlg->to_double(1);
 			}
 
 			FracturedMediaRefiner<Grid, APosition> refiner(grid);
 			refiner.set_position_attachment(aPosition);
-			refiner.set_degenerated_edge_threshold(degEdgeThreshold);
+			refiner.set_aspect_ratio_threshold(aspectRatioThreshold);
 
 			{
 				refiner.mark(sel.edges_begin(), sel.edges_end(), RM_REGULAR);
@@ -269,10 +269,12 @@ class ToolFracturedMediaRefine : public ITool
 			ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
 											IDB_APPLY | IDB_OK | IDB_CLOSE);
 			dlg->addCheckBox(tr("strict subset inheritance:"), false);
-			dlg->addSpinBox(tr("degenerated edge threshold"), 0, 1.e9, 0.001, 0.0001, 9);
+			dlg->addSpinBox(tr("aspect ratio threshold"), 0, 1.e9, 0.001, 0.0001, 9);
 			return dlg;
 		}
 };
+*/
+
 
 class ToolCreateFractal : public ITool
 {
@@ -354,7 +356,7 @@ void RegisterRefinementTools(ToolManager* toolMgr)
 	toolMgr->register_tool(new ToolHangingNodeRefine);
 	toolMgr->register_tool(new ToolRefineSmooth);
 	toolMgr->register_tool(new ToolRefineSmoothBoundary2D);
-	toolMgr->register_tool(new ToolFracturedMediaRefine);
+	//toolMgr->register_tool(new ToolFracturedMediaRefine);
 	toolMgr->register_tool(new ToolCreateFractal);
 }
 

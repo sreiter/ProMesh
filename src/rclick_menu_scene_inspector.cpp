@@ -44,8 +44,8 @@ void RClickMenu_SceneInspector::rename()
 	this->close();
 	LGObject* obj = app::getActiveObject();
 	if(obj){
-		ToolWidget* widget = new ToolWidget("rename", this,
-										  NULL, IDB_OK | IDB_CANCEL);
+		/*ToolWidget* widget = new ToolWidget("rename", this,
+										  NULL, IDB_APPLY);
 
 		QDialog* dlg = new QDialog(NULL);
 		QVBoxLayout* layout = new QVBoxLayout(dlg);
@@ -58,9 +58,40 @@ void RClickMenu_SceneInspector::rename()
 			curName = obj->get_subset_name(si);
 		
 		widget->addTextBox("name:", curName.c_str());
-		
+		*/
+		string curName = obj->name();
+		int si = m_sceneInspector->getActiveSubsetIndex();
+		if(si != -1)
+			curName = obj->get_subset_name(si);
+
+		QDialog* dlg = new QDialog(this);
+		dlg->setWindowTitle(tr("rename"));
+		QVBoxLayout* layout = new QVBoxLayout(dlg);
+		dlg->setLayout(layout);
+
+		QLineEdit* text = new QLineEdit(dlg);
+		layout->addWidget(text);
+		text->setText(QString::fromUtf8(curName.c_str()));
+		text->selectAll();
+
+		QHBoxLayout* hlayout = new QHBoxLayout();
+		layout->addLayout(hlayout);
+
+		hlayout->addStretch();
+
+		QPushButton* btnCancel = new QPushButton(dlg);
+		btnCancel->setText(tr("Cancel"));
+		hlayout->addWidget(btnCancel);
+		connect(btnCancel, SIGNAL(clicked()), dlg, SLOT(reject()));
+
+		QPushButton* btnOk = new QPushButton(dlg);
+		btnOk->setText(tr("Ok"));
+		hlayout->addWidget(btnOk);
+		btnOk->setDefault(true);
+		connect(btnOk, SIGNAL(clicked()), dlg, SLOT(accept()));
+
 		if(dlg->exec()){
-			curName = widget->to_string(0).toStdString();
+			curName = text->text().toLocal8Bit().constData();
 			if(si != -1)
 				obj->set_subset_name(si, curName.c_str());
 			else

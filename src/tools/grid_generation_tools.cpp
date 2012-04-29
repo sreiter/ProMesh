@@ -1180,7 +1180,7 @@ bool CreateFractal(LGObject* obj, number scaleFac, size_t numIterations)
 
 void RegisterGridGenerationTools(ToolManager* toolMgr)
 {
-	toolMgr->set_group_icon("Grid Generation", ":images/tool_new.png");
+	toolMgr->set_group_icon("Grid Generation", ":images/tool_geometry_generation.png");
 
 	toolMgr->register_tool(new ToolCreatePlane);
 	toolMgr->register_tool(new ToolCreateCircle);

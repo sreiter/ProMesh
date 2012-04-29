@@ -106,7 +106,7 @@ class ToolUnmarkSelection : public ITool
 void RegisterMarkTools(ToolManager* toolMgr)
 {
 	toolMgr->register_tool(new ToolMarkSelection, Qt::Key_M);
-	toolMgr->register_tool(new ToolMarkCreaseEdges);
 	toolMgr->register_tool(new ToolUnmarkSelection);
+	toolMgr->register_tool(new ToolMarkCreaseEdges);
 	toolMgr->register_tool(new ToolClearMarks);
 }

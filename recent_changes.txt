@@ -10,6 +10,8 @@ Changes and additions:
 - Restructured tools into new sections:
   Camera GridGeneration Transform Selection Subsets Remeshing Objects Info
 - Reworked some input windows, like the matrix/vector input widget
+- Selection->Faces->LinkedFlatFaces now optionally stops at selected edges.
+- Text in Rename selected by default.
 
 Fixes:
 - Finally supporting umlauts and other local character representations.
