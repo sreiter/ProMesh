@@ -91,6 +91,12 @@ class FracToLayerWidget : public QWidget
 			QPushButton* btnApply = new QPushButton(tr("Apply"), this);
 			connect(btnApply, SIGNAL(clicked()), this, SLOT(applyClicked()));
 			hDoneLayout->addWidget(btnApply);
+
+			QPushButton* btnClear = new QPushButton(tr("Clear"), this);
+			connect(btnClear, SIGNAL(clicked()), this, SLOT(clearClicked()));
+			hDoneLayout->addWidget(btnClear);
+
+			hDoneLayout->addStretch();
 		}
 
 		virtual ~FracToLayerWidget()	{}
@@ -102,7 +108,7 @@ class FracToLayerWidget : public QWidget
 		bool degenerated_fractures() const				{return m_cbCreateDegenerated->isChecked();}
 		bool expand_outer_boundaries() const			{return m_cbExpandOuterBounds->isChecked();}
 
-	protected slots:
+	protected slots:;
 		void addClicked()
 		{
 			if(!m_object){
@@ -123,10 +129,11 @@ class FracToLayerWidget : public QWidget
 
 			if(m_object != app::getActiveObject()){
 				QMessageBox msg(this);
-				msg.setText(tr("WARNING: Change of active object is ignored.\n"
-								"If you want to apply ExpandLayers onto the newly selected object "
-								"then please close and reexecute ExpandLayers."));
+				msg.setText(tr("WARNING: The active object has changed. Clear will be "
+								"performed before the subset is added."));
 				msg.exec();
+				clearClicked();
+				m_object = app::getActiveObject();
 			}
 
 		//	add a new entry - if it not already exists
@@ -158,6 +165,14 @@ class FracToLayerWidget : public QWidget
 
 		void applyClicked()
 		{
+			if(m_object != app::getActiveObject()){
+				QMessageBox msg(this);
+				msg.setText(tr("Sorry - the active object is not the same as the"
+						" one for which the subsets were added. Aborting."));
+				msg.exec();
+				return;
+			}
+
 		//	if degenerated is set to true, then all widths are set to 0
 			if(degenerated_fractures()){
 				for(size_t i = 0; i < m_entries.size(); ++i){
@@ -173,6 +188,13 @@ class FracToLayerWidget : public QWidget
 				UG_LOG("Execution of tool " << m_tool->get_name() << " failed with the following message:\n");
 				UG_LOG("  " << error.get_msg() << std::endl);
 			}
+		}
+
+		void clearClicked()
+		{
+			m_entries.clear();
+			m_listWidget->clear();
+			m_object = NULL;
 		}
 
 		void currentItemChanged(QListWidgetItem* current, QListWidgetItem* previous)
