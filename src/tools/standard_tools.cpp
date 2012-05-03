@@ -64,9 +64,6 @@ void RegisterStandardTools(ToolManager* toolMgr)
 //	remeshing | layers
 	RegisterFracToLayerTools(toolMgr);
 
-//	objects
-	RegisterObjectTools(toolMgr);
-
 //	info
 	RegisterInfoTools(toolMgr);
 }

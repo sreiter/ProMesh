@@ -13,6 +13,161 @@
 
 using namespace std;
 
+class ToolMergeObjects : public ITool
+{
+	public:
+		void execute(LGObject* obj, QWidget* widget){
+			using namespace std;
+			using namespace ug;
+
+			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
+
+		//todo: This method makes problems, if new objects are added while
+		//		the tool-dialog is opened.
+
+		//	get parameters
+			QString mergedObjName = "mergedObj";
+			vector<int> selObjInds;
+			bool joinSubsets = false;
+
+			if(dlg){
+				mergedObjName = dlg->to_string(0);
+				selObjInds = dlg->to_index_list(1);
+				joinSubsets = dlg->to_bool(2);
+			}
+
+		//	create a new empty object and merge the selected ones into it
+			LGObject* mergedObj = app::createEmptyLGObject(mergedObjName.toStdString().c_str());
+			Grid& mrgGrid = mergedObj->get_grid();
+			SubsetHandler& mrgSH = mergedObj->get_subset_handler();
+
+		//	The position attachment for mrgGrid
+			Grid::AttachmentAccessor<VertexBase, APosition> aaPosMRG(mrgGrid, aPosition);
+
+		//	we'll use this attachment later on on the vertices of each source grid.
+			AVertexBase aVrt;
+
+		//	iterate through all selected objects and copy their content to mergedObj
+			LGScene* scene = app::getActiveScene();
+
+			for(size_t i_obj = 0; i_obj < selObjInds.size(); ++i_obj){
+				int objInd = selObjInds[i_obj];
+				if(objInd >= scene->num_objects()){
+					UG_LOG("Bad selection during MergeObjects. Aborting\n");
+					return;
+				}
+
+				LGObject* obj = scene->get_object(objInd);
+				Grid& grid = obj->get_grid();
+				SubsetHandler& sh = obj->get_subset_handler();
+
+			//	if we're joining subsets, the subsetBaseInd is always 0. If
+			//	we're not joining subsets, then subsetBaseInd has to be set
+			//	to the current max subset.
+				int subsetBaseInd = 0;
+				if(!joinSubsets)
+					subsetBaseInd = mrgSH.num_subsets();
+
+			//	we need an attachment, which tells us the associated vertex in
+			//	mrgGrid for each vertex in grid.
+				Grid::AttachmentAccessor<VertexBase, AVertexBase> aaVrt(grid, aVrt, true);
+
+			//	and we need an accessor for the position attachment
+				Grid::AttachmentAccessor<VertexBase, APosition> aaPos(grid, aPosition);
+
+			//	copy vertices
+				for(VertexBaseIterator iter = grid.begin<VertexBase>();
+					iter != grid.end<VertexBase>(); ++iter)
+				{
+					VertexBase* nvrt = *mrgGrid.create_by_cloning(*iter);
+					aaPosMRG[nvrt] = aaPos[*iter];
+					aaVrt[*iter] = nvrt;
+					mrgSH.assign_subset(nvrt, subsetBaseInd + sh.get_subset_index(*iter));
+				}
+
+			//	copy edges
+				EdgeDescriptor ed;
+				for(EdgeBaseIterator iter = grid.begin<EdgeBase>();
+					iter != grid.end<EdgeBase>(); ++iter)
+				{
+					EdgeBase* eSrc = *iter;
+					ed.set_vertices(aaVrt[eSrc->vertex(0)], aaVrt[eSrc->vertex(1)]);
+					EdgeBase* e = *mrgGrid.create_by_cloning(eSrc, ed);
+					mrgSH.assign_subset(e, subsetBaseInd + sh.get_subset_index(eSrc));
+				}
+
+			//	copy faces
+				FaceDescriptor fd;
+				for(FaceIterator iter = grid.begin<Face>();
+					iter != grid.end<Face>(); ++iter)
+				{
+					Face* fSrc = *iter;
+					fd.set_num_vertices(fSrc->num_vertices());
+					for(size_t i = 0; i < fd.num_vertices(); ++i)
+						fd.set_vertex(i, aaVrt[fSrc->vertex(i)]);
+
+					Face* f = *mrgGrid.create_by_cloning(fSrc, fd);
+					mrgSH.assign_subset(f, subsetBaseInd + sh.get_subset_index(fSrc));
+				}
+
+			//	copy volumes
+				VolumeDescriptor vd;
+				for(VolumeIterator iter = grid.begin<Volume>();
+					iter != grid.end<Volume>(); ++iter)
+				{
+					Volume* vSrc = *iter;
+					vd.set_num_vertices(vSrc->num_vertices());
+					for(size_t i = 0; i < vd.num_vertices(); ++i)
+						vd.set_vertex(i, aaVrt[vSrc->vertex(i)]);
+
+					Volume* v = *mrgGrid.create_by_cloning(vSrc, vd);
+					mrgSH.assign_subset(v, subsetBaseInd + sh.get_subset_index(vSrc));
+				}
+
+			//	remove the temporary attachment
+				grid.detach_from_vertices(aVrt);
+
+			//	now copy the names of the subset handler
+			//	we overwrite old subset-infos if the name of the new one is not
+			//	empty.
+				for(int i_sub = 0; i_sub < sh.num_subsets(); ++i_sub){
+					mrgSH.subset_info(subsetBaseInd + i_sub) = sh.subset_info(i_sub);
+				}
+			}
+
+			scene->object_changed(mergedObj);
+			mergedObj->geometry_changed();
+			UG_LOG("The merged grid contains:\n");
+			ug::PrintGridElementNumbers(mergedObj->get_grid());
+		}
+
+		const char* get_name()		{return "Merge Objects";}
+		const char* get_tooltip()	{return "Merges the selected objects into a new one.";}
+		const char* get_group()		{return "Grid Generation | Objects";}
+
+		QWidget* get_dialog(QWidget* parent){
+			ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
+											IDB_APPLY | IDB_OK | IDB_CLOSE);
+
+		//	The name of the new object
+			dlg->addTextBox(tr("new object name:"), "mergedObj");
+
+		//	push all names of current objects
+			QStringList entries;
+			LGScene* scene = app::getActiveScene();
+
+			for(int i = 0; i < scene->num_objects(); ++i){
+				entries.push_back(scene->get_scene_object(i)->name());
+			}
+			dlg->addListBox(tr("objects:"), entries);
+
+		//	select whether subsets should be joined
+			dlg->addCheckBox(tr("join subsets:"), false);
+
+			return dlg;
+		}
+};
+
 class ToolCreateVertex : public ITool
 {
 	public:
@@ -46,7 +201,7 @@ class ToolCreateVertex : public ITool
 
 		const char* get_name()		{return "Create Vertex";}
 		const char* get_tooltip()	{return "Creates a new vertex";}
-		const char* get_group()		{return "Grid Generation";}
+		const char* get_group()		{return "Grid Generation | Basic Elements";}
 
 		QWidget* get_dialog(QWidget* parent){
 			return new CoordinatesWidget(get_name(), parent, this, false);
@@ -92,7 +247,7 @@ class ToolCreateEdge : public ITool
 
 		const char* get_name()		{return "Create Edge";}
 		const char* get_tooltip()	{return "Creates an edge between two selected vertices.";}
-		const char* get_group()		{return "Grid Generation";}
+		const char* get_group()		{return "Grid Generation | Basic Elements";}
 };
 
 class ToolCreateFace : public ITool
@@ -159,7 +314,7 @@ class ToolCreateFace : public ITool
 
 		const char* get_name()		{return "Create Face";}
 		const char* get_tooltip()	{return "Creates a face between selected vertices.";}
-		const char* get_group()		{return "Grid Generation";}
+		const char* get_group()		{return "Grid Generation | Basic Elements";}
 };
 
 
@@ -248,7 +403,7 @@ public:
 
 	const char* get_name()		{return "Create Plane";}
 	const char* get_tooltip()	{return "Creates a plane.";}
-	const char* get_group()		{return "Grid Generation";}
+	const char* get_group()		{return "Grid Generation | Geometries";}
 
 	ToolWidget* get_dialog(QWidget* parent){
 		ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
@@ -338,7 +493,7 @@ public:
 
 	const char* get_name()		{return "Create Circle";}
 	const char* get_tooltip()	{return "Creates a circle.";}
-	const char* get_group()		{return "Grid Generation";}
+	const char* get_group()		{return "Grid Generation | Geometries";}
 
 	ToolWidget* get_dialog(QWidget* parent){
 		ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
@@ -424,7 +579,7 @@ public:
 
 	const char* get_name()		{return "Create Box";}
 	const char* get_tooltip()	{return "Creates a box.";}
-	const char* get_group()		{return "Grid Generation";}
+	const char* get_group()		{return "Grid Generation | Geometries";}
 
 	ToolWidget* get_dialog(QWidget* parent){
 		ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
@@ -480,7 +635,7 @@ public:
 
 	const char* get_name()		{return "Create Sphere";}
 	const char* get_tooltip()	{return "Creates a sphere.";}
-	const char* get_group()		{return "Grid Generation";}
+	const char* get_group()		{return "Grid Generation | Geometries";}
 
 	ToolWidget* get_dialog(QWidget* parent){
 		ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
@@ -554,7 +709,7 @@ public:
 
 	const char* get_name()		{return "Create Tetrahedron";}
 	const char* get_tooltip()	{return "Creates a tetrahedron.";}
-	const char* get_group()		{return "Grid Generation";}
+	const char* get_group()		{return "Grid Generation | Geometries";}
 
 	ToolWidget* get_dialog(QWidget* parent){
 		ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
@@ -625,7 +780,7 @@ public:
 
 	const char* get_name()		{return "Create Pyramid";}
 	const char* get_tooltip()	{return "Creates a pyramid.";}
-	const char* get_group()		{return "Grid Generation";}
+	const char* get_group()		{return "Grid Generation | Geometries";}
 
 	ToolWidget* get_dialog(QWidget* parent){
 		ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
@@ -697,7 +852,7 @@ public:
 
 	const char* get_name()		{return "Create Prism";}
 	const char* get_tooltip()	{return "Creates a prism.";}
-	const char* get_group()		{return "Grid Generation";}
+	const char* get_group()		{return "Grid Generation | Geometries";}
 
 	ToolWidget* get_dialog(QWidget* parent){
 		ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
@@ -708,196 +863,6 @@ public:
 	}
 };
 
-class ToolDuplicate : public ITool
-{
-public:
-	void execute(LGObject* obj, QWidget* widget){
-		ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
-		using namespace ug;
-
-		vector3 offset(0, 0, 0);
-		bool deselectOld = true;
-		bool selectNew = true;
-		if(dlg){
-			offset.x = dlg->to_double(0);
-			offset.y = dlg->to_double(1);
-			offset.z = dlg->to_double(2);
-			deselectOld = dlg->to_bool(3);
-			selectNew = dlg->to_bool(4);
-		}
-
-		Grid& grid = obj->get_grid();
-		Selector& sel = obj->get_selector();
-		Duplicate(grid, sel, offset, aPosition, deselectOld, selectNew);
-
-		obj->geometry_changed();
-	}
-
-	const char* get_name()		{return "Duplicate";}
-	const char* get_tooltip()	{return "Duplicates the selected geometry.";}
-	const char* get_group()		{return "Grid Generation";}
-
-	QWidget* get_dialog(QWidget* parent){
-		ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
-								IDB_APPLY | IDB_OK | IDB_CLOSE);
-		dlg->addSpinBox(tr("offset x:"), -1.e+9, 1.e+9, 0, 1, 9);
-		dlg->addSpinBox(tr("offset y:"), -1.e+9, 1.e+9, 0, 1, 9);
-		dlg->addSpinBox(tr("offset z:"), -1.e+9, 1.e+9, 0, 1, 9);
-		dlg->addCheckBox(tr("deselect old:"), true);
-		dlg->addCheckBox(tr("select new:"), true);
-		return dlg;
-	}
-};
-
-
-
-
-class ToolExtrude : public ITool
-{
-	public:
-		void execute(LGObject* obj, QWidget* widget){
-		ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
-			bool createFaces = true;
-			bool createVolumes = true;
-			ug::vector3 totalDir(0, 1., 0);
-			int numSteps = 1;
-			int newVolSubsetIndex = 0;
-
-			if(dlg){
-				createFaces = dlg->to_bool(0);
-				createVolumes = dlg->to_bool(1);
-				totalDir.x = dlg->to_double(2);
-				totalDir.y = dlg->to_double(3);
-				totalDir.z = dlg->to_double(4);
-				numSteps = dlg->to_int(5);
-				newVolSubsetIndex = dlg->to_int(6);
-			}
-
-			ug::vector3 stepDir;
-			VecScale(stepDir, totalDir, 1./(float)numSteps);
-
-			ug::Grid& grid = obj->get_grid();
-			ug::Selector& sel = obj->get_selector();
-			ug::SubsetHandler& sh = obj->get_subset_handler();
-
-			vector<ug::VertexBase*> vrts;
-			vrts.assign(sel.vertices_begin(), sel.vertices_end());
-			vector<ug::EdgeBase*> edges;
-			edges.assign(sel.edges_begin(), sel.edges_end());
-			vector<ug::Face*> faces;
-			faces.assign(sel.faces_begin(), sel.faces_end());
-
-			uint extrusionOptions = 0;
-			if(createFaces)
-				extrusionOptions |= ug::EO_CREATE_FACES;
-			if(createVolumes)
-				extrusionOptions |= ug::EO_CREATE_VOLUMES;
-
-		//	we use sel to collect the newly created volumes
-			sel.clear();
-			sel.enable_autoselection(true);
-
-		//	mark all elements that were already in the selector.
-			for(int i = 0; i < numSteps; ++i)
-			{
-				ug::Extrude(grid, &vrts, &edges, &faces, stepDir,
-							extrusionOptions, ug::aPosition);
-			}
-
-			sel.enable_autoselection(false);
-			if(sel.num<ug::Volume>())
-				sh.assign_subset(sel.volumes_begin(), sel.volumes_end(), newVolSubsetIndex);
-			else if(sel.num<ug::Face>())
-				sh.assign_subset(sel.faces_begin(), sel.faces_end(), newVolSubsetIndex);
-			else
-				sh.assign_subset(sel.edges_begin(), sel.edges_end(), newVolSubsetIndex);
-
-
-		//	select faces, edges and vertices from the new top-layer.
-			sel.clear<ug::VertexBase>();
-			sel.clear<ug::EdgeBase>();
-			sel.clear<ug::Face>();
-			sel.select(vrts.begin(), vrts.end());
-			sel.select(edges.begin(), edges.end());
-			sel.select(faces.begin(), faces.end());
-
-			obj->geometry_changed();
-		}
-
-		const char* get_name()		{return "Extrude";}
-		const char* get_tooltip()	{return "Extrudes selected geometry (vertices, edges, faces).";}
-		const char* get_group()		{return "Grid Generation";}
-
-		ToolWidget* get_dialog(QWidget* parent){
-			ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
-											IDB_APPLY | IDB_OK | IDB_CANCEL);
-			dlg->addCheckBox("create faces:", true);
-			dlg->addCheckBox("create volumes:", true);
-			dlg->addSpinBox("x-total:", -1.e+9, 1.e+9, 0., 0.1, 9);
-			dlg->addSpinBox("y-total:", -1.e+9, 1.e+9, 0., 0.1, 9);
-			dlg->addSpinBox("z-total:", -1.e+9, 1.e+9, 0., 0.1, 9);
-			dlg->addSpinBox("num steps:", 1, 1.e+9, 1, 1, 0);
-			dlg->addSpinBox("new volume subset index:", 0, 1.e+9, 0, 1, 0);
-			return dlg;
-		}
-};
-
-class ToolExtrudeCylinders : public ITool
-{
-public:
-	void execute(LGObject* obj, QWidget* widget){
-		ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
-		number height = 1.;
-		number radius = 1.;
-		bool createVolumes = false;
-
-		if(dlg){
-			height = (number)dlg->to_double(0);
-			radius = (number)dlg->to_double(1);
-			createVolumes = dlg->to_bool(2);
-		}
-
-		ug::Grid& g = obj->get_grid();
-		ug::Selector& sel = obj->get_selector();
-		ug::SubsetHandler& sh = obj->get_subset_handler();
-		ug::Grid::VertexAttachmentAccessor<ug::APosition> aaPos(g, ug::aPosition);
-
-	//	store all source-vertices in a list
-		vector<ug::VertexBase*> vrts;
-		vrts.assign(sel.begin<ug::VertexBase>(), sel.end<ug::VertexBase>());
-
-	//	iterate over selected vertices
-		for(vector<ug::VertexBase*>::iterator iter = vrts.begin();
-			iter != vrts.end(); ++iter)
-		{
-			ug::VertexBase* vrt = *iter;
-			ug::vector3 n;
-			ug::CalculateVertexNormal(n, g, vrt, aaPos);
-
-			int numSubs = sh.num_subsets();
-			if(!ug::ExtrudeCylinder(g, sh, vrt, n, height, radius, aaPos,
-									numSubs, numSubs + 1))
-			{
-				UG_LOG("Cylinder-Extrude failed for the vertex at " << aaPos[vrt] << "\n");
-			}
-		}
-
-		obj->geometry_changed();
-	}
-
-	const char* get_name()		{return "Extrude Cylinders";}
-	const char* get_tooltip()	{return "Extrudes cylinders around selected points of a 2d manifold.";}
-	const char* get_group()		{return "Grid Generation";}
-
-	ToolWidget* get_dialog(QWidget* parent){
-		ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
-										IDB_APPLY | IDB_OK | IDB_CANCEL);
-		dlg->addSpinBox("height: ", -1.e+9, 1.e+9, 1, 1, 9);
-		dlg->addSpinBox("radius: ", -1.e+9, 1.e+9, 1, 1, 9);
-		dlg->addCheckBox("create volumes: ", false);
-		return dlg;
-	}
-};
 /*
 class ToolCreateDualGrid : public ITool
 {
@@ -1182,6 +1147,12 @@ void RegisterGridGenerationTools(ToolManager* toolMgr)
 {
 	toolMgr->set_group_icon("Grid Generation", ":images/tool_geometry_generation.png");
 
+	toolMgr->register_tool(new ToolMergeObjects);
+
+	toolMgr->register_tool(new ToolCreateVertex);
+	toolMgr->register_tool(new ToolCreateEdge);
+	toolMgr->register_tool(new ToolCreateFace);
+
 	toolMgr->register_tool(new ToolCreatePlane);
 	toolMgr->register_tool(new ToolCreateCircle);
 	toolMgr->register_tool(new ToolCreateBox);
@@ -1189,12 +1160,6 @@ void RegisterGridGenerationTools(ToolManager* toolMgr)
 	toolMgr->register_tool(new ToolCreateTetrahedron);
 	toolMgr->register_tool(new ToolCreatePyramid);
 	toolMgr->register_tool(new ToolCreatePrism);
-	toolMgr->register_tool(new ToolCreateVertex);
-	toolMgr->register_tool(new ToolCreateEdge);
-	toolMgr->register_tool(new ToolCreateFace);
-	toolMgr->register_tool(new ToolDuplicate);
-	toolMgr->register_tool(new ToolExtrude);
-	toolMgr->register_tool(new ToolExtrudeCylinders);
     //toolMgr->register_tool(new ToolCreateDualGrid);
 
 //	ug::bridge::Registry& reg = toolMgr->get_registry();

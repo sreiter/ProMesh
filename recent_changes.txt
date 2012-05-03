@@ -8,7 +8,7 @@ Changes and additions:
 - Complete rework of the ToolBrowser. Now all tool-widgets are directly integrated
   into the browsers panel. Each section has a separate tab.
 - Restructured tools into new sections:
-  Camera GridGeneration Transform Selection Subsets Remeshing Objects Info
+  Camera GridGeneration Transform Selection Subsets Remeshing Info
 - Reworked some input windows, like the matrix/vector input widget
 - Selection->Faces->LinkedFlatFaces now optionally stops at selected edges.
 - Text in Rename selected by default.

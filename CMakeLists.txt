@@ -109,7 +109,6 @@ set(ProMeshSRC	src/main.cpp
 				src/tools/camera_tools.cpp
 				src/tools/fracture_tools.cpp
 				src/tools/refinement_tools.cpp
-				src/tools/object_tools.cpp
 				src/tools/remeshing_tools.cpp
 				src/tools/dialog_components/matrix_widget.cpp
 				src/tools/dialog_components/file_widget.cpp

@@ -10,7 +10,6 @@
 void RegisterStandardTools(ToolManager* toolMgr);
 
 void RegisterCameraTools(ToolManager* toolMgr);
-void RegisterObjectTools(ToolManager* toolMgr);
 void RegisterSelectionTools(ToolManager* toolMgr);
 void RegisterMarkTools(ToolManager* toolMgr);
 void RegisterRemeshingTools(ToolManager* toolMgr);

@@ -38,7 +38,8 @@ else
   then
      echo couldn't find path ~/apps. Won't copy ProMesh4.app
   else
-     echo copying ProMesh4.app to ~/apps
+     echo moving ProMesh4.app to ~/apps
      cp -r -f "$execPath"/ProMesh4.app ./
+     rm -rf "$execPath"/ProMesh4.app
   fi
 fi
