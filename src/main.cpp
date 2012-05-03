@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
 	UG_LOG("This version is for academical use only. Redistribution of this software is not allowed.\n");
 	UG_LOG("If you use ProMesh to create geometries for your publications, make sure to cite it!\n");
 	UG_LOG("Special thanks to all people who contributed code or made their libraries available.\n");
-	UG_LOG("This version of ProMesh4 uses 'tetgen' by Hang Si (in GridGeneration/Tetgen).\n");
+	UG_LOG("This version of ProMesh4 uses 'tetgen' by Hang Si (in Remeshing/Tetgen).\n");
 	UG_LOG("--------------------------------------------------------------\n\n");
 
 	for(int i = 1; i < argc; ++i){

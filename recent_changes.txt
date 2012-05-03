@@ -16,6 +16,7 @@ Changes and additions:
 
 Fixes:
 - Finally supporting umlauts and other local character representations.
+- Fixed SmoothRefinement for edge-only geometries.
 
 
 
