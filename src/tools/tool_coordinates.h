@@ -73,7 +73,7 @@ class CoordinatesWidget: public QFrame
 
 		//	create apply, ok and cancel buttons
 			QPushButton* btn = new QPushButton(tr("Apply"), this);
-			vLayout->addWidget(btn, 0, Qt::AlignRight);
+			vLayout->addWidget(btn, 0, Qt::AlignLeft);
 			connect(btn, SIGNAL(clicked()), this, SLOT(apply()));
 		}
 
