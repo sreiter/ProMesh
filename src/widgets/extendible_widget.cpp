@@ -13,16 +13,19 @@ ExtendibleWidget::ExtendibleWidget(QWidget* parent) :
 	QWidget(parent),
 	m_widget(NULL)
 {
-	m_vLayout = new QVBoxLayout(this);
+	QVBoxLayout* mainLayout = new QVBoxLayout(this);
+	m_vLayout = new QVBoxLayout();
 	QHBoxLayout* hLayout = new QHBoxLayout();
 
-	m_vLayout->setSpacing(0);
-	m_vLayout->setContentsMargins(0, 0, 0, 0);
+	mainLayout->setSpacing(0);
+	mainLayout->setContentsMargins(0, 0, 10, 0);
 	hLayout->setSpacing(10);
 	hLayout->setContentsMargins(0, 0, 0, 0);
+	m_vLayout->setContentsMargins(10, 0, 0, 0);
 
-	this->setLayout(m_vLayout);
-	m_vLayout->addLayout(hLayout);
+	this->setLayout(mainLayout);
+	mainLayout->addLayout(hLayout);
+	mainLayout->addLayout(m_vLayout);
 
 	m_toolButton = new QToolButton(this);
 	m_toolButton->setCheckable(true);

@@ -17,6 +17,7 @@ FileWidget::FileWidget(FileWidgetType fwt, QString filter, QWidget* parent) :
 {
 //	create a grid layout
 	QHBoxLayout* layout = new QHBoxLayout(this);
+	layout->setContentsMargins(0, 0, 0, 0);
 
 //	create a text-box and a browse button
 	m_lbl = new QLabel(tr("-- no file selected --"), this);

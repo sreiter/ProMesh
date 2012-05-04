@@ -303,13 +303,13 @@ QModelIndex SceneItemModel::index ( int row, int column,
 		{
 		//	since the parent is invalid, the index is a top-level index.
 		//	ItemInfos for top-level objects are stored in m_itemInfos.
-			if(row < m_itemInfos.size())
+			if(row < (int)m_itemInfos.size())
 				return createIndex(row, column, m_itemInfos[row]);
 		}
 		else
 		{
 		//	make sure, that the given row is ok
-			if(row < parentInfo->children.size())
+			if(row < (int)parentInfo->children.size())
 			{
 				return createIndex(row, column, parentInfo->children[row]);//	subsets are handled by indices.
 			}

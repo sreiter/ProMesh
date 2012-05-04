@@ -5,25 +5,26 @@
 #ifndef TOOL_COORDINATES_H
 #define TOOL_COORDINATES_H
 
-#include <QtGui>
+#include <QFrame>
 #include <sstream>
 #include <iomanip>
 #include "app.h"
 #include "standard_tools.h"
 #include "common/error.h"
 
-class CoordinatesWidget: public QWidget
+class CoordinatesWidget: public QFrame
 {
 	Q_OBJECT;
 
 	public:
 		CoordinatesWidget(const QString& name, QWidget* parent,
 						  ITool* tool, bool applyOnChange = false) :
-			QWidget(parent),
+			QFrame(parent),
 			m_applyOnChange(applyOnChange),
 			m_bRefreshingCoords(false)
 		{
 			m_tool = tool;
+			setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
 
 			QVBoxLayout* vLayout = new QVBoxLayout(this);
 			vLayout->setSpacing(2);

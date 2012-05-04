@@ -207,6 +207,7 @@ void MainWindow::init()
 */
 //	create the rclick menu for the scene-inspector
 	m_rclickMenu_SI = new RClickMenu_SceneInspector(m_sceneInspector);
+	m_rclickMenu_SI->setVisible(false);
 	connect(m_sceneInspector, SIGNAL(mouseClicked(QMouseEvent*)),
 			this, SLOT(sceneInspectorClicked(QMouseEvent*)));
 
@@ -515,6 +516,7 @@ int MainWindow::openFile()
 	int numOpened = 0;
 
 	QString path = settings().value("file-path", ".").toString();
+
 	QStringList fileNames = QFileDialog::getOpenFileNames(
 								this,
 								tr("Load Geometry"),

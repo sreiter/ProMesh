@@ -10,12 +10,13 @@
 WidgetContainer::WidgetContainer(QWidget* parent) : QFrame(parent)
 {
 	m_layout = new QVBoxLayout(this);
-	m_layout->setSpacing(0);
+	m_layout->setSpacing(3);
 	m_layout->setContentsMargins(0, 0, 0, 0);
 	this->setLayout(m_layout);
 	this->setLineWidth(1);
 	//this->setContentsMargins(1, 1, 1, 0);
-	this->setFrameStyle(QFrame::Box | QFrame::Plain);
+	//this->setFrameStyle(QFrame::Box | QFrame::Plain);
+	setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
 }
 
 WidgetContainer::~WidgetContainer()
@@ -25,7 +26,7 @@ WidgetContainer::~WidgetContainer()
 
 void WidgetContainer::addWidget(QWidget* widget, Qt::Alignment alignment)
 {
-	QFrame* frame = new QFrame(this);
+/*	QFrame* frame = new QFrame(this);
 	QVBoxLayout* layout = new QVBoxLayout(frame);
 	frame->setLayout(layout);
 	layout->setContentsMargins(10, 2, 4, 2);
@@ -38,5 +39,8 @@ void WidgetContainer::addWidget(QWidget* widget, Qt::Alignment alignment)
 	widget->setParent(frame);
 	layout->addWidget(widget);
 	layout->setAlignment(widget, alignment);
-	m_layout->addWidget(frame);
+	m_layout->addWidget(frame);*/
+	widget->setParent(this);
+	m_layout->addWidget(widget);
+	m_layout->setAlignment(widget, alignment);
 }

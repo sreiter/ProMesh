@@ -5,7 +5,7 @@
 #ifndef INPUT_DIALOG_H
 #define INPUT_DIALOG_H
 
-#include <QDialog>
+#include <QFrame>
 #include <vector>
 #include "common/math/ugmath.h"
 #include "dialog_components/file_widget.h"
@@ -25,7 +25,7 @@ enum InputDialogButtons
 };
 
 
-class ToolWidget : public QWidget
+class ToolWidget : public QFrame
 {
 	Q_OBJECT
 	

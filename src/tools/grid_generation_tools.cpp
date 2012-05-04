@@ -13,6 +13,41 @@
 
 using namespace std;
 
+class ToolNewObject : public ITool
+{
+	public:
+		void execute(LGObject* obj, QWidget* widget){
+			using namespace std;
+			using namespace ug;
+
+			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
+
+		//	get parameters
+			QString objName = "new object";
+
+			if(dlg){
+				objName = dlg->to_string(0);
+			}
+
+		//	create a new empty object and merge the selected ones into it
+			app::createEmptyLGObject(objName.toLocal8Bit().constData());
+		}
+
+		const char* get_name()		{return "New Object";}
+		const char* get_tooltip()	{return "Creates a new empty object.";}
+		const char* get_group()		{return "Grid Generation | Objects";}
+		bool accepts_null_object_ptr()	{return true;}
+
+		QWidget* get_dialog(QWidget* parent){
+			ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
+											IDB_APPLY | IDB_OK | IDB_CLOSE);
+		//	The name of the new object
+			dlg->addTextBox(tr("new object name:"), "new object");
+			return dlg;
+		}
+};
+
+
 class ToolMergeObjects : public ITool
 {
 	public:
@@ -173,6 +208,11 @@ class ToolCreateVertex : public ITool
 	public:
 		void execute(LGObject* obj, QWidget* widget){
 			using namespace ug;
+		//	since we're accepting NULL-Ptr Objects, we have to create a new one
+		//	if none was supplied.
+			if(!obj)
+				obj = app::createEmptyLGObject("new object");
+
 			CoordinatesWidget* dlg = dynamic_cast<CoordinatesWidget*>(widget);
 			if(dlg){
 				Grid& grid = obj->get_grid();
@@ -202,6 +242,7 @@ class ToolCreateVertex : public ITool
 		const char* get_name()		{return "Create Vertex";}
 		const char* get_tooltip()	{return "Creates a new vertex";}
 		const char* get_group()		{return "Grid Generation | Basic Elements";}
+		bool accepts_null_object_ptr()	{return true;}
 
 		QWidget* get_dialog(QWidget* parent){
 			return new CoordinatesWidget(get_name(), parent, this, false);
@@ -325,6 +366,11 @@ public:
 		ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 		using namespace ug;
 
+	//	since we're accepting NULL-Ptr Objects, we have to create a new one
+	//	if none was supplied.
+		if(!obj)
+			obj = app::createEmptyLGObject("new object");
+
 		int orientation = 0;
 		number width = 1.;
 		number height = 1.;
@@ -404,6 +450,7 @@ public:
 	const char* get_name()		{return "Create Plane";}
 	const char* get_tooltip()	{return "Creates a plane.";}
 	const char* get_group()		{return "Grid Generation | Geometries";}
+	bool accepts_null_object_ptr()	{return true;}
 
 	ToolWidget* get_dialog(QWidget* parent){
 		ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
@@ -413,13 +460,13 @@ public:
 		entries.push_back(tr("xz"));
 		entries.push_back(tr("yz"));
 
-		dlg->addComboBox("plane orientation", entries, 0);
+		dlg->addComboBox("orientation", entries, 0);
 		dlg->addSpinBox(tr("width:"), -1.e+9, 1.e+9, 2., 1, 9);
 		dlg->addSpinBox(tr("height:"), -1.e+9, 1.e+9, 2., 1, 9);
 		dlg->addSpinBox(tr("center x:"), -1.e+9, 1.e+9, 0, 1, 9);
 		dlg->addSpinBox(tr("center y:"), -1.e+9, 1.e+9, 0, 1, 9);
 		dlg->addSpinBox(tr("center z:"), -1.e+9, 1.e+9, 0, 1, 9);
-		dlg->addSpinBox(tr("new subset index:"), -1, 1.e+9, 0, 1, 0);
+		dlg->addSpinBox(tr("subset:"), -1, 1.e+9, 0, 1, 0);
 		return dlg;
 	}
 };
@@ -430,6 +477,11 @@ public:
 	void execute(LGObject* obj, QWidget* widget){
 		ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 		using namespace ug;
+
+	//	since we're accepting NULL-Ptr Objects, we have to create a new one
+	//	if none was supplied.
+		if(!obj)
+			obj = app::createEmptyLGObject("new object");
 
 	//todo: add a 'regular' flag. This requires that the optimizer can
 	//		be applied to a selected subset of the grid.
@@ -494,6 +546,7 @@ public:
 	const char* get_name()		{return "Create Circle";}
 	const char* get_tooltip()	{return "Creates a circle.";}
 	const char* get_group()		{return "Grid Generation | Geometries";}
+	bool accepts_null_object_ptr()	{return true;}
 
 	ToolWidget* get_dialog(QWidget* parent){
 		ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
@@ -501,8 +554,8 @@ public:
 
 		dlg->addVector(tr("center:"), 3);
 		dlg->addSpinBox(tr("radius:"), 0, 1.e+9, 1., 1, 9);
-		dlg->addSpinBox(tr("num rim vertices:"), 3, 1.e+9, 12, 1, 0);
-		dlg->addSpinBox(tr("new subset index:"), -1, 1.e+9, 0, 1, 0);
+		dlg->addSpinBox(tr("rim vertices:"), 3, 1.e+9, 12, 1, 0);
+		dlg->addSpinBox(tr("subset:"), -1, 1.e+9, 0, 1, 0);
 		return dlg;
 	}
 };
@@ -513,6 +566,11 @@ public:
 	void execute(LGObject* obj, QWidget* widget){
 		ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 		using namespace ug;
+
+	//	since we're accepting NULL-Ptr Objects, we have to create a new one
+	//	if none was supplied.
+		if(!obj)
+			obj = app::createEmptyLGObject("new object");
 
 		vector3 boxMin(-1, -1, -1);
 		vector3 boxMax(1, 1, 1);
@@ -580,6 +638,7 @@ public:
 	const char* get_name()		{return "Create Box";}
 	const char* get_tooltip()	{return "Creates a box.";}
 	const char* get_group()		{return "Grid Generation | Geometries";}
+	bool accepts_null_object_ptr()	{return true;}
 
 	ToolWidget* get_dialog(QWidget* parent){
 		ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
@@ -590,7 +649,7 @@ public:
 		dlg->addSpinBox(tr("x-max:"), -1.e+9, 1.e+9, 1., 1, 9);
 		dlg->addSpinBox(tr("y-max:"), -1.e+9, 1.e+9, 1., 1, 9);
 		dlg->addSpinBox(tr("z-max:"), -1.e+9, 1.e+9, 1., 1, 9);
-		dlg->addSpinBox(tr("new subset index:"), -1, 1.e+9, 0, 1, 0);
+		dlg->addSpinBox(tr("subset:"), -1, 1.e+9, 0, 1, 0);
 		dlg->addCheckBox(tr("create volume:"), true);
 		return dlg;
 	}
@@ -603,6 +662,11 @@ public:
 	void execute(LGObject* obj, QWidget* widget){
 		ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 		using namespace ug;
+
+	//	since we're accepting NULL-Ptr Objects, we have to create a new one
+	//	if none was supplied.
+		if(!obj)
+			obj = app::createEmptyLGObject("new object");
 
 	//todo: add a 'regular' flag. This requires that the optimizer can
 	//		be applied to a selected subset of the grid.
@@ -636,6 +700,7 @@ public:
 	const char* get_name()		{return "Create Sphere";}
 	const char* get_tooltip()	{return "Creates a sphere.";}
 	const char* get_group()		{return "Grid Generation | Geometries";}
+	bool accepts_null_object_ptr()	{return true;}
 
 	ToolWidget* get_dialog(QWidget* parent){
 		ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
@@ -643,8 +708,8 @@ public:
 
 		dlg->addVector(tr("center:"), 3);
 		dlg->addSpinBox(tr("radius:"), 0, 1.e+9, 1., 1, 9);
-		dlg->addSpinBox(tr("num refinements:"), 0, 1.e+9, 2, 1, 0);
-		dlg->addSpinBox(tr("new subset index:"), -1, 1.e+9, 0, 1, 0);
+		dlg->addSpinBox(tr("refinements:"), 0, 1.e+9, 2, 1, 0);
+		dlg->addSpinBox(tr("subset:"), -1, 1.e+9, 0, 1, 0);
 		return dlg;
 	}
 };
@@ -656,6 +721,11 @@ public:
 	void execute(LGObject* obj, QWidget* widget){
 		ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 		using namespace ug;
+
+	//	since we're accepting NULL-Ptr Objects, we have to create a new one
+	//	if none was supplied.
+		if(!obj)
+			obj = app::createEmptyLGObject("new object");
 
 		int newSI = 0;
 		bool createVolume = true;
@@ -710,11 +780,12 @@ public:
 	const char* get_name()		{return "Create Tetrahedron";}
 	const char* get_tooltip()	{return "Creates a tetrahedron.";}
 	const char* get_group()		{return "Grid Generation | Geometries";}
+	bool accepts_null_object_ptr()	{return true;}
 
 	ToolWidget* get_dialog(QWidget* parent){
 		ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
 								IDB_APPLY | IDB_OK | IDB_CLOSE);
-		dlg->addSpinBox(tr("new subset index:"), -1, 1.e+9, 0, 1, 0);
+		dlg->addSpinBox(tr("subset:"), -1, 1.e+9, 0, 1, 0);
 		dlg->addCheckBox(tr("create volume:"), true);
 		return dlg;
 	}
@@ -726,6 +797,11 @@ public:
 	void execute(LGObject* obj, QWidget* widget){
 		ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 		using namespace ug;
+
+	//	since we're accepting NULL-Ptr Objects, we have to create a new one
+	//	if none was supplied.
+		if(!obj)
+			obj = app::createEmptyLGObject("new object");
 
 		int newSI = 0;
 		bool createVolume = true;
@@ -781,11 +857,12 @@ public:
 	const char* get_name()		{return "Create Pyramid";}
 	const char* get_tooltip()	{return "Creates a pyramid.";}
 	const char* get_group()		{return "Grid Generation | Geometries";}
+	bool accepts_null_object_ptr()	{return true;}
 
 	ToolWidget* get_dialog(QWidget* parent){
 		ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
 								IDB_APPLY | IDB_OK | IDB_CLOSE);
-		dlg->addSpinBox(tr("new subset index:"), -1, 1.e+9, 0, 1, 0);
+		dlg->addSpinBox(tr("subset:"), -1, 1.e+9, 0, 1, 0);
 		dlg->addCheckBox(tr("create volume:"), true);
 		return dlg;
 	}
@@ -797,6 +874,11 @@ public:
 	void execute(LGObject* obj, QWidget* widget){
 		ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 		using namespace ug;
+
+	//	since we're accepting NULL-Ptr Objects, we have to create a new one
+	//	if none was supplied.
+		if(!obj)
+			obj = app::createEmptyLGObject("new object");
 
 		int newSI = 0;
 		bool createVolume = true;
@@ -853,11 +935,12 @@ public:
 	const char* get_name()		{return "Create Prism";}
 	const char* get_tooltip()	{return "Creates a prism.";}
 	const char* get_group()		{return "Grid Generation | Geometries";}
+	bool accepts_null_object_ptr()	{return true;}
 
 	ToolWidget* get_dialog(QWidget* parent){
 		ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
 								IDB_APPLY | IDB_OK | IDB_CLOSE);
-		dlg->addSpinBox(tr("new subset index:"), -1, 1.e+9, 0, 1, 0);
+		dlg->addSpinBox(tr("subset:"), -1, 1.e+9, 0, 1, 0);
 		dlg->addCheckBox(tr("create volume:"), true);
 		return dlg;
 	}
@@ -1147,6 +1230,7 @@ void RegisterGridGenerationTools(ToolManager* toolMgr)
 {
 	toolMgr->set_group_icon("Grid Generation", ":images/tool_geometry_generation.png");
 
+	toolMgr->register_tool(new ToolNewObject);
 	toolMgr->register_tool(new ToolMergeObjects);
 
 	toolMgr->register_tool(new ToolCreateVertex);

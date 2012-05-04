@@ -13,11 +13,13 @@ Changes and additions:
 - Selection->Faces->LinkedFlatFaces now optionally stops at selected edges.
 - Text in Rename selected by default.
 - Added Clear to ExpandLayers.
+- When Create Plane / Sphere / ... is used, a new object will automatically be
+  created, if required.
 
 Fixes:
 - Finally supporting umlauts and other local character representations.
 - Fixed SmoothRefinement for edge-only geometries.
-
+- Resolved click-bug on upper left cell in SceneInspector (clicks were partly ignored).
 
 
 

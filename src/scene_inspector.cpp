@@ -32,7 +32,7 @@ SceneInspector::SceneInspector(QWidget* parent) : QTreeView(parent)
 	this->resizeColumnToContents(1);
 	this->resizeColumnToContents(2);
 
-	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+//	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
 	//setExpandsOnDoubleClick(false);
 	//setEditTriggers(QAbstractItemView::DoubleClicked);

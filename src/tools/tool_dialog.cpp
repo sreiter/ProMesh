@@ -14,11 +14,13 @@ using namespace std;
 
 ToolWidget::ToolWidget(const QString& name, QWidget* parent,
 					ITool* tool, uint buttons) :
-	QWidget(parent)
+	QFrame(parent)
 {
 
 	m_tool = tool;
 	//this->setWindowTitle(name);
+
+	setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
 
 	QVBoxLayout* vBoxLayout = new QVBoxLayout(this);
 	vBoxLayout->setSpacing(2);
@@ -168,7 +170,7 @@ void ToolWidget::addFileBrowser(const QString& caption, FileWidgetType fwt,
 void ToolWidget::buttonClicked(int buttonID)
 {
 	LGObject* obj = app::getActiveObject();
-	if(m_tool && obj){
+	if(m_tool && (obj || m_tool->accepts_null_object_ptr())){
 		switch(buttonID){
 		case IDB_OK:
 		case IDB_APPLY:

@@ -132,7 +132,7 @@ void ToolManager::launchTool(int toolID)
 		}
 		else{
 			LGObject* obj = app::getActiveObject();
-			if(obj){
+			if(obj || tool->accepts_null_object_ptr()){
 				try{
 					tool->execute(obj, NULL);
 				}
@@ -347,7 +347,7 @@ ToolBrowserWidget* ToolManager::createToolBrowser(QWidget* parentWidget)
 					ExtendibleWidget* extWidget = new ExtendibleWidget(toolBrowser);
 					WidgetContainer* container = new WidgetContainer(extWidget);
 					extWidget->setWidget(container);
-					QString extWidgetName(tokensWithWhiteSpaces[i_toks].c_str());
+					QString extWidgetName(TrimString(tokensWithWhiteSpaces[i_toks]).c_str());
 					QString infoText("Group: ");
 					infoText.append(extWidgetName);
 					extWidgetName.append(" ...");

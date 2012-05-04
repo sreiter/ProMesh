@@ -44,6 +44,8 @@ class ITool : public QObject
 		virtual const char* get_group()		{return "";}
 		virtual const char* get_shortcut()	{return "";}
 
+		virtual bool accepts_null_object_ptr()	{return false;}
+
 		virtual QWidget* get_dialog(QWidget* parent)	{return NULL;}
 };
 
