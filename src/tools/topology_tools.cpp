@@ -992,6 +992,7 @@ class ToolEraseSelectedElements : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget* widget){
+			using namespace ug;
 			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 			bool eraseUnusedVrts = true;
 			bool eraseUnusedEdges = true;
@@ -1005,6 +1006,10 @@ class ToolEraseSelectedElements : public ITool
 
 		//	adjust selection
 			ug::Selector& sel = obj->get_selector();
+			SelectAssociatedEdges(sel, sel.begin<VertexBase>(), sel.end<VertexBase>());
+			SelectAssociatedFaces(sel, sel.begin<EdgeBase>(), sel.end<EdgeBase>());
+			SelectAssociatedVolumes(sel, sel.begin<Face>(), sel.end<Face>());
+
 			if(eraseUnusedFaces)
 				ug::SelectInnerSelectionFaces(sel);
 

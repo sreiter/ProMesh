@@ -463,9 +463,6 @@ bool MainWindow::load_grid_from_file(const char* filename)
 	}
 	catch(UGError err){
 		UG_LOG("ERROR: " << err.get_msg() << endl);
-
-		if(err.terminate())
-			exit(0);
 		return false;
 	}
 
@@ -495,9 +492,6 @@ bool MainWindow::save_object_to_file(ISceneObject* obj, const char* filename)
 		}
 		catch(UGError err){
 			UG_LOG("ERROR: " << err.get_msg() << endl);
-
-			if(err.terminate())
-				exit(0);
 			return false;
 		}
 	}
@@ -649,9 +643,6 @@ bool MainWindow::exportToUG3()
 		catch(UGError err){
 			UG_LOG("\n");
 			UG_LOG("ERROR: " << err.get_msg() << endl);
-
-			if(err.terminate())
-				exit(0);
 		}
 	}
 

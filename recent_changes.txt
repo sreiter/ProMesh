@@ -3,6 +3,16 @@ Recent changes:
 
 
 -------------------------------------------------------------------------------
+v 4.0 alpha 2
+Changes and additions:
+
+Fixes:
+- Fixed Remeshing->EraseSelectedElements. If, e.g., only faces were selected in,
+  a volume geometry, then unused edges and vertices were not properly deleted.
+
+
+
+-------------------------------------------------------------------------------
 v 4.0 alpha 1
 Changes and additions:
 - Complete rework of the ToolBrowser. Now all tool-widgets are directly integrated

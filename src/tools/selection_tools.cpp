@@ -990,7 +990,7 @@ class ToolSelectVertexByCoordinate : public ITool
 				coord.y = dlg->y();
 				coord.z = dlg->z();
 
-				VertexBase* vrt = FindByCoordinate<VertexBase>(coord,
+				VertexBase* vrt = FindClosestByCoordinate<VertexBase>(coord,
 												 grid.vertices_begin(),
 												 grid.vertices_end(),
 												 aaPos);
@@ -1028,7 +1028,7 @@ class ToolSelectEdgeByCoordinate : public ITool
 				coord.y = dlg->y();
 				coord.z = dlg->z();
 
-				EdgeBase* e = FindByCoordinate<EdgeBase>(coord,
+				EdgeBase* e = FindClosestByCoordinate<EdgeBase>(coord,
 												 grid.edges_begin(),
 												 grid.edges_end(),
 												 aaPos);
@@ -1069,7 +1069,7 @@ class ToolSelectFaceByCoordinate : public ITool
 				coord.y = dlg->y();
 				coord.z = dlg->z();
 
-				Face* f = FindByCoordinate<Face>(coord,
+				Face* f = FindClosestByCoordinate<Face>(coord,
 												 grid.faces_begin(),
 												 grid.faces_end(),
 												 aaPos);
@@ -1110,7 +1110,7 @@ class ToolSelectVolumeByCoordinate : public ITool
 				coord.y = dlg->y();
 				coord.z = dlg->z();
 
-				Volume* v = FindByCoordinate<Volume>(coord,
+				Volume* v = FindClosestByCoordinate<Volume>(coord,
 												 grid.volumes_begin(),
 												 grid.volumes_end(),
 												 aaPos);
