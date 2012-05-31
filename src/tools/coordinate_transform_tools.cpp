@@ -382,7 +382,7 @@ class ToolLaplacianSmooth : public ITool
 public:
 	void execute(LGObject* obj, QWidget* widget){
 	ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
-		double alpha = 0.01;
+		double alpha = 0.25;
 		int numIterations = 10;
 		int curInd = 0;
 
@@ -441,7 +441,7 @@ public:
 	ToolWidget* get_dialog(QWidget* parent){
 		ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
 								IDB_APPLY | IDB_OK | IDB_CLOSE);
-		dlg->addSpinBox(tr("alpha:"), 0, 1., 0.01, 0.001, 5);
+		dlg->addSpinBox(tr("alpha:"), 0, 1., 0.25, 0.001, 5);
 		dlg->addSpinBox(tr("iterations:"), 1, 10000000, 10, 1, 0);
 		QStringList entries;
 		entries.push_back(tr("selected"));
