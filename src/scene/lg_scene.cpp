@@ -9,7 +9,8 @@
 using namespace std;
 using namespace ug;
 
-LGScene::LGScene()
+LGScene::LGScene() :
+	m_aHidden(true)
 {
 	m_drawModeFront = m_drawModeBack = DM_SOLID_WIRE;
 
@@ -64,6 +65,12 @@ int LGScene::add_object(LGObject* obj, bool autoDelete)
 		obj->m_grid.attach_to_edges(m_aRendered);
 		obj->m_grid.attach_to_faces(m_aRendered);
 		obj->m_grid.attach_to_volumes(m_aRendered);
+	}
+	if(!obj->m_grid.has_vertex_attachment(m_aHidden)){
+		obj->m_grid.attach_to_vertices(m_aHidden);
+		obj->m_grid.attach_to_edges(m_aHidden);
+		obj->m_grid.attach_to_faces(m_aHidden);
+		obj->m_grid.attach_to_volumes(m_aHidden);
 	}
 
 	connect(obj, SIGNAL(sig_geometry_changed()), this, SLOT(object_geometry_changed()));
@@ -743,7 +750,7 @@ void LGScene::render_points(LGObject* pObj, const ug::vector4& color,
 							  ug::VertexBaseIterator vrtsEnd,
 							  Grid::VertexAttachmentAccessor<APosition>& aaPos)
 {
-	Grid::VertexAttachmentAccessor<AChar> aaRenderedVRT(pObj->m_grid, m_aRendered);
+	Grid::VertexAttachmentAccessor<ABool> aaRenderedVRT(pObj->m_grid, m_aRendered);
 
 	glColor4f(color.x, color.y, color.z, color.w);
 	glPointSize(5.f);
@@ -753,7 +760,7 @@ void LGScene::render_points(LGObject* pObj, const ug::vector4& color,
 	for(VertexBaseIterator iter = vrtsBegin;
 		iter != vrtsEnd; ++iter)
 	{
-		if(aaRenderedVRT[*iter] > 0){
+		if(aaRenderedVRT[*iter]){
 			vector3& v = aaPos[*iter];
 			glVertex3f(v.x, v.y, v.z);
 		}
@@ -767,10 +774,11 @@ void LGScene::render_point_subsets(LGObject* pObj)
 	Grid& grid = pObj->m_grid;
 	SubsetHandler& sh = pObj->get_subset_handler();
 	Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
-	Grid::VertexAttachmentAccessor<AChar> aaRenderedVRT(grid, m_aRendered);
+	Grid::VertexAttachmentAccessor<ABool> aaRenderedVRT(grid, m_aRendered);
+	Grid::VertexAttachmentAccessor<ABool> aaHiddenVRT(grid, m_aHidden);
 
 	SetAttachmentValues(aaRenderedVRT, grid.vertices_begin(),
-						grid.vertices_end(), 0);
+						grid.vertices_end(), false);
 
 	for(int i = 0; i < sh.num_subsets(); ++i)
 	{
@@ -793,9 +801,11 @@ void LGScene::render_point_subsets(LGObject* pObj)
 		for(VertexBaseIterator iter = sh.begin<VertexBase>(i);
 			iter != sh.end<VertexBase>(i); ++iter)
 		{
-			aaRenderedVRT[*iter] = 1;
-			vector3& v = aaPos[*iter];
-			glVertex3f(v.x, v.y, v.z);
+			if(!aaHiddenVRT[*iter]){
+				aaRenderedVRT[*iter] = true;
+				vector3& v = aaPos[*iter];
+				glVertex3f(v.x, v.y, v.z);
+			}
 		}
 
 		glEnd();
@@ -810,7 +820,7 @@ void LGScene::render_edges(LGObject* pObj, const ug::vector4& color,
 						  Grid::VertexAttachmentAccessor<APosition>& aaPos)
 {
 	Grid& grid = pObj->m_grid;
-	Grid::EdgeAttachmentAccessor<AChar> aaRenderedEDGE(grid, m_aRendered);
+	Grid::EdgeAttachmentAccessor<ABool> aaRenderedEDGE(grid, m_aRendered);
 
 //	draw edges
 	glColor4f(color.x, color.y, color.z, color.w);
@@ -820,7 +830,7 @@ void LGScene::render_edges(LGObject* pObj, const ug::vector4& color,
 		iter != edgesEnd; ++iter)
 	{
 		EdgeBase* e = *iter;
-		if(aaRenderedEDGE[e] > 0){
+		if(aaRenderedEDGE[e]){
 			for(int i = 0; i < 2; ++i)
 			{
 				vector3& v = aaPos[e->vertex(i)];
@@ -837,13 +847,15 @@ void LGScene::render_edge_subsets(LGObject* pObj)
 	Grid& grid = pObj->m_grid;
 	SubsetHandler& sh = pObj->get_subset_handler();
 	Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
-	Grid::VertexAttachmentAccessor<AChar> aaRenderedVRT(grid, m_aRendered);
-	Grid::EdgeAttachmentAccessor<AChar> aaRenderedEDGE(grid, m_aRendered);
+	Grid::VertexAttachmentAccessor<ABool> aaRenderedVRT(grid, m_aRendered);
+	Grid::EdgeAttachmentAccessor<ABool> aaRenderedEDGE(grid, m_aRendered);
+
+	Grid::EdgeAttachmentAccessor<ABool> aaHiddenEDGE(grid, m_aHidden);
 
 	SetAttachmentValues(aaRenderedVRT, grid.vertices_begin(),
-						grid.vertices_end(), 0);
+						grid.vertices_end(), false);
 	SetAttachmentValues(aaRenderedEDGE, grid.edges_begin(),
-						grid.edges_end(), 0);
+						grid.edges_end(), false);
 
 	for(int i = 0; i < sh.num_subsets(); ++i)
 	{
@@ -866,12 +878,14 @@ void LGScene::render_edge_subsets(LGObject* pObj)
 			iter != sh.end<EdgeBase>(i); ++iter)
 		{
 			EdgeBase* e = *iter;
-			aaRenderedEDGE[e] = 1;
-			for(int i = 0; i < 2; ++i)
-			{
-				aaRenderedVRT[e->vertex(i)] = 1;
-				vector3& v = aaPos[e->vertex(i)];
-				glVertex3f(v.x, v.y, v.z);
+			if(!aaHiddenEDGE[e]){
+				aaRenderedEDGE[e] = true;
+				for(int i = 0; i < 2; ++i)
+				{
+					aaRenderedVRT[e->vertex(i)] = true;
+					vector3& v = aaPos[e->vertex(i)];
+					glVertex3f(v.x, v.y, v.z);
+				}
 			}
 		}
 
@@ -887,7 +901,7 @@ void LGScene::render_triangles(LGObject* pObj, const ug::vector4& color,
 						  ug::Grid::VertexAttachmentAccessor<APosition>& aaPos,
 						  ug::Grid::FaceAttachmentAccessor<ANormal>& aaNorm)
 {
-	Grid::FaceAttachmentAccessor<AChar> aaRenderedFACE(pObj->get_grid(), m_aRendered);
+	Grid::FaceAttachmentAccessor<ABool> aaRenderedFACE(pObj->get_grid(), m_aRendered);
 
 	glColor4f(color.x, color.y, color.z, color.w);
 	glBegin(GL_TRIANGLES);
@@ -897,7 +911,7 @@ void LGScene::render_triangles(LGObject* pObj, const ug::vector4& color,
 	{
 		Face* tri = *iter;
 
-		if(aaRenderedFACE[tri] > 0){
+		if(aaRenderedFACE[tri]){
 			vector3& n = aaNorm[tri];
 			glNormal3f(n.x, n.y, n.z);
 
@@ -919,7 +933,7 @@ void LGScene::render_quadrilaterals(LGObject* pObj,
 						  ug::Grid::VertexAttachmentAccessor<APosition>& aaPos,
 						  ug::Grid::FaceAttachmentAccessor<ANormal>& aaNorm)
 {
-	Grid::FaceAttachmentAccessor<AChar> aaRenderedFACE(pObj->get_grid(), m_aRendered);
+	Grid::FaceAttachmentAccessor<ABool> aaRenderedFACE(pObj->get_grid(), m_aRendered);
 
 	glColor4f(color.x, color.y, color.z, color.w);
 	glBegin(GL_QUADS);
@@ -929,7 +943,7 @@ void LGScene::render_quadrilaterals(LGObject* pObj,
 	{
 		Face* q = *iter;
 
-		if(aaRenderedFACE[q] > 0){
+		if(aaRenderedFACE[q]){
 			vector3& n = aaNorm[q];
 			glNormal3f(n.x, n.y, n.z);
 
@@ -952,8 +966,8 @@ void LGScene::rerender_volumes(LGObject* pObj,
 						  ug::Grid::FaceAttachmentAccessor<ANormal>& aaNorm)
 {
 	Grid& grid = pObj->get_grid();
-	Grid::FaceAttachmentAccessor<AChar> aaRenderedFACE(grid, m_aRendered);
-	Grid::VolumeAttachmentAccessor<AChar> aaRenderedVOL(grid, m_aRendered);
+	Grid::FaceAttachmentAccessor<ABool> aaRenderedFACE(grid, m_aRendered);
+	Grid::VolumeAttachmentAccessor<ABool> aaRenderedVOL(grid, m_aRendered);
 
 //	collect all triangles and quadrilaterals that have to be rendered
 	vector<Face*> tris;
@@ -962,14 +976,14 @@ void LGScene::rerender_volumes(LGObject* pObj,
 	for(VolumeIterator iter = volsBegin; iter != volsEnd; ++iter)
 	{
 		Volume* vol = *iter;
-		if(aaRenderedVOL[vol] > 0){
+		if(aaRenderedVOL[vol]){
 		//	iterate through the volumes faces
 			Grid::AssociatedFaceIterator fEnd = grid.associated_faces_end(vol);
 			for(Grid::AssociatedFaceIterator fIter = grid.associated_faces_begin(vol);
 				fIter != fEnd; ++fIter)
 			{
 				Face* f = *fIter;
-				if(aaRenderedFACE[f] > 0){
+				if(aaRenderedFACE[f]){
 					if(f->num_vertices() == 3)
 						tris.push_back(f);
 					else{
@@ -1027,16 +1041,18 @@ void LGScene::render_faces(LGObject* pObj, Grid& grid,
 //	with differing grids and subsets.
 	Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
 	Grid::FaceAttachmentAccessor<ANormal> aaNorm(grid, aNormal);
-	Grid::VertexAttachmentAccessor<AChar> aaRenderedVRT(grid, m_aRendered);
-	Grid::EdgeAttachmentAccessor<AChar> aaRenderedEDGE(grid, m_aRendered);
-	Grid::FaceAttachmentAccessor<AChar> aaRenderedFACE(grid, m_aRendered);
+	Grid::VertexAttachmentAccessor<ABool> aaRenderedVRT(grid, m_aRendered);
+	Grid::EdgeAttachmentAccessor<ABool> aaRenderedEDGE(grid, m_aRendered);
+	Grid::FaceAttachmentAccessor<ABool> aaRenderedFACE(grid, m_aRendered);
+
+	Grid::FaceAttachmentAccessor<ABool> aaHidden(grid, m_aHidden);
 
 	SetAttachmentValues(aaRenderedVRT, grid.vertices_begin(),
-						grid.vertices_end(), 0);
+						grid.vertices_end(), false);
 	SetAttachmentValues(aaRenderedEDGE, grid.edges_begin(),
-						grid.edges_end(), 0);
+						grid.edges_end(), false);
 	SetAttachmentValues(aaRenderedFACE, grid.faces_begin(),
-						grid.faces_end(), 0);
+						grid.faces_end(), false);
 
 //	iterate through all subsets
 //	each subset has its own display list
@@ -1061,63 +1077,72 @@ void LGScene::render_faces(LGObject* pObj, Grid& grid,
 			iter != sh.end<Triangle>(i); ++iter)
 		{
 			Face* tri = *iter;
-			aaRenderedFACE[tri] = 1;
+			if(aaHidden[tri] && !renderAll)
+				continue;
+
+			aaRenderedFACE[tri] = true;
 
 			vector3& n = aaNorm[tri];
 			glNormal3f(n.x, n.y, n.z);
 
 			for(int i = 0; i < 3; ++i)
 			{
-				aaRenderedVRT[tri->vertex(i)] = 1;
+				aaRenderedVRT[tri->vertex(i)] = true;
 				vector3& v = aaPos[tri->vertex(i)];
 				glVertex3f(v.x, v.y, v.z);
 			}
 
 			for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(tri);
 				eiter != grid.associated_edges_end(tri); ++eiter)
-					aaRenderedEDGE[*eiter] = 1;
+					aaRenderedEDGE[*eiter] = true;
 		}
 
 		for(FaceIterator iter = sh.begin<ConstrainingTriangle>(i);
 			iter != sh.end<ConstrainingTriangle>(i); ++iter)
 		{
 			Face* tri = *iter;
-			aaRenderedFACE[tri] = 1;
+			if(aaHidden[tri] && !renderAll)
+				continue;
+
+			aaRenderedFACE[tri] = true;
 
 			vector3& n = aaNorm[tri];
 			glNormal3f(n.x, n.y, n.z);
 
 			for(int i = 0; i < 3; ++i)
 			{
-				aaRenderedVRT[tri->vertex(i)] = 1;
+				aaRenderedVRT[tri->vertex(i)] = true;
 				vector3& v = aaPos[tri->vertex(i)];
 				glVertex3f(v.x, v.y, v.z);
 			}
 
 			for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(tri);
 				eiter != grid.associated_edges_end(tri); ++eiter)
-				aaRenderedEDGE[*eiter] = 1;
+				aaRenderedEDGE[*eiter] = true;
 		}
 
 		for(FaceIterator iter = sh.begin<ConstrainedTriangle>(i);
 			iter != sh.end<ConstrainedTriangle>(i); ++iter)
 		{
 			Face* tri = *iter;
-			aaRenderedFACE[tri] = 1;
+			if(aaHidden[tri] && !renderAll)
+				continue;
+
+			aaRenderedFACE[tri] = true;
 
 			vector3& n = aaNorm[tri];
 			glNormal3f(n.x, n.y, n.z);
 
 			for(int i = 0; i < 3; ++i)
 			{
-				aaRenderedVRT[tri->vertex(i)] = 1;
+				aaRenderedVRT[tri->vertex(i)] = true;
 				vector3& v = aaPos[tri->vertex(i)];
 				glVertex3f(v.x, v.y, v.z);
 			}
 
 			for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(tri);
 				eiter != grid.associated_edges_end(tri); ++eiter)
-				aaRenderedEDGE[*eiter] = 1;
+				aaRenderedEDGE[*eiter] = true;
 		}
 
 		glEnd();
@@ -1129,63 +1154,72 @@ void LGScene::render_faces(LGObject* pObj, Grid& grid,
 			iter != sh.end<Quadrilateral>(i); ++iter)
 		{
 			Quadrilateral* q = *iter;
-			aaRenderedFACE[q] = 1;
+			if(aaHidden[q] && !renderAll)
+				continue;
+
+			aaRenderedFACE[q] = true;
 
 			vector3& n = aaNorm[q];
 			glNormal3f(n.x, n.y, n.z);
 
 			for(int i = 0; i < 4; ++i)
 			{
-				aaRenderedVRT[q->vertex(i)] = 1;
+				aaRenderedVRT[q->vertex(i)] = true;
 				vector3& v = aaPos[q->vertex(i)];
 				glVertex3f(v.x, v.y, v.z);
 			}
 
 			for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(q);
 				eiter != grid.associated_edges_end(q); ++eiter)
-				aaRenderedEDGE[*eiter] = 1;
+				aaRenderedEDGE[*eiter] = true;
 		}
 
 		for(ConstrainingQuadrilateralIterator iter = sh.begin<ConstrainingQuadrilateral>(i);
 			iter != sh.end<ConstrainingQuadrilateral>(i); ++iter)
 		{
 			ConstrainingQuadrilateral* q = *iter;
-			aaRenderedFACE[q] = 1;
+			if(aaHidden[q] && !renderAll)
+				continue;
+
+			aaRenderedFACE[q] = true;
 
 			vector3& n = aaNorm[q];
 			glNormal3f(n.x, n.y, n.z);
 
 			for(int i = 0; i < 4; ++i)
 			{
-				aaRenderedVRT[q->vertex(i)] = 1;
+				aaRenderedVRT[q->vertex(i)] = true;
 				vector3& v = aaPos[q->vertex(i)];
 				glVertex3f(v.x, v.y, v.z);
 			}
 
 			for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(q);
 				eiter != grid.associated_edges_end(q); ++eiter)
-				aaRenderedEDGE[*eiter] = 1;
+				aaRenderedEDGE[*eiter] = true;
 		}
 
 		for(ConstrainedQuadrilateralIterator iter = sh.begin<ConstrainedQuadrilateral>(i);
 			iter != sh.end<ConstrainedQuadrilateral>(i); ++iter)
 		{
 			ConstrainedQuadrilateral* q = *iter;
-			aaRenderedFACE[q] = 1;
+			if(aaHidden[q] && !renderAll)
+				continue;
+
+			aaRenderedFACE[q] = true;
 
 			vector3& n = aaNorm[q];
 			glNormal3f(n.x, n.y, n.z);
 
 			for(int i = 0; i < 4; ++i)
 			{
-				aaRenderedVRT[q->vertex(i)] = 1;
+				aaRenderedVRT[q->vertex(i)] = true;
 				vector3& v = aaPos[q->vertex(i)];
 				glVertex3f(v.x, v.y, v.z);
 			}
 
 			for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(q);
 				eiter != grid.associated_edges_end(q); ++eiter)
-				aaRenderedEDGE[*eiter] = 1;
+				aaRenderedEDGE[*eiter] = true;
 		}
 
 		glEnd();
@@ -1212,7 +1246,8 @@ void LGScene::render_volumes(LGObject* pObj)
 	Grid::FaceAttachmentAccessor<ASphere>	aaSphereFACE(grid, m_aSphere);
 	Grid::VolumeAttachmentAccessor<ASphere>	aaSphereVOL(grid, m_aSphere);
 
-	Grid::VolumeAttachmentAccessor<AChar> aaRenderedVOL(grid, m_aRendered);
+	Grid::VolumeAttachmentAccessor<ABool> aaRenderedVOL(grid, m_aRendered);
+	Grid::VolumeAttachmentAccessor<ABool> aaHiddenVOL(grid, m_aHidden);
 
 //	preprocessing step:
 //	sort all faces in a subset handler
@@ -1220,7 +1255,7 @@ void LGScene::render_volumes(LGObject* pObj)
 
 //	reset all attachment values to 0
 	SetAttachmentValues(aaRenderedVOL, grid.volumes_begin(),
-						grid.volumes_end(), 0);
+						grid.volumes_end(), false);
 
 //	too slow too!
 //	iterate through all faces
@@ -1240,6 +1275,9 @@ void LGScene::render_volumes(LGObject* pObj)
 			for(Grid::AssociatedVolumeIterator vIter = grid.associated_volumes_begin(f);
 				vIter != volEnd; ++vIter)
 			{
+				if(aaHiddenVOL[*vIter])
+					continue;
+
 				int vSubInd = sh.get_subset_index(*vIter);
 				if(vSubInd == -1)
 					continue;
@@ -1269,7 +1307,7 @@ void LGScene::render_volumes(LGObject* pObj)
 				shFace.assign_subset(f, newSubInd);
 			//	mark the visible volume as rendered
 				if(visVol){
-					aaRenderedVOL[visVol] = 1;
+					aaRenderedVOL[visVol] = true;
 				}
 			}
 		}
@@ -1346,16 +1384,18 @@ void LGScene::render_with_clip_plane(LGObject* pObj)
 	Grid::FaceAttachmentAccessor<ASphere>	aaSphereFACE(grid, m_aSphere);
 	Grid::VolumeAttachmentAccessor<ASphere>	aaSphereVOL(grid, m_aSphere);
 
-	Grid::VertexAttachmentAccessor<AChar> aaRenderedVRT(grid, m_aRendered);
-	Grid::EdgeAttachmentAccessor<AChar> aaRenderedEDGE(grid, m_aRendered);
-	Grid::FaceAttachmentAccessor<AChar> aaRenderedFACE(grid, m_aRendered);
+	Grid::VertexAttachmentAccessor<ABool> aaRenderedVRT(grid, m_aRendered);
+	Grid::EdgeAttachmentAccessor<ABool> aaRenderedEDGE(grid, m_aRendered);
+	Grid::FaceAttachmentAccessor<ABool> aaRenderedFACE(grid, m_aRendered);
+
+	Grid::FaceAttachmentAccessor<ABool> aaHidden(grid, m_aHidden);
 
 	SetAttachmentValues(aaRenderedVRT, grid.vertices_begin(),
-						grid.vertices_end(), 0);
+						grid.vertices_end(), false);
 	SetAttachmentValues(aaRenderedEDGE, grid.edges_begin(),
-						grid.edges_end(), 0);
+						grid.edges_end(), false);
 	SetAttachmentValues(aaRenderedFACE, grid.faces_begin(),
-						grid.faces_end(), 0);
+						grid.faces_end(), false);
 
 //	iterate through all subsets
 //	each subset has its own display list
@@ -1384,44 +1424,50 @@ void LGScene::render_with_clip_plane(LGObject* pObj)
 				iter != sh.end<Triangle>(i); ++iter)
 			{
 				Triangle* tri = *iter;
+				if(aaHidden[tri])
+					continue;
+
 				if(!clip_face(tri, aaSphereFACE[tri], aaPos))
 				{
-					aaRenderedFACE[tri] = 1;
+					aaRenderedFACE[tri] = true;
 					vector3& n = aaNorm[tri];
 					glNormal3f(n.x, n.y, n.z);
 
 					for(int j = 0; j < 3; ++j)
 					{
-						aaRenderedVRT[tri->vertex(j)] = 1;
+						aaRenderedVRT[tri->vertex(j)] = true;
 						vector3& v = aaPos[tri->vertex(j)];
 						glVertex3f(v.x, v.y, v.z);
 					}
 					for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(tri);
 						eiter != grid.associated_edges_end(tri); ++eiter)
-							aaRenderedEDGE[*eiter] = 1;
+							aaRenderedEDGE[*eiter] = true;
 				}
 			}
 			for(FaceIterator iter = sh.begin<ConstrainingTriangle>(i);
 				iter != sh.end<ConstrainingTriangle>(i); ++iter)
 			{
 				Face* tri = *iter;
+				if(aaHidden[tri])
+					continue;
+
 				if(!clip_face(tri, aaSphereFACE[tri], aaPos))
 				{
-					aaRenderedFACE[tri] = 1;
+					aaRenderedFACE[tri] = true;
 
 					vector3& n = aaNorm[tri];
 					glNormal3f(n.x, n.y, n.z);
 
 					for(int i = 0; i < 3; ++i)
 					{
-						aaRenderedVRT[tri->vertex(i)] = 1;
+						aaRenderedVRT[tri->vertex(i)] = true;
 						vector3& v = aaPos[tri->vertex(i)];
 						glVertex3f(v.x, v.y, v.z);
 					}
 
 					for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(tri);
 						eiter != grid.associated_edges_end(tri); ++eiter)
-							aaRenderedEDGE[*eiter] = 1;
+							aaRenderedEDGE[*eiter] = true;
 				}
 			}
 
@@ -1429,23 +1475,26 @@ void LGScene::render_with_clip_plane(LGObject* pObj)
 				iter != sh.end<ConstrainedTriangle>(i); ++iter)
 			{
 				Face* tri = *iter;
+				if(aaHidden[tri])
+					continue;
+
 				if(!clip_face(tri, aaSphereFACE[tri], aaPos))
 				{
-					aaRenderedFACE[tri] = 1;
+					aaRenderedFACE[tri] = true;
 
 					vector3& n = aaNorm[tri];
 					glNormal3f(n.x, n.y, n.z);
 
 					for(int i = 0; i < 3; ++i)
 					{
-						aaRenderedVRT[tri->vertex(i)] = 1;
+						aaRenderedVRT[tri->vertex(i)] = true;
 						vector3& v = aaPos[tri->vertex(i)];
 						glVertex3f(v.x, v.y, v.z);
 					}
 
 					for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(tri);
 						eiter != grid.associated_edges_end(tri); ++eiter)
-							aaRenderedEDGE[*eiter] = 1;
+							aaRenderedEDGE[*eiter] = true;
 				}
 			}
 
@@ -1461,21 +1510,24 @@ void LGScene::render_with_clip_plane(LGObject* pObj)
 				iter != sh.end<Quadrilateral>(i); ++iter)
 			{
 				Face* q = *iter;
+				if(aaHidden[q])
+					continue;
+
 				if(!clip_face(q, aaSphereFACE[q], aaPos))
 				{
-					aaRenderedFACE[q] = 1;
+					aaRenderedFACE[q] = true;
 					vector3& n = aaNorm[q];
 					glNormal3f(n.x, n.y, n.z);
 
 					for(int j = 0; j < 4; ++j)
 					{
-						aaRenderedVRT[q->vertex(j)] = 1;
+						aaRenderedVRT[q->vertex(j)] = true;
 						vector3& v = aaPos[q->vertex(j)];
 						glVertex3f(v.x, v.y, v.z);
 					}
 					for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(q);
 						eiter != grid.associated_edges_end(q); ++eiter)
-							aaRenderedEDGE[*eiter] = 1;
+							aaRenderedEDGE[*eiter] = true;
 				}
 			}
 
@@ -1483,22 +1535,25 @@ void LGScene::render_with_clip_plane(LGObject* pObj)
 				iter != sh.end<ConstrainingQuadrilateral>(i); ++iter)
 			{
 				Face* q = *iter;
+				if(aaHidden[q])
+					continue;
+
 				if(!clip_face(q, aaSphereFACE[q], aaPos))
 				{
-					aaRenderedFACE[q] = 1;
+					aaRenderedFACE[q] = true;
 					vector3& n = aaNorm[q];
 					glNormal3f(n.x, n.y, n.z);
 
 					for(int j = 0; j < 4; ++j)
 					{
-						aaRenderedVRT[q->vertex(j)] = 1;
+						aaRenderedVRT[q->vertex(j)] = true;
 						vector3& v = aaPos[q->vertex(j)];
 						glVertex3f(v.x, v.y, v.z);
 					}
 
 					for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(q);
 						eiter != grid.associated_edges_end(q); ++eiter)
-							aaRenderedEDGE[*eiter] = 1;
+							aaRenderedEDGE[*eiter] = true;
 				}
 			}
 
@@ -1506,22 +1561,25 @@ void LGScene::render_with_clip_plane(LGObject* pObj)
 				iter != sh.end<ConstrainedQuadrilateral>(i); ++iter)
 			{
 				Face* q = *iter;
+				if(aaHidden[q])
+					continue;
+
 				if(!clip_face(q, aaSphereFACE[q], aaPos))
 				{
-					aaRenderedFACE[q] = 1;
+					aaRenderedFACE[q] = true;
 					vector3& n = aaNorm[q];
 					glNormal3f(n.x, n.y, n.z);
 
 					for(int j = 0; j < 4; ++j)
 					{
-						aaRenderedVRT[q->vertex(j)] = 1;
+						aaRenderedVRT[q->vertex(j)] = true;
 						vector3& v = aaPos[q->vertex(j)];
 						glVertex3f(v.x, v.y, v.z);
 					}
 
 					for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(q);
 						eiter != grid.associated_edges_end(q); ++eiter)
-							aaRenderedEDGE[*eiter] = 1;
+							aaRenderedEDGE[*eiter] = true;
 				}
 			}
 			glEnd();
@@ -1637,7 +1695,7 @@ get_clicked_vertex(LGObject* obj, const ug::vector3& from,
 	if(obj){
 		Grid& grid = obj->get_grid();
 		Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
-
+		Grid::VertexAttachmentAccessor<ABool> aaRenderedVRT(grid, m_aRendered);
 
 	//	max distance - a safe overestimation
 		number minDist = m_zFar * 2.;
@@ -1646,11 +1704,13 @@ get_clicked_vertex(LGObject* obj, const ug::vector3& from,
 			iter != grid.end<VertexBase>(); ++iter)
 		{
 			VertexBase* vrt = *iter;
-			number t;
-			number dist = DistancePointToLine(t, aaPos[vrt], from, to);
-			if(dist < minDist && t > 0 && t < 1.2){
-				vrtClosest = vrt;
-				minDist = dist;
+			if(aaRenderedVRT[vrt]){
+				number t;
+				number dist = DistancePointToLine(t, aaPos[vrt], from, to);
+				if(dist < minDist && t > 0 && t < 1.2){
+					vrtClosest = vrt;
+					minDist = dist;
+				}
 			}
 		}
 	}
@@ -1669,7 +1729,7 @@ get_clicked_edge(LGObject* obj, const ug::vector3& from,
 	//	the ray.
 		Grid& grid = obj->get_grid();
 		Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
-		Grid::EdgeAttachmentAccessor<AChar> aaRenderedEDGE(grid, m_aRendered);
+		Grid::EdgeAttachmentAccessor<ABool> aaRenderedEDGE(grid, m_aRendered);
 
 	//	max distance - a safe overestimation
 		number minDist = m_zFar * 2.;
@@ -1746,7 +1806,7 @@ get_clicked_face(LGObject* pObj, const ug::vector3& from,
 	Grid::FaceAttachmentAccessor<ANormal> aaNorm(grid, aNormal);
 	Grid::FaceAttachmentAccessor<ASphere>	aaSphereFACE(grid, m_aSphere);
 
-	Grid::FaceAttachmentAccessor<AChar> aaRenderedFACE(grid, m_aRendered);
+	Grid::FaceAttachmentAccessor<ABool> aaRenderedFACE(grid, m_aRendered);
 
 	Face* clickedFace = NULL;
 	number maxDistSq = m_zFar * 2.;
@@ -1842,7 +1902,7 @@ get_clicked_volume(LGObject* pObj, const ug::vector3& from,
 //	if a visible volume is associated, it is considered to be clicked.
 	Grid& grid = pObj->get_grid();
 	SubsetHandler& sh = pObj->get_subset_handler();
-	Grid::VolumeAttachmentAccessor<AChar> aaRenderedVOL(grid, m_aRendered);
+	Grid::VolumeAttachmentAccessor<ABool> aaRenderedVOL(grid, m_aRendered);
 
 //	get the clicked face.
 	Face* clickedFace = get_clicked_face(pObj, from, to);
@@ -1891,21 +1951,24 @@ get_vertices_in_rect(std::vector<VertexBase*>& vrtsOut,
 
 		Grid& grid = obj->get_grid();
 		Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
+		Grid::VertexAttachmentAccessor<ABool> aaRenderedVRT(grid, m_aRendered);
 
 		for(VertexBaseIterator iter = grid.begin<VertexBase>();
 			iter != grid.end<VertexBase>(); ++iter)
 		{
 			VertexBase* vrt = *iter;
-			vector3& pos = aaPos[vrt];
-			GLdouble px = pos.x;
-			GLdouble py = pos.y;
-			GLdouble pz = pos.z;
+			if(aaRenderedVRT[vrt]){
+				vector3& pos = aaPos[vrt];
+				GLdouble px = pos.x;
+				GLdouble py = pos.y;
+				GLdouble pz = pos.z;
 
-			gluProject(px, py, pz, modelMat, projMat,
-					   viewport, &vx, &vy, &vz);
+				gluProject(px, py, pz, modelMat, projMat,
+						   viewport, &vx, &vy, &vz);
 
-			if(vx >= xMin && vx <= xMax && vy >= yMin && vy <= yMax && vz >= 0){
-				vrtsOut.push_back(vrt);
+				if(vx >= xMin && vx <= xMax && vy >= yMin && vy <= yMax && vz >= 0){
+					vrtsOut.push_back(vrt);
+				}
 			}
 		}
 	}
@@ -1936,7 +1999,7 @@ get_edges_in_rect(std::vector<EdgeBase*>& edgesOut,
 		GLdouble vx, vy, vz;
 		Grid& grid = obj->get_grid();
 		Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
-		Grid::EdgeAttachmentAccessor<AChar> aaRenderedEDGE(grid, m_aRendered);
+		Grid::EdgeAttachmentAccessor<ABool> aaRenderedEDGE(grid, m_aRendered);
 
 		for(EdgeBaseIterator iter = grid.begin<EdgeBase>();
 			iter != grid.end<EdgeBase>(); ++iter)
@@ -1992,7 +2055,7 @@ get_faces_in_rect(std::vector<Face*>& facesOut,
 		GLdouble vx, vy, vz;
 		Grid& grid = obj->get_grid();
 		Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
-		Grid::FaceAttachmentAccessor<AChar> aaRenderedFACE(grid, m_aRendered);
+		Grid::FaceAttachmentAccessor<ABool> aaRenderedFACE(grid, m_aRendered);
 
 		for(FaceIterator iter = grid.begin<Face>();
 			iter != grid.end<Face>(); ++iter)
@@ -2048,7 +2111,7 @@ get_volumes_in_rect(std::vector<Volume*>& volsOut,
 		GLdouble vx, vy, vz;
 		Grid& grid = obj->get_grid();
 		Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
-		Grid::VolumeAttachmentAccessor<AChar> aaRenderedVOL(grid, m_aRendered);
+		Grid::VolumeAttachmentAccessor<ABool> aaRenderedVOL(grid, m_aRendered);
 
 		for(VolumeIterator iter = grid.begin<Volume>();
 			iter != grid.end<Volume>(); ++iter)
@@ -2114,7 +2177,7 @@ get_edges_in_rect_cut(std::vector<EdgeBase*>& edgesOut,
 
 		Grid& grid = obj->get_grid();
 		Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
-		Grid::EdgeAttachmentAccessor<AChar> aaRenderedEDGE(grid, m_aRendered);
+		Grid::EdgeAttachmentAccessor<ABool> aaRenderedEDGE(grid, m_aRendered);
 
 		for(EdgeBaseIterator iter = grid.begin<EdgeBase>();
 			iter != grid.end<EdgeBase>(); ++iter)
@@ -2188,7 +2251,7 @@ get_faces_in_rect_cut(std::vector<Face*>& facesOut,
 		Grid& grid = obj->get_grid();
 		SubsetHandler& sh = obj->get_subset_handler();
 		Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
-		Grid::FaceAttachmentAccessor<AChar> aaRenderedFACE(grid, m_aRendered);
+		Grid::FaceAttachmentAccessor<ABool> aaRenderedFACE(grid, m_aRendered);
 
 		for(int si = 0; si < sh.num_subsets(); ++si)
 		{
@@ -2322,4 +2385,15 @@ get_volumes_in_rect_cut(std::vector<Volume*>& volsOut,
 	}
 
 	return volsOut.size();
+}
+
+
+void LGScene::
+unhide_elements(LGObject* obj)
+{
+	using namespace ug;
+	unhide_elements<VertexBase>(obj);
+	unhide_elements<EdgeBase>(obj);
+	unhide_elements<Face>(obj);
+	unhide_elements<Volume>(obj);
 }

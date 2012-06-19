@@ -5,11 +5,14 @@ Recent changes:
 -------------------------------------------------------------------------------
 v 4.0 alpha 2
 Changes and additions:
+- Added Camera->HideSelectedElements and Camera->UnhideElements.
 
 Fixes:
 - Fixed Remeshing->EraseSelectedElements. If, e.g., only faces were selected in,
   a volume geometry, then unused edges and vertices were not properly deleted.
-
+- Vertices which were not rendered (e.g. due to clip-planes) are now ignored
+  when click- or box-selections are performed.
+- Tools->CoordinateTransform->LaplacianSmooth has more efficient default parameters now.
 
 
 -------------------------------------------------------------------------------
@@ -30,6 +33,7 @@ Fixes:
 - Finally supporting umlauts and other local character representations.
 - Fixed SmoothRefinement for edge-only geometries.
 - Resolved click-bug on upper left cell in SceneInspector (clicks were partly ignored).
+
 
 
 

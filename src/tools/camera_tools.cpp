@@ -117,6 +117,42 @@ class ToolSideView : public ITool
 		const char* get_group()		{return "Camera";}
 };
 */
+
+class ToolHideSelectedElements : public ITool
+{
+	public:
+		void execute(LGObject* obj, QWidget*){
+			using namespace ug;
+			LGScene* scene = app::getActiveScene();
+			ug::Selector& sel = obj->get_selector();
+			scene->hide_elements(obj, sel.begin<VertexBase>(), sel.end<VertexBase>());
+			scene->hide_elements(obj, sel.begin<EdgeBase>(), sel.end<EdgeBase>());
+			scene->hide_elements(obj, sel.begin<Face>(), sel.end<Face>());
+			scene->hide_elements(obj, sel.begin<Volume>(), sel.end<Volume>());
+			obj->visuals_changed();
+		}
+
+		const char* get_name()		{return "Hide Selected Elements";}
+		const char* get_tooltip()	{return "Hides all currently selected elements.";}
+		const char* get_group()		{return "Camera";}
+};
+
+
+class ToolUnhideElements : public ITool
+{
+	public:
+		void execute(LGObject* obj, QWidget*){
+			LGScene* scene = app::getActiveScene();
+			scene->unhide_elements(obj);
+			obj->visuals_changed();
+		}
+
+		const char* get_name()		{return "Unhide Elements";}
+		const char* get_tooltip()	{return "Unhides all hidden elements.";}
+		const char* get_group()		{return "Camera";}
+};
+
+
 void RegisterCameraTools(ToolManager* toolMgr)
 {
 	toolMgr->set_group_icon("Camera", ":images/tool_camera.png");
@@ -126,4 +162,6 @@ void RegisterCameraTools(ToolManager* toolMgr)
 	toolMgr->register_tool(new ToolTopView);
 	//toolMgr->register_tool(new ToolFrontView);
 	//toolMgr->register_tool(new ToolSideView);
+	toolMgr->register_tool(new ToolHideSelectedElements);
+	toolMgr->register_tool(new ToolUnhideElements);
 }

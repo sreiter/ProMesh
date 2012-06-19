@@ -142,6 +142,21 @@ class LGScene : public TScene<LGObject>
 		inline bool clipPlaneIsEnabled(int index)	{return m_clipPlaneEnabled[index];}
 		void setClipPlane(int index, const ug::Plane& plane);
 
+	//	hide / unhide parts of the geometry
+	/**	Note that this method doesn't invoke obj->visuals_changed. The caller is
+	 * responsible to do so.*/
+		template <class TIterator>
+		void hide_elements(LGObject* obj, TIterator elemsBegin, TIterator elemsEnd);
+
+	/**	Note that this method doesn't invoke obj->visuals_changed. The caller is
+	 * responsible to do so.*/
+		template <class TElem>
+		void unhide_elements(LGObject* obj);
+
+	/**	Note that this method doesn't invoke obj->visuals_changed. The caller is
+	 * responsible to do so.*/
+		void unhide_elements(LGObject* obj);
+
 	signals:
 		void geometry_changed();
 
@@ -227,11 +242,17 @@ class LGScene : public TScene<LGObject>
 	//	attachments
 		ug::ASphere		m_aSphere;
 		ug::AInt		m_aInt;
-		AChar			m_aRendered;
+		ug::ABool		m_aRendered;
+		ug::ABool		m_aHidden;
 
 	//	clip planes
 		ug::Plane	m_clipPlanes[MAX_NUM_CLIP_PLANES];
 		bool		m_clipPlaneEnabled[MAX_NUM_CLIP_PLANES];
 };
+
+
+////////////////////////////////////////
+//	include implementation
+#include "lg_scene_impl.hpp"
 
 #endif // __H__LG_SCENE__
