@@ -357,7 +357,7 @@ public:
 
 		Grid& g = obj->get_grid();
 		if(!g.has_volume_attachment(aVolumeConstraint)){
-			g.attach_to_volumes_dv<ANumber>(aVolumeConstraint, -1., true);
+			g.attach_to_volumes_dv<ANumber>(aVolumeConstraint, 10.e12, true);
 		}
 		Grid::AttachmentAccessor<Volume, ANumber> aaVolCon(g, aVolumeConstraint);
 
@@ -412,16 +412,16 @@ public:
 	//	we can only retetrahedralize, if volume constraints are present.
 		Grid& g = obj->get_grid();
 		if(!g.has_volume_attachment(aVolumeConstraint)){
-			UG_LOG("Retetrahedralization can only be applied after volume "
-				   "constraints have been set. Aborting.\n");
-			return;
+			g.attach_to_volumes_dv<ANumber>(aVolumeConstraint, 10.e12, true);
 		}
 
 		number quality = 5;
 		int preserveOpt = 0;
+		bool applyVolumeConstraint = false;
 		if(dlg){
 			quality = (number)dlg->to_double(0);
 			preserveOpt = dlg->to_int(1);
+			applyVolumeConstraint = dlg->to_bool(2);
 		}
 
 		bool preserveOuter = (preserveOpt >= 1);
@@ -433,11 +433,9 @@ public:
 							aVolumeConstraint,
 							quality,
 							preserveOuter, preserveAll,
-							ug::aPosition);
+							ug::aPosition,
+							applyVolumeConstraint);
 		UG_LOG("done.\n");
-
-	//	remove constraints - have to be setup anew anyways
-		g.detach_from_volumes(aVolumeConstraint);
 
 		obj->geometry_changed();
 	}
@@ -455,6 +453,7 @@ public:
 		entries.push_back(tr("outer boundary faces"));
 		entries.push_back(tr("all faces"));
 		dlg->addComboBox("preserve:", entries, 0);
+		dlg->addCheckBox(tr("apply volume constraint"), false);
 		return dlg;
 	}
 };
@@ -512,7 +511,7 @@ class ToolExtrude : public ITool
 			bool createVolumes = true;
 			ug::vector3 totalDir(0, 1., 0);
 			int numSteps = 1;
-			int newVolSubsetIndex = 0;
+			int newSubsetIndex = 0;
 
 			if(dlg){
 				createFaces = dlg->to_bool(0);
@@ -521,7 +520,7 @@ class ToolExtrude : public ITool
 				totalDir.y = dlg->to_double(3);
 				totalDir.z = dlg->to_double(4);
 				numSteps = dlg->to_int(5);
-				newVolSubsetIndex = dlg->to_int(6);
+				newSubsetIndex = dlg->to_int(6);
 			}
 
 			ug::vector3 stepDir;
@@ -556,12 +555,10 @@ class ToolExtrude : public ITool
 			}
 
 			sel.enable_autoselection(false);
-			if(sel.num<ug::Volume>())
-				sh.assign_subset(sel.volumes_begin(), sel.volumes_end(), newVolSubsetIndex);
-			else if(sel.num<ug::Face>())
-				sh.assign_subset(sel.faces_begin(), sel.faces_end(), newVolSubsetIndex);
-			else
-				sh.assign_subset(sel.edges_begin(), sel.edges_end(), newVolSubsetIndex);
+			sh.assign_subset(sel.volumes_begin(), sel.volumes_end(), newSubsetIndex);
+			sh.assign_subset(sel.faces_begin(), sel.faces_end(), newSubsetIndex);
+			sh.assign_subset(sel.edges_begin(), sel.edges_end(), newSubsetIndex);
+			sh.assign_subset(sel.vertices_begin(), sel.vertices_end(), newSubsetIndex);
 
 
 		//	select faces, edges and vertices from the new top-layer.
@@ -588,7 +585,7 @@ class ToolExtrude : public ITool
 			dlg->addSpinBox("y-total:", -1.e+9, 1.e+9, 0., 0.1, 9);
 			dlg->addSpinBox("z-total:", -1.e+9, 1.e+9, 0., 0.1, 9);
 			dlg->addSpinBox("num steps:", 1, 1.e+9, 1, 1, 0);
-			dlg->addSpinBox("new volume subset index:", 0, 1.e+9, 0, 1, 0);
+			dlg->addSpinBox("new subset index:", 0, 1.e+9, 0, 1, 0);
 			return dlg;
 		}
 };

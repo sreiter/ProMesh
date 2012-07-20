@@ -1,5 +1,19 @@
 Recent changes:
 
+-------------------------------------------------------------------------------
+v 4.0.0
+Changes and additions:
+- New vertices / edges / faces are now created in the currently selected subset,
+  when created through GridGeneration->BasicElements...
+- CheckBoxes are now added as a single row entry in ToolDialogs.
+- Scaling of selected elements can now be performed around the objects pivot.
+- A subset name can now be specified in Subsets->AssignSubset.
+- Added the ProMesh License (see "Help->License")
+- Extrude assigns a new subset to all newly created elements now.
+- Volume constraint is now optional during remeshing.
+
+Fixes:
+
 
 
 -------------------------------------------------------------------------------
@@ -13,6 +27,7 @@ Fixes:
 - Vertices which were not rendered (e.g. due to clip-planes) are now ignored
   when click- or box-selections are performed.
 - Tools->CoordinateTransform->LaplacianSmooth has more efficient default parameters now.
+
 
 
 -------------------------------------------------------------------------------

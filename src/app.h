@@ -23,6 +23,11 @@ inline LGObject* getActiveObject()
 	return getMainWindow()->getActiveObject();
 }
 
+inline int getActiveSubsetIndex()
+{
+	return getMainWindow()->getSceneInspector()->getActiveSubsetIndex();
+}
+
 inline LGScene* getActiveScene()
 {
 	return getMainWindow()->get_scene();

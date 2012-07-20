@@ -33,7 +33,9 @@ ExtendibleWidget::ExtendibleWidget(QWidget* parent) :
 	hLayout->addWidget(m_toolButton);
 
 	ExtendibleWidgetHeader* header = new ExtendibleWidgetHeader(this);
+	connect(header, SIGNAL(clicked()), this, SLOT(toggle()));
 	connect(header, SIGNAL(double_clicked()), this, SLOT(toggle()));
+
 	m_header = header;
 	hLayout->addWidget(m_header);
 

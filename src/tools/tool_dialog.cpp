@@ -14,7 +14,8 @@ using namespace std;
 
 ToolWidget::ToolWidget(const QString& name, QWidget* parent,
 					ITool* tool, uint buttons) :
-	QFrame(parent)
+	QFrame(parent),
+	m_currentFormLayout(NULL)
 {
 
 	m_tool = tool;
@@ -22,24 +23,22 @@ ToolWidget::ToolWidget(const QString& name, QWidget* parent,
 
 	setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
 
-	QVBoxLayout* vBoxLayout = new QVBoxLayout(this);
-	vBoxLayout->setSpacing(2);
+	QVBoxLayout* baseLayout = new QVBoxLayout(this);
+	//baseLayout->setSpacing(2);
+	baseLayout->setSpacing(10);
 
-	m_formLayout = new QFormLayout();
-	m_formLayout->setSpacing(5);
-	m_formLayout->setHorizontalSpacing(10);
-	m_formLayout->setVerticalSpacing(8);
-	vBoxLayout->addLayout(m_formLayout);
-
-	vBoxLayout->addSpacing(15);
-
+	QVBoxLayout* vBoxLayout = new QVBoxLayout();
+	//vBoxLayout->setSpacing(2);
+	vBoxLayout->setSpacing(10);
+	m_mainLayout = vBoxLayout;
+	baseLayout->addLayout(vBoxLayout);
 	m_signalMapper = new QSignalMapper(this);
 	connect(m_signalMapper, SIGNAL(mapped(int)),
 			this, SLOT(buttonClicked(int)));
 
 	if(buttons & IDB_APPLY){
 		QPushButton* btn = new QPushButton(tr("Apply"), this);
-		vBoxLayout->addWidget(btn, 0, Qt::AlignLeft);
+		baseLayout->addWidget(btn, 0, Qt::AlignLeft);
 		m_signalMapper->setMapping(btn, IDB_APPLY);
 		connect(btn, SIGNAL(clicked()), m_signalMapper, SLOT(map()));
 	}
@@ -75,9 +74,22 @@ ToolWidget::ToolWidget(const QString& name, QWidget* parent,
 */
 }
 
+QFormLayout* ToolWidget::current_form_layout()
+{
+	if(!m_currentFormLayout){
+		m_currentFormLayout = new QFormLayout();
+		m_currentFormLayout->setSpacing(5);
+		m_currentFormLayout->setHorizontalSpacing(10);
+		m_currentFormLayout->setVerticalSpacing(8);
+		m_mainLayout->addLayout(m_currentFormLayout);
+		//m_mainLayout->addSpacing(15);
+	}
+	return m_currentFormLayout;
+}
+
 void ToolWidget::addWidget(const QString& caption, QWidget* widget)
 {
-	m_formLayout->addRow(caption, widget);
+	current_form_layout()->addRow(caption, widget);
 }
 
 void ToolWidget::addSlider(const QString& caption,
@@ -86,7 +98,7 @@ void ToolWidget::addSlider(const QString& caption,
 	QSlider* slider = new QSlider(Qt::Horizontal, this);
 	slider->setRange(min, max);
 	slider->setValue(value);
-	m_formLayout->addRow(caption, slider);
+	current_form_layout()->addRow(caption, slider);
 	m_widgets.push_back(WidgetEntry(slider, WT_SLIDER));
 }
 
@@ -100,7 +112,7 @@ void ToolWidget::addSpinBox(const QString& caption,
 	spinner->setValue(value);
 	spinner->setDecimals(numDecimals);
 	spinner->setSingleStep(stepSize);
-	m_formLayout->addRow(caption, spinner);
+	current_form_layout()->addRow(caption, spinner);
 	m_widgets.push_back(WidgetEntry(spinner, WT_SPIN_BOX));
 }
 
@@ -111,16 +123,17 @@ void ToolWidget::addComboBox(const QString& caption,
 	QComboBox* combo = new QComboBox(this);
 	combo->addItems(entries);
 	combo->setCurrentIndex(activeEntry);
-	m_formLayout->addRow(caption, combo);
+	current_form_layout()->addRow(caption, combo);
 	m_widgets.push_back(WidgetEntry(combo, WT_COMBO_BOX));
 }
 
 void ToolWidget::addCheckBox(const QString& caption,
 							bool bChecked)
 {
-	QCheckBox* check = new QCheckBox(this);
+	QCheckBox* check = new QCheckBox(caption, this);
 	check->setChecked(bChecked);
-	m_formLayout->addRow(caption, check);
+	m_currentFormLayout = NULL;
+	m_mainLayout->addWidget(check);
 	m_widgets.push_back(WidgetEntry(check, WT_CHECK_BOX));
 }
 
@@ -132,7 +145,7 @@ void ToolWidget::addListBox(const QString& caption,
 	if(multiSelection)
 		list->setSelectionMode(QAbstractItemView::MultiSelection);
 	list->addItems(entries);
-	m_formLayout->addRow(caption, list);
+	current_form_layout()->addRow(caption, list);
 	m_widgets.push_back(WidgetEntry(list, WT_LIST_BOX));
 }
 
@@ -140,7 +153,7 @@ void ToolWidget::addTextBox(const QString& caption, const QString& text)
 {
 	QLineEdit* textBox = new QLineEdit(this);
 	textBox->setText(text);
-	m_formLayout->addRow(caption, textBox);
+	current_form_layout()->addRow(caption, textBox);
 	m_widgets.push_back(WidgetEntry(textBox, WT_TEXT_BOX));
 }
 
@@ -148,14 +161,14 @@ void ToolWidget::addVector(const QString& caption, int size)
 {
 	MatrixWidget* mat = new MatrixWidget(size, 1, this);
 	mat->set_value(0, 0, 0);
-	m_formLayout->addRow(caption, mat);
+	current_form_layout()->addRow(caption, mat);
 	m_widgets.push_back(WidgetEntry(mat, WT_MATRIX));
 }
 
 void ToolWidget::addMatrix(const QString& caption, int numRows, int numCols)
 {
 	MatrixWidget* mat = new MatrixWidget(numRows, numCols, this);
-	m_formLayout->addRow(caption, mat);
+	current_form_layout()->addRow(caption, mat);
 	m_widgets.push_back(WidgetEntry(mat, WT_MATRIX));
 }
 
@@ -163,7 +176,7 @@ void ToolWidget::addFileBrowser(const QString& caption, FileWidgetType fwt,
 								const QString& filter)
 {
 	FileWidget* fw = new FileWidget(fwt, filter, this);
-	m_formLayout->addRow(caption, fw);
+	current_form_layout()->addRow(caption, fw);
 	m_widgets.push_back(WidgetEntry(fw, WT_FILE_BROWSER));
 }
 
@@ -404,4 +417,20 @@ ug::matrix44 ToolWidget::to_matrix44(int paramIndex, bool* bOKOut)
 	}
 
 	return ug::matrix44();
+}
+
+bool ToolWidget::set_string(int paramIndex, const QString& param)
+{
+	WidgetEntry& we = m_widgets[paramIndex];
+
+	if(we.m_widgetType == WT_TEXT_BOX){
+		QLineEdit* textBox = qobject_cast<QLineEdit*>(we.m_widget);
+		textBox->setText(param);
+	}
+	else{
+		UG_LOG("ERROR in ToolDialog::set_string: Parameter " << paramIndex << " can't be converted to a string-list.\n");
+		return false;
+	}
+
+	return true;
 }

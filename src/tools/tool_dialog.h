@@ -12,6 +12,7 @@
 
 class QSignalMapper;
 class QFormLayout;
+class QVBoxLayout;
 class ITool;
 
 enum InputDialogButtons
@@ -85,6 +86,8 @@ class ToolWidget : public QFrame
 		void to_vector3(double& xOut, double& yOut, double& zOut,
 						bool* bOKOut = NULL);
 */
+		bool set_string(int paramIndex, const QString& param);
+
 	protected:
 	///	convertes the value of the i-th input element to a number.
 	/**	inices start from 0. Elements are indexed in the order they
@@ -92,8 +95,11 @@ class ToolWidget : public QFrame
 	 *	be converted to a number. To check if conversion was successful
 	 *	you may specify the optional parameter bOKOut (make sure that
 	 *	the pointer points to a valid boolean).*/
-	 template <class TNumber>
+		template <class TNumber>
 		TNumber to_number(int paramIndex, bool* bOKOut = NULL);
+
+	 /// returns the current form layout and creates a new if none is available.
+	 	 QFormLayout* current_form_layout();
 
 	protected slots:
 		void buttonClicked(int buttonID);
@@ -125,7 +131,8 @@ class ToolWidget : public QFrame
 
 	protected:
 		QSignalMapper*	m_signalMapper;
-		QFormLayout*	m_formLayout;
+		QVBoxLayout*	m_mainLayout;
+		QFormLayout*	m_currentFormLayout;
 		ITool*			m_tool;
 
 		WidgetEntryVec	m_widgets;

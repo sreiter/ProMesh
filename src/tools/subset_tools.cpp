@@ -12,10 +12,13 @@ class ToolAssignSubset : public ITool
 	public:
 		void execute(LGObject* obj, QWidget* widget){
 			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
+
+			QString subsetName = "";
 			int newIndex = 0;
 
 			if(dlg){
-				newIndex = dlg->to_int(0);
+				subsetName = dlg->to_string(0);
+				newIndex = dlg->to_int(1);
 			}
 
 			ug::Selector& sel = obj->get_selector();
@@ -30,16 +33,22 @@ class ToolAssignSubset : public ITool
 			sh.assign_subset(sel.begin<ug::Volume>(),
 							 sel.end<ug::Volume>(), newIndex);
 
+			if(!subsetName.isEmpty())
+				sh.subset_info(newIndex).name = subsetName.toLocal8Bit().constData();
+
+			dlg->set_string(0, QString(""));
+
 			obj->geometry_changed();
 		}
 
-		const char* get_name()	{return "Assign Subset";}
+		const char* get_name()		{return "Assign Subset";}
 		const char* get_tooltip()	{return "Assigns the selected elements to a subset.";}
 		const char* get_group()		{return "Subsets";}
 
 		ToolWidget* get_dialog(QWidget* parent){
 			ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
 											IDB_APPLY | IDB_OK | IDB_CLOSE);
+			dlg->addTextBox(tr("new subset name:"), "");
 			dlg->addSpinBox(tr("new subset index:"), -1, 1e+9, 0., 1., 0);
 			return dlg;
 		}

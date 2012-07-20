@@ -47,11 +47,19 @@ class ExtendibleWidgetHeader : public QLabel
 		virtual ~ExtendibleWidgetHeader()	{}
 
 	signals:
+		void clicked();
 		void double_clicked();
 
 	protected:
+		virtual void mouseReleaseEvent(QMouseEvent* evt)
+		{
+			QLabel::mouseReleaseEvent(evt);
+			emit(clicked());
+		}
+
 		virtual void mouseDoubleClickEvent(QMouseEvent* evt)
 		{
+			QLabel::mouseDoubleClickEvent(evt);
 			emit(double_clicked());
 		}
 };

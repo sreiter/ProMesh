@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
 	pMainWindow->init();
 
 	myApp.setMainWindow(pMainWindow);
-	pMainWindow->setWindowTitle("ProMesh 4.0 alpha 2      (c) Sebastian Reiter    s.b.reiter@googlemail.com");
+	pMainWindow->setWindowTitle("ProMesh 4.0.0      (c) Sebastian Reiter    s.b.reiter@googlemail.com");
 
 	//pMainWindow->resize(1024, 768);
 	pMainWindow->show();
@@ -74,10 +74,10 @@ int main(int argc, char *argv[])
 	setlocale(LC_NUMERIC, "C");
 
 	UG_LOG("ProMesh4 - created by Sebastian Reiter (s.b.reiter@googlemail.com).\n");
-	UG_LOG("This version is for academical use only. Redistribution of this software is not allowed.\n");
+	UG_LOG("This version of ProMesh4 is for non-commercial use only. See \"Help->License\" for more information.\n");
 	UG_LOG("If you use ProMesh to create geometries for your publications, make sure to cite it!\n");
-	UG_LOG("Special thanks to all people who contributed code or made their libraries available.\n");
-	UG_LOG("This version of ProMesh4 uses 'tetgen' by Hang Si (in Remeshing/Tetgen).\n");
+	UG_LOG("ProMesh uses libGrid, which is part of the ug4 simulation framework.\n");
+	UG_LOG("This version of ProMesh4 uses 'tetgen' by Hang Si for tetrahedral mesh generation (in Remeshing/Tetgen).\n");
 	UG_LOG("--------------------------------------------------------------\n\n");
 
 	for(int i = 1; i < argc; ++i){

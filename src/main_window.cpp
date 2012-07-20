@@ -118,6 +118,10 @@ void MainWindow::init()
 	m_actShortcuts->setStatusTip(tr("displays shortcuts."));
 	connect(m_actShortcuts, SIGNAL(triggered()), this, SLOT(showShortcuts()));
 
+	m_actLicense = new QAction(tr("License"), this);
+	m_actLicense->setStatusTip(tr("displays the ProMesh-License."));
+	connect(m_actLicense, SIGNAL(triggered()), this, SLOT(showLicense()));
+
 //	create the main menu
 	QMenu* filemenu = menuBar()->addMenu("&File");
 	filemenu->addAction(m_actNew);
@@ -129,18 +133,14 @@ void MainWindow::init()
 
 	m_toolManager = new ToolManager(this);
 	RegisterStandardTools(m_toolManager);
-	m_toolsMenu = menuBar()->addMenu("Tools");
+//	m_toolsMenu = menuBar()->addMenu("Tools");
 //	m_toolManager->populateMenu(m_toolsMenu);
 
-	QMenu* windowMenu = menuBar()->addMenu("&Windows");
-	QAction* actShowLog = new QAction(tr("Show Log"), this);
-	connect(actShowLog, SIGNAL(triggered()), m_pLog, SLOT(show()));
-	windowMenu->addAction(actShowLog);
-
 	QMenu* helpmenu = menuBar()->addMenu("&Help");
+	helpmenu->addAction(m_actLicense);
+	helpmenu->addAction(m_actShortcuts);
 	helpmenu->addAction(m_actHelpControls);
 	helpmenu->addAction(m_actRecentChanges);
-	helpmenu->addAction(m_actShortcuts);
 
 //	create a tool bar for file handling
 	QToolBar* fileToolBar = addToolBar(tr("&File"));
@@ -691,6 +691,7 @@ LGObject* MainWindow::getActiveObject()
 void MainWindow::showHelp()
 {
 	QDialog* dlg = new QDialog(this);
+	dlg->setWindowTitle(tr("ProMesh - Controls"));
 	QString strMsg;
 	strMsg.append(tr("CAMERA CONTROLS:\n"));
 	strMsg.append(tr("- Use Left-Mouse-Button (LMB) to steer the camera.\n"));
@@ -730,6 +731,7 @@ void MainWindow::showHelp()
 void MainWindow::showRecentChanges()
 {
 	QDialog* dlg = new QDialog(this);
+	dlg->setWindowTitle(tr("ProMesh - Recent Changes"));
 	QTextEdit* textEdit = new QTextEdit(dlg);
 
 	QFile inputFile(":/text/recent_changes.txt");
@@ -758,6 +760,7 @@ void MainWindow::showRecentChanges()
 void MainWindow::showShortcuts()
 {
 	QDialog* dlg = new QDialog(this);
+	dlg->setWindowTitle(tr("ProMesh - Shortcuts"));
 	QTextEdit* textEdit = new QTextEdit(dlg);
 
 	QFile inputFile(":/text/shortcuts.txt");
@@ -783,9 +786,33 @@ void MainWindow::showShortcuts()
 	//delete dlg;
 }
 
-void MainWindow::showLog()
+void MainWindow::showLicense()
 {
-	m_pLog->show();
+	QDialog* dlg = new QDialog(this);
+	dlg->setWindowTitle(tr("ProMesh - License"));
+	QTextEdit* textEdit = new QTextEdit(dlg);
+
+	QFile inputFile(":/text/promesh_license.txt");
+	inputFile.open(QIODevice::ReadOnly);
+	QTextStream in(&inputFile);
+
+	while(!in.atEnd()){
+		QString line = in.readLine();
+		textEdit->append(line);
+	}
+
+	inputFile.close();
+
+	textEdit->setReadOnly(true);
+	textEdit->moveCursor(QTextCursor::Start);
+	QBoxLayout* layout = new QVBoxLayout(dlg);
+	layout->addWidget(textEdit);
+
+	dlg->setGeometry(QRect(50, 50, 700, 500));
+
+	dlg->show();
+
+	//delete dlg;
 }
 
 void MainWindow::frontDrawModeChanged(int newMode)

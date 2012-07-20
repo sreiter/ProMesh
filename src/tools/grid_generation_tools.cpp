@@ -213,6 +213,10 @@ class ToolCreateVertex : public ITool
 			if(!obj)
 				obj = app::createEmptyLGObject("new object");
 
+			int newSubsetIndex = 0;
+			if(obj == app::getActiveObject())
+				newSubsetIndex = app::getActiveSubsetIndex();
+
 			CoordinatesWidget* dlg = dynamic_cast<CoordinatesWidget*>(widget);
 			if(dlg){
 				Grid& grid = obj->get_grid();
@@ -233,7 +237,7 @@ class ToolCreateVertex : public ITool
 					sel.clear();
 					sel.select(vrt);
 				//todo: use the currently marked subset.
-					sh.assign_subset(vrt, 0);
+					sh.assign_subset(vrt, newSubsetIndex);
 				}
 			}
 			obj->geometry_changed();
@@ -259,6 +263,10 @@ class ToolCreateEdge : public ITool
 			ug::Grid& grid = obj->get_grid();
 			ug::SubsetHandler& sh = obj->get_subset_handler();
 
+			int newSubsetIndex = 0;
+			if(obj == app::getActiveObject())
+				newSubsetIndex = app::getActiveSubsetIndex();
+
 			size_t numVrts = sel.num<ug::VertexBase>();
 			vector<ug::VertexBase*> vrts;
 			vrts.reserve(numVrts);
@@ -281,7 +289,7 @@ class ToolCreateEdge : public ITool
 
 		//todo: use the currently marked subset.
 			if(e)
-				sh.assign_subset(e, 0);
+				sh.assign_subset(e, newSubsetIndex);
 
 			obj->geometry_changed();
 		}
@@ -299,6 +307,10 @@ class ToolCreateFace : public ITool
 			ug::Selector& sel = obj->get_selector();
 			ug::Grid& grid = obj->get_grid();
 			ug::SubsetHandler& sh = obj->get_subset_handler();
+
+			int newSubsetIndex = 0;
+			if(obj == app::getActiveObject())
+				newSubsetIndex = app::getActiveSubsetIndex();
 
 			size_t numVrts = sel.num<ug::VertexBase>();
 			vector<ug::VertexBase*> vrts;
@@ -348,7 +360,7 @@ class ToolCreateFace : public ITool
 
 		//todo: use the currently marked subset.
 			if(f)
-				sh.assign_subset(f, 0);
+				sh.assign_subset(f, newSubsetIndex);
 
 			obj->geometry_changed();
 		}

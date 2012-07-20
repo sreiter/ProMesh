@@ -30,5 +30,6 @@
     <qresource prefix="/text">
         <file>recent_changes.txt</file>
         <file>shortcuts.txt</file>
+        <file>promesh_license.txt</file>
     </qresource>
 </RCC>

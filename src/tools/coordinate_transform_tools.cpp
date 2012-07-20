@@ -94,11 +94,13 @@ public:
 	ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 		ug::vector3 vScale(1, 1, 1);
 		bool object = true;
+		bool scaleAroundPivot = false;
 		if(dlg){
 			object = (dlg->to_int(0) == 0);
 			vScale.x = dlg->to_double(1);
 			vScale.y = dlg->to_double(2);
 			vScale.z = dlg->to_double(3);
+			scaleAroundPivot = dlg->to_bool(4);
 		}
 
 		Grid& grid = obj->get_grid();
@@ -113,12 +115,14 @@ public:
 		}
 		else{
 			goc = sel.get_geometric_objects();
-			center = CalculateCenter(goc.begin<VertexBase>(),
-									goc.end<VertexBase>(),
-									aaPos);
+			if(scaleAroundPivot)
+				center = obj->pivot();
+			else{
+				center = CalculateCenter(goc.begin<VertexBase>(),
+										goc.end<VertexBase>(),
+										aaPos);
+			}
 		}
-
-
 
 		for(ug::VertexBaseIterator iter = goc.begin<VertexBase>();
 			iter != goc.end<VertexBase>(); ++iter)
@@ -149,6 +153,9 @@ public:
 		dlg->addSpinBox(tr("x:"), -1.e+9, 1.e+9, 1., 0.1, 9);
 		dlg->addSpinBox(tr("y:"), -1.e+9, 1.e+9, 1., 0.1, 9);
 		dlg->addSpinBox(tr("z:"), -1.e+9, 1.e+9, 1., 0.1, 9);
+
+		dlg->addCheckBox(tr("scale around pivot"), false);
+
 		return dlg;
 	}
 };

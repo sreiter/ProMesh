@@ -68,7 +68,8 @@ class MainWindow : public QMainWindow
 		inline QSettings& settings()	{return m_settings;}
 
 		LGObject* getActiveObject();
-		View3D*	getView3D()				{return m_pView;}
+		View3D*	getView3D()					{return m_pView;}
+		SceneInspector* getSceneInspector()	{return m_sceneInspector;}
 
 	public slots:
 		void newGeometry();
@@ -79,7 +80,7 @@ class MainWindow : public QMainWindow
 		void showHelp();
 		void showRecentChanges();
 		void showShortcuts();
-		void showLog();
+		void showLicense();
 
 	protected slots:
 		void frontDrawModeChanged(int newMode);
@@ -159,6 +160,7 @@ class MainWindow : public QMainWindow
 		QAction*	m_actHelpControls;
 		QAction*	m_actRecentChanges;
 		QAction*	m_actShortcuts;
+		QAction*	m_actLicense;
 
 		QToolButton*	m_tbSelVrts;
 		QToolButton*	m_tbSelEdges;
