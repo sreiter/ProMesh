@@ -349,6 +349,89 @@ public:
 	}
 };
 
+class ToolInsertCenter : public ITool
+{
+	public:
+		void execute(LGObject* obj, QWidget* widget){
+			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
+
+			Grid& grid = obj->get_grid();
+			Selector& sel = obj->get_selector();
+			SubsetHandler& sh = obj->get_subset_handler();
+			bool siEnabled = sh.strict_inheritance_enabled();
+
+			if(dlg)
+				sh.enable_strict_inheritance(dlg->to_bool(0));
+
+		//	access position attachment
+			Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
+
+			std::vector<EdgeBase*> edges;
+			std::vector<Face*> faces;
+			std::vector<Volume*> vols;
+			vols.assign(sel.begin<Volume>(), sel.end<Volume>());
+
+		//todo: support insert center for all selections
+			if(grid.num<Volume>()){
+				if(sel.num<Face>() > 0){
+					UG_LOG("InsertCenter for faces is currently not supported if"
+							" volumes are present.\n");
+				}
+			}
+			else
+				faces.assign(sel.begin<Face>(), sel.end<Face>());
+
+		//todo: support insert center for all selections
+			if(grid.num<Face>() > 0){
+				if(sel.num<EdgeBase>() > 0){
+					UG_LOG("InsertCenter for edges is currently not supported if"
+							" faces are present.\n");
+				}
+			}
+			else
+				edges.assign(sel.begin<EdgeBase>(), sel.end<EdgeBase>());
+
+		//	insert centers
+			for(size_t i = 0; i < vols.size(); ++i){
+				Volume* vol = vols[i];
+				Vertex* vrt = *grid.create<Vertex>(vol);
+				aaPos[vrt] = CalculateCenter(vol, aaPos);
+				InsertCenterVertex(grid, vol, vrt, true);
+			}
+
+		//	insert centers
+			for(size_t i = 0; i < faces.size(); ++i){
+				Face* f = faces[i];
+				Vertex* vrt = *grid.create<Vertex>(f);
+				aaPos[vrt] = CalculateCenter(f, aaPos);
+				InsertCenterVertex(grid, f, vrt, true);
+			}
+
+		//	split edges
+			for(size_t i = 0; i < edges.size(); ++i){
+				EdgeBase* e = edges[i];
+				vector3 center = CalculateCenter(e, aaPos);
+				Vertex* vrt = SplitEdge<Vertex>(grid, e);
+				aaPos[vrt] = center;
+			}
+
+			sh.enable_strict_inheritance(siEnabled);
+
+		//	done
+			obj->geometry_changed();
+		}
+
+		const char* get_name()		{return "Insert Center";}
+		const char* get_tooltip()	{return "Inserts a central vertex in all selected elements.";}
+		const char* get_group()		{return "Remeshing | Refinement";}
+
+		ToolWidget* get_dialog(QWidget* parent){
+			ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
+											IDB_APPLY | IDB_OK | IDB_CLOSE);
+			dlg->addCheckBox(tr("strict subset inheritance:"), false);
+			return dlg;
+		}
+};
 
 void RegisterRefinementTools(ToolManager* toolMgr)
 {
@@ -356,6 +439,7 @@ void RegisterRefinementTools(ToolManager* toolMgr)
 	toolMgr->register_tool(new ToolHangingNodeRefine);
 	toolMgr->register_tool(new ToolRefineSmooth);
 	toolMgr->register_tool(new ToolRefineSmoothBoundary2D);
+	toolMgr->register_tool(new ToolInsertCenter);
 	//toolMgr->register_tool(new ToolFracturedMediaRefine);
 	toolMgr->register_tool(new ToolCreateFractal);
 }
