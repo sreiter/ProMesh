@@ -214,8 +214,8 @@ class LGScene : public TScene<LGObject>
 		void render_faces(LGObject* pObj, ug::Grid& grid,
 						  ug::SubsetHandler& sh, bool renderAll = false);
 		void render_volumes(LGObject* pObj);
-		void render_without_clip_plane(LGObject* pObj);
-		void render_with_clip_plane(LGObject* pObj);
+		void render_faces_without_clip_plane(LGObject* pObj);
+		void render_faces_with_clip_plane(LGObject* pObj);
 
 		bool clip_face(ug::Face* f, const ug::Sphere& boundingSphere,
 						ug::Grid::VertexAttachmentAccessor<ug::APosition>& aaPos);

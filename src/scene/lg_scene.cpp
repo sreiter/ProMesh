@@ -633,9 +633,9 @@ void LGScene::update_visuals(LGObject* pObj)
 		assert(curDisplayListIndex + numSubsets < numDisplayLists);
 	//	render faces
 		if(clipPlaneEnabled)
-			render_with_clip_plane(pObj);
+			render_faces_with_clip_plane(pObj);
 		else
-			render_without_clip_plane(pObj);
+			render_faces_without_clip_plane(pObj);
 		curDisplayListIndex += numSubsets;
 	}
 	if(pObj->edge_rendering_enabled()){
@@ -1250,7 +1250,7 @@ void LGScene::render_faces(LGObject* pObj, Grid& grid,
 	}
 }
 
-void LGScene::render_without_clip_plane(LGObject* pObj)
+void LGScene::render_faces_without_clip_plane(LGObject* pObj)
 {
 //	renders the faces of an object.
 //	visibility is handled by the draw routine.
@@ -1395,7 +1395,7 @@ void LGScene::render_volumes(LGObject* pObj)
 	render_faces(pObj, grid, shFace, true);
 }
 
-void LGScene::render_with_clip_plane(LGObject* pObj)
+void LGScene::render_faces_with_clip_plane(LGObject* pObj)
 {
 //	renders the faces of an object.
 //	visibility is handled by the draw routine.
