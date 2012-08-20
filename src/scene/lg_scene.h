@@ -157,6 +157,11 @@ class LGScene : public TScene<LGObject>
 	 * responsible to do so.*/
 		void unhide_elements(LGObject* obj);
 
+	///	sets which elements will be drawn.
+	/**	\todo:	Associated code has to be cleaned up a little!*/
+		void set_element_draw_mode(bool drawVrts, bool drawEdges, bool drawFaces,
+								   bool drawVols);
+
 	signals:
 		void geometry_changed();
 
@@ -217,10 +222,14 @@ class LGScene : public TScene<LGObject>
 		void render_faces_without_clip_plane(LGObject* pObj);
 		void render_faces_with_clip_plane(LGObject* pObj);
 
+		bool clip_vertex(ug::VertexBase* vrt,
+						 ug::Grid::VertexAttachmentAccessor<ug::APosition>& aaPos);
+		bool clip_edge(ug::EdgeBase* e,
+					   ug::Grid::VertexAttachmentAccessor<ug::APosition>& aaPos);
 		bool clip_face(ug::Face* f, const ug::Sphere& boundingSphere,
-						ug::Grid::VertexAttachmentAccessor<ug::APosition>& aaPos);
+					   ug::Grid::VertexAttachmentAccessor<ug::APosition>& aaPos);
 		bool clip_volume(ug::Volume* v, const ug::Sphere& boundingSphere,
-						ug::Grid::VertexAttachmentAccessor<ug::APosition>& aaPos);
+						 ug::Grid::VertexAttachmentAccessor<ug::APosition>& aaPos);
 
 		ug::RelativePositionIndicator clip_sphere(const ug::Sphere& sphere);
 		ug::RelativePositionIndicator clip_point(const ug::vector3& point);
@@ -248,6 +257,12 @@ class LGScene : public TScene<LGObject>
 	//	clip planes
 		ug::Plane	m_clipPlanes[MAX_NUM_CLIP_PLANES];
 		bool		m_clipPlaneEnabled[MAX_NUM_CLIP_PLANES];
+
+	//	rendering
+		bool	m_drawVertices;
+		bool	m_drawEdges;
+		bool	m_drawFaces;
+		bool	m_drawVolumes;
 };
 
 

@@ -32,6 +32,7 @@ MainWindow::MainWindow() :
 	m_settings("G-CSC", "ProMesh3"),
 	m_selectionElement(0),
 	m_selectionMode(0),
+	m_elementModeListIndex(3),
 	m_mouseMoveAction(MMA_DEFAULT),
 	m_activeAxis(X_AXIS | Y_AXIS | Z_AXIS)
 {
@@ -300,6 +301,7 @@ QToolBar* MainWindow::createVisibilityToolbar()
 
 
 //	add a combo-box for the element-mode
+/*
 	visToolBar->addSeparator();
 	QComboBox* elemMode = new QComboBox(visToolBar);
 	visToolBar->addWidget(elemMode);
@@ -313,6 +315,47 @@ QToolBar* MainWindow::createVisibilityToolbar()
 //	connect signals and slots
 	connect(elemMode, SIGNAL(currentIndexChanged(int)),
 			this, SLOT(elementDrawModeChanged(int)));
+*/
+	visToolBar->addSeparator();
+	m_tbRenderVrts = new QToolButton(visToolBar);
+	m_tbRenderVrts->setIcon(QIcon(":images/icon_render_vertices.png"));
+	m_tbRenderVrts->setCheckable(true);
+	m_tbRenderVrts->setChecked(true);
+	m_tbRenderVrts->setAutoExclusive(false);
+	m_tbRenderVrts->setToolTip(tr("render vertices"));
+	visToolBar->addWidget(m_tbRenderVrts);
+	connect(m_tbRenderVrts, SIGNAL(toggled(bool)),
+			this, SLOT(elementDrawModeChanged()));
+
+	m_tbRenderEdges = new QToolButton(visToolBar);
+	m_tbRenderEdges->setIcon(QIcon(":images/icon_render_edges.png"));
+	m_tbRenderEdges->setCheckable(true);
+	m_tbRenderEdges->setChecked(true);
+	m_tbRenderEdges->setAutoExclusive(false);
+	m_tbRenderEdges->setToolTip(tr("render edges"));
+	visToolBar->addWidget(m_tbRenderEdges);
+	connect(m_tbRenderEdges, SIGNAL(toggled(bool)),
+			this, SLOT(elementDrawModeChanged()));
+
+	m_tbRenderFaces = new QToolButton(visToolBar);
+	m_tbRenderFaces->setIcon(QIcon(":images/icon_render_faces.png"));
+	m_tbRenderFaces->setCheckable(true);
+	m_tbRenderFaces->setChecked(true);
+	m_tbRenderFaces->setAutoExclusive(false);
+	m_tbRenderFaces->setToolTip(tr("render faces"));
+	visToolBar->addWidget(m_tbRenderFaces);
+	connect(m_tbRenderFaces, SIGNAL(toggled(bool)),
+			this, SLOT(elementDrawModeChanged()));
+
+	m_tbRenderVols = new QToolButton(visToolBar);
+	m_tbRenderVols->setIcon(QIcon(":images/icon_render_volumes.png"));
+	m_tbRenderVols->setCheckable(true);
+	m_tbRenderVols->setChecked(true);
+	m_tbRenderVols->setAutoExclusive(false);
+	m_tbRenderVols->setToolTip(tr("render volumes"));
+	visToolBar->addWidget(m_tbRenderVols);
+	connect(m_tbRenderVols, SIGNAL(toggled(bool)),
+			this, SLOT(elementDrawModeChanged()));
 
 
 //	add a combo-box for the selection elements
@@ -332,6 +375,7 @@ QToolBar* MainWindow::createVisibilityToolbar()
 //	init the value
 	selElems->setCurrentIndex(0);
 */
+
 	visToolBar->addSeparator();
 	m_tbSelVrts = new QToolButton(visToolBar);
 	m_tbSelVrts->setIcon(QIcon(":images/icon_vertices.png"));
@@ -853,8 +897,9 @@ void MainWindow::selectionModeChanged(int newMode)
 	m_selectionMode = newMode;
 }
 
-void MainWindow::elementDrawModeChanged(int newMode)
+void MainWindow::elementDrawModeChanged()
 {
+/*
 	m_elementModeListIndex = newMode;
 //	update rendering mode in all elements.
 //todo: allow render mode on per-object basis.
@@ -864,6 +909,10 @@ void MainWindow::elementDrawModeChanged(int newMode)
 		pObj->set_element_mode(lgElemMode);
 		pObj->visuals_changed();
 	}
+*/
+
+	m_scene->set_element_draw_mode(m_tbRenderVrts->isChecked(), m_tbRenderEdges->isChecked(),
+								   m_tbRenderFaces->isChecked(), m_tbRenderVols->isChecked());
 	m_scene->update_visuals();
 }
 

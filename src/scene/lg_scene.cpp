@@ -10,7 +10,11 @@ using namespace std;
 using namespace ug;
 
 LGScene::LGScene() :
-	m_aHidden(true)
+	m_aHidden(true),
+	m_drawVertices(true),
+	m_drawEdges(true),
+	m_drawFaces(true),
+	m_drawVolumes(true)
 {
 	m_drawModeFront = m_drawModeBack = DM_SOLID_WIRE;
 
@@ -195,14 +199,38 @@ void LGScene::calculate_bounding_spheres(LGObject* pObj)
 		CalculateBoundingSphere(aaSphereVOL[*iter], *iter, aaPos);
 }
 
+bool LGScene::clip_vertex(VertexBase* v, Grid::VertexAttachmentAccessor<APosition>& aaPos)
+{
+//	exact version
+	for(int i = 0; i < numClipPlanes(); ++i){
+		if(clipPlaneIsEnabled(i)){
+			if(PlanePointTest(m_clipPlanes[i], aaPos[v]) == RPI_OUTSIDE)
+				return true;
+		}
+	}
+
+	return false;
+}
+
+bool LGScene::clip_edge(EdgeBase* e, Grid::VertexAttachmentAccessor<APosition>& aaPos)
+{
+//	exact version
+	for(int i = 0; i < numClipPlanes(); ++i){
+		if(clipPlaneIsEnabled(i)){
+			if(ClipEdge(e, m_clipPlanes[i], aaPos))
+				return true;
+		}
+	}
+
+	return false;
+}
+
 bool LGScene::clip_face(Face* f, const ug::Sphere& boundingSphere,
 						Grid::VertexAttachmentAccessor<APosition>& aaPos)
 {
 //	exact version
-	for(int i = 0; i < numClipPlanes(); ++i)
-	{
-		if(clipPlaneIsEnabled(i))
-		{
+	for(int i = 0; i < numClipPlanes(); ++i){
+		if(clipPlaneIsEnabled(i)){
 			if(ClipFace(f, boundingSphere, m_clipPlanes[i], aaPos))
 				return true;
 		}
@@ -227,10 +255,8 @@ bool LGScene::clip_volume(Volume* v, const ug::Sphere& boundingSphere,
 						Grid::VertexAttachmentAccessor<APosition>& aaPos)
 {
 //	exact version
-	for(int i = 0; i < numClipPlanes(); ++i)
-	{
-		if(clipPlaneIsEnabled(i))
-		{
+	for(int i = 0; i < numClipPlanes(); ++i){
+		if(clipPlaneIsEnabled(i)){
 			if(ClipVolume(v, boundingSphere, m_clipPlanes[i], aaPos))
 				return true;
 		}
@@ -344,223 +370,220 @@ void LGScene::draw()
 	static GLfloat lightDiffuse[4] = { 1.0, 1.0, 1.0, 1.0 };
 	static GLfloat lightDiffuseInv[4] = { 1.0, 1.0, 1.0, 1.0 };
 
-	if(num_objects() > 0)
+	for(int i = 0; i < num_objects(); ++i)
 	{
-		for(int i = 0; i < num_objects(); ++i)
+	//	init settings
+		glEnable(GL_LIGHTING);
+		glEnable(GL_LIGHT0);
+		glEnable(GL_POLYGON_OFFSET_FILL);
+		glEnable(GL_CULL_FACE);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+		LGObject* obj = get_object(i);
+		if(obj->is_visible())
 		{
-		//	init settings
-			glEnable(GL_LIGHTING);
-			glEnable(GL_LIGHT0);
-			glEnable(GL_POLYGON_OFFSET_FILL);
-			glEnable(GL_CULL_FACE);
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		//	first we'll check which drawmodes are required
+			bool drawDoublePassShaded = false;
+			bool drawSinglePassColor = false;
+			bool drawDoublePassColor = false;
+			bool drawSinglePassNoLight = false;
+			for(int j = 0; j < obj->num_display_lists(); ++j){
+				drawDoublePassShaded |= (obj->get_display_list_mode(j) == LGRM_DOUBLE_PASS_SHADED);
+				drawSinglePassColor |= (obj->get_display_list_mode(j) == LGRM_SINGLE_PASS_COLOR);
+				drawDoublePassColor |= (obj->get_display_list_mode(j) == LGRM_DOUBLE_PASS_COLOR);
+				drawSinglePassNoLight |= (obj->get_display_list_mode(j) == LGRM_SINGLE_PASS_NO_LIGHT);
+			}
 
-			LGObject* obj = get_object(i);
-			if(obj->is_visible())
-			{
-			//	first we'll check which drawmodes are required
-				bool drawDoublePassShaded = false;
-				bool drawSinglePassColor = false;
-				bool drawDoublePassColor = false;
-				bool drawSinglePassNoLight = false;
-				for(int j = 0; j < obj->num_display_lists(); ++j){
-					drawDoublePassShaded |= (obj->get_display_list_mode(j) == LGRM_DOUBLE_PASS_SHADED);
-					drawSinglePassColor |= (obj->get_display_list_mode(j) == LGRM_SINGLE_PASS_COLOR);
-					drawDoublePassColor |= (obj->get_display_list_mode(j) == LGRM_DOUBLE_PASS_COLOR);
-					drawSinglePassNoLight |= (obj->get_display_list_mode(j) == LGRM_SINGLE_PASS_NO_LIGHT);
-				}
+		//	draw double-pass-shaded
+			if(drawDoublePassShaded){
+				glPolygonOffset(1.f, 1.f);
+				int drawMode[2];
+				drawMode[0] = m_drawModeFront;
+				drawMode[1] = m_drawModeBack;
 
-			//	draw double-pass-shaded
-				if(drawDoublePassShaded){
-					glPolygonOffset(1.f, 1.f);
-					int drawMode[2];
-					drawMode[0] = m_drawModeFront;
-					drawMode[1] = m_drawModeBack;
+			//	we'll do this twice. for both orientations.
+			//	draw back first. wire-frame is rendered without z-buffer-write.
+				for(int iPass = 1; iPass >= 0; --iPass)
+				{
+				//	if the draw-mode is set to DM_NONE we'll continue right away
+					if(drawMode[iPass] == DM_NONE)
+						continue;
 
-				//	we'll do this twice. for both orientations.
-				//	draw back first. wire-frame is rendered without z-buffer-write.
-					for(int iPass = 1; iPass >= 0; --iPass)
+				//	init world-matrix
+					glMatrixMode(GL_MODELVIEW);
+					glLoadIdentity();
+
+					if(iPass == 0)
 					{
-					//	if the draw-mode is set to DM_NONE we'll continue right away
-						if(drawMode[iPass] == DM_NONE)
-							continue;
-
-					//	init world-matrix
-						glMatrixMode(GL_MODELVIEW);
-						glLoadIdentity();
-
-						if(iPass == 0)
-						{
-						//	normal orientation
-							glLightfv( GL_LIGHT0, GL_POSITION, lightDirection);
-							glLightfv( GL_LIGHT0, GL_DIFFUSE, lightDiffuse);
-							glCullFace(GL_BACK);
-						}
-						else
-						{
-						//	inverted orientation
-							glLightfv( GL_LIGHT0, GL_POSITION, lightDirectionInv);
-							glLightfv( GL_LIGHT0, GL_DIFFUSE, lightDiffuseInv);
-							glCullFace(GL_FRONT);
-						}
-
-						glMultMatrixf(m_matTransform);
-
-						QColor objCol = obj->get_color();
-
-//TODO: either iterate over subsets or add a visible state and colors per display-list
-						for(int j = 0; j < obj->num_display_lists(); ++j)
-						{
-						//	currently this works ... Add a color per display list later on
-						//	and remove this HACK!
-							int si = j % obj->num_subsets();
-							if(/*obj->subset_is_visible(si) &&*/
-							   (obj->get_display_list_mode(j) == LGRM_DOUBLE_PASS_SHADED))
-							{
-								if(drawMode[iPass] & DM_SOLID)
-								{
-								//	draw solid
-									glDepthMask(true);
-									glDisable(GL_BLEND);
-									glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
-
-									QColor sCol = obj->get_subset_color(si);
-									GLfloat faceColor[4] = {objCol.redF() * sCol.redF(),
-															objCol.greenF() * sCol.greenF(),
-															objCol.blueF() * sCol.blueF(),
-															1.};
-
-									glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, faceColor);
-									glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, faceColor);
-									glCallList(obj->get_display_list(j));
-								}
-
-								if(drawMode[iPass] & DM_WIRE)
-								{
-								//	draw wire
-								//	check whether we have to use the z-buffer or not.
-									GLfloat wireColor[4] = {0.4, 0.4, 0.4, 1.0};
-									if(drawMode[iPass] & DM_SOLID)
-									{
-										glDepthMask(false);
-										glEnable(GL_BLEND);
-										glEnable(GL_LINE_SMOOTH);
-										glLineWidth(0.5f);
-									}
-									else
-									{
-										glDepthMask(true);
-										glDisable(GL_BLEND);
-										glDisable(GL_LINE_SMOOTH);
-										glLineWidth(1);
-									}
-									glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-									glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, wireColor);
-									glCallList(obj->get_display_list(j));
-								}
-							}
-						}
+					//	normal orientation
+						glLightfv( GL_LIGHT0, GL_POSITION, lightDirection);
+						glLightfv( GL_LIGHT0, GL_DIFFUSE, lightDiffuse);
+						glCullFace(GL_BACK);
 					}
-					glDepthMask(true);
-				}
-
-			//	draw single-pass-color
-				if(drawSinglePassColor || drawDoublePassColor){
-					for(int j = 0; j < obj->num_display_lists(); ++j)
+					else
 					{
-//TODO:	add display-list visibility
-						if((obj->get_display_list_mode(j) == LGRM_SINGLE_PASS_COLOR) ||
-						   (obj->get_display_list_mode(j) == LGRM_DOUBLE_PASS_COLOR))
-						{
-							glMatrixMode(GL_MODELVIEW);
-							glLoadIdentity();
-							glMultMatrixf(m_matTransform);
-
-							glLineWidth(2.f);
-							//glDisable(GL_BLEND);
-							glEnable(GL_BLEND);
-							glEnable(GL_LINE_SMOOTH);
-							glDisable(GL_LIGHTING);
-							//glDisable(GL_POLYGON_OFFSET_FILL);
-							glPolygonOffset(0.5f, 0.5f);
-							glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
-
-							if(drawDoublePassColor)
-								glDisable(GL_CULL_FACE);
-							else
-								glEnable(GL_CULL_FACE);
-
-							glCallList(obj->get_display_list(j));
-
-							glEnable(GL_POLYGON_OFFSET_FILL);
-							glEnable(GL_LIGHTING);
-						}
+					//	inverted orientation
+						glLightfv( GL_LIGHT0, GL_POSITION, lightDirectionInv);
+						glLightfv( GL_LIGHT0, GL_DIFFUSE, lightDiffuseInv);
+						glCullFace(GL_FRONT);
 					}
-				}
-//	draw single-pass-no-light
-				if(drawSinglePassNoLight){
+
+					glMultMatrixf(m_matTransform);
+
 					QColor objCol = obj->get_color();
 
-					//for(int j = 0; j < obj->num_subsets(); ++j)
-					//{
+//TODO: either iterate over subsets or add a visible state and colors per display-list
 					for(int j = 0; j < obj->num_display_lists(); ++j)
 					{
 					//	currently this works ... Add a color per display list later on
 					//	and remove this HACK!
 						int si = j % obj->num_subsets();
+						if(/*obj->subset_is_visible(si) &&*/
+						   (obj->get_display_list_mode(j) == LGRM_DOUBLE_PASS_SHADED))
+						{
+							if(drawMode[iPass] & DM_SOLID)
+							{
+							//	draw solid
+								glDepthMask(true);
+								glDisable(GL_BLEND);
+								glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
+
+								QColor sCol = obj->get_subset_color(si);
+								GLfloat faceColor[4] = {objCol.redF() * sCol.redF(),
+														objCol.greenF() * sCol.greenF(),
+														objCol.blueF() * sCol.blueF(),
+														1.};
+
+								glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, faceColor);
+								glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, faceColor);
+								glCallList(obj->get_display_list(j));
+							}
+
+							if(drawMode[iPass] & DM_WIRE)
+							{
+							//	draw wire
+							//	check whether we have to use the z-buffer or not.
+								GLfloat wireColor[4] = {0.4, 0.4, 0.4, 1.0};
+								if(drawMode[iPass] & DM_SOLID)
+								{
+									glDepthMask(false);
+									glEnable(GL_BLEND);
+									glEnable(GL_LINE_SMOOTH);
+									glLineWidth(0.5f);
+								}
+								else
+								{
+									glDepthMask(true);
+									glDisable(GL_BLEND);
+									glDisable(GL_LINE_SMOOTH);
+									glLineWidth(1);
+								}
+								glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+								glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, wireColor);
+								glCallList(obj->get_display_list(j));
+							}
+						}
+					}
+				}
+				glDepthMask(true);
+			}
+
+		//	draw single-pass-color
+			if(drawSinglePassColor || drawDoublePassColor){
+				for(int j = 0; j < obj->num_display_lists(); ++j)
+				{
+//TODO:	add display-list visibility
+					if((obj->get_display_list_mode(j) == LGRM_SINGLE_PASS_COLOR) ||
+					   (obj->get_display_list_mode(j) == LGRM_DOUBLE_PASS_COLOR))
+					{
+						glMatrixMode(GL_MODELVIEW);
+						glLoadIdentity();
+						glMultMatrixf(m_matTransform);
+
+						glLineWidth(2.f);
+						//glDisable(GL_BLEND);
+						glEnable(GL_BLEND);
+						glEnable(GL_LINE_SMOOTH);
+						glDisable(GL_LIGHTING);
+						//glDisable(GL_POLYGON_OFFSET_FILL);
+						glPolygonOffset(0.5f, 0.5f);
+						glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
+
+						if(drawDoublePassColor)
+							glDisable(GL_CULL_FACE);
+						else
+							glEnable(GL_CULL_FACE);
+
+						glCallList(obj->get_display_list(j));
+
+						glEnable(GL_POLYGON_OFFSET_FILL);
+						glEnable(GL_LIGHTING);
+					}
+				}
+			}
+//	draw single-pass-no-light
+			if(drawSinglePassNoLight){
+				QColor objCol = obj->get_color();
+
+				//for(int j = 0; j < obj->num_subsets(); ++j)
+				//{
+				for(int j = 0; j < obj->num_display_lists(); ++j)
+				{
+				//	currently this works ... Add a color per display list later on
+				//	and remove this HACK!
+					int si = j % obj->num_subsets();
 
 //TODO:	add display-list visibility
-						if((obj->get_display_list_mode(j) == LGRM_SINGLE_PASS_NO_LIGHT))
-						{
-							glMatrixMode(GL_MODELVIEW);
-							glLoadIdentity();
-							glMultMatrixf(m_matTransform);
+					if((obj->get_display_list_mode(j) == LGRM_SINGLE_PASS_NO_LIGHT))
+					{
+						glMatrixMode(GL_MODELVIEW);
+						glLoadIdentity();
+						glMultMatrixf(m_matTransform);
 
-							glLineWidth(2.f);
-							//glDisable(GL_BLEND);
-							glEnable(GL_BLEND);
-							glEnable(GL_LINE_SMOOTH);
-							glEnable(GL_LIGHTING);
-							glDisable(GL_LIGHT0);
-							glLightModelfv(GL_LIGHT_MODEL_AMBIENT, lightAmbientFull);
+						glLineWidth(2.f);
+						//glDisable(GL_BLEND);
+						glEnable(GL_BLEND);
+						glEnable(GL_LINE_SMOOTH);
+						glEnable(GL_LIGHTING);
+						glDisable(GL_LIGHT0);
+						glLightModelfv(GL_LIGHT_MODEL_AMBIENT, lightAmbientFull);
 
-							//glLightfv( GL_LIGHT0, GL_DIFFUSE, lightAmbient);
-							//glDisable(GL_POLYGON_OFFSET_FILL);
-							glPolygonOffset(0.5f, 0.5f);
-							glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
+						//glLightfv( GL_LIGHT0, GL_DIFFUSE, lightAmbient);
+						//glDisable(GL_POLYGON_OFFSET_FILL);
+						glPolygonOffset(0.5f, 0.5f);
+						glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
 /*
-							if(drawDoublePassColor)
-								glDisable(GL_CULL_FACE);
-							else
-								glEnable(GL_CULL_FACE);
+						if(drawDoublePassColor)
+							glDisable(GL_CULL_FACE);
+						else
+							glEnable(GL_CULL_FACE);
 */
-							//glEnable(GL_COLOR_MATERIAL);
-							//glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
-							QColor sCol = obj->get_subset_color(si);
-							glColor3f(objCol.redF() * sCol.redF(),
-													objCol.greenF() * sCol.greenF(),
-													objCol.blueF() * sCol.blueF());
-							GLfloat glCol[4] = {objCol.redF() * sCol.redF(),
-													objCol.greenF() * sCol.greenF(),
-													objCol.blueF() * sCol.blueF(),
-													1.};
+						//glEnable(GL_COLOR_MATERIAL);
+						//glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
+						QColor sCol = obj->get_subset_color(si);
+						glColor3f(objCol.redF() * sCol.redF(),
+												objCol.greenF() * sCol.greenF(),
+												objCol.blueF() * sCol.blueF());
+						GLfloat glCol[4] = {objCol.redF() * sCol.redF(),
+												objCol.greenF() * sCol.greenF(),
+												objCol.blueF() * sCol.blueF(),
+												1.};
 
-							glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, glCol);
-							glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, glCol);
+						glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, glCol);
+						glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, glCol);
 
-							glCallList(obj->get_display_list(j));
+						glCallList(obj->get_display_list(j));
 
-							glEnable(GL_POLYGON_OFFSET_FILL);
-							glEnable(GL_LIGHTING);
-							glEnable(GL_LIGHT0);
-							glLightModelfv(GL_LIGHT_MODEL_AMBIENT, lightAmbientLow);
-						}
+						glEnable(GL_POLYGON_OFFSET_FILL);
+						glEnable(GL_LIGHTING);
+						glEnable(GL_LIGHT0);
+						glLightModelfv(GL_LIGHT_MODEL_AMBIENT, lightAmbientLow);
 					}
 				}
 			}
 		}
-	}	
+	}
 }
 
 void LGScene::update_visuals()
@@ -599,6 +622,12 @@ void LGScene::update_visuals(LGObject* pObj)
 	int numSubsets = pObj->get_subset_handler().num_subsets();
 	int numDisplayLists = 0;
 
+	bool drawVolumes	= (m_drawVolumes && (pObj->get_grid().num_volumes() > 0));
+	bool drawFaces		= (m_drawFaces && (pObj->get_grid().num_faces() > 0) && (!drawVolumes));
+	bool drawEdges		= (m_drawEdges && (pObj->get_grid().num_edges() > 0));
+	bool drawVertices 	= (m_drawVertices && (pObj->get_grid().num_vertices() > 0));
+
+/*
 	if((pObj->volume_rendering_enabled()))
 		numDisplayLists += numSubsets;
 	else if((pObj->face_rendering_enabled()))
@@ -606,6 +635,15 @@ void LGScene::update_visuals(LGObject* pObj)
 	if(pObj->edge_rendering_enabled())
 		numDisplayLists += numSubsets;
 	if(pObj->vertex_rendering_enabled())
+		numDisplayLists += numSubsets;
+*/
+	if(drawVolumes)
+		numDisplayLists += numSubsets;
+	if(drawFaces)
+		numDisplayLists += numSubsets;
+	if(drawEdges)
+		numDisplayLists += numSubsets;
+	if(drawVertices)
 		numDisplayLists += numSubsets;
 
 	bool bDrawSelection = !pObj->get_selector().empty();
@@ -621,14 +659,16 @@ void LGScene::update_visuals(LGObject* pObj)
 	int curDisplayListIndex = 0;
 
 //	perform the rendering
-	if((pObj->volume_rendering_enabled()))
+	//if((pObj->volume_rendering_enabled()))
+	if(drawVolumes)
 	{
 	//	render volumes
 		assert(curDisplayListIndex + numSubsets < numDisplayLists);
 		render_volumes(pObj);
 		curDisplayListIndex += numSubsets;
 	}
-	else if((pObj->face_rendering_enabled()))
+	//else if((pObj->face_rendering_enabled()))
+	if(drawFaces)
 	{
 		assert(curDisplayListIndex + numSubsets < numDisplayLists);
 	//	render faces
@@ -638,12 +678,14 @@ void LGScene::update_visuals(LGObject* pObj)
 			render_faces_without_clip_plane(pObj);
 		curDisplayListIndex += numSubsets;
 	}
-	if(pObj->edge_rendering_enabled()){
+	//if(pObj->edge_rendering_enabled()){
+	if(drawEdges){
 		assert(curDisplayListIndex + numSubsets < numDisplayLists);
 		render_edge_subsets(pObj, curDisplayListIndex);
 		curDisplayListIndex += numSubsets;
 	}
-	if(pObj->vertex_rendering_enabled()){
+	//if(pObj->vertex_rendering_enabled()){
+	if(drawVertices){
 		assert(curDisplayListIndex + numSubsets < numDisplayLists);
 		render_point_subsets(pObj, curDisplayListIndex);
 		curDisplayListIndex += numSubsets;
@@ -823,9 +865,10 @@ void LGScene::render_point_subsets(LGObject* pObj, int baseDisplayListIndex)
 		for(VertexBaseIterator iter = sh.begin<VertexBase>(i);
 			iter != sh.end<VertexBase>(i); ++iter)
 		{
-			if(!aaHiddenVRT[*iter]){
-				aaRenderedVRT[*iter] = true;
-				vector3& v = aaPos[*iter];
+			VertexBase* vrt = *iter;
+			if((!aaHiddenVRT[vrt]) && (!clip_vertex(vrt, aaPos))){
+				aaRenderedVRT[vrt] = true;
+				vector3& v = aaPos[vrt];
 				glVertex3f(v.x, v.y, v.z);
 			}
 		}
@@ -901,10 +944,9 @@ void LGScene::render_edge_subsets(LGObject* pObj, int baseDisplayListIndex)
 			iter != sh.end<EdgeBase>(i); ++iter)
 		{
 			EdgeBase* e = *iter;
-			if(!aaHiddenEDGE[e]){
+			if((!aaHiddenEDGE[e]) && (!clip_edge(e, aaPos))){
 				aaRenderedEDGE[e] = true;
-				for(int i = 0; i < 2; ++i)
-				{
+				for(int i = 0; i < 2; ++i){
 					aaRenderedVRT[e->vertex(i)] = true;
 					vector3& v = aaPos[e->vertex(i)];
 					glVertex3f(v.x, v.y, v.z);
@@ -1290,47 +1332,57 @@ void LGScene::render_volumes(LGObject* pObj)
 		if(!clip_face(f, aaSphereFACE[f], aaPos))
 		{
 		//	it's not.
-		//	if it has exactly one visible adjacent volume,
-		//	it has to be displayed.
+		//	if it has exactly one visible adjacent volume, or no adjacent volumes at all,
+		//	then it has to be displayed
 			Volume* visVol = NULL;
 			int newSubInd = -1;
 			Grid::AssociatedVolumeIterator volEnd = grid.associated_volumes_end(f);
-			for(Grid::AssociatedVolumeIterator vIter = grid.associated_volumes_begin(f);
-				vIter != volEnd; ++vIter)
-			{
-				if(aaHiddenVOL[*vIter])
-					continue;
+			Grid::AssociatedVolumeIterator volBegin = grid.associated_volumes_begin(f);
 
-				int vSubInd = sh.get_subset_index(*vIter);
-				if(vSubInd == -1)
-					continue;
-
-			//	check whether the subset of the volume is visible
-				if(pObj->subset_is_visible(vSubInd))
+			if((volBegin == volEnd) && m_drawFaces){
+			//	the face has to be rendered, since it is not adjacent to any volume
+				int si = sh.get_subset_index(f);
+				if(si != -1)
+					shFace.assign_subset(f, si);
+			}
+			else{
+				for(Grid::AssociatedVolumeIterator vIter = volBegin;
+					vIter != volEnd; ++vIter)
 				{
-				//	make sure the volume is not clipped.
-				//	uncomment the following line for exact clipping tests.
-					if(!clip_volume(*vIter, aaSphereVOL[*vIter], aaPos))
+					if(aaHiddenVOL[*vIter])
+						continue;
+
+					int vSubInd = sh.get_subset_index(*vIter);
+					if(vSubInd == -1)
+						continue;
+
+				//	check whether the subset of the volume is visible
+					if(pObj->subset_is_visible(vSubInd))
 					{
-					//	if newSubInd has already been assigned, we'll reset it to 0
-						if(newSubInd != -1){
-							newSubInd = -1;
-							visVol = NULL;
-						}
-						else{
-							newSubInd = vSubInd;
-							visVol = *vIter;
+					//	make sure the volume is not clipped.
+					//	uncomment the following line for exact clipping tests.
+						if(!clip_volume(*vIter, aaSphereVOL[*vIter], aaPos))
+						{
+						//	if newSubInd has already been assigned, we'll reset it to 0
+							if(newSubInd != -1){
+								newSubInd = -1;
+								visVol = NULL;
+							}
+							else{
+								newSubInd = vSubInd;
+								visVol = *vIter;
+							}
 						}
 					}
 				}
-			}
 
-		//	if newSubInd != -1 then the face has to be drawn.
-			if(newSubInd != -1){
-				shFace.assign_subset(f, newSubInd);
-			//	mark the visible volume as rendered
-				if(visVol){
-					aaRenderedVOL[visVol] = true;
+			//	if newSubInd != -1 then the face has to be drawn.
+				if(newSubInd != -1){
+					shFace.assign_subset(f, newSubInd);
+				//	mark the visible volume as rendered
+					if(visVol){
+						aaRenderedVOL[visVol] = true;
+					}
 				}
 			}
 		}
@@ -2419,4 +2471,13 @@ unhide_elements(LGObject* obj)
 	unhide_elements<EdgeBase>(obj);
 	unhide_elements<Face>(obj);
 	unhide_elements<Volume>(obj);
+}
+
+void LGScene::
+set_element_draw_mode(bool drawVrts, bool drawEdges, bool drawFaces, bool drawVols)
+{
+	m_drawVertices = drawVrts;
+	m_drawEdges = drawEdges;
+	m_drawFaces = drawFaces;
+	m_drawVolumes = drawVols;
 }

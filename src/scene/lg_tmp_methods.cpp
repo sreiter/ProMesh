@@ -70,10 +70,29 @@ void CalculateBoundingSphere(Sphere& sphereOut, Volume* v,
 	sphereOut.set_radius(sqrt(maxDistSq));
 }
 
+
+////////////////////////////////////////////////////////////////////////
+//	ClipEdge
+bool ClipEdge(EdgeBase* e, Plane& clipPlane,
+			  Grid::VertexAttachmentAccessor<APosition>& aaPos)
+{
+//	check whether one of the vertices lies outside of the plane.
+//	if so, the whole edge will be clipped.
+	EdgeBase::ConstVertexArray vrts = e->vertices();
+	if((PlanePointTest(clipPlane, aaPos[vrts[0]]) == RPI_OUTSIDE)
+		|| (PlanePointTest(clipPlane, aaPos[vrts[1]]) == RPI_OUTSIDE))
+	{
+		return true;
+	}
+
+//	they were all inside.
+	return false;
+}
+
+
 ////////////////////////////////////////////////////////////////////////
 //	ClipFace
-bool ClipFace(Face* f, const Sphere& boundingSphere,
-				Plane& clipPlane,
+bool ClipFace(Face* f, const Sphere& boundingSphere, Plane& clipPlane,
 				Grid::VertexAttachmentAccessor<APosition>& aaPos)
 {
 	RelativePositionIndicator rpi = PlaneSphereTest(clipPlane, boundingSphere);
@@ -86,9 +105,10 @@ bool ClipFace(Face* f, const Sphere& boundingSphere,
 	//	check whether one of the vertices lies outside of the plane.
 	//	if so, the whole face will be clipped.
 		uint numVrts = f->num_vertices();
+		Face::ConstVertexArray vrts = f->vertices();
 		for(uint i = 0; i < numVrts; ++i)
 		{
-			if(PlanePointTest(clipPlane, aaPos[f->vertex(i)]) == RPI_OUTSIDE)
+			if(PlanePointTest(clipPlane, aaPos[vrts[i]]) == RPI_OUTSIDE)
 				return true;
 		}
 
@@ -96,14 +116,13 @@ bool ClipFace(Face* f, const Sphere& boundingSphere,
 		return false;
 	}
 
-//	the triangle is completly outside.
+//	the face is completely outside.
 	return true;
 }
 
 ////////////////////////////////////////////////////////////////////////
 //	ClipVolume
-bool ClipVolume(Volume* v, const ug::Sphere& boundingSphere,
-								ug::Plane& clipPlane,
+bool ClipVolume(Volume* v, const ug::Sphere& boundingSphere, ug::Plane& clipPlane,
 				Grid::VertexAttachmentAccessor<APosition>& aaPos)
 {
 	RelativePositionIndicator rpi = PlaneSphereTest(clipPlane, boundingSphere);

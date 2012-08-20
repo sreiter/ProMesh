@@ -93,7 +93,7 @@ class MainWindow : public QMainWindow
 		void selectionElementChanged(int newElement);
 		void selectionElementChanged(bool enabled);
 		void selectionModeChanged(int newMode);
-		void elementDrawModeChanged(int newMode);
+		void elementDrawModeChanged();
 		void undo();
 		void redo();
 		void sceneInspectorClicked(QMouseEvent* event);
@@ -166,6 +166,11 @@ class MainWindow : public QMainWindow
 		QToolButton*	m_tbSelEdges;
 		QToolButton*	m_tbSelFaces;
 		QToolButton*	m_tbSelVols;
+
+		QToolButton*	m_tbRenderVrts;
+		QToolButton*	m_tbRenderEdges;
+		QToolButton*	m_tbRenderFaces;
+		QToolButton*	m_tbRenderVols;
 };
 
 #endif // __H__MAIN_WINDOW__

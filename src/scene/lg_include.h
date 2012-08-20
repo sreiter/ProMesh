@@ -42,14 +42,16 @@ void CalculateBoundingSphere(ug::Sphere& sphereOut, ug::Face* f,
 void CalculateBoundingSphere(ug::Sphere& sphereOut, ug::Volume* v,
 							Grid::VertexAttachmentAccessor<APosition>& aaPos);
 
+///	if at least one point of the edge lies outside of the plane, the method returns true.
+bool ClipEdge(EdgeBase* e, ug::Plane& clipPlane,
+			  Grid::VertexAttachmentAccessor<APosition>& aaPos);
+
 ///	if at least one point of the face lies outside of the plane, the method returns true.
-bool ClipFace(Face* f, const ug::Sphere& boundingSphere,
-                                ug::Plane& clipPlane,
-				Grid::VertexAttachmentAccessor<APosition>& aaPos);
+bool ClipFace(Face* f, const ug::Sphere& boundingSphere, ug::Plane& clipPlane,
+			  Grid::VertexAttachmentAccessor<APosition>& aaPos);
 
 ///	if at least one point of the volume lies outside of the plane, the method returns true.
-bool ClipVolume(Volume* v, const ug::Sphere& boundingSphere,
-								ug::Plane& clipPlane,
+bool ClipVolume(Volume* v, const ug::Sphere& boundingSphere, ug::Plane& clipPlane,
 				Grid::VertexAttachmentAccessor<APosition>& aaPos);
 
 }

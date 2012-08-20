@@ -7,6 +7,10 @@
         <file>images/erase.png</file>
         <file>images/filesave.png</file>
         <file>images/filenew.png</file>
+        <file>images/icon_render_edges.png</file>
+        <file>images/icon_render_faces.png</file>
+        <file>images/icon_render_vertices.png</file>
+        <file>images/icon_render_volumes.png</file>
         <file>images/icon_edges.png</file>
         <file>images/icon_faces.png</file>
         <file>images/icon_vertices.png</file>

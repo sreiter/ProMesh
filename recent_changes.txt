@@ -1,5 +1,20 @@
 Recent changes:
 
+
+-------------------------------------------------------------------------------
+v 4.0.1
+Changes and additions:
+- vertices can now also be rendered during edge, face and volume rendering.
+- edges can now also be rendered during face and volume rendering.
+- faces which are not adjacent to volumes are now rendered even if volumes exist.
+- replaced "draw vertices, draw edges, ..." combo-box with ToolButtons. Rendering
+  for vertices, edges, faces and volumes can now be activated / deactivated
+  separately.
+
+Fixes:
+
+
+
 -------------------------------------------------------------------------------
 v 4.0.0
 Changes and additions:
