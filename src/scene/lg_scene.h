@@ -182,14 +182,14 @@ class LGScene : public TScene<LGObject>
 						  ug::VertexBaseIterator vrtsEnd,
 						  ug::Grid::VertexAttachmentAccessor<ug::APosition>& aaPos);
 
-		void render_point_subsets(LGObject* pObj);
+		void render_point_subsets(LGObject* pObj, int baseDisplayListIndex = 0);
 
 		void render_edges(LGObject* pObj, const ug::vector4& color,
 						  ug::EdgeBaseIterator edgesBegin,
 						  ug::EdgeBaseIterator edgesEnd,
 						  ug::Grid::VertexAttachmentAccessor<ug::APosition>& aaPos);
 
-		void render_edge_subsets(LGObject* pObj);
+		void render_edge_subsets(LGObject* pObj, int baseDisplayListIndex = 0);
 
 		void render_triangles(LGObject* pObj, const ug::vector4& color,
 						  ug::FaceIterator trisBegin,

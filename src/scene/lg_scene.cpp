@@ -411,7 +411,10 @@ void LGScene::draw()
 //TODO: either iterate over subsets or add a visible state and colors per display-list
 						for(int j = 0; j < obj->num_display_lists(); ++j)
 						{
-							if((j < obj->num_subsets()) &&/*obj->subset_is_visible(j) &&*/
+						//	currently this works ... Add a color per display list later on
+						//	and remove this HACK!
+							int si = j % obj->num_subsets();
+							if(/*obj->subset_is_visible(si) &&*/
 							   (obj->get_display_list_mode(j) == LGRM_DOUBLE_PASS_SHADED))
 							{
 								if(drawMode[iPass] & DM_SOLID)
@@ -421,7 +424,7 @@ void LGScene::draw()
 									glDisable(GL_BLEND);
 									glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
 
-									QColor sCol = obj->get_subset_color(j);
+									QColor sCol = obj->get_subset_color(si);
 									GLfloat faceColor[4] = {objCol.redF() * sCol.redF(),
 															objCol.greenF() * sCol.greenF(),
 															objCol.blueF() * sCol.blueF(),
@@ -499,8 +502,14 @@ void LGScene::draw()
 				if(drawSinglePassNoLight){
 					QColor objCol = obj->get_color();
 
-					for(int j = 0; j < obj->num_subsets(); ++j)
+					//for(int j = 0; j < obj->num_subsets(); ++j)
+					//{
+					for(int j = 0; j < obj->num_display_lists(); ++j)
 					{
+					//	currently this works ... Add a color per display list later on
+					//	and remove this HACK!
+						int si = j % obj->num_subsets();
+
 //TODO:	add display-list visibility
 						if((obj->get_display_list_mode(j) == LGRM_SINGLE_PASS_NO_LIGHT))
 						{
@@ -528,7 +537,7 @@ void LGScene::draw()
 */
 							//glEnable(GL_COLOR_MATERIAL);
 							//glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
-							QColor sCol = obj->get_subset_color(j);
+							QColor sCol = obj->get_subset_color(si);
 							glColor3f(objCol.redF() * sCol.redF(),
 													objCol.greenF() * sCol.greenF(),
 													objCol.blueF() * sCol.blueF());
@@ -586,60 +595,72 @@ void LGScene::update_visuals(LGObject* pObj)
 		}
 	}
 
-	int numDisplayLists = pObj->get_subset_handler().num_subsets();
+//	calculate the number of required display lists
+	int numSubsets = pObj->get_subset_handler().num_subsets();
+	int numDisplayLists = 0;
+
+	if((pObj->volume_rendering_enabled()))
+		numDisplayLists += numSubsets;
+	else if((pObj->face_rendering_enabled()))
+		numDisplayLists += numSubsets;
+	if(pObj->edge_rendering_enabled())
+		numDisplayLists += numSubsets;
+	if(pObj->vertex_rendering_enabled())
+		numDisplayLists += numSubsets;
 
 	bool bDrawSelection = !pObj->get_selector().empty();
-	int selectionDisplayListIndex = -1;
-	if(bDrawSelection){
-		selectionDisplayListIndex = numDisplayLists;
+	if(bDrawSelection)
 		numDisplayLists++;
-	}
 
 	bool bDrawCreases = (pObj->get_crease_handler().num<EdgeBase>(REM_CREASE) > 0);
-	int creaseDisplayListIndex = - 1;
-	if(bDrawCreases){
-		creaseDisplayListIndex = numDisplayLists;
+	if(bDrawCreases)
 		numDisplayLists++;
-	}
 
+	pObj->set_num_display_lists(numDisplayLists);
+
+	int curDisplayListIndex = 0;
+
+//	perform the rendering
 	if((pObj->volume_rendering_enabled()))
 	{
 	//	render volumes
-		pObj->set_num_display_lists(numDisplayLists);
+		assert(curDisplayListIndex + numSubsets < numDisplayLists);
 		render_volumes(pObj);
+		curDisplayListIndex += numSubsets;
 	}
 	else if((pObj->face_rendering_enabled()))
 	{
+		assert(curDisplayListIndex + numSubsets < numDisplayLists);
 	//	render faces
-		pObj->set_num_display_lists(numDisplayLists);
 		if(clipPlaneEnabled)
 			render_with_clip_plane(pObj);
 		else
 			render_without_clip_plane(pObj);
+		curDisplayListIndex += numSubsets;
 	}
-	else{
-		//bDrawCreases = false;//make sure no creases will be drawn.
-		if(pObj->edge_rendering_enabled()){
-			pObj->set_num_display_lists(numDisplayLists);
-			render_edge_subsets(pObj);
-		}
-		else{
-			pObj->set_num_display_lists(numDisplayLists);
-			//bDrawSelection = false;
-			//pObj->set_num_display_lists(1);
-			//render_skeleton(pObj);
-			render_point_subsets(pObj);
-		}
+	if(pObj->edge_rendering_enabled()){
+		assert(curDisplayListIndex + numSubsets < numDisplayLists);
+		render_edge_subsets(pObj, curDisplayListIndex);
+		curDisplayListIndex += numSubsets;
+	}
+	if(pObj->vertex_rendering_enabled()){
+		assert(curDisplayListIndex + numSubsets < numDisplayLists);
+		render_point_subsets(pObj, curDisplayListIndex);
+		curDisplayListIndex += numSubsets;
 	}
 
 //	if something is selected, we'll render it
 	if(bDrawSelection){
-		render_selection(pObj, selectionDisplayListIndex);
+		assert(curDisplayListIndex < numDisplayLists);
+		render_selection(pObj, curDisplayListIndex);
+		++curDisplayListIndex;
 	}
 
 //	if there are crease edges, we'll render them
 	if(bDrawCreases){
-		render_creases(pObj, creaseDisplayListIndex);
+		assert(curDisplayListIndex < numDisplayLists);
+		render_creases(pObj, curDisplayListIndex);
+		++curDisplayListIndex;
 	}
 
 	emit visuals_updated();
@@ -769,7 +790,7 @@ void LGScene::render_points(LGObject* pObj, const ug::vector4& color,
 	glEnd();
 }
 
-void LGScene::render_point_subsets(LGObject* pObj)
+void LGScene::render_point_subsets(LGObject* pObj, int baseDisplayListIndex)
 {
 	Grid& grid = pObj->m_grid;
 	SubsetHandler& sh = pObj->get_subset_handler();
@@ -783,8 +804,9 @@ void LGScene::render_point_subsets(LGObject* pObj)
 	for(int i = 0; i < sh.num_subsets(); ++i)
 	{
 	//	set up open-gl display lists
-		GLuint displayList = pObj->get_display_list(i);
-		pObj->set_display_list_mode(i, LGRM_SINGLE_PASS_NO_LIGHT);
+		int dispListIndex = baseDisplayListIndex + i;
+		GLuint displayList = pObj->get_display_list(dispListIndex);
+		pObj->set_display_list_mode(dispListIndex, LGRM_SINGLE_PASS_NO_LIGHT);
 		glDeleteLists(displayList, 1);
 		glNewList(displayList, GL_COMPILE);
 
@@ -842,7 +864,7 @@ void LGScene::render_edges(LGObject* pObj, const ug::vector4& color,
 	glEnd();
 }
 
-void LGScene::render_edge_subsets(LGObject* pObj)
+void LGScene::render_edge_subsets(LGObject* pObj, int baseDisplayListIndex)
 {
 	Grid& grid = pObj->m_grid;
 	SubsetHandler& sh = pObj->get_subset_handler();
@@ -860,8 +882,9 @@ void LGScene::render_edge_subsets(LGObject* pObj)
 	for(int i = 0; i < sh.num_subsets(); ++i)
 	{
 	//	set up open-gl display lists
-		GLuint displayList = pObj->get_display_list(i);
-		pObj->set_display_list_mode(i, LGRM_SINGLE_PASS_NO_LIGHT);
+		int dispListIndex = baseDisplayListIndex + i;
+		GLuint displayList = pObj->get_display_list(dispListIndex);
+		pObj->set_display_list_mode(dispListIndex, LGRM_SINGLE_PASS_NO_LIGHT);
 		glDeleteLists(displayList, 1);
 		glNewList(displayList, GL_COMPILE);
 
