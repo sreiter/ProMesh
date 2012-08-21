@@ -139,10 +139,10 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
 
 	switch(modifiedKey)
 	{
-		case Qt::Key_Space:
+/*		case Qt::Key_Space:
 			m_toolsMenu->popup(QCursor::pos());
 			break;
-
+*/
 		case Qt::Key_A:
 		{
 		//	Get the current object. If the selection is not empty, then

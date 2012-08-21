@@ -765,8 +765,14 @@ void LGScene::render_selection(LGObject* pObj, int displayListIndex)
 	vector4 faceColor(1.f, 0.7f, 0.1f, 0.5);
 	vector4 volColor(1.f, 0.7f, 0.1f, 0.3);
 
+	bool drawVolumes	= (m_drawVolumes && (pObj->get_grid().num_volumes() > 0));
+	bool drawFaces		= (m_drawFaces && (pObj->get_grid().num_faces() > 0) && (!drawVolumes));
+	bool drawEdges		= (m_drawEdges && (pObj->get_grid().num_edges() > 0));
+	bool drawVertices 	= (m_drawVertices && (pObj->get_grid().num_vertices() > 0));
+
 //	draw faces
-	if(pObj->face_rendering_enabled()){
+	//if(pObj->face_rendering_enabled()){
+	if(drawFaces || drawVolumes){
 		render_triangles(pObj, faceColor, sel.begin<Triangle>(),
 						sel.end<Triangle>(), aaPos, aaNorm);
 
@@ -792,18 +798,23 @@ void LGScene::render_selection(LGObject* pObj, int displayListIndex)
 
 //	draw volumes
 //	draw volumes after faces, since the draw-order is important.
-	if(pObj->volume_rendering_enabled()){
+	//if(pObj->volume_rendering_enabled()){
+	if(drawVolumes){
 		rerender_volumes(pObj, volColor, sel.begin<Volume>(),
 						 sel.end<Volume>(), aaPos, aaNorm);
 	}
 
 //	draw edges
-	render_edges(pObj, edgeColor,
-				 sel.begin<EdgeBase>(), sel.end<EdgeBase>(), aaPos);
+	if(drawEdges || drawFaces || drawVolumes){
+		render_edges(pObj, edgeColor,
+					 sel.begin<EdgeBase>(), sel.end<EdgeBase>(), aaPos);
+	}
 
 //	draw points
-	render_points(pObj, vrtColor,
-				 sel.begin<VertexBase>(), sel.end<VertexBase>(), aaPos);
+	if(drawVertices || drawEdges || drawFaces || drawVolumes){
+		render_points(pObj, vrtColor,
+					 sel.begin<VertexBase>(), sel.end<VertexBase>(), aaPos);
+	}
 
 	glEndList();
 }

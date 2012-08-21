@@ -149,7 +149,8 @@ class MainWindow : public QMainWindow
 		RClickMenu_SceneInspector*	m_rclickMenu_SI;
 		ToolManager* m_toolManager;
 	//	menus
-		QMenu*		m_toolsMenu;
+		//QMenu*		m_toolsMenu;
+
 	//	actions
 		QAction*	m_actNew;
 		QAction*	m_actOpen;

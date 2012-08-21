@@ -12,6 +12,7 @@ Changes and additions:
   separately.
 
 Fixes:
+- Fixed crash when 'space' was pressed.
 
 
 
