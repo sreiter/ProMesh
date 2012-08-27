@@ -4,6 +4,7 @@
 
 #include <QtGui>
 #include <iostream>
+#include "gl_includes.h"
 #include "view3d.h"
 #include "renderer3d_interface.h"
 

@@ -587,7 +587,7 @@ public:
 		vector3 boxMin(-1, -1, -1);
 		vector3 boxMax(1, 1, 1);
 		int newSI = 0;
-		bool createVolume = true;
+		bool createVolume = false;
 
 		if(dlg){
 			boxMin.x = dlg->to_double(0);
@@ -662,7 +662,7 @@ public:
 		dlg->addSpinBox(tr("y-max:"), -1.e+9, 1.e+9, 1., 1, 9);
 		dlg->addSpinBox(tr("z-max:"), -1.e+9, 1.e+9, 1., 1, 9);
 		dlg->addSpinBox(tr("subset:"), -1, 1.e+9, 0, 1, 0);
-		dlg->addCheckBox(tr("create volume:"), true);
+		dlg->addCheckBox(tr("create volume:"), false);
 		return dlg;
 	}
 };
@@ -740,7 +740,7 @@ public:
 			obj = app::createEmptyLGObject("new object");
 
 		int newSI = 0;
-		bool createVolume = true;
+		bool createVolume = false;
 
 		if(dlg){
 			newSI = dlg->to_int(0);
@@ -798,7 +798,7 @@ public:
 		ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
 								IDB_APPLY | IDB_OK | IDB_CLOSE);
 		dlg->addSpinBox(tr("subset:"), -1, 1.e+9, 0, 1, 0);
-		dlg->addCheckBox(tr("create volume:"), true);
+		dlg->addCheckBox(tr("create volume:"), false);
 		return dlg;
 	}
 };
@@ -816,7 +816,7 @@ public:
 			obj = app::createEmptyLGObject("new object");
 
 		int newSI = 0;
-		bool createVolume = true;
+		bool createVolume = false;
 
 		if(dlg){
 			newSI = dlg->to_int(0);
@@ -875,7 +875,7 @@ public:
 		ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
 								IDB_APPLY | IDB_OK | IDB_CLOSE);
 		dlg->addSpinBox(tr("subset:"), -1, 1.e+9, 0, 1, 0);
-		dlg->addCheckBox(tr("create volume:"), true);
+		dlg->addCheckBox(tr("create volume:"), false);
 		return dlg;
 	}
 };
@@ -893,7 +893,7 @@ public:
 			obj = app::createEmptyLGObject("new object");
 
 		int newSI = 0;
-		bool createVolume = true;
+		bool createVolume = false;
 
 		if(dlg){
 			newSI = dlg->to_int(0);
@@ -953,7 +953,7 @@ public:
 		ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
 								IDB_APPLY | IDB_OK | IDB_CLOSE);
 		dlg->addSpinBox(tr("subset:"), -1, 1.e+9, 0, 1, 0);
-		dlg->addCheckBox(tr("create volume:"), true);
+		dlg->addCheckBox(tr("create volume:"), false);
 		return dlg;
 	}
 };

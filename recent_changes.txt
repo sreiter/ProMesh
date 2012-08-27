@@ -2,6 +2,18 @@ Recent changes:
 
 
 -------------------------------------------------------------------------------
+v 4.0.2
+Changes and additions:
+- Now using tmp directory on unix to save .history.
+- GridGeneration->CreateBox, CreateTetrahedron, CreatePyramid, CreatePrism now
+  have option "create volume" disabled by default.
+
+Fixes:
+- Undo on most unix systems now works (resolved write permission problem)
+
+
+
+-------------------------------------------------------------------------------
 v 4.0.1
 Changes and additions:
 - vertices can now also be rendered during edge, face and volume rendering.

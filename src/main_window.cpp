@@ -16,8 +16,8 @@
 #include "undo.h"
 #include "app.h"
 #include "widgets/tool_browser_widget.h"
-
 #include "tools/tool_coordinates.h"
+#include "common/util/file_util.h"
 
 using namespace std;
 using namespace ug;
@@ -213,10 +213,13 @@ void MainWindow::init()
 			this, SLOT(sceneInspectorClicked(QMouseEvent*)));
 
 //	init undo
-	QString appPath = QCoreApplication::applicationDirPath();
-	if(!UndoHistoryProvider::inst().init(appPath.toStdString().c_str())){
+	//QString appPath = QCoreApplication::applicationDirPath();
+	//if(!UndoHistoryProvider::inst().init(appPath.toStdString().c_str())){
+//	we'll write to a temporary path
+	std::string tmpPath = ug::GetTmpPath();
+	if(!UndoHistoryProvider::inst().init(tmpPath.c_str())){
 		cout << "initialization of undo failed. couldn't create history path at "
-			 << appPath.toStdString().c_str() << "\n";
+			 << tmpPath << "\n";
 	}
 
 //	init the status bar

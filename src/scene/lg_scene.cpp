@@ -5,6 +5,7 @@
 #include <QtOpenGL>
 #include <algorithm>
 #include "lg_scene.h"
+#include "gl_includes.h"
 
 using namespace std;
 using namespace ug;

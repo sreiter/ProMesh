@@ -453,6 +453,71 @@ class ToolSelectLinkedFlatFaces : public ITool
 		}
 };
 
+
+class ToolSelectLinkedBoundaryEdges : public ITool
+{
+	public:
+		void execute(LGObject* obj, QWidget* widget){
+			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
+			using namespace ug;
+
+			bool stopAtSelectedVrts = true;
+
+			if(dlg){
+				stopAtSelectedVrts = dlg->to_bool(0);
+			}
+
+			Selector& sel = obj->get_selector();
+			SelectLinkedBoundaryElements<EdgeBase>(sel, aPosition, stopAtSelectedVrts);
+
+			obj->selection_changed();
+		}
+
+		const char* get_name()		{return "Linked Boundary Edges";}
+		const char* get_tooltip()	{return "Selects linked boundary edges of selected edges.";}
+		const char* get_group()		{return "Selection | Edges";}
+
+		ToolWidget* get_dialog(QWidget* parent){
+			ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
+											IDB_APPLY | IDB_OK | IDB_CLOSE);
+			dlg->addCheckBox(tr("stop at selected vertices:"), true);
+
+			return dlg;
+		}
+};
+
+class ToolSelectLinkedBoundaryFaces : public ITool
+{
+	public:
+		void execute(LGObject* obj, QWidget* widget){
+			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
+			using namespace ug;
+
+			bool stopAtSelectedEdges = true;
+
+			if(dlg){
+				stopAtSelectedEdges = dlg->to_bool(0);
+			}
+
+			Selector& sel = obj->get_selector();
+			SelectLinkedBoundaryElements<Face>(sel, aPosition, stopAtSelectedEdges);
+
+			obj->selection_changed();
+		}
+
+		const char* get_name()		{return "Linked Boundary Faces";}
+		const char* get_tooltip()	{return "Selects linked boundary faces of selected faces.";}
+		const char* get_group()		{return "Selection | Faces";}
+
+		ToolWidget* get_dialog(QWidget* parent){
+			ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
+											IDB_APPLY | IDB_OK | IDB_CLOSE);
+			dlg->addCheckBox(tr("stop at selected edges:"), true);
+
+			return dlg;
+		}
+};
+
 class ToolSelectIntersectingTriangles : public ITool
 {
 	public:
@@ -1639,6 +1704,8 @@ void RegisterSelectionTools(ToolManager* toolMgr)
 	toolMgr->register_tool(new ToolSelectAssociatedEdges);
 	toolMgr->register_tool(new ToolSelectSmoothEdgePath);
 	toolMgr->register_tool(new ToolSelectBoundaryEdges);
+	toolMgr->register_tool(new ToolSelectLinkedBoundaryEdges);
+	
 	toolMgr->register_tool(new ToolSelectInnerEdges);
 	toolMgr->register_tool(new ToolSelectNonManifoldEdges);
 
@@ -1649,6 +1716,7 @@ void RegisterSelectionTools(ToolManager* toolMgr)
 	toolMgr->register_tool(new ToolSelectAssociatedManifoldFaces);
 	toolMgr->register_tool(new ToolSelectLinkedFlatFaces);
 	toolMgr->register_tool(new ToolSelectBoundaryFaces);
+	toolMgr->register_tool(new ToolSelectLinkedBoundaryFaces);
 	toolMgr->register_tool(new ToolSelectInnerFaces);
 	toolMgr->register_tool(new ToolSelectDegenerateFaces);
 	toolMgr->register_tool(new ToolSelectIntersectingTriangles);

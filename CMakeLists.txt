@@ -73,6 +73,12 @@ include_directories(${UG_ROOT_PATH}/ugbase)
 include_directories(${UG_ROOT_PATH}/externals/boost_1_48_0)
 link_directories(${UG_ROOT_PATH}/lib)
 
+# On some unix systems (e.g. ubuntu 12.04) glu.h is not automatically included.
+# We thus set the define to additionally include glu.h
+# This may have to be improved for broader compatibility
+if(UNIX)
+add_definitions(-DPROMESH_INCLUDE_GLU)
+endif(UNIX)
 
 # Now add the sources
 set(ProMeshSRC	src/main.cpp
