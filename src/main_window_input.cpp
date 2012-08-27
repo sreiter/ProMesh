@@ -4,6 +4,7 @@
  
 #include "main_window.h"
 #include "app.h"
+#include "lib_grid/algorithms/selection_util.h"
 
 using namespace std;
 using namespace ug;
@@ -245,10 +246,15 @@ selectElement(LGObject* obj, TElem* elem, bool extendSelection)
 
 void MainWindow::view3dMousePressed(QMouseEvent *event)
 {
+	using namespace ug;
 
 	bool extendSelection = ((QApplication::keyboardModifiers()
 							& Qt::ShiftModifier)
 							== Qt::ShiftModifier);
+
+	bool selectSubset = ((QApplication::keyboardModifiers()
+							& Qt::ControlModifier)
+							== Qt::ControlModifier);
 
 	vector3 from, to;
 	LGObject* obj = getActiveObject();
@@ -267,8 +273,16 @@ void MainWindow::view3dMousePressed(QMouseEvent *event)
 					{
 						VertexBase* v = m_scene->get_clicked_vertex(obj, from, to);
 						if(v){
-							selectElement(obj, v, extendSelection);
 							int si = obj->get_subset_handler().get_subset_index(v);
+							if(selectSubset && (si != -1)){
+								if(!extendSelection)	obj->get_selector().clear();
+								SelectSubsetElements<VertexBase>(obj->get_selector(),
+																 obj->get_subset_handler(), si);
+								obj->selection_changed();
+							}
+							else
+								selectElement(obj, v, extendSelection);
+
 							if(si == -1)
 								m_sceneInspector->setActiveObject(m_sceneInspector->getActiveObjectIndex());
 							else
@@ -279,8 +293,16 @@ void MainWindow::view3dMousePressed(QMouseEvent *event)
 					{
 						EdgeBase* e = m_scene->get_clicked_edge(obj, from, to, pointOnGeom);
 						if(e){
-							selectElement(obj, e, extendSelection);
 							int si = obj->get_subset_handler().get_subset_index(e);
+							if(selectSubset && (si != -1)){
+								if(!extendSelection)	obj->get_selector().clear();
+								SelectSubsetElements<EdgeBase>(obj->get_selector(),
+															   obj->get_subset_handler(), si);
+								obj->selection_changed();
+							}
+							else
+								selectElement(obj, e, extendSelection);
+
 							if(si == -1)
 								m_sceneInspector->setActiveObject(m_sceneInspector->getActiveObjectIndex());
 							else
@@ -291,8 +313,16 @@ void MainWindow::view3dMousePressed(QMouseEvent *event)
 					{
 						Face* f = m_scene->get_clicked_face(obj, from, to);
 						if(f){
-							selectElement(obj, f, extendSelection);
 							int si = obj->get_subset_handler().get_subset_index(f);
+							if(selectSubset && (si != -1)){
+								if(!extendSelection)	obj->get_selector().clear();
+								SelectSubsetElements<Face>(obj->get_selector(),
+														   obj->get_subset_handler(), si);
+								obj->selection_changed();
+							}
+							else
+								selectElement(obj, f, extendSelection);
+
 							if(si == -1)
 								m_sceneInspector->setActiveObject(m_sceneInspector->getActiveObjectIndex());
 							else
@@ -303,8 +333,16 @@ void MainWindow::view3dMousePressed(QMouseEvent *event)
 					{
 						Volume* v = m_scene->get_clicked_volume(obj, from, to);
 						if(v){
-							selectElement(obj, v, extendSelection);
 							int si = obj->get_subset_handler().get_subset_index(v);
+							if(selectSubset && (si != -1)){
+								if(!extendSelection)	obj->get_selector().clear();
+								SelectSubsetElements<VertexBase>(obj->get_selector(),
+																 obj->get_subset_handler(), si);
+								obj->selection_changed();
+							}
+							else
+								selectElement(obj, v, extendSelection);
+
 							if(si == -1)
 								m_sceneInspector->setActiveObject(m_sceneInspector->getActiveObjectIndex());
 							else

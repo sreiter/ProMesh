@@ -619,6 +619,22 @@ void LGScene::update_visuals(LGObject* pObj)
 		}
 	}
 
+//	all elements are initially undrawn
+	Grid& grid = pObj->get_grid();
+	Grid::VertexAttachmentAccessor<ABool>	aaRenderedVRT(grid, m_aRendered);
+	Grid::EdgeAttachmentAccessor<ABool>		aaRenderedEDGE(grid, m_aRendered);
+	Grid::FaceAttachmentAccessor<ABool>		aaRenderedFACE(grid, m_aRendered);
+	Grid::VolumeAttachmentAccessor<ABool>	aaRenderedVOL(grid, m_aRendered);
+
+	SetAttachmentValues(aaRenderedVRT, grid.vertices_begin(),
+						grid.vertices_end(), false);
+	SetAttachmentValues(aaRenderedEDGE, grid.edges_begin(),
+						grid.edges_end(), false);
+	SetAttachmentValues(aaRenderedFACE, grid.faces_begin(),
+						grid.faces_end(), false);
+	SetAttachmentValues(aaRenderedVOL, grid.volumes_begin(),
+						grid.volumes_end(), false);
+
 //	calculate the number of required display lists
 	int numSubsets = pObj->get_subset_handler().num_subsets();
 	int numDisplayLists = 0;
@@ -852,9 +868,6 @@ void LGScene::render_point_subsets(LGObject* pObj, int baseDisplayListIndex)
 	Grid::VertexAttachmentAccessor<ABool> aaRenderedVRT(grid, m_aRendered);
 	Grid::VertexAttachmentAccessor<ABool> aaHiddenVRT(grid, m_aHidden);
 
-	SetAttachmentValues(aaRenderedVRT, grid.vertices_begin(),
-						grid.vertices_end(), false);
-
 	for(int i = 0; i < sh.num_subsets(); ++i)
 	{
 	//	set up open-gl display lists
@@ -926,13 +939,7 @@ void LGScene::render_edge_subsets(LGObject* pObj, int baseDisplayListIndex)
 	Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
 	Grid::VertexAttachmentAccessor<ABool> aaRenderedVRT(grid, m_aRendered);
 	Grid::EdgeAttachmentAccessor<ABool> aaRenderedEDGE(grid, m_aRendered);
-
 	Grid::EdgeAttachmentAccessor<ABool> aaHiddenEDGE(grid, m_aHidden);
-
-	SetAttachmentValues(aaRenderedVRT, grid.vertices_begin(),
-						grid.vertices_end(), false);
-	SetAttachmentValues(aaRenderedEDGE, grid.edges_begin(),
-						grid.edges_end(), false);
 
 	for(int i = 0; i < sh.num_subsets(); ++i)
 	{
@@ -1123,13 +1130,6 @@ void LGScene::render_faces(LGObject* pObj, Grid& grid,
 	Grid::FaceAttachmentAccessor<ABool> aaRenderedFACE(grid, m_aRendered);
 
 	Grid::FaceAttachmentAccessor<ABool> aaHidden(grid, m_aHidden);
-
-	SetAttachmentValues(aaRenderedVRT, grid.vertices_begin(),
-						grid.vertices_end(), false);
-	SetAttachmentValues(aaRenderedEDGE, grid.edges_begin(),
-						grid.edges_end(), false);
-	SetAttachmentValues(aaRenderedFACE, grid.faces_begin(),
-						grid.faces_end(), false);
 
 //	iterate through all subsets
 //	each subset has its own display list
@@ -1329,10 +1329,6 @@ void LGScene::render_volumes(LGObject* pObj)
 //	preprocessing step:
 //	sort all faces in a subset handler
 	SubsetHandler shFace(grid);
-
-//	reset all attachment values to 0
-	SetAttachmentValues(aaRenderedVOL, grid.volumes_begin(),
-						grid.volumes_end(), false);
 
 //	too slow too!
 //	iterate through all faces

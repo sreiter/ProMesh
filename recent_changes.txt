@@ -7,9 +7,11 @@ Changes and additions:
 - Now using tmp directory on unix to save .history.
 - GridGeneration->CreateBox, CreateTetrahedron, CreatePyramid, CreatePrism now
   have option "create volume" disabled by default.
+- Ctrl-RClick now selects all elements of the subset of the clicked element.
 
 Fixes:
-- Undo on most unix systems now works (resolved write permission problem)
+- Undo on most unix systems works now (resolved write permission problem)
+- Fixed selection rendering bug (e.g., selected edges in subset -1 were not drawn)
 
 
 

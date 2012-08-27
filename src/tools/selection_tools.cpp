@@ -467,8 +467,13 @@ class ToolSelectLinkedBoundaryEdges : public ITool
 				stopAtSelectedVrts = dlg->to_bool(0);
 			}
 
+			Grid& grid = obj->get_grid();
 			Selector& sel = obj->get_selector();
-			SelectLinkedBoundaryElements<EdgeBase>(sel, aPosition, stopAtSelectedVrts);
+
+			if(stopAtSelectedVrts)
+				SelectLinkedElements<EdgeBase>(sel, IsOnBoundary(grid), IsNotSelected(sel));
+			else
+				SelectLinkedElements<EdgeBase>(sel, IsOnBoundary(grid));
 
 			obj->selection_changed();
 		}
@@ -499,8 +504,13 @@ class ToolSelectLinkedBoundaryFaces : public ITool
 				stopAtSelectedEdges = dlg->to_bool(0);
 			}
 
+			Grid& grid = obj->get_grid();
 			Selector& sel = obj->get_selector();
-			SelectLinkedBoundaryElements<Face>(sel, aPosition, stopAtSelectedEdges);
+
+			if(stopAtSelectedEdges)
+				SelectLinkedElements<Face>(sel, IsOnBoundary(grid), IsNotSelected(sel));
+			else
+				SelectLinkedElements<Face>(sel, IsOnBoundary(grid));
 
 			obj->selection_changed();
 		}

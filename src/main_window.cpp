@@ -760,6 +760,8 @@ void MainWindow::showHelp()
 	strMsg.append(tr("\n"));
 	strMsg.append(tr("- CTRL + Mouse-Wheel: Move the camera into the scene.\n"));
 	strMsg.append(tr("\n"));
+	strMsg.append(tr("- CTRL + RMB: Select all elements in subset of clicked element.\n"));
+	strMsg.append(tr("\n"));
 	strMsg.append(tr("\n"));
 	strMsg.append(tr("SHORT-KEYS:\n"));
 	strMsg.append(tr("- G: Grab (move selection)\n"));
