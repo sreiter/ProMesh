@@ -86,7 +86,8 @@ class ToolWidget : public QFrame
 		void to_vector3(double& xOut, double& yOut, double& zOut,
 						bool* bOKOut = NULL);
 */
-		bool set_string(int paramIndex, const QString& param);
+		bool setString(int paramIndex, const QString& param);
+		bool setStringList(int paramIndex, const QStringList& stringList);
 
 	protected:
 	///	convertes the value of the i-th input element to a number.
@@ -100,6 +101,11 @@ class ToolWidget : public QFrame
 
 	 /// returns the current form layout and creates a new if none is available.
 	 	 QFormLayout* current_form_layout();
+
+	public slots:
+	///	when called, this method calls the associated tool to refresh the tool-widgets contents.
+	/**	Connect this slot with care, to avoid unforseen performance problems.*/
+		void refreshContents();
 
 	protected slots:
 		void buttonClicked(int buttonID);

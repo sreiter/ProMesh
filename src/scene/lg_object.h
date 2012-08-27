@@ -71,7 +71,7 @@ class LGObject : public ISceneObject
 
 	//	from ISceneObject
 		virtual const char* name()				{return m_name.c_str();}
-		virtual void set_name(const char* name)	{m_name = name;}
+		virtual void set_name(const char* name)	{m_name = name; properties_changed();}
 		virtual void set_visibility(bool visible)	{m_bVisible = visible;}
 		virtual bool is_visible()					{return m_bVisible;}
 		virtual QColor get_color() const	{return m_color;}
@@ -82,7 +82,7 @@ class LGObject : public ISceneObject
 		virtual bool subset_is_visible(int index);
 		virtual QColor get_subset_color(int index) const;
 
-		virtual void set_subset_name(int index, const char* name)	{m_subsetHandler.subset_info(index).name = name;}
+		virtual void set_subset_name(int index, const char* name)	{m_subsetHandler.subset_info(index).name = name; properties_changed();}
 		virtual void set_subset_visibility(int index, bool visible);
 		virtual void set_subset_color(int index, const QColor& color);
 

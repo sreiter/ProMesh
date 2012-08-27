@@ -36,7 +36,7 @@ class ToolAssignSubset : public ITool
 			if(!subsetName.isEmpty())
 				sh.subset_info(newIndex).name = subsetName.toLocal8Bit().constData();
 
-			dlg->set_string(0, QString(""));
+			dlg->setString(0, QString(""));
 
 			obj->geometry_changed();
 		}

@@ -419,7 +419,7 @@ ug::matrix44 ToolWidget::to_matrix44(int paramIndex, bool* bOKOut)
 	return ug::matrix44();
 }
 
-bool ToolWidget::set_string(int paramIndex, const QString& param)
+bool ToolWidget::setString(int paramIndex, const QString& param)
 {
 	WidgetEntry& we = m_widgets[paramIndex];
 
@@ -433,4 +433,28 @@ bool ToolWidget::set_string(int paramIndex, const QString& param)
 	}
 
 	return true;
+}
+
+bool ToolWidget::setStringList(int paramIndex, const QStringList& stringList)
+{
+	WidgetEntry& we = m_widgets[paramIndex];
+
+	if(we.m_widgetType == WT_LIST_BOX){
+		QListWidget* listBox = qobject_cast<QListWidget*>(we.m_widget);
+		listBox->clear();
+		listBox->addItems(stringList);
+	}
+	else{
+		UG_LOG("ERROR in ToolDialog::set_string_list: Parameter " << paramIndex << " can't be converted to a list box.\n");
+		return false;
+	}
+
+	return true;
+}
+
+
+void ToolWidget::refreshContents()
+{
+	if(m_tool)
+		m_tool->refresh_dialog(this);
 }

@@ -64,8 +64,14 @@ class IScene : public QObject, public IRenderer3D
 	///	informs about a scheduled erase
 		void object_to_be_erased(ISceneObject* pObj);
 
+	///	called when an object was removed from the scene
+		void object_removed();
+
 	///	informs that the scenes visuals have been updated
 		void visuals_updated();
+
+	///	infoforms that the properties of an object were changed.
+		void object_properties_changed(ISceneObject* pObj);
 
 	//	slots:
 	//	object added(pObj)
@@ -111,6 +117,9 @@ class ISceneObject : public QObject
 	///	triggers sig_visuals_changed.
 		virtual void visuals_changed();
 
+	///	triggers sig_properties_changed
+		virtual void properties_changed();
+
 	///	returns the values of the i-th indicator point.
 	/** an indicator point is a point with a color independent of the grid.
 	 * You should only use the returned values, if the method returns true.*/
@@ -125,6 +134,9 @@ class ISceneObject : public QObject
 	///	triggered when the objects geometry has changed
 		void sig_geometry_changed();
 		void sig_visuals_changed();
+
+	///	informs that invisible properties like the name changed
+		void sig_properties_changed();
 
 /*
 		virtual void set_draw_mode(unsigned int drawMode) = 0;

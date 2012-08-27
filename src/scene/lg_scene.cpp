@@ -80,6 +80,7 @@ int LGScene::add_object(LGObject* obj, bool autoDelete)
 
 	connect(obj, SIGNAL(sig_geometry_changed()), this, SLOT(object_geometry_changed()));
 	connect(obj, SIGNAL(sig_visuals_changed()), this, SLOT(object_visuals_changed()));
+	connect(obj, SIGNAL(sig_properties_changed()), this, SLOT(object_properties_changed()));
 
 	calculate_bounding_spheres(obj);
 	int retVal = BaseClass::add_object(obj, autoDelete);
@@ -129,6 +130,13 @@ void LGScene::object_visuals_changed()
 	LGObject* obj = dynamic_cast<LGObject*>(sender());
 	if(obj){
 		update_visuals(obj);
+	}
+}
+
+void LGScene::object_properties_changed()
+{
+	if(ISceneObject* obj = dynamic_cast<ISceneObject*>(sender())){
+		emit IScene::object_properties_changed(obj);
 	}
 }
 

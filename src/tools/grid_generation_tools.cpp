@@ -47,7 +47,7 @@ class ToolNewObject : public ITool
 		}
 };
 
-
+/**	registers a callback to automatically update internal scene-object list.*/
 class ToolMergeObjects : public ITool
 {
 	public:
@@ -199,7 +199,27 @@ class ToolMergeObjects : public ITool
 		//	select whether subsets should be joined
 			dlg->addCheckBox(tr("join subsets:"), false);
 
+		//	connect some signals of the scene to the refresh slot of the dialog
+			connect(scene, SIGNAL(object_added(ISceneObject*)), dlg, SLOT(refreshContents()));
+			connect(scene, SIGNAL(object_removed()), dlg, SLOT(refreshContents()));
+			connect(scene, SIGNAL(object_properties_changed(ISceneObject*)), dlg, SLOT(refreshContents()));
+
 			return dlg;
+		}
+
+		virtual void refresh_dialog(QWidget* dialog)
+		{
+			ToolWidget* dlg = dynamic_cast<ToolWidget*>(dialog);
+			if(!dlg)	UG_THROW("Only pass dialogs to a tool, which were created by the tool itself!");
+
+		//	push all names of current objects
+			QStringList entries;
+			LGScene* scene = app::getActiveScene();
+
+			for(int i = 0; i < scene->num_objects(); ++i)
+				entries.push_back(scene->get_scene_object(i)->name());
+
+			dlg->setStringList(1, entries);
 		}
 };
 

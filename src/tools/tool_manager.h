@@ -47,6 +47,10 @@ class ITool : public QObject
 		virtual bool accepts_null_object_ptr()	{return false;}
 
 		virtual QWidget* get_dialog(QWidget* parent)	{return NULL;}
+	///	refresh the given dialog.
+	/**	Only dialogs which were created with the tools get_dialog method should
+	 * be passed into this method.*/
+		virtual void refresh_dialog(QWidget* dialog)	{}
 };
 
 ///	launches tools and populates menus with associated actions.

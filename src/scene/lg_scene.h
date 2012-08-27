@@ -172,6 +172,7 @@ class LGScene : public TScene<LGObject>
 	protected slots:
 		void object_geometry_changed();
 		void object_visuals_changed();
+		void object_properties_changed();
 
 	protected:
 		void calculate_bounding_spheres(LGObject* pObj);

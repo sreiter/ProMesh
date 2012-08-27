@@ -68,7 +68,7 @@ erase_object(int index)
 
 		if(m_vInfos[index].m_autoDelete)
 		{
-			emit object_to_be_erased(obj);
+			emit IScene::object_to_be_erased(obj);
 			delete obj;
 		}
 
@@ -85,10 +85,11 @@ remove_object(int index)
 	if(index_is_valid(index))
 	{
 		ISceneObject* obj = get_object(index);
-		emit object_to_be_removed(obj);
+		emit IScene::object_to_be_removed(obj);
 		m_vObjects.erase(m_vObjects.begin() + index);
 		m_vInfos.erase(m_vInfos.begin() + index);
-		emit visuals_updated();
+		emit IScene::visuals_updated();
+		emit IScene::object_removed();
 		return true;
 	}
 

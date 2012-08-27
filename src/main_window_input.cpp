@@ -336,7 +336,7 @@ void MainWindow::view3dMousePressed(QMouseEvent *event)
 							int si = obj->get_subset_handler().get_subset_index(v);
 							if(selectSubset && (si != -1)){
 								if(!extendSelection)	obj->get_selector().clear();
-								SelectSubsetElements<VertexBase>(obj->get_selector(),
+								SelectSubsetElements<Volume>(obj->get_selector(),
 																 obj->get_subset_handler(), si);
 								obj->selection_changed();
 							}
