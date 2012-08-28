@@ -15,6 +15,7 @@ Fixes:
 - Marks are now preserved during merge-vertices.
 
 
+
 -------------------------------------------------------------------------------
 v 4.0.1
 Changes and additions:
