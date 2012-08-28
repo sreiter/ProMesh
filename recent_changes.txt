@@ -12,7 +12,7 @@ Changes and additions:
 Fixes:
 - Undo on most unix systems works now (resolved write permission problem)
 - Fixed selection rendering bug (e.g., selected edges in subset -1 were not drawn)
-
+- Marks are now preserved during merge-vertices.
 
 
 -------------------------------------------------------------------------------
