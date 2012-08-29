@@ -217,6 +217,10 @@ void MainWindow::init()
 	//if(!UndoHistoryProvider::inst().init(appPath.toStdString().c_str())){
 //	we'll write to a temporary path
 	std::string tmpPath = ug::GetTmpPath();
+	tmpPath.append("/ProMesh");
+//	make sure that the path exists. Otherwise, create it
+	if(!DirectoryExists(tmpPath.c_str()))
+		CreateDirectory(tmpPath.c_str());
 	if(!UndoHistoryProvider::inst().init(tmpPath.c_str())){
 		cout << "initialization of undo failed. couldn't create history path at "
 			 << tmpPath << "\n";

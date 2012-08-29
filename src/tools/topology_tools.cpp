@@ -1368,6 +1368,25 @@ class ToolPlaneCut : public ITool
 		}
 };
 
+class ToolAdjustEdgeOrientation : public ITool
+{
+	public:
+		void execute(LGObject* obj, QWidget*){
+			ug::Grid& grid = obj->get_grid();
+			ug::Selector& sel = obj->get_selector();
+
+			ug::AdjustEdgeOrientationToFaceOrientation(grid, sel.begin<ug::EdgeBase>(),
+														sel.end<ug::EdgeBase>());
+
+		//	done
+			obj->geometry_changed();
+		}
+
+		const char* get_name()		{return "Adjust Edge Orientation";}
+		const char* get_tooltip()	{return "Adjusts the orientation of boundary edges to associated faces.";}
+		const char* get_group()		{return "Remeshing | Orientation";}
+};
+
 class ToolFixFaceOrientation : public ITool
 {
 	public:
@@ -1439,6 +1458,7 @@ void RegisterTopologyTools(ToolManager* toolMgr)
 	toolMgr->register_tool(new ToolSplitEdge);
 	toolMgr->register_tool(new ToolSwapEdge, Qt::Key_W, SMK_ALT);
 	toolMgr->register_tool(new ToolPlaneCut);
+	toolMgr->register_tool(new ToolAdjustEdgeOrientation);
 	toolMgr->register_tool(new ToolFixFaceOrientation);
 	toolMgr->register_tool(new ToolFixVolumeOrientation);
 	toolMgr->register_tool(new ToolInvertOrientation);
