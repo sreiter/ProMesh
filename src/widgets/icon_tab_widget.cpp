@@ -43,7 +43,7 @@ void IconTabWidget::addPage(QWidget* page, const QIcon& icon, const QString& too
 	toolBtn->setToolTip(tooltip);
 
 	m_signalMapper->setMapping(toolBtn, m_stackedWidget->count());
-	connect(toolBtn, SIGNAL(pressed()), m_signalMapper, SLOT(map()));
+	connect(toolBtn, SIGNAL(clicked()), m_signalMapper, SLOT(map()));
 
 	m_toolBar->addWidget(toolBtn);
 	m_stackedWidget->addWidget(page);

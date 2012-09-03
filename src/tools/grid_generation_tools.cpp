@@ -521,12 +521,14 @@ public:
 		vector3 center(0, 0, 0);
 		int numRimVertices = 12;
 		int newSI = 0;
+		bool fill = false;
 
 		if(dlg){
 			center = dlg->to_vector3(0);
 			radius = dlg->to_double(1);
 			numRimVertices = dlg->to_int(2);
 			newSI = dlg->to_int(3);
+			fill = dlg->to_bool(4);
 		}
 
 		Grid& grid = obj->get_grid();
@@ -540,8 +542,11 @@ public:
 
 	//	create the vertices
 	//	create one upfront, the others in a loop
-		VertexBase* centerVrt = *grid.create<Vertex>();
-		aaPos[centerVrt] = center;
+		VertexBase* centerVrt = NULL;
+		if(fill){
+			centerVrt = *grid.create<Vertex>();
+			aaPos[centerVrt] = center;
+		}
 		VertexBase* firstVrt = *grid.create<Vertex>();
 		aaPos[firstVrt] = vector3(0, radius, 0);
 		VecAdd(aaPos[firstVrt], aaPos[firstVrt], center);
@@ -554,16 +559,22 @@ public:
 			VecScale(aaPos[vNew], aaPos[vNew], radius);
 			VecAdd(aaPos[vNew], aaPos[vNew], center);
 
-		//	create a new triangle
-			grid.create<Triangle>(TriangleDescriptor(centerVrt, vNew, lastVrt));
+		//	create a new triangle or a new edge
+			if(fill)
+				grid.create<Triangle>(TriangleDescriptor(centerVrt, vNew, lastVrt));
+			else
+				grid.create<Edge>(EdgeDescriptor(lastVrt, vNew));
 
 		//	prepare the next iteration
 			lastVrt = vNew;
 		}
 
-	//	one triangle is still missing
-		grid.create<Triangle>(TriangleDescriptor(centerVrt, firstVrt, lastVrt));
-
+	//	one triangle / edge is still missing
+		if(fill)
+			grid.create<Triangle>(TriangleDescriptor(centerVrt, firstVrt, lastVrt));
+		else
+			grid.create<Edge>(EdgeDescriptor(lastVrt, firstVrt));
+			
 	//	assign subset
 		sh.assign_subset(sel.begin<VertexBase>(), sel.end<VertexBase>(), newSI);
 		sh.assign_subset(sel.begin<EdgeBase>(), sel.end<EdgeBase>(), newSI);
@@ -588,6 +599,7 @@ public:
 		dlg->addSpinBox(tr("radius:"), 0, 1.e+9, 1., 1, 9);
 		dlg->addSpinBox(tr("rim vertices:"), 3, 1.e+9, 12, 1, 0);
 		dlg->addSpinBox(tr("subset:"), -1, 1.e+9, 0, 1, 0);
+		dlg->addCheckBox(tr("fill"), false);
 		return dlg;
 	}
 };

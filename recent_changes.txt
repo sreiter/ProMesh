@@ -2,6 +2,20 @@ Recent changes:
 
 
 -------------------------------------------------------------------------------
+v 4.0.3
+Changes and additions:
+- GridGeneration->CreateCircle now supports a 'fill' argument.
+- Remeshing->Triangulation->AdjustEdgeLength now features 'automark boundaries' flag.
+- Improved error output if Remeshing->Triangulation->TriangleFill fails.
+
+Fixes:
+- Fixed small bug occurring on Ubuntu, where the tool-button of a tool-group
+  didn't appear checked, unless clicked twice, even though it was clicked.
+- Fixed bug where geometry was transformed, when triangle-fill failed.
+
+
+
+-------------------------------------------------------------------------------
 v 4.0.2
 Changes and additions:
 - Now using tmp directory on unix to save .history.

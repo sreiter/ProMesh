@@ -118,8 +118,8 @@ class ToolTriangleFill_SweepLine : public ITool
 			Selector& sel = obj->get_selector();
 
 		//	if no edges are selected, nothing can be triangulated
-			if(sel.num<EdgeBase>() == 0){
-				UG_LOG("ERROR in TriangleFill: No edges are selected!\n");
+			if(sel.num<EdgeBase>() < 3){
+				UG_LOG("ERROR in TriangleFill: A closed outer edge-chain has to be selected.\n");
 				return;
 			}
 
@@ -147,6 +147,7 @@ class ToolTriangleFill_SweepLine : public ITool
 				UG_LOG("TriangleFill_SweepLine failed.\n");
 
 			// ONLY FOR DEBUGGING - BEGIN
+			/*
 				static int fileCounter = 1;
 				string filenamePrefix = "/Users/sreiter/Desktop/failed_sweeplines/failed_sweepline_";
 				//string filenamePrefix = "C:/sweep_errors/failed_sweepline_";
@@ -183,6 +184,7 @@ class ToolTriangleFill_SweepLine : public ITool
 				{
 					aaPos[*iter] = vector3(vrts[counter].x, vrts[counter].y, 0);
 				}
+			*/
 			// ONLY FOR DEBUGGING - END
 
 			}
@@ -218,22 +220,36 @@ class ToolAdjustEdgeLength : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget* widget){
+			using namespace ug;
 			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 			double minEdgeLen = 1.;
 			double maxEdgeLen = 3.;
 			int numIterations = 3;
 			bool adaptive = true;
+			bool automarkBoundaries = true;
 
 			if(dlg){
 				minEdgeLen = dlg->to_double(0);
 				maxEdgeLen = dlg->to_double(1);
 				numIterations = dlg->to_int(2);
 				adaptive = dlg->to_bool(3);
+				automarkBoundaries = dlg->to_bool(4);
+			}
+			
+			Grid& grid = obj->get_grid();
+			SubsetHandler& shCrease = obj->get_crease_handler();
+			
+			if(automarkBoundaries){
+				for(EdgeBaseIterator iter = grid.begin<EdgeBase>();
+					iter != grid.end<EdgeBase>(); ++iter)
+				{
+					if(IsBoundaryEdge2D(grid, *iter))
+						shCrease.assign_subset(*iter, REM_CREASE);
+				}
 			}
 
-			ug::AdjustEdgeLength(obj->get_grid(), obj->get_crease_handler(),
-								minEdgeLen, maxEdgeLen,
-								numIterations, true, adaptive);
+			ug::AdjustEdgeLength(grid, shCrease, minEdgeLen, maxEdgeLen,
+								 numIterations, true, adaptive);
 
 			obj->geometry_changed();
 		}
@@ -248,7 +264,8 @@ class ToolAdjustEdgeLength : public ITool
 			dlg->addSpinBox(tr("min edge length:"), 0, 1e+10, 1., 0.1, 9);
 			dlg->addSpinBox(tr("max edge length:"), 0, 1e+10, 2., 0.1, 9);
 			dlg->addSpinBox(tr("iterations:"), 1, 1e+10, 10, 1, 0);
-			dlg->addCheckBox(tr("adaptive:"), true);
+			dlg->addCheckBox(tr("adaptive"), true);
+			dlg->addCheckBox(tr("automark boundaries"), true);
 			return dlg;
 		}
 };

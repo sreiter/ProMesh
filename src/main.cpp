@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
 	pMainWindow->init();
 
 	myApp.setMainWindow(pMainWindow);
-	pMainWindow->setWindowTitle("ProMesh 4.0.2      (c) Sebastian Reiter    s.b.reiter@googlemail.com");
+	pMainWindow->setWindowTitle("ProMesh 4.0.3      (c) Sebastian Reiter    s.b.reiter@googlemail.com");
 
 	//pMainWindow->resize(1024, 768);
 	pMainWindow->show();
