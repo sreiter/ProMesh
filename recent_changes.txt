@@ -8,6 +8,7 @@ Changes and additions:
 - GridGeneration->CreateBox, CreateTetrahedron, CreatePyramid, CreatePrism now
   have option "create volume" disabled by default.
 - Ctrl-RClick now selects all elements of the subset of the clicked element.
+- Added Selection->Edges->LinkedBoundaryEdges
 
 Fixes:
 - Undo on most unix systems works now (resolved write permission problem)

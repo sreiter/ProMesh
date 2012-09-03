@@ -6,8 +6,17 @@ cmake_minimum_required(VERSION 2.6)
 
 project(P_PROMESH4)
 
+# Some options which allow to control makefile generation
+option(DEBUG "If enabled a debug build is performed - this slows down performance." OFF)
+option(UG_ROOT_PATH "The path to ug4. Has to contain the ugbase and lib directories.")
+option(TETGEN_PATH "The path to tetgen. Has to contain the static tet library.")
+
 # Qt4 with OpenGL support is required.
+# in order to use a custom installation of QT4, execute
+# "export PATH=path_to_your_qmake:$PATH"
+# before calling cmake for the first time for your build
 FIND_PACKAGE(Qt4 REQUIRED)
+
 SET(QT_USE_QTOPENGL TRUE)
 
 FIND_PACKAGE(OpenGL REQUIRED)
@@ -23,10 +32,6 @@ include_directories(${CMAKE_SOURCE_DIR}/src)
 #FIND_PACKAGE(Boost 1.40.0 REQUIRED)
 #include_directories(${Boost_INCLUDE_DIRS})
 
-# Some options which allow to control makefile generation
-option(DEBUG "If enabled a debug build is performed - this slows down performance." OFF)
-option(UG_ROOT_PATH "The path to ug4. Has to contain the ugbase and lib directories.")
-option(TETGEN_PATH "The path to tetgen. Has to contain the static tet library.")
 
 if(DEBUG)
 	message(STATUS "INFO: Debug mode. (Enable release-mode by defining -DDEBUG=OFF)")

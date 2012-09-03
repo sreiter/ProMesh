@@ -6,6 +6,7 @@
 #define TOOL_COORDINATES_H
 
 #include <QFrame>
+#include <QString>
 #include <sstream>
 #include <iomanip>
 #include "app.h"
