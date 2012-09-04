@@ -7,11 +7,14 @@ Changes and additions:
 - GridGeneration->CreateCircle now supports a 'fill' argument.
 - Remeshing->Triangulation->AdjustEdgeLength now features 'automark boundaries' flag.
 - Improved error output if Remeshing->Triangulation->TriangleFill fails.
+- Rearranged some tools to improve usablility of the tool browser.
+- Added Subsets->JoinSubsets
 
 Fixes:
 - Fixed small bug occurring on Ubuntu, where the tool-button of a tool-group
   didn't appear checked, unless clicked twice, even though it was clicked.
 - Fixed bug where geometry was transformed, when triangle-fill failed.
+- Fixed volume selection bug, which appeared when face subsets were invisible.
 
 
 

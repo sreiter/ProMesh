@@ -1458,10 +1458,10 @@ void RegisterTopologyTools(ToolManager* toolMgr)
 	toolMgr->register_tool(new ToolSplitEdge);
 	toolMgr->register_tool(new ToolSwapEdge, Qt::Key_W, SMK_ALT);
 	toolMgr->register_tool(new ToolPlaneCut);
+	toolMgr->register_tool(new ToolInvertOrientation);
 	toolMgr->register_tool(new ToolAdjustEdgeOrientation);
 	toolMgr->register_tool(new ToolFixFaceOrientation);
 	toolMgr->register_tool(new ToolFixVolumeOrientation);
-	toolMgr->register_tool(new ToolInvertOrientation);
 	toolMgr->register_tool(new ToolProjectVerticesToCloseEdges);
 	toolMgr->register_tool(new ToolProjectVerticesToCloseFaces);
 	toolMgr->register_tool(new ToolIntersectCloseEdges);

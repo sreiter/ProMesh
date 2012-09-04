@@ -9,7 +9,7 @@
 #include "tools_util.h"
 #include "common/node_tree/node_tree.h"
 
-class ToolSelectAssociatedManifoldFaces : public ITool
+class ToolSelectLinkedManifoldFaces : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
@@ -54,8 +54,8 @@ class ToolSelectAssociatedManifoldFaces : public ITool
 			obj->selection_changed();
 		}
 
-		const char* get_name()		{return "Associated Manifold Faces";}
-		const char* get_tooltip()	{return "Selects faces associated with the selection, avoiding non-manifold configurations.";}
+		const char* get_name()		{return "Linked Manifold Faces";}
+		const char* get_tooltip()	{return "Selects faces linked with the selection, not crossing non-manifold edges.";}
 		const char* get_group()		{return "Selection | Faces";}
 };
 
@@ -686,7 +686,7 @@ class ToolSelectAll : public ITool
 			obj->selection_changed();
 		}
 
-		const char* get_name()		{return "All";}
+		const char* get_name()		{return "Select All";}
 		const char* get_tooltip()	{return "Selects all vertices, edges ,faces and volumes of the current grid";}
 		const char* get_group()		{return "Selection";}
 };
@@ -1695,72 +1695,72 @@ void RegisterSelectionTools(ToolManager* toolMgr)
 {
 	toolMgr->set_group_icon("Selection", ":images/tool_selection.png");
 
+//	GENERAL TOOLS
 	toolMgr->register_tool(new ToolClearSelection);
-
 	toolMgr->register_tool(new ToolSelectAll);
+	toolMgr->register_tool(new ToolCloseSelection, Qt::Key_C);
+	toolMgr->register_tool(new ToolSelectSelectionBoundary);
+
+//	VERTICES
 	toolMgr->register_tool(new ToolSelectAllVertices);
-	toolMgr->register_tool(new ToolSelectAllEdges);
-	toolMgr->register_tool(new ToolSelectAllFaces);
-	toolMgr->register_tool(new ToolSelectAllVolumes);
 	toolMgr->register_tool(new ToolDeselectAllVertices);
-	toolMgr->register_tool(new ToolDeselectAllEdges);
-	toolMgr->register_tool(new ToolDeselectAllFaces);
-	toolMgr->register_tool(new ToolDeselectAllVolumes);
-
 	toolMgr->register_tool(new ToolSelectAssociatedVertices);
-	toolMgr->register_tool(new ToolSelectBoundaryVertices);
+	toolMgr->register_tool(new ToolSelectMarkedVertices);
 	toolMgr->register_tool(new ToolSelectInnerVertices);
-
-	toolMgr->register_tool(new ToolSelectAssociatedEdges);
-	toolMgr->register_tool(new ToolSelectSmoothEdgePath);
-	toolMgr->register_tool(new ToolSelectBoundaryEdges);
-	toolMgr->register_tool(new ToolSelectLinkedBoundaryEdges);
-	
-	toolMgr->register_tool(new ToolSelectInnerEdges);
-	toolMgr->register_tool(new ToolSelectNonManifoldEdges);
-
-	toolMgr->register_tool(new ToolSelectShortEdges);
-	toolMgr->register_tool(new ToolSelectLongEdges);
-
-	toolMgr->register_tool(new ToolSelectAssociatedFaces);
-	toolMgr->register_tool(new ToolSelectAssociatedManifoldFaces);
-	toolMgr->register_tool(new ToolSelectLinkedFlatFaces);
-	toolMgr->register_tool(new ToolSelectBoundaryFaces);
-	toolMgr->register_tool(new ToolSelectLinkedBoundaryFaces);
-	toolMgr->register_tool(new ToolSelectInnerFaces);
-	toolMgr->register_tool(new ToolSelectDegenerateFaces);
-	toolMgr->register_tool(new ToolSelectIntersectingTriangles);
-	//toolMgr->register_tool(new ToolSelectLastUnselectedFace);
+	toolMgr->register_tool(new ToolSelectBoundaryVertices);
 
 	toolMgr->register_tool(new ToolSelectVertexByIndex);
+	toolMgr->register_tool(new ToolSelectVertexByCoordinate);
+	toolMgr->register_tool(new ToolSelectUnconnectedVertices);
+
+//	EDGES
+	toolMgr->register_tool(new ToolSelectAllEdges);
+	toolMgr->register_tool(new ToolDeselectAllEdges);
+	toolMgr->register_tool(new ToolSelectAssociatedEdges);
+	toolMgr->register_tool(new ToolSelectMarkedEdges);
+	toolMgr->register_tool(new ToolEdgeSelectionFill);
+	toolMgr->register_tool(new ToolSelectInnerEdges);
+	toolMgr->register_tool(new ToolSelectBoundaryEdges);
+	toolMgr->register_tool(new ToolSelectNonManifoldEdges);
+
+	toolMgr->register_tool(new ToolSelectLinkedBoundaryEdges);
+	toolMgr->register_tool(new ToolSelectSmoothEdgePath);
+	toolMgr->register_tool(new ToolSelectShortEdges);
+	toolMgr->register_tool(new ToolSelectLongEdges);
 	toolMgr->register_tool(new ToolSelectEdgeByIndex);
+	toolMgr->register_tool(new ToolSelectEdgeByCoordinate);
+
+//	FACES
+	toolMgr->register_tool(new ToolSelectAllFaces);
+	toolMgr->register_tool(new ToolDeselectAllFaces);
+	toolMgr->register_tool(new ToolSelectAssociatedFaces);
+	toolMgr->register_tool(new ToolFaceSelectionFill);
+	toolMgr->register_tool(new ToolSelectIntersectingTriangles);
+	toolMgr->register_tool(new ToolSelectInnerFaces);
+	toolMgr->register_tool(new ToolSelectBoundaryFaces);
+	toolMgr->register_tool(new ToolSelectLinkedManifoldFaces);
+
+	toolMgr->register_tool(new ToolSelectLinkedBoundaryFaces);
+	toolMgr->register_tool(new ToolSelectLinkedFlatFaces);
+	toolMgr->register_tool(new ToolSelectDegenerateFaces);
 	toolMgr->register_tool(new ToolSelectFaceByIndex);
-	toolMgr->register_tool(new ToolSelectVolumeByIndex);
+	toolMgr->register_tool(new ToolSelectFaceByCoordinate);
+	toolMgr->register_tool(new ToolSelectBentQuadrilaterals);
+	//toolMgr->register_tool(new ToolSelectLastUnselectedFace);
+
+//	VOLUMES
+	toolMgr->register_tool(new ToolSelectAllVolumes);
+	toolMgr->register_tool(new ToolDeselectAllVolumes);
+	toolMgr->register_tool(new ToolVolumeSelectionFill);
 	toolMgr->register_tool(new ToolSelectUnorientableVolumes);
 
+	toolMgr->register_tool(new ToolSelectVolumeByIndex);
+	toolMgr->register_tool(new ToolSelectVolumeByCoordinate);
+
+//	MORE GENERAL TOOLS
+	toolMgr->register_tool(new ToolInvertSelection);
 	toolMgr->register_tool(new ToolExtendSelection);
 	toolMgr->register_tool(new ToolSelectSubset);
 	toolMgr->register_tool(new ToolSelectSubsetBoundary);
 	toolMgr->register_tool(new ToolSelectUnassignedElements);
-	toolMgr->register_tool(new ToolInvertSelection);
-
-	toolMgr->register_tool(new ToolSelectVertexByCoordinate);
-	toolMgr->register_tool(new ToolSelectEdgeByCoordinate);
-	toolMgr->register_tool(new ToolSelectFaceByCoordinate);
-	toolMgr->register_tool(new ToolSelectVolumeByCoordinate);
-
-	toolMgr->register_tool(new ToolSelectUnconnectedVertices);
-
-	toolMgr->register_tool(new ToolEdgeSelectionFill);
-	toolMgr->register_tool(new ToolFaceSelectionFill);
-	toolMgr->register_tool(new ToolVolumeSelectionFill);
-
-	toolMgr->register_tool(new ToolSelectMarkedVertices);
-	toolMgr->register_tool(new ToolSelectMarkedEdges);
-
-	toolMgr->register_tool(new ToolSelectSelectionBoundary);
-
-	toolMgr->register_tool(new ToolSelectBentQuadrilaterals);
-
-	toolMgr->register_tool(new ToolCloseSelection, Qt::Key_C);
 }

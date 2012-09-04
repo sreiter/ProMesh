@@ -1331,6 +1331,7 @@ void LGScene::render_volumes(LGObject* pObj)
 	Grid::FaceAttachmentAccessor<ASphere>	aaSphereFACE(grid, m_aSphere);
 	Grid::VolumeAttachmentAccessor<ASphere>	aaSphereVOL(grid, m_aSphere);
 
+	Grid::FaceAttachmentAccessor<ABool> aaRenderedFACE(grid, m_aRendered);
 	Grid::VolumeAttachmentAccessor<ABool> aaRenderedVOL(grid, m_aRendered);
 	Grid::VolumeAttachmentAccessor<ABool> aaHiddenVOL(grid, m_aHidden);
 
@@ -1891,7 +1892,7 @@ get_clicked_face(LGObject* pObj, const ug::vector3& from,
 	VecSubtract(dir, to, from);
 
 	Grid& grid = pObj->get_grid();
-	SubsetHandler& sh = pObj->get_subset_handler();
+//	SubsetHandler& sh = pObj->get_subset_handler();
 
 	Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
 	Grid::FaceAttachmentAccessor<ANormal> aaNorm(grid, aNormal);
@@ -1919,10 +1920,14 @@ get_clicked_face(LGObject* pObj, const ug::vector3& from,
 	//	subset -1 can be drawn as side-faces of volumes and should
 	//	thus be selectable. In face mode those faces are never drawn
 	//	and thus aaRenderedFACE[f] == 0 holds.
+//	this should no longer be required, since aaRenderedFACE already takes care of it.
+//	The code leads to problems if faces were rendered as sides of volumes, even though
+//	their subset was invisible.
+/*
 		int si = sh.get_subset_index(f);
 		if(!(si == -1 || pObj->subset_is_visible(si)))
 			continue;
-
+*/
 	//	check whether the face is invisible due to culling
 		number normDot = VecDot(aaNorm[f], dir);
 		if(!(m_drawModeBack & DM_SOLID)){

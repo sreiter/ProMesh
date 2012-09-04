@@ -242,6 +242,45 @@ class ToolSwapSubsets : public ITool
 		}
 };
 
+class ToolJoinSubsets : public ITool
+{
+	public:
+		void execute(LGObject* obj, QWidget* widget){
+			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
+			int target = 0;
+			int s1 = 0;
+			int s2 = 0;
+			bool eraseUnused = true;
+
+			if(dlg){
+				target = dlg->to_int(0);
+				s1 = dlg->to_int(1);
+				s2 = dlg->to_int(2);
+				eraseUnused = dlg->to_bool(3);
+			}
+
+			ug::SubsetHandler& sh = obj->get_subset_handler();
+
+			sh.join_subsets(target, s1, s2, eraseUnused);
+
+			obj->geometry_changed();
+		}
+
+		const char* get_name()		{return "Join Subsets";}
+		const char* get_tooltip()	{return "Joins two subsets";}
+		const char* get_group()		{return "Subsets";}
+
+		ToolWidget* get_dialog(QWidget* parent){
+			ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
+											IDB_APPLY | IDB_OK | IDB_CLOSE);
+			dlg->addSpinBox(tr("target subset"), 0, 1e+9, 0, 1, 0);
+			dlg->addSpinBox(tr("subset 1:"), 0, 1e+9, 0., 1., 0);
+			dlg->addSpinBox(tr("subset 2:"), 0, 1e+9, 0., 1., 0);
+			dlg->addCheckBox(tr("remove old unused subsets"), true);
+			return dlg;
+		}
+};
+
 class EraseSubset : public ITool
 {
 	public:
@@ -285,7 +324,7 @@ class EraseSubset : public ITool
 		}
 };
 
-class EraseEmptySubsets : public ITool
+class ToolEraseEmptySubsets : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
@@ -626,11 +665,10 @@ void RegisterSubsetTools(ToolManager* toolMgr)
 	toolMgr->set_group_icon("Subsets", ":images/tool_subsets.png");
 
 	toolMgr->register_tool(new ToolAssignSubset, Qt::Key_S, SMK_ALT);
-	toolMgr->register_tool(new ToolAssignSubsetColors);
 	toolMgr->register_tool(new ToolMoveSubset);
 	toolMgr->register_tool(new ToolSwapSubsets);
+	toolMgr->register_tool(new ToolJoinSubsets);
 	toolMgr->register_tool(new EraseSubset);
-	toolMgr->register_tool(new EraseEmptySubsets);
 	toolMgr->register_tool(new ToolAdjustSubsetsForUG3);
 	toolMgr->register_tool(new ToolAdjustSubsetsForUG4);
 	toolMgr->register_tool(new ToolAssignSubsetsByQuality);
@@ -642,4 +680,6 @@ void RegisterSubsetTools(ToolManager* toolMgr)
 	toolMgr->register_tool(new ToolSeparateFaceSubsetsByNormal);
 	toolMgr->register_tool(new ToolSeparateIrregularManifoldSubsets);
 	toolMgr->register_tool(new ToolSeparateDegeneratedBoundaryFaceSubsets);
+	toolMgr->register_tool(new ToolAssignSubsetColors);
+	toolMgr->register_tool(new ToolEraseEmptySubsets);
 }

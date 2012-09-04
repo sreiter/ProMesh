@@ -658,8 +658,8 @@ void RegisterCoordinateTransformTools(ToolManager* toolMgr)
 {
 	toolMgr->set_group_icon("Coordinate Transform", ":images/tool_transform.png");
 
-	toolMgr->register_tool(new ToolSetPivot);
 	toolMgr->register_tool(new ToolSetPivotToCenter);
+	toolMgr->register_tool(new ToolSetPivot);
 
 	toolMgr->register_tool(new ToolMove);
 	toolMgr->register_tool(new ToolScale);
