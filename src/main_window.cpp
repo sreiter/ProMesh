@@ -34,7 +34,8 @@ MainWindow::MainWindow() :
 	m_selectionMode(0),
 	m_elementModeListIndex(3),
 	m_mouseMoveAction(MMA_DEFAULT),
-	m_activeAxis(X_AXIS | Y_AXIS | Z_AXIS)
+	m_activeAxis(X_AXIS | Y_AXIS | Z_AXIS),
+	m_activeObject(NULL)
 {
 }
 
@@ -495,7 +496,7 @@ bool MainWindow::load_grid_from_file(const char* filename)
 			int index = m_scene->add_object(pObj);
 			if(index != -1)
 			{
-				m_sceneInspector->setActiveObject(index);
+				setActiveObject(index);
 
 			//	if this is the first object loaded, we will focus it.
 				if(bFirstLoad)
@@ -529,7 +530,7 @@ LGObject* MainWindow::create_empty_object(const char* name)
 //	add it to the scene
 	int index = m_scene->add_object(pObj);
 	if(index != -1)
-		m_sceneInspector->setActiveObject(index);
+		setActiveObject(index);
 
 	return pObj;
 }
@@ -727,9 +728,9 @@ void MainWindow::eraseActiveSceneObject()
 			m_scene->erase_object(index);
 		//	select the next object
 			if(index < m_scene->num_objects())
-				m_sceneInspector->setActiveObject(index);
+				setActiveObject(index);
 			else if(index > 0)
-				m_sceneInspector->setActiveObject(index - 1);
+				setActiveObject(index - 1);
 		}
 	}
 }
@@ -737,6 +738,15 @@ void MainWindow::eraseActiveSceneObject()
 LGObject* MainWindow::getActiveObject()
 {
 	return dynamic_cast<LGObject*>(m_sceneInspector->getActiveObject());
+}
+
+void MainWindow::setActiveObject(int index)
+{
+	m_sceneInspector->setActiveObject(index);
+	if(getActiveObject() != m_activeObject){
+		m_activeObject = getActiveObject();
+		emit activeObjectChanged();
+	}
 }
 
 void MainWindow::showHelp()
@@ -963,11 +973,15 @@ void MainWindow::dropEvent(QDropEvent* event)
 	}
 }
 
-
 void MainWindow::sceneInspectorClicked(QMouseEvent* event)
 {
 	if(event->button() == Qt::RightButton){
 		m_rclickMenu_SI->exec(QCursor::pos());
+	}
+
+	if(getActiveObject() != m_activeObject){
+		m_activeObject = getActiveObject();
+		emit activeObjectChanged();
 	}
 }
 

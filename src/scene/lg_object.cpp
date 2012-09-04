@@ -328,7 +328,7 @@ void LGObject::marks_changed()
 
 void LGObject::selection_changed()
 {
-	ISceneObject::visuals_changed();
+	ISceneObject::selection_changed();
 }
 
 void LGObject::geometry_changed()

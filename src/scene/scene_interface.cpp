@@ -15,6 +15,12 @@ void ISceneObject::visuals_changed()
 	emit sig_visuals_changed();
 }
 
+void ISceneObject::selection_changed()
+{
+	emit sig_selection_changed();
+	visuals_changed();
+}
+
 void ISceneObject::properties_changed()
 {
 	emit sig_properties_changed();

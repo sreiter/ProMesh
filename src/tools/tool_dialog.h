@@ -86,6 +86,7 @@ class ToolWidget : public QFrame
 		void to_vector3(double& xOut, double& yOut, double& zOut,
 						bool* bOKOut = NULL);
 */
+		bool setNumber(int paramIndex, double val);
 		bool setString(int paramIndex, const QString& param);
 		bool setStringList(int paramIndex, const QStringList& stringList);
 

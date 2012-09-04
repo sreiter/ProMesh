@@ -117,6 +117,9 @@ class ISceneObject : public QObject
 	///	triggers sig_visuals_changed.
 		virtual void visuals_changed();
 
+	///	triggers sig_visuals_changed.
+		virtual void selection_changed();
+
 	///	triggers sig_properties_changed
 		virtual void properties_changed();
 
@@ -134,6 +137,7 @@ class ISceneObject : public QObject
 	///	triggered when the objects geometry has changed
 		void sig_geometry_changed();
 		void sig_visuals_changed();
+		void sig_selection_changed();
 
 	///	informs that invisible properties like the name changed
 		void sig_properties_changed();

@@ -71,7 +71,11 @@ class MainWindow : public QMainWindow
 		View3D*	getView3D()					{return m_pView;}
 		SceneInspector* getSceneInspector()	{return m_sceneInspector;}
 
+	signals:
+		void activeObjectChanged();
+
 	public slots:
+		void setActiveObject(int index);
 		void newGeometry();
 		int openFile();///< returns the number of successfully opened files.
 		bool saveToFile();
@@ -141,6 +145,9 @@ class MainWindow : public QMainWindow
 		QPoint m_mouseMoveActionStart;
 		LGObject* m_mouseMoveActionObject;///< Only valid if m_mouseMoveAction != MMA_DEFAULT
 		unsigned int m_activeAxis;
+
+	//	use it as seldom as possible. It is mainly used to trigger the signal activeObjectChanged.
+		LGObject*	m_activeObject;
 
 	//	dialogs
 		QFileDialog* m_dlgGeometryFiles;

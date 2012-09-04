@@ -419,6 +419,32 @@ ug::matrix44 ToolWidget::to_matrix44(int paramIndex, bool* bOKOut)
 	return ug::matrix44();
 }
 
+bool ToolWidget::setNumber(int paramIndex, double val)
+{
+	if(paramIndex < 0 || paramIndex >= (int)m_widgets.size()){
+		UG_LOG("ERROR: bad parameter index in ToolDialog::setNumber: " << paramIndex << std::endl);
+		return false;
+	}
+
+	WidgetEntry& we = m_widgets[paramIndex];
+
+	switch(we.m_widgetType){
+	case WT_SLIDER:{
+			QSlider* slider = qobject_cast<QSlider*>(we.m_widget);
+			slider->setValue(val);
+		}break;
+	case WT_SPIN_BOX:{
+			QDoubleSpinBox* spinBox = qobject_cast<QDoubleSpinBox*>(we.m_widget);
+			spinBox->setValue(val);
+		}break;
+	default:
+		UG_LOG("ERROR in ToolDialog::setNumber: No matching widget found for parameter " << paramIndex << ".\n");
+		return false;
+	}
+
+	return true;
+}
+
 bool ToolWidget::setString(int paramIndex, const QString& param)
 {
 	WidgetEntry& we = m_widgets[paramIndex];

@@ -80,6 +80,7 @@ int LGScene::add_object(LGObject* obj, bool autoDelete)
 
 	connect(obj, SIGNAL(sig_geometry_changed()), this, SLOT(object_geometry_changed()));
 	connect(obj, SIGNAL(sig_visuals_changed()), this, SLOT(object_visuals_changed()));
+	connect(obj, SIGNAL(sig_selection_changed()), this, SLOT(object_selection_changed()));
 	connect(obj, SIGNAL(sig_properties_changed()), this, SLOT(object_properties_changed()));
 
 	calculate_bounding_spheres(obj);
@@ -121,15 +122,24 @@ void LGScene::object_geometry_changed()
 		Grid& g = obj->get_grid();
 		CalculateFaceNormals(g, g.begin<Face>(), g.end<Face>(), aPosition, aNormal);
 		update_visuals(obj);
+		emit geometry_changed();
 	}
 }
 
 void LGScene::object_visuals_changed()
 {
-//	LGObject* obj = qobject_cast<LGObject*>(sender());
 	LGObject* obj = dynamic_cast<LGObject*>(sender());
 	if(obj){
 		update_visuals(obj);
+	}
+}
+
+void LGScene::object_selection_changed()
+{
+	LGObject* obj = dynamic_cast<LGObject*>(sender());
+	if(obj){
+		update_visuals(obj);
+		emit selection_changed();
 	}
 }
 

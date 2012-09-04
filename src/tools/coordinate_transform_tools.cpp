@@ -12,6 +12,73 @@ using namespace ug;
 using namespace std;
 
 
+class ToolCoordinates : public ITool
+{
+public:
+	void execute(LGObject* obj, QWidget* widget){
+		ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
+
+		vector3 nc(0, 0, 0);
+		if(dlg){
+			nc.x = dlg->to_double(0);
+			nc.y = dlg->to_double(1);
+			nc.z = dlg->to_double(2);
+		}
+
+		vector3 center;
+	//	calculate the center of the current selection
+		Grid::VertexAttachmentAccessor<APosition> aaPos(obj->get_grid(), aPosition);
+		CalculateCenter(center, obj->get_selector(), aaPos);
+
+		vector3 d;
+		VecSubtract(d, nc, center);
+		TranslateSelection(obj->get_selector(), d, aaPos);
+
+
+		obj->geometry_changed();
+	}
+
+	const char* get_name()		{return "Coordinates";}
+	const char* get_tooltip()	{return "Coordinates of the center of the current selection";}
+	const char* get_group()		{return "Coordinate Transform";}
+
+	ToolWidget* get_dialog(QWidget* parent)
+	{
+		ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
+								IDB_APPLY | IDB_OK | IDB_CLOSE);
+
+		dlg->addSpinBox(tr("x:"), -1.e+9, 1.e+9, 0, 1, 9);
+		dlg->addSpinBox(tr("y:"), -1.e+9, 1.e+9, 0, 1, 9);
+		dlg->addSpinBox(tr("z:"), -1.e+9, 1.e+9, 0, 1, 9);
+
+		connect(app::getActiveScene(), SIGNAL(geometry_changed()), dlg, SLOT(refreshContents()));
+		connect(app::getActiveScene(), SIGNAL(selection_changed()), dlg, SLOT(refreshContents()));
+		connect(app::getMainWindow(), SIGNAL(activeObjectChanged()), dlg, SLOT(refreshContents()));
+
+		return dlg;
+	}
+
+	virtual void refresh_dialog(QWidget* dialog)
+	{
+		ToolWidget* dlg = dynamic_cast<ToolWidget*>(dialog);
+		if(!dlg)
+			return;
+
+		LGObject* obj = app::getActiveObject();
+		vector3 center(0, 0, 0);
+		if(obj){
+		//	calculate the center of the current selection
+			Grid::VertexAttachmentAccessor<APosition> aaPos(obj->get_grid(), aPosition);
+			CalculateCenter(center, obj->get_selector(), aaPos);
+		}
+
+		dlg->setNumber(0, center.x);
+		dlg->setNumber(1, center.y);
+		dlg->setNumber(2, center.z);
+	}
+};
+
+
 class ToolMove : public ITool
 {
 public:
@@ -658,6 +725,7 @@ void RegisterCoordinateTransformTools(ToolManager* toolMgr)
 {
 	toolMgr->set_group_icon("Coordinate Transform", ":images/tool_transform.png");
 
+	toolMgr->register_tool(new ToolCoordinates);
 	toolMgr->register_tool(new ToolSetPivotToCenter);
 	toolMgr->register_tool(new ToolSetPivot);
 

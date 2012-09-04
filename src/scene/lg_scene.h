@@ -164,6 +164,7 @@ class LGScene : public TScene<LGObject>
 
 	signals:
 		void geometry_changed();
+		void selection_changed();
 
 	public slots:
 		virtual void visibility_changed(ISceneObject* pObj);
@@ -172,6 +173,7 @@ class LGScene : public TScene<LGObject>
 	protected slots:
 		void object_geometry_changed();
 		void object_visuals_changed();
+		void object_selection_changed();
 		void object_properties_changed();
 
 	protected:
