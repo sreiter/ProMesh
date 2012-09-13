@@ -1369,7 +1369,7 @@ void LGScene::render_volumes(LGObject* pObj)
 			if((volBegin == volEnd) && m_drawFaces){
 			//	the face has to be rendered, since it is not adjacent to any volume
 				int si = sh.get_subset_index(f);
-				if(si != -1)
+				if((si != -1) && pObj->subset_is_visible(si))
 					shFace.assign_subset(f, si);
 			}
 			else{

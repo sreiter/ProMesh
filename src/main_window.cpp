@@ -602,7 +602,7 @@ bool MainWindow::saveToFile()
 									this,
 									tr("Save Geometry"),
 									path,
-									tr("geometry files (*.ugx *ncdf *.lgb *.obj *.txt *.ele)"));
+									tr("geometry files (*.ugx *.ncdf *.lgb *.obj *.txt *.ele)"));
 
 		if(!fileName.isEmpty())
 		{
@@ -626,7 +626,7 @@ bool MainWindow::saveToFile()
 		else
 		{
 			str.append("make sure that the selected filename has a valid suffix.\n");
-			str.append("valid suffixes are: .ncdf .lgb, .obj, .txt");
+			str.append("valid suffixes are: *.ugx *.ncdf *.lgb *.obj *.txt *.ele");
 		}
 		msg.setText(str);
 		msg.exec();
@@ -674,13 +674,13 @@ bool MainWindow::exportToUG3()
 
 					UG_LOG("Exporting to UG3 3D ... ");
 				//	export the grid
-					saveFailed = !ExportGridToUG(g, shFaces, shVolumes, prefix.toAscii().constData(),
+					saveFailed = !ExportGridToUG(g, shFaces, shVolumes, prefix.toLocal8Bit().constData(),
 												"tmpLGMName", "tmpProblemName", 0);
 				}
 				else{
 					UG_LOG("Exporting to UG3 2D ... ");
 				//	export the grid
-					saveFailed = !ExportGridToUG_2D(g, prefix.toAscii().constData(),
+					saveFailed = !ExportGridToUG_2D(g, prefix.toLocal8Bit().constData(),
 													"tmpLGMName", "tmpProblemName", 0, &sh);
 				}
 
