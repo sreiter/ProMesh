@@ -11,6 +11,7 @@ Changes and additions:
 - Improved error output if Remeshing->Triangulation->TriangleFill fails.
 - Rearranged some tools to improve usablility of the tool browser.
 - Added Subsets->JoinSubsets
+- Added "append subsets at end" to Remeshing->Tetgen->Tetrahedralize.
 
 Fixes:
 - Fixed small bug occurring on Ubuntu, where the tool-button of a tool-group

@@ -313,32 +313,44 @@ class ToolTetrahedralize : public ITool
 {
 public:
 	void execute(LGObject* obj, QWidget* widget){
+		using namespace ug;
 		ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 		number quality = 5;
 		int preserveOpt = 0;
 		bool separateVolumes = true;
+		bool appendSubsetsAtEnd = true;
+		
 		if(dlg){
 			quality = (number)dlg->to_double(0);
 			preserveOpt = dlg->to_int(1);
 			separateVolumes = dlg->to_bool(2);
+			appendSubsetsAtEnd = dlg->to_bool(3);
 		}
 
 		bool preserveOuter = (preserveOpt >= 1);
 		bool preserveAll = (preserveOpt == 2);
 
+		Grid& grid = obj->get_grid();
+		SubsetHandler& sh = obj->get_subset_handler();
 		UG_LOG("tetrahedralizing using 'tetgen' by Hang Si... ");
-		ug::Tetrahedralize(obj->get_grid(),
-							obj->get_subset_handler(),
-							quality, preserveOuter, preserveAll,
-							ug::aPosition);
-		UG_LOG("done. Created " << obj->get_grid().num<ug::Tetrahedron>()
-				<< " tetrahedrons.\n");
+		ug::Tetrahedralize(grid, sh, quality, preserveOuter, preserveAll, aPosition);
+		UG_LOG("done. Created " << grid.num<ug::Tetrahedron>() << " tetrahedrons.\n");
 
+		int oldNumSubsets = sh.num_subsets();
 		if(separateVolumes){
-			ug::SeparateSubsetsByLowerDimSubsets<ug::Volume>(obj->get_grid(),
-															 obj->get_subset_handler());
+			ug::SeparateSubsetsByLowerDimSubsets<ug::Volume>(grid, sh,
+															 appendSubsetsAtEnd);
+		}
+		else if(appendSubsetsAtEnd){
+		//todo:	only assign newly generated tetrahedrons.
+			sh.assign_subset(grid.begin<ug::Tetrahedron>(),
+							 grid.end<ug::Tetrahedron>(), sh.num_subsets());
 		}
 
+	//	assign a subset name
+		for(int i = oldNumSubsets; i < sh.num_subsets(); ++i)
+			sh.subset_info(i).name = "tetrahedrons";
+			
 		obj->geometry_changed();
 	}
 
@@ -355,7 +367,8 @@ public:
 		entries.push_back(tr("outer boundary faces"));
 		entries.push_back(tr("all faces"));
 		dlg->addComboBox("preserve:", entries, 0);
-		dlg->addCheckBox(tr("separate volume subsets:"), true);
+		dlg->addCheckBox(tr("separate volume subsets"), true);
+		dlg->addCheckBox(tr("append subsets at end"), true);
 		return dlg;
 	}
 };
