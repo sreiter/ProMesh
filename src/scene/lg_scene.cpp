@@ -1366,13 +1366,17 @@ void LGScene::render_volumes(LGObject* pObj)
 			Grid::AssociatedVolumeIterator volEnd = grid.associated_volumes_end(f);
 			Grid::AssociatedVolumeIterator volBegin = grid.associated_volumes_begin(f);
 
-			if((volBegin == volEnd) && m_drawFaces){
+			int fSubInd = sh.get_subset_index(f);
+			bool faceIsVisible = (fSubInd != -1) && m_drawFaces && pObj->subset_is_visible(fSubInd);
+			
+			if((volBegin == volEnd)){
 			//	the face has to be rendered, since it is not adjacent to any volume
-				int si = sh.get_subset_index(f);
-				if((si != -1) && pObj->subset_is_visible(si))
-					shFace.assign_subset(f, si);
+				if(faceIsVisible)
+					shFace.assign_subset(f, fSubInd);
 			}
 			else{
+				int numVisVols = 0;
+				
 				for(Grid::AssociatedVolumeIterator vIter = volBegin;
 					vIter != volEnd; ++vIter)
 				{
@@ -1380,6 +1384,7 @@ void LGScene::render_volumes(LGObject* pObj)
 						continue;
 
 					int vSubInd = sh.get_subset_index(*vIter);
+				
 					if(vSubInd == -1)
 						continue;
 
@@ -1390,6 +1395,7 @@ void LGScene::render_volumes(LGObject* pObj)
 					//	uncomment the following line for exact clipping tests.
 						if(!clip_volume(*vIter, aaSphereVOL[*vIter], aaPos))
 						{
+							++numVisVols;
 						//	if newSubInd has already been assigned, we'll reset it to 0
 							if(newSubInd != -1){
 								newSubInd = -1;
@@ -1403,8 +1409,13 @@ void LGScene::render_volumes(LGObject* pObj)
 					}
 				}
 
-			//	if newSubInd != -1 then the face has to be drawn.
-				if(newSubInd != -1){
+				//	if the face and volume subsets do not match, and if the face
+				//	is visible, we'll simply draw the face itself.
+				if((numVisVols < 2) && faceIsVisible){
+					shFace.assign_subset(f, fSubInd);
+				}
+				else if(newSubInd != -1){
+				//	if newSubInd != -1 then the face has to be drawn.
 					shFace.assign_subset(f, newSubInd);
 				//	mark the visible volume as rendered
 					if(visVol){

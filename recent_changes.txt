@@ -12,6 +12,7 @@ Changes and additions:
 - Rearranged some tools to improve usablility of the tool browser.
 - Added Subsets->JoinSubsets
 - Added "append subsets at end" to Remeshing->Tetgen->Tetrahedralize.
+- Improved face visualization during volume rendering.
 
 Fixes:
 - Fixed small bug occurring on Ubuntu, where the tool-button of a tool-group
