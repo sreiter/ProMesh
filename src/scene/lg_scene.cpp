@@ -1413,6 +1413,8 @@ void LGScene::render_volumes(LGObject* pObj)
 				//	is visible, we'll simply draw the face itself.
 				if((numVisVols < 2) && faceIsVisible){
 					shFace.assign_subset(f, fSubInd);
+					if(visVol)
+						aaRenderedVOL[visVol] = true;
 				}
 				else if(newSubInd != -1){
 				//	if newSubInd != -1 then the face has to be drawn.
