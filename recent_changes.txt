@@ -2,6 +2,15 @@ Recent changes:
 
 
 -------------------------------------------------------------------------------
+v 4.0.4
+Changes and additions:
+- Added CoordinateTransform->NormalMove, which moves vertices along their normals.
+
+Fixes:
+
+
+
+-------------------------------------------------------------------------------
 v 4.0.3
 Changes and additions:
 - CoordinateTransform->Coordinates Now monitors the center of the selection in

@@ -154,6 +154,57 @@ public:
 	}
 };
 
+
+class ToolNormalMove : public ITool
+{
+public:
+	void execute(LGObject* obj, QWidget* widget){
+		ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
+
+		number offset = 0.1;
+
+		if(dlg){
+			offset = dlg->to_double(0);
+		}
+
+		Grid& grid = obj->get_grid();
+		Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
+		Grid::FaceAttachmentAccessor<ANormal> aaNorm(grid, aNormal);
+		Selector& sel = obj->get_selector();
+
+		Grid::face_traits::secure_container faces;
+
+		for(VertexBaseIterator iter = sel.begin<VertexBase>();
+			iter != sel.end<VertexBase>(); ++iter)
+		{
+			vector3& p = aaPos[*iter];
+		//	calculate vertex normal by averaging face normals
+			vector3 n(0, 0, 0);
+			grid.associated_elements(faces, *iter);
+			for(size_t i = 0; i < faces.size(); ++i)
+				VecAdd(n, n, aaNorm[faces[i]]);
+
+			VecNormalize(n, n);
+
+			VecScaleAdd(p, 1., p, offset, n);
+		}
+
+		obj->geometry_changed();
+	}
+
+	const char* get_name()		{return "Normal Move";}
+	const char* get_tooltip()	{return "Moves selected vertices along their normal.";}
+	const char* get_group()		{return "Coordinate Transform";}
+
+	ToolWidget* get_dialog(QWidget* parent){
+		ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
+								IDB_APPLY | IDB_OK | IDB_CLOSE);
+
+		dlg->addSpinBox(tr("offset:"), -1.e+9, 1.e+9, 0.1, 0.11, 9);
+		return dlg;
+	}
+};
+
 class ToolScale : public ITool
 {
 public:
@@ -730,6 +781,7 @@ void RegisterCoordinateTransformTools(ToolManager* toolMgr)
 	toolMgr->register_tool(new ToolSetPivot);
 
 	toolMgr->register_tool(new ToolMove);
+	toolMgr->register_tool(new ToolNormalMove);
 	toolMgr->register_tool(new ToolScale);
 	toolMgr->register_tool(new ToolRotate);
 	toolMgr->register_tool(new ToolTransform);
