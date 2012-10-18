@@ -100,6 +100,11 @@ void View3D::paintGL()
 	//	update near and far clipping planes
 		const cam::vector3* vFrom = m_camera.get_from();
 		const cam::vector3* vTo = m_camera.get_to();
+		cam::vector3 camDir = m_camera.get_to_dir();
+		cam::vector3 camUp = m_camera.get_up_dir();
+		m_pRenderer->set_camera_parameters(vFrom->x, vFrom->y, vFrom->z,
+										   camDir.x, camDir.y, camDir.z,
+										   camUp.x, camUp.y, camUp.z);
 
 		m_pRenderer->get_clip_distance_estimate(m_zNear, m_zFar,
 												vFrom->x, vFrom->y, vFrom->z,

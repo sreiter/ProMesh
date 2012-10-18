@@ -31,6 +31,11 @@ class IRenderer3D
 
 	///	the camara transform
 		virtual void set_transform(float* mat) = 0;
+		
+	///	the camera parameters
+		virtual void set_camera_parameters(float fromX, float fromY, float fromZ,
+										   float dirX, float dirY, float dirZ,
+										   float upX, float upY, float upZ) = 0;
 
 	///	the perspective transform
 		virtual void set_perspective(float fovy, int viewWidth, int viewHeight,

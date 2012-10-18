@@ -11,6 +11,9 @@ using namespace std;
 using namespace ug;
 
 LGScene::LGScene() :
+	m_camFrom(0, 0, 0),
+	m_camDir(0, 0, -1),
+	m_camUp(0, 1, 0),
 	m_aHidden(true),
 	m_drawVertices(true),
 	m_drawEdges(true),
@@ -31,6 +34,15 @@ void LGScene::set_draw_mode_front(unsigned int drawMode)
 	emit visuals_updated();
 }
 
+ug::Plane LGScene::near_clip_plane()
+{
+	vector3 v;
+	VecNormalize(v, m_camDir);
+	VecScale(v, v, m_zNear);
+	VecAdd(v, v, m_camFrom);
+	return Plane(m_camFrom, m_camDir);
+}
+
 void LGScene::set_draw_mode_back(unsigned int drawMode)
 {
 	m_drawModeBack = drawMode;
@@ -40,6 +52,15 @@ void LGScene::set_draw_mode_back(unsigned int drawMode)
 void LGScene::set_transform(float* mat)
 {
 	memcpy(m_matTransform, mat, sizeof(float)*16);
+}
+
+void LGScene::set_camera_parameters(float fromX, float fromY, float fromZ,
+								   float dirX, float dirY, float dirZ,
+								   float upX, float upY, float upZ)
+{
+	m_camFrom = vector3(fromX, fromY, fromZ);
+	m_camDir = vector3(dirX, dirY, dirZ);
+	m_camUp = vector3(upX, upY, upZ);
 }
 
 void LGScene::set_perspective(float fovy, int viewWidth, int viewHeight,
@@ -2067,24 +2088,29 @@ get_vertices_in_rect(std::vector<VertexBase*>& vrtsOut,
 		glGetIntegerv(GL_VIEWPORT, viewport);
 
 		GLdouble vx, vy, vz;
-
+		
 		Grid& grid = obj->get_grid();
 		Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
 		Grid::VertexAttachmentAccessor<ABool> aaRenderedVRT(grid, m_aRendered);
 
+		Plane plane = near_clip_plane();
 		for(VertexBaseIterator iter = grid.begin<VertexBase>();
 			iter != grid.end<VertexBase>(); ++iter)
 		{
 			VertexBase* vrt = *iter;
 			if(aaRenderedVRT[vrt]){
 				vector3& pos = aaPos[vrt];
+				
+				if(PlanePointTest(plane, pos) == RPI_INSIDE)
+					continue;
+					
 				GLdouble px = pos.x;
 				GLdouble py = pos.y;
 				GLdouble pz = pos.z;
 
 				gluProject(px, py, pz, modelMat, projMat,
-						   viewport, &vx, &vy, &vz);
-
+		   				   viewport, &vx, &vy, &vz);
+				
 				if(vx >= xMin && vx <= xMax && vy >= yMin && vy <= yMax && vz >= 0){
 					vrtsOut.push_back(vrt);
 				}
@@ -2119,7 +2145,8 @@ get_edges_in_rect(std::vector<EdgeBase*>& edgesOut,
 		Grid& grid = obj->get_grid();
 		Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
 		Grid::EdgeAttachmentAccessor<ABool> aaRenderedEDGE(grid, m_aRendered);
-
+		Plane plane = near_clip_plane();
+		
 		for(EdgeBaseIterator iter = grid.begin<EdgeBase>();
 			iter != grid.end<EdgeBase>(); ++iter)
 		{
@@ -2131,6 +2158,12 @@ get_edges_in_rect(std::vector<EdgeBase*>& edgesOut,
 			for(size_t i = 0; i < e->num_vertices(); ++i){
 				VertexBase* vrt = e->vertex(i);
 				vector3& pos = aaPos[vrt];
+				
+				if(PlanePointTest(plane, pos) == RPI_INSIDE){
+					allIn = false;
+					break;
+				}
+					
 				GLdouble px = pos.x;
 				GLdouble py = pos.y;
 				GLdouble pz = pos.z;
@@ -2175,7 +2208,8 @@ get_faces_in_rect(std::vector<Face*>& facesOut,
 		Grid& grid = obj->get_grid();
 		Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
 		Grid::FaceAttachmentAccessor<ABool> aaRenderedFACE(grid, m_aRendered);
-
+		Plane plane = near_clip_plane();
+		
 		for(FaceIterator iter = grid.begin<Face>();
 			iter != grid.end<Face>(); ++iter)
 		{
@@ -2187,6 +2221,11 @@ get_faces_in_rect(std::vector<Face*>& facesOut,
 			for(size_t i = 0; i < f->num_vertices(); ++i){
 				VertexBase* vrt = f->vertex(i);
 				vector3& pos = aaPos[vrt];
+				if(PlanePointTest(plane, pos) == RPI_INSIDE){
+					allIn = false;
+					break;
+				}
+				
 				GLdouble px = pos.x;
 				GLdouble py = pos.y;
 				GLdouble pz = pos.z;
@@ -2231,7 +2270,8 @@ get_volumes_in_rect(std::vector<Volume*>& volsOut,
 		Grid& grid = obj->get_grid();
 		Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
 		Grid::VolumeAttachmentAccessor<ABool> aaRenderedVOL(grid, m_aRendered);
-
+		Plane plane = near_clip_plane();
+		
 		for(VolumeIterator iter = grid.begin<Volume>();
 			iter != grid.end<Volume>(); ++iter)
 		{
@@ -2248,6 +2288,11 @@ get_volumes_in_rect(std::vector<Volume*>& volsOut,
 			for(size_t i = 0; i < v->num_vertices(); ++i){
 				VertexBase* vrt = v->vertex(i);
 				vector3& pos = aaPos[vrt];
+				if(PlanePointTest(plane, pos) == RPI_INSIDE){
+					allIn = false;
+					break;
+				}
+				
 				GLdouble px = pos.x;
 				GLdouble py = pos.y;
 				GLdouble pz = pos.z;
@@ -2297,7 +2342,8 @@ get_edges_in_rect_cut(std::vector<EdgeBase*>& edgesOut,
 		Grid& grid = obj->get_grid();
 		Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
 		Grid::EdgeAttachmentAccessor<ABool> aaRenderedEDGE(grid, m_aRendered);
-
+		Plane plane = near_clip_plane();
+		
 		for(EdgeBaseIterator iter = grid.begin<EdgeBase>();
 			iter != grid.end<EdgeBase>(); ++iter)
 		{
@@ -2309,6 +2355,14 @@ get_edges_in_rect_cut(std::vector<EdgeBase*>& edgesOut,
 			VertexBase* vrt2 = e->vertex(1);
 			vector3& pos1 = aaPos[vrt1];
 			vector3& pos2 = aaPos[vrt2];
+			
+		//	at least one of the vertices has to lie in front of the clip plane
+			if((PlanePointTest(plane, pos1) == RPI_INSIDE)
+			   && (PlanePointTest(plane, pos2) == RPI_INSIDE))
+			{
+				continue;
+			}
+			
 			GLdouble px1 = pos1.x;
 			GLdouble py1 = pos1.y;
 			GLdouble pz1 = pos1.z;
@@ -2371,7 +2425,8 @@ get_faces_in_rect_cut(std::vector<Face*>& facesOut,
 		SubsetHandler& sh = obj->get_subset_handler();
 		Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
 		Grid::FaceAttachmentAccessor<ABool> aaRenderedFACE(grid, m_aRendered);
-
+		Plane plane = near_clip_plane();
+		
 		for(int si = 0; si < sh.num_subsets(); ++si)
 		{
 			if(!obj->subset_is_visible(si))
@@ -2387,9 +2442,16 @@ get_faces_in_rect_cut(std::vector<Face*>& facesOut,
 				assert((f->num_vertices() == 3 || f->num_vertices() == 4) && "unsupported number of vertices");
 
 				vector3 projPos[4];
+				bool oneLiesInFront = false;
+			
 				for(size_t i = 0; i < f->num_vertices(); ++i){
 					VertexBase* vrt = f->vertex(i);
 					vector3& pos = aaPos[vrt];
+					
+				//	at least one of the vertices has to lie in front of the clip plane
+					if(PlanePointTest(plane, pos) == RPI_OUTSIDE)
+						oneLiesInFront = true;
+											
 					GLdouble px = pos.x;
 					GLdouble py = pos.y;
 					GLdouble pz = pos.z;
@@ -2403,6 +2465,8 @@ get_faces_in_rect_cut(std::vector<Face*>& facesOut,
 					projPos[i].z = vz;
 				}
 
+				if(!oneLiesInFront)
+					continue;
 
 				bool intersecting = TriangleBoxIntersection(
 										projPos[0], projPos[1], projPos[2],
@@ -2449,7 +2513,8 @@ get_volumes_in_rect_cut(std::vector<Volume*>& volsOut,
 		Grid& grid = obj->get_grid();
 		SubsetHandler& sh = obj->get_subset_handler();
 		Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
-
+		Plane plane = near_clip_plane();
+		
 		grid.begin_marking();
 
 		for(FaceIterator iter = grid.begin<Face>();
@@ -2460,9 +2525,14 @@ get_volumes_in_rect_cut(std::vector<Volume*>& volsOut,
 			assert((f->num_vertices() == 3 || f->num_vertices() == 4) && "unsupported number of vertices");
 
 			vector3 projPos[4];
+			bool oneLiesInFront = false;
 			for(size_t i = 0; i < f->num_vertices(); ++i){
 				VertexBase* vrt = f->vertex(i);
 				vector3& pos = aaPos[vrt];
+			//	at least one of the vertices has to lie in front of the clip plane
+				if(PlanePointTest(plane, pos) == RPI_OUTSIDE)
+					oneLiesInFront = true;
+				
 				GLdouble px = pos.x;
 				GLdouble py = pos.y;
 				GLdouble pz = pos.z;
@@ -2476,6 +2546,8 @@ get_volumes_in_rect_cut(std::vector<Volume*>& volsOut,
 				projPos[i].z = vz;
 			}
 
+			if(!oneLiesInFront)
+				continue;
 
 			bool intersecting = TriangleBoxIntersection(
 									projPos[0], projPos[1], projPos[2],

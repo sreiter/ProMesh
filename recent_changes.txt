@@ -8,6 +8,7 @@ Changes and additions:
 
 Fixes:
 - Fixed Remeshing->Refinement->RefineSmooth.
+- Fixed Box-Selection: Elements behind the camera won't be selected no longer.
 
 
 

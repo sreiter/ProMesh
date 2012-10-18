@@ -119,6 +119,11 @@ class LGScene : public TScene<LGObject>
 	///	the camara transform. mat is an array of 16 floats.
 		virtual void set_transform(float* mat);
 
+	///	the camera parameters
+		virtual void set_camera_parameters(float fromX, float fromY, float fromZ,
+										   float dirX, float dirY, float dirZ,
+										   float upX, float upY, float upZ);
+
 	///	the perspective transform
 		virtual void set_perspective(float fovy, int viewWidth, int viewHeight,
 									float zNear, float zFar);
@@ -177,6 +182,8 @@ class LGScene : public TScene<LGObject>
 		void object_properties_changed();
 
 	protected:
+		ug::Plane near_clip_plane();
+		
 		void calculate_bounding_spheres(LGObject* pObj);
 
 		void render_skeleton(LGObject* pObj);
@@ -250,7 +257,10 @@ class LGScene : public TScene<LGObject>
 		float m_aspectRatio;
 		float m_zNear;
 		float m_zFar;
-
+		ug::vector3		m_camFrom;
+		ug::vector3		m_camDir;
+		ug::vector3		m_camUp;
+		
 	//	attachments
 		ug::ASphere		m_aSphere;
 		ug::AInt		m_aInt;
