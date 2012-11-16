@@ -509,14 +509,14 @@ void LGScene::draw()
 									glDepthMask(false);
 									glEnable(GL_BLEND);
 									glEnable(GL_LINE_SMOOTH);
-									glLineWidth(0.5f);
+									glLineWidth(1.f);
 								}
 								else
 								{
 									glDepthMask(true);
 									glDisable(GL_BLEND);
 									glDisable(GL_LINE_SMOOTH);
-									glLineWidth(1);
+									glLineWidth(1.f);
 								}
 								glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 

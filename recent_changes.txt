@@ -2,6 +2,14 @@ Recent changes:
 
 
 -------------------------------------------------------------------------------
+v 4.0.5
+Changes and additions:
+
+Fixes:
+
+
+
+-------------------------------------------------------------------------------
 v 4.0.4
 Changes and additions:
 - Added CoordinateTransform->NormalMove, which moves vertices along their normals.

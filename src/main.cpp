@@ -23,7 +23,7 @@ class MyApplication : public QApplication
 				if(foe){
 					QString str = foe->file();
 					if(m_pMainWindow){
-						if(m_pMainWindow->load_grid_from_file(str.toAscii().data()))
+						if(m_pMainWindow->load_grid_from_file(str.toLocal8Bit().constData()))
 						{
 							m_pMainWindow->settings().setValue("file-path",
 												QFileInfo(str).absolutePath());
@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
 	pMainWindow->init();
 
 	myApp.setMainWindow(pMainWindow);
-	pMainWindow->setWindowTitle("ProMesh 4.0.4      (c) Sebastian Reiter    s.b.reiter@googlemail.com");
+	pMainWindow->setWindowTitle("ProMesh 4.0.5*      (c) Sebastian Reiter    s.b.reiter@googlemail.com");
 
 	//pMainWindow->resize(1024, 768);
 	pMainWindow->show();
