@@ -237,6 +237,9 @@ class ToolCreateVertex : public ITool
 			if(obj == app::getActiveObject())
 				newSubsetIndex = app::getActiveSubsetIndex();
 
+			if(newSubsetIndex < 0)
+				newSubsetIndex = 0;
+
 			CoordinatesWidget* dlg = dynamic_cast<CoordinatesWidget*>(widget);
 			if(dlg){
 				Grid& grid = obj->get_grid();
@@ -287,6 +290,9 @@ class ToolCreateEdge : public ITool
 			if(obj == app::getActiveObject())
 				newSubsetIndex = app::getActiveSubsetIndex();
 
+			if(newSubsetIndex < 0)
+				newSubsetIndex = 0;
+
 			size_t numVrts = sel.num<ug::VertexBase>();
 			vector<ug::VertexBase*> vrts;
 			vrts.reserve(numVrts);
@@ -331,6 +337,9 @@ class ToolCreateFace : public ITool
 			int newSubsetIndex = 0;
 			if(obj == app::getActiveObject())
 				newSubsetIndex = app::getActiveSubsetIndex();
+
+			if(newSubsetIndex < 0)
+				newSubsetIndex = 0;
 
 			size_t numVrts = sel.num<ug::VertexBase>();
 			vector<ug::VertexBase*> vrts;

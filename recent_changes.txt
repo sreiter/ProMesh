@@ -9,6 +9,9 @@ Changes and additions:
 
 Fixes:
 - Remeshing->Extrusion->ExtrudeCylinders now works as expected
+- GridGeneration-New Vertex/Edge/Face no longer assigns to subset -1 if no
+  subset is selected.
+  
 
 
 -------------------------------------------------------------------------------

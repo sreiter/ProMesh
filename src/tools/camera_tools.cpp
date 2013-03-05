@@ -16,7 +16,7 @@ class ToolCenterObject : public ITool
 								cam::vector3(s.get_center().x,
 											s.get_center().y,
 											s.get_center().z),
-								s.get_radius() * 4.f);
+								s.get_radius() * 4.f + 0.001);
 		}
 
 		const char* get_name()	{return "Center Object";}
