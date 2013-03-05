@@ -308,6 +308,58 @@ class ToolQualityGridGeneration : public ITool
 };
 
 
+class ToolAdaptSurfaceToCylinder : public ITool
+{
+	public:
+		void execute(LGObject* obj, QWidget* widget){
+			using namespace ug;
+			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
+			double radius = 1.;
+			double threshold = 0.1;
+
+			if(dlg){
+				radius = dlg->to_double(0);
+				threshold = dlg->to_double(1);
+			}
+
+			Grid& g = obj->get_grid();
+			ug::Selector& sel = obj->get_selector();
+			ug::Grid::VertexAttachmentAccessor<ug::APosition> aaPos(g, ug::aPosition);
+
+		//	store all source-vertices in a list
+			vector<ug::VertexBase*> vrts;
+			vrts.assign(sel.begin<ug::VertexBase>(), sel.end<ug::VertexBase>());
+
+		//	iterate over selected vertices
+			for(vector<ug::VertexBase*>::iterator iter = vrts.begin();
+				iter != vrts.end(); ++iter)
+			{
+				ug::VertexBase* vrt = *iter;
+				ug::vector3 n;
+				ug::CalculateVertexNormal(n, g, vrt, aaPos);
+
+				if(!ug::AdaptSurfaceGridToCylinder(sel, g, vrt, n, radius, threshold))
+				{
+					UG_LOG("AdaptSurfaceGridToCylinder failed for the vertex at " << aaPos[vrt] << "\n");
+				}
+			}
+
+			obj->geometry_changed();
+		}
+
+		const char* get_name()		{return "Adapt Surface to Cylinder";}
+		const char* get_tooltip()	{return "Introduces edges in a grid around a selected vertex which roughly correspond to the intersection of a cylinder with the surface.";}
+		const char* get_group()		{return "Remeshing | Triangulation";}
+
+		ToolWidget* get_dialog(QWidget* parent){
+			ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
+											IDB_APPLY | IDB_OK | IDB_CLOSE);
+			dlg->addSpinBox(tr("radius:"), 0, 1e+10, 1., 0.1, 9);
+			dlg->addSpinBox(tr("rim snap threshold:"), 0, 1e+10, 0.01, 0.01, 9);
+			return dlg;
+		}
+};
+
 
 class ToolTetrahedralize : public ITool
 {
@@ -627,12 +679,14 @@ public:
 		ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 		number height = 1.;
 		number radius = 1.;
+		number snapThreshold = 0.1;
 		bool createVolumes = false;
 
 		if(dlg){
 			height = (number)dlg->to_double(0);
 			radius = (number)dlg->to_double(1);
-			createVolumes = dlg->to_bool(2);
+			snapThreshold = (number)dlg->to_double(2);
+			createVolumes = dlg->to_bool(3);
 		}
 
 		ug::Grid& g = obj->get_grid();
@@ -653,8 +707,8 @@ public:
 			ug::CalculateVertexNormal(n, g, vrt, aaPos);
 
 			int numSubs = sh.num_subsets();
-			if(!ug::ExtrudeCylinder(g, sh, vrt, n, height, radius, aaPos,
-									numSubs, numSubs + 1))
+			if(!ug::ExtrudeCylinder(g, sh, vrt, n, height, radius, snapThreshold,
+									aaPos, numSubs, numSubs + 1))
 			{
 				UG_LOG("Cylinder-Extrude failed for the vertex at " << aaPos[vrt] << "\n");
 			}
@@ -672,6 +726,7 @@ public:
 										IDB_APPLY | IDB_OK | IDB_CANCEL);
 		dlg->addSpinBox("height: ", -1.e+9, 1.e+9, 1, 1, 9);
 		dlg->addSpinBox("radius: ", -1.e+9, 1.e+9, 1, 1, 9);
+		dlg->addSpinBox(tr("rim snap threshold:"), 0, 1e+10, 0.01, 0.01, 9);
 		dlg->addCheckBox("create volumes: ", false);
 		return dlg;
 	}
@@ -687,6 +742,7 @@ void RegisterRemeshingTools(ToolManager* toolMgr)
 	toolMgr->register_tool(new ToolTriangleFill_SweepLine);
 	toolMgr->register_tool(new ToolAdjustEdgeLength);
 	toolMgr->register_tool(new ToolQualityGridGeneration);
+	toolMgr->register_tool(new ToolAdaptSurfaceToCylinder);
 
 	toolMgr->register_tool(new ToolTetrahedralize);
     toolMgr->register_tool(new ToolAssignVolumeConstraints);

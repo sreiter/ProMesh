@@ -658,6 +658,29 @@ class ToolSeparateDegeneratedBoundaryFaceSubsets : public ITool
 		}
 };
 
+class ToolAssignSubsetsByElementType : public ITool
+{
+	public:
+		void execute(LGObject* obj, QWidget*){
+			ug::SubsetHandler& sh = obj->get_subset_handler();
+
+			ug::AssignSubsetsByElementType(sh);
+
+			int i = 0;
+			while(i < sh.num_subsets()){
+				if(sh.empty(i))
+					sh.erase_subset(i);
+				else
+					++i;
+			}
+
+			obj->geometry_changed();
+		}
+
+		const char* get_name()	{return "Assign Subsets By Element Type";}
+		const char* get_tooltip()	{return "Assigns elemets to subsets based on their concrete type.";}
+		const char* get_group()		{return "Subsets";}
+};
 
 
 void RegisterSubsetTools(ToolManager* toolMgr)
@@ -681,5 +704,6 @@ void RegisterSubsetTools(ToolManager* toolMgr)
 	toolMgr->register_tool(new ToolSeparateIrregularManifoldSubsets);
 	toolMgr->register_tool(new ToolSeparateDegeneratedBoundaryFaceSubsets);
 	toolMgr->register_tool(new ToolAssignSubsetColors);
+	toolMgr->register_tool(new ToolAssignSubsetsByElementType);
 	toolMgr->register_tool(new ToolEraseEmptySubsets);
 }

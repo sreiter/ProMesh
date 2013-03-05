@@ -4,9 +4,11 @@ Recent changes:
 -------------------------------------------------------------------------------
 v 4.0.5
 Changes and additions:
+- Added Subsets->AssignSubsetsByElementType
+- Added Remeshing->Triangulation->AdaptSurfaceToCylinder
 
 Fixes:
-
+- Remeshing->Extrusion->ExtrudeCylinders now works as expected
 
 
 -------------------------------------------------------------------------------
