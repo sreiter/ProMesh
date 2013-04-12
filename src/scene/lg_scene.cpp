@@ -1368,7 +1368,8 @@ void LGScene::render_volumes(LGObject* pObj)
 
 //	preprocessing step:
 //	sort all faces in a subset handler
-	SubsetHandler shFace(grid);
+	SubsetHandler& shFace = pObj->m_shFacesForVolRendering;
+	shFace.clear();
 
 //	too slow too!
 //	iterate through all faces

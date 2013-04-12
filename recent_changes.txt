@@ -2,10 +2,22 @@ Recent changes:
 
 
 -------------------------------------------------------------------------------
+v 4.0.6
+Changes and additions:
+- Renamed Remeshing->QualityGridGeneration to Remeshing->Retriangulate
+- Improved volume rendering speed and reduced involved memory consumption.
+
+Fixes:
+- Fixed Subsets->JoinSubsets
+
+
+
+-------------------------------------------------------------------------------
 v 4.0.5
 Changes and additions:
 - Added Subsets->AssignSubsetsByElementType
 - Added Remeshing->Triangulation->AdaptSurfaceToCylinder
+- Added optional fill for GridGeneration->Geometries->Plane
 
 Fixes:
 - Remeshing->Extrusion->ExtrudeCylinders now works as expected

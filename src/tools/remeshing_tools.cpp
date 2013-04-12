@@ -210,7 +210,44 @@ class ToolTriangleFill_SweepLine : public ITool
 											IDB_APPLY | IDB_OK | IDB_CANCEL);
 			dlg->addSpinBox("new subset index:", -1, 1.e+9, 0, 1, 0);
 			dlg->addCheckBox(tr("quality grid generation"), true);
-			dlg->addSpinBox(tr("min angle:"), 0, 30, 0, 1, 9);
+			dlg->addSpinBox(tr("min angle:"), 0, 30, 20, 1, 9);
+			return dlg;
+		}
+};
+
+
+class ToolRetriangulate : public ITool
+{
+	public:
+		void execute(LGObject* obj, QWidget* widget){
+			using namespace ug;
+			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
+
+			number minAngle = 0;
+			if(dlg){
+				minAngle = dlg->to_double(0);
+			}
+
+			Grid& g = obj->get_grid();
+			Selector& sel = obj->get_selector();
+			SubsetHandler& creases = obj->get_crease_handler();
+
+			Grid::AttachmentAccessor<VertexBase, APosition> aaPos(g, aPosition);
+
+			QualityGridGeneration(g, sel.begin<Triangle>(), sel.end<Triangle>(),
+						 	 	  aaPos, minAngle, IsNotInSubset(creases, -1));
+
+			obj->geometry_changed();
+		}
+
+		const char* get_name()		{return "Retriangulate";}
+		const char* get_tooltip()	{return "Inserts vertices as required and performs Constrained Delaunay triangulation.";}
+		const char* get_group()		{return "Remeshing | Triangulation";}
+
+		ToolWidget* get_dialog(QWidget* parent){
+			ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
+											IDB_APPLY | IDB_OK | IDB_CLOSE);
+			dlg->addSpinBox(tr("min angle:"), 0, 30, 20, 1, 9);
 			return dlg;
 		}
 };
@@ -266,43 +303,6 @@ class ToolAdjustEdgeLength : public ITool
 			dlg->addSpinBox(tr("iterations:"), 1, 1e+10, 10, 1, 0);
 			dlg->addCheckBox(tr("adaptive"), true);
 			dlg->addCheckBox(tr("automark boundaries"), true);
-			return dlg;
-		}
-};
-
-
-class ToolQualityGridGeneration : public ITool
-{
-	public:
-		void execute(LGObject* obj, QWidget* widget){
-			using namespace ug;
-			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
-
-			number minAngle = 0;
-			if(dlg){
-				minAngle = dlg->to_double(0);
-			}
-
-			Grid& g = obj->get_grid();
-			Selector& sel = obj->get_selector();
-			SubsetHandler& creases = obj->get_crease_handler();
-
-			Grid::AttachmentAccessor<VertexBase, APosition> aaPos(g, aPosition);
-
-			QualityGridGeneration(g, sel.begin<Triangle>(), sel.end<Triangle>(),
-						 	 	  aaPos, minAngle, IsNotInSubset(creases, -1));
-
-			obj->geometry_changed();
-		}
-
-		const char* get_name()		{return "Quality Grid Generation";}
-		const char* get_tooltip()	{return "Inserts vertices as required and performs Constrained Delaunay triangulation.";}
-		const char* get_group()		{return "Remeshing | Triangulation";}
-
-		ToolWidget* get_dialog(QWidget* parent){
-			ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
-											IDB_APPLY | IDB_OK | IDB_CLOSE);
-			dlg->addSpinBox(tr("min angle:"), 0, 30, 0, 1, 9);
 			return dlg;
 		}
 };
@@ -740,8 +740,8 @@ void RegisterRemeshingTools(ToolManager* toolMgr)
 
 	//toolMgr->register_tool(new ToolTriangleFill);
 	toolMgr->register_tool(new ToolTriangleFill_SweepLine);
+	toolMgr->register_tool(new ToolRetriangulate);
 	toolMgr->register_tool(new ToolAdjustEdgeLength);
-	toolMgr->register_tool(new ToolQualityGridGeneration);
 	toolMgr->register_tool(new ToolAdaptSurfaceToCylinder);
 
 	toolMgr->register_tool(new ToolTetrahedralize);

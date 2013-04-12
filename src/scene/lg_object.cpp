@@ -269,6 +269,10 @@ void LGObject::init()
 	m_subsetHandler.assign_grid(m_grid);
 	m_subsetHandler.enable_strict_inheritance(true);
 	m_creaseHandler.assign_grid(m_grid);
+
+	m_shFacesForVolRendering.set_supported_elements(SHE_FACE);
+	m_shFacesForVolRendering.assign_grid(m_grid);
+
 	m_selector.assign_grid(m_grid);
 	m_name = "default name";
 	m_bVisible = true;

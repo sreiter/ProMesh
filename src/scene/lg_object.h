@@ -203,6 +203,8 @@ class LGObject : public ISceneObject
 		ug::SubsetHandler	m_creaseHandler;
 		ug::Selector		m_selector;
 
+		ug::SubsetHandler	m_shFacesForVolRendering;
+
 		ug::vector3			m_boundBoxMin;
 		ug::vector3			m_boundBoxMax;
 		ug::Sphere			m_boundSphere;

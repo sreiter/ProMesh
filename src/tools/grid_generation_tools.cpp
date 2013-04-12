@@ -417,6 +417,7 @@ public:
 		number height = 1.;
 		vector3 center(0, 0, 0);
 		int newSI = 0;
+		bool fill = false;
 
 		if(dlg){
 			orientation = dlg->to_int(0);
@@ -426,6 +427,7 @@ public:
 			center.y = dlg->to_double(4);
 			center.z = dlg->to_double(5);
 			newSI = dlg->to_int(6);
+			fill = dlg->to_bool(7);
 		}
 
 		Grid& grid = obj->get_grid();
@@ -475,7 +477,15 @@ public:
 		VecAdd(aaPos[vrts[3]], aaPos[vrts[3]], dirHeight);
 
 	//	create the plane
-		grid.create<Quadrilateral>(QuadrilateralDescriptor(vrts[0], vrts[1], vrts[2], vrts[3]));
+		if(fill)
+			grid.create<Quadrilateral>(QuadrilateralDescriptor(vrts[0], vrts[1], vrts[2], vrts[3]));
+		else{
+			for(size_t i = 0; i < 4; ++i){
+				int i0 = i;
+				int i1 = (i + 1) % 4;
+				grid.create<Edge>(EdgeDescriptor(vrts[i0], vrts[i1]));
+			}
+		}
 
 	//	assign subset
 		sh.assign_subset(sel.begin<VertexBase>(), sel.end<VertexBase>(), newSI);
@@ -508,6 +518,7 @@ public:
 		dlg->addSpinBox(tr("center y:"), -1.e+9, 1.e+9, 0, 1, 9);
 		dlg->addSpinBox(tr("center z:"), -1.e+9, 1.e+9, 0, 1, 9);
 		dlg->addSpinBox(tr("subset:"), -1, 1.e+9, 0, 1, 0);
+		dlg->addCheckBox(tr("fill"), false);
 		return dlg;
 	}
 };
