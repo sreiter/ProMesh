@@ -680,13 +680,13 @@ public:
 		number height = 1.;
 		number radius = 1.;
 		number snapThreshold = 0.1;
-		bool createVolumes = false;
+		//bool createVolumes = false;
 
 		if(dlg){
 			height = (number)dlg->to_double(0);
 			radius = (number)dlg->to_double(1);
 			snapThreshold = (number)dlg->to_double(2);
-			createVolumes = dlg->to_bool(3);
+			//createVolumes = dlg->to_bool(3);
 		}
 
 		ug::Grid& g = obj->get_grid();
@@ -727,7 +727,7 @@ public:
 		dlg->addSpinBox("height: ", -1.e+9, 1.e+9, 1, 1, 9);
 		dlg->addSpinBox("radius: ", -1.e+9, 1.e+9, 1, 1, 9);
 		dlg->addSpinBox(tr("rim snap threshold:"), 0, 1e+10, 0.01, 0.01, 9);
-		dlg->addCheckBox("create volumes: ", false);
+		//dlg->addCheckBox("create volumes: ", false);
 		return dlg;
 	}
 };

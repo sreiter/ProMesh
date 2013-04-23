@@ -72,13 +72,6 @@ class ToolSeparateFacesByEdgeSubsets : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget* widget){
-			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
-			int newIndex = 0;
-
-			if(dlg){
-				newIndex = dlg->to_int(0);
-			}
-
 			ug::Grid& grid = obj->get_grid();
 			ug::SubsetHandler& sh = obj->get_subset_handler();
 
@@ -96,13 +89,6 @@ class ToolSeparateFacesBySelectedEdges : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget* widget){
-			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
-			int newIndex = 0;
-
-			if(dlg){
-				newIndex = dlg->to_int(0);
-			}
-
 			ug::Grid& grid = obj->get_grid();
 			ug::SubsetHandler& sh = obj->get_subset_handler();
 			ug::Selector& sel = obj->get_selector();

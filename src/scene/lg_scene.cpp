@@ -1881,7 +1881,6 @@ get_clicked_edge(LGObject* obj, const ug::vector3& from,
 				EdgeBase* e = *iter;
 				if(!aaRenderedEDGE[e])
 					continue;
-				vector3 center = CalculateCenter(e, aaPos);
 				number t;
 				number dist = DistancePointToLine(t, to, aaPos[e->vertex(0)],
 													aaPos[e->vertex(1)]);

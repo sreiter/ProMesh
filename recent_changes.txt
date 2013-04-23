@@ -6,6 +6,7 @@ v 4.0.6
 Changes and additions:
 - Renamed Remeshing->QualityGridGeneration to Remeshing->Retriangulate
 - Improved volume rendering speed and reduced involved memory consumption.
+- Manual volume generation is now supported (GridGeneration->BasicElements->CreateVolume)
 
 Fixes:
 - Fixed Subsets->JoinSubsets

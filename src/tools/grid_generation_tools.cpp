@@ -329,10 +329,11 @@ class ToolCreateFace : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
+			using namespace ug;
 		//	build an edge or a face between selected vertices.
-			ug::Selector& sel = obj->get_selector();
-			ug::Grid& grid = obj->get_grid();
-			ug::SubsetHandler& sh = obj->get_subset_handler();
+			Selector& sel = obj->get_selector();
+			Grid& grid = obj->get_grid();
+			SubsetHandler& sh = obj->get_subset_handler();
 
 			int newSubsetIndex = 0;
 			if(obj == app::getActiveObject())
@@ -341,53 +342,36 @@ class ToolCreateFace : public ITool
 			if(newSubsetIndex < 0)
 				newSubsetIndex = 0;
 
-			size_t numVrts = sel.num<ug::VertexBase>();
-			vector<ug::VertexBase*> vrts;
+			size_t numVrts = sel.num<VertexBase>();
+			vector<VertexBase*> vrts;
 			vrts.reserve(numVrts);
-			vrts.assign(sel.begin<ug::VertexBase>(), sel.end<ug::VertexBase>());
+			vrts.assign(sel.begin<VertexBase>(), sel.end<VertexBase>());
 
-			ug::Face* f = NULL;
-			switch(numVrts){
-			/*
-			case 2://	create edge
-				if(!grid.get_edge(vrts[0], vrts[1]))
-					grid.create<EdgeBase>(EdgeDescriptor(vrts[0], vrts[1]));
-				else{
-					UG_LOG("Can't create edge: Edge already exists.\n")
-				}
-				break;
-			*/
-			case 3:{//	create triangle
-				ug::FaceDescriptor fd(3);
-				for(size_t i = 0; i < 3; ++i)
-					fd.set_vertex(i, vrts[i]);
+			FaceDescriptor fd(numVrts);
+			for(size_t i = 0; i < numVrts; ++i)
+				fd.set_vertex(i, vrts[i]);
 
-				if(!grid.get_face(fd))
-					f = *grid.create<ug::Triangle>(ug::TriangleDescriptor(vrts[0], vrts[1], vrts[2]));
-				else{
-					UG_LOG("Can't create face: Face already exists.\n");
-				}
-			}break;
-
-			case 4:{//	create quadrilateral
-				ug::FaceDescriptor fd(4);
-				for(size_t i = 0; i < 4; ++i)
-					fd.set_vertex(i, vrts[i]);
-
-				if(!grid.get_face(fd))
-					f = *grid.create<ug::Quadrilateral>(ug::QuadrilateralDescriptor(vrts[0], vrts[1],
-																			vrts[2], vrts[3]));
-				else{
-					UG_LOG("Can't create face: Face already exists.\n");
-				}
-			}break;
-
-			default:
-				UG_LOG("Can't create face: Bad number of vertices. 3 or 4 are supported.\n");
-				break;
+			if(grid.get_face(fd)){
+				UG_LOG("A face connecting the given vertices already exists. Won't create a new one!");
+				return;
 			}
 
-		//todo: use the currently marked subset.
+			Face* f = NULL;
+			switch(numVrts){
+				case 3:{//	create triangle
+					f = *grid.create<Triangle>(TriangleDescriptor(vrts[0], vrts[1], vrts[2]));
+				}break;
+
+				case 4:{//	create quadrilateral
+					f = *grid.create<Quadrilateral>(QuadrilateralDescriptor(vrts[0], vrts[1],
+																					vrts[2], vrts[3]));
+				}break;
+
+				default:
+					UG_LOG("Can't create face: Bad number of vertices. 3 or 4 are supported.\n");
+					break;
+			}
+
 			if(f)
 				sh.assign_subset(f, newSubsetIndex);
 
@@ -396,6 +380,89 @@ class ToolCreateFace : public ITool
 
 		const char* get_name()		{return "Create Face";}
 		const char* get_tooltip()	{return "Creates a face between selected vertices.";}
+		const char* get_group()		{return "Grid Generation | Basic Elements";}
+};
+
+
+class ToolCreateVolume : public ITool
+{
+	public:
+		void execute(LGObject* obj, QWidget*){
+			using namespace ug;
+		//	build an edge or a face between selected vertices.
+			Selector& sel = obj->get_selector();
+			Grid& grid = obj->get_grid();
+			SubsetHandler& sh = obj->get_subset_handler();
+
+			int newSubsetIndex = 0;
+			if(obj == app::getActiveObject())
+				newSubsetIndex = app::getActiveSubsetIndex();
+
+			if(newSubsetIndex < 0)
+				newSubsetIndex = 0;
+
+			size_t numVrts = sel.num<VertexBase>();
+
+			if(numVrts < 4 || numVrts > 8){
+				UG_LOG("Bad number of vertices! Can't create a volume element from " << numVrts << " vertices.");
+				return;
+			}
+
+			vector<VertexBase*> vrts;
+			vrts.reserve(numVrts);
+			vrts.assign(sel.begin<VertexBase>(), sel.end<VertexBase>());
+
+			VolumeDescriptor vd(numVrts);
+			for(size_t i = 0; i < numVrts; ++i)
+				vd.set_vertex(i, vrts[i]);
+
+			if(grid.get_volume(vd)){
+				UG_LOG("A volume connecting the given vertices already exists. Won't create a new one!");
+				return;
+			}
+
+			Volume* v = NULL;
+			switch(numVrts){
+				case 4:{//	create tetrahedron
+					v = *grid.create<Tetrahedron>(TetrahedronDescriptor(vrts[0], vrts[1],
+																		vrts[2], vrts[3]));
+				}break;
+
+				case 5:{//	create pyramid
+					v = *grid.create<Pyramid>(PyramidDescriptor(vrts[0], vrts[1],
+																vrts[2], vrts[3], vrts[4]));
+				}break;
+
+				case 6:{//	create prism
+					v = *grid.create<Prism>(PrismDescriptor(vrts[0], vrts[1], vrts[2],
+															vrts[3], vrts[4], vrts[5]));
+				}break;
+
+				case 8:{//	create hexahedron
+					v = *grid.create<Hexahedron>(HexahedronDescriptor(vrts[0], vrts[1], vrts[2], vrts[3],
+																	  vrts[4], vrts[5], vrts[6], vrts[7]));
+				}break;
+
+				default:
+					UG_LOG("Can't create volume: Bad number of vertices. 4, 5, 6, and 8 are supported.\n");
+					break;
+			}
+
+			if(v){
+			//	check and fix orientation
+				Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
+				if(!CheckOrientation(v, aaPos)){
+					grid.flip_orientation(v);
+				}
+
+				sh.assign_subset(v, newSubsetIndex);
+			}
+
+			obj->geometry_changed();
+		}
+
+		const char* get_name()		{return "Create Volume";}
+		const char* get_tooltip()	{return "Creates a volume between selected vertices.";}
 		const char* get_group()		{return "Grid Generation | Basic Elements";}
 };
 
@@ -1300,6 +1367,7 @@ void RegisterGridGenerationTools(ToolManager* toolMgr)
 	toolMgr->register_tool(new ToolCreateVertex);
 	toolMgr->register_tool(new ToolCreateEdge);
 	toolMgr->register_tool(new ToolCreateFace);
+	toolMgr->register_tool(new ToolCreateVolume);
 
 	toolMgr->register_tool(new ToolCreatePlane);
 	toolMgr->register_tool(new ToolCreateCircle);
