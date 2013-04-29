@@ -1552,7 +1552,8 @@ class ToolEdgeSelectionFill : public ITool
 	public:
 		void execute(LGObject* obj, QWidget*)
 		{
-			ug::SelectionFill<ug::EdgeBase>(obj->get_selector());
+			ug::Selector& sel = obj->get_selector();
+			ug::SelectionFill<ug::EdgeBase>(sel, ug::IsSelected(sel));
 			obj->selection_changed();
 		}
 
@@ -1566,7 +1567,8 @@ class ToolFaceSelectionFill : public ITool
 	public:
 		void execute(LGObject* obj, QWidget*)
 		{
-			ug::SelectionFill<ug::Face>(obj->get_selector());
+			ug::Selector& sel = obj->get_selector();
+			ug::SelectionFill<ug::Face>(sel, ug::IsSelected(sel));
 			obj->selection_changed();
 		}
 
@@ -1580,7 +1582,8 @@ class ToolVolumeSelectionFill : public ITool
 	public:
 		void execute(LGObject* obj, QWidget*)
 		{
-			ug::SelectionFill<ug::Volume>(obj->get_selector());
+			ug::Selector& sel = obj->get_selector();
+			ug::SelectionFill<ug::Volume>(sel, ug::IsSelected(sel));
 			obj->selection_changed();
 		}
 
