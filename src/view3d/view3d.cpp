@@ -122,7 +122,7 @@ void View3D::paintGL()
 		glMatrixMode(GL_PROJECTION);
 		glPushMatrix();
 		glLoadIdentity();
-		glOrtho(0, 100.f, 0, 100.f / m_aspectRatio, 0, 100);
+		glOrtho(0, 100.f, 0, 100.f / m_aspectRatio, 0.01, 100);
 		glMatrixMode(GL_MODELVIEW);
 		glPushMatrix();
 		glLoadIdentity();
@@ -135,16 +135,17 @@ void View3D::paintGL()
 		//cam::MatTranspose(mat, mat);
 		cam::MatMultiply(axMat, matOrientation, axMat);
 		glMultMatrixf((GLfloat*)&axMat);
-
+//
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_BLEND);
 		glEnable(GL_LINE_SMOOTH);
 		glLineWidth(2.f);
 		glPointSize(2.f);
 		glDisable(GL_LIGHTING);
-
-	//	render text
+//
+//	//	render text
 		const GLfloat axlen = 5;
+//CAUSES PROBLEMS ON SOME SYSTEMS (mscherer, mknodel)
 		glColor3f(1, 0, 0);
 		renderText(axlen, 0, 0, "X");
 		glColor3f(0, 1, 0);
@@ -171,7 +172,7 @@ void View3D::paintGL()
 		if(m_bDrawSelRect){
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
-			glOrtho(0, m_viewWidth, 0, m_viewHeight, 0, 100);
+			glOrtho(0, m_viewWidth, 0, m_viewHeight, 0.01, 100);
 			glMatrixMode(GL_MODELVIEW);
 			glLoadIdentity();
 
@@ -199,13 +200,13 @@ void View3D::paintGL()
 		glPopMatrix();
 		glMatrixMode(GL_PROJECTION);
 		glPopMatrix();
-/*
-	//	reset renderer matrix
-		m_pRenderer->set_transform((float*)&mat);
-		m_pRenderer->set_perspective(m_fovy, m_aspectRatio,
-									 m_zNear, m_zFar);
-*/
+
+//	//	reset renderer matrix
+//		m_pRenderer->set_transform((float*)&mat);
+//		m_pRenderer->set_perspective(m_fovy, m_aspectRatio,
+//									 m_zNear, m_zFar);
 	}
+
 }
 
 void  View3D::

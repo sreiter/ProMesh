@@ -2,12 +2,22 @@ Recent changes:
 
 
 -------------------------------------------------------------------------------
+v 4.0.8
+Changes and additions:
+
+Fixes:
+- Fixed Smooth-Refinement for edge geometries.
+
+
+
+-------------------------------------------------------------------------------
 v 4.0.7
 Changes and additions:
 
 Fixes:
 - ProMesh no longer crashes during Remeshing->MergeVertices (introduced in 4.0.5).
 - And it doesn't crash on refinement with strict subset inheritance either!
+
 
 
 -------------------------------------------------------------------------------

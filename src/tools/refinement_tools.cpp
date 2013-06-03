@@ -83,9 +83,9 @@ class ToolHangingNodeRefine : public ITool
 				refiner.mark(sel.volumes_begin(), sel.volumes_end(), RM_ANISOTROPIC);
 			}
 			else{
-				refiner.mark(sel.edges_begin(), sel.edges_end(), RM_REGULAR);
-				refiner.mark(sel.faces_begin(), sel.faces_end(), RM_REGULAR);
-				refiner.mark(sel.volumes_begin(), sel.volumes_end(), RM_REGULAR);
+				refiner.mark(sel.edges_begin(), sel.edges_end(), RM_REFINE);
+				refiner.mark(sel.faces_begin(), sel.faces_end(), RM_REFINE);
+				refiner.mark(sel.volumes_begin(), sel.volumes_end(), RM_REFINE);
 			}
 
 			refiner.refine();
