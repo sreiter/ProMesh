@@ -75,6 +75,7 @@ else(TETGEN_LIBS-NOTFOUND)
 endif(TETGEN_LIBS-NOTFOUND)
 
 include_directories(${UG_ROOT_PATH}/ugbase)
+include_directories(${UG_ROOT_PATH}/plugins/experimental/promesh)
 include_directories(${UG_ROOT_PATH}/externals/boost_1_48_0)
 link_directories(${UG_ROOT_PATH}/lib)
 

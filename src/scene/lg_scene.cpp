@@ -81,22 +81,22 @@ void LGScene::set_perspective(float fovy, int viewWidth, int viewHeight,
 
 int LGScene::add_object(LGObject* obj, bool autoDelete)
 {
-	if(!obj->m_grid.has_face_attachment(m_aSphere))
-		obj->m_grid.attach_to_faces(m_aSphere);
-	if(!obj->m_grid.has_volume_attachment(m_aSphere))
-		obj->m_grid.attach_to_volumes(m_aSphere);
-	if(!obj->m_grid.has_vertex_attachment(m_aRendered))
+	if(!obj->get_grid().has_face_attachment(m_aSphere))
+		obj->get_grid().attach_to_faces(m_aSphere);
+	if(!obj->get_grid().has_volume_attachment(m_aSphere))
+		obj->get_grid().attach_to_volumes(m_aSphere);
+	if(!obj->get_grid().has_vertex_attachment(m_aRendered))
 	{
-		obj->m_grid.attach_to_vertices(m_aRendered);
-		obj->m_grid.attach_to_edges(m_aRendered);
-		obj->m_grid.attach_to_faces(m_aRendered);
-		obj->m_grid.attach_to_volumes(m_aRendered);
+		obj->get_grid().attach_to_vertices(m_aRendered);
+		obj->get_grid().attach_to_edges(m_aRendered);
+		obj->get_grid().attach_to_faces(m_aRendered);
+		obj->get_grid().attach_to_volumes(m_aRendered);
 	}
-	if(!obj->m_grid.has_vertex_attachment(m_aHidden)){
-		obj->m_grid.attach_to_vertices(m_aHidden);
-		obj->m_grid.attach_to_edges(m_aHidden);
-		obj->m_grid.attach_to_faces(m_aHidden);
-		obj->m_grid.attach_to_volumes(m_aHidden);
+	if(!obj->get_grid().has_vertex_attachment(m_aHidden)){
+		obj->get_grid().attach_to_vertices(m_aHidden);
+		obj->get_grid().attach_to_edges(m_aHidden);
+		obj->get_grid().attach_to_faces(m_aHidden);
+		obj->get_grid().attach_to_volumes(m_aHidden);
 	}
 
 	connect(obj, SIGNAL(sig_geometry_changed()), this, SLOT(object_geometry_changed()));
@@ -226,7 +226,7 @@ void LGScene::setClipPlane(int index, const ug::Plane& plane)
 
 void LGScene::calculate_bounding_spheres(LGObject* pObj)
 {
-	Grid& grid = pObj->m_grid;
+	Grid& grid = pObj->get_grid();
 
 //	calculate bounding-spheres.
 	Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
@@ -766,7 +766,7 @@ void LGScene::update_visuals(LGObject* pObj)
 
 void LGScene::render_skeleton(LGObject* pObj)
 {
-	Grid& grid = pObj->m_grid;
+	Grid& grid = pObj->get_grid();
 	Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
 
 //	iterate through all subsets
@@ -788,7 +788,7 @@ void LGScene::render_skeleton(LGObject* pObj)
 
 void LGScene::render_creases(LGObject* pObj, int displayListIndex)
 {
-	Grid& grid = pObj->m_grid;
+	Grid& grid = pObj->get_grid();
 	SubsetHandler& sh = pObj->get_crease_handler();
 	Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
 
@@ -806,7 +806,7 @@ void LGScene::render_creases(LGObject* pObj, int displayListIndex)
 
 void LGScene::render_selection(LGObject* pObj, int displayListIndex)
 {
-	Grid& grid = pObj->m_grid;
+	Grid& grid = pObj->get_grid();
 	Selector& sel = pObj->get_selector();
 	Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
 	Grid::FaceAttachmentAccessor<ANormal> aaNorm(grid, aNormal);
@@ -880,7 +880,7 @@ void LGScene::render_points(LGObject* pObj, const ug::vector4& color,
 							  ug::VertexBaseIterator vrtsEnd,
 							  Grid::VertexAttachmentAccessor<APosition>& aaPos)
 {
-	Grid::VertexAttachmentAccessor<ABool> aaRenderedVRT(pObj->m_grid, m_aRendered);
+	Grid::VertexAttachmentAccessor<ABool> aaRenderedVRT(pObj->get_grid(), m_aRendered);
 
 	glColor4f(color.x, color.y, color.z, color.w);
 	glPointSize(5.f);
@@ -901,7 +901,7 @@ void LGScene::render_points(LGObject* pObj, const ug::vector4& color,
 
 void LGScene::render_point_subsets(LGObject* pObj, int baseDisplayListIndex)
 {
-	Grid& grid = pObj->m_grid;
+	Grid& grid = pObj->get_grid();
 	SubsetHandler& sh = pObj->get_subset_handler();
 	Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
 	Grid::VertexAttachmentAccessor<ABool> aaRenderedVRT(grid, m_aRendered);
@@ -948,7 +948,7 @@ void LGScene::render_edges(LGObject* pObj, const ug::vector4& color,
 						  ug::EdgeBaseIterator edgesEnd,
 						  Grid::VertexAttachmentAccessor<APosition>& aaPos)
 {
-	Grid& grid = pObj->m_grid;
+	Grid& grid = pObj->get_grid();
 	Grid::EdgeAttachmentAccessor<ABool> aaRenderedEDGE(grid, m_aRendered);
 
 //	draw edges
@@ -973,7 +973,7 @@ void LGScene::render_edges(LGObject* pObj, const ug::vector4& color,
 
 void LGScene::render_edge_subsets(LGObject* pObj, int baseDisplayListIndex)
 {
-	Grid& grid = pObj->m_grid;
+	Grid& grid = pObj->get_grid();
 	SubsetHandler& sh = pObj->get_subset_handler();
 	Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
 	Grid::VertexAttachmentAccessor<ABool> aaRenderedVRT(grid, m_aRendered);
@@ -1347,15 +1347,15 @@ void LGScene::render_faces_without_clip_plane(LGObject* pObj)
 {
 //	renders the faces of an object.
 //	visibility is handled by the draw routine.
-	render_faces(pObj, pObj->m_grid, pObj->m_subsetHandler);
+	render_faces(pObj, pObj->get_grid(), pObj->get_subset_handler());
 }
 
 void LGScene::render_volumes(LGObject* pObj)
 {
 //	renders the volumes of an object.
 //	clip planes are used.
-	Grid& grid = pObj->m_grid;
-	SubsetHandler& sh = pObj->m_subsetHandler;
+	Grid& grid = pObj->get_grid();
+	SubsetHandler& sh = pObj->get_subset_handler();
 
 	Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
 	Grid::FaceAttachmentAccessor<ANormal> aaNorm(grid, aNormal);
@@ -1513,8 +1513,8 @@ void LGScene::render_faces_with_clip_plane(LGObject* pObj)
 {
 //	renders the faces of an object.
 //	visibility is handled by the draw routine.
-	Grid& grid = pObj->m_grid;
-	SubsetHandler& sh = pObj->m_subsetHandler;
+	Grid& grid = pObj->get_grid();
+	SubsetHandler& sh = pObj->get_subset_handler();
 
 	Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
 	Grid::FaceAttachmentAccessor<ANormal> aaNorm(grid, aNormal);

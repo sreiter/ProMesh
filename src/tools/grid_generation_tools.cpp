@@ -8,10 +8,12 @@
 #include "standard_tools.h"
 #include "tools_util.h"
 #include "lib_grid/algorithms/remeshing/delaunay_triangulation.h"
+#include "tools/grid_generation_tools.h"
 
 //#include "lib_discretization/spatial_discretization/disc_util/finite_volume_output.h"
 
 using namespace std;
+using namespace ug;
 
 class ToolNewObject : public ITool
 {
@@ -242,26 +244,7 @@ class ToolCreateVertex : public ITool
 
 			CoordinatesWidget* dlg = dynamic_cast<CoordinatesWidget*>(widget);
 			if(dlg){
-				Grid& grid = obj->get_grid();
-				Selector& sel = obj->get_selector();
-				SubsetHandler& sh = obj->get_subset_handler();
-				Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
-
-				vector3 coord;
-				coord.x = dlg->x();
-				coord.y = dlg->y();
-				coord.z = dlg->z();
-
-			//	build a new vertex
-				Vertex* vrt = *grid.create<Vertex>();
-
-				if(vrt){
-					aaPos[vrt] = coord;
-					sel.clear();
-					sel.select(vrt);
-				//todo: use the currently marked subset.
-					sh.assign_subset(vrt, newSubsetIndex);
-				}
+				promesh::CreateVertex(obj, dlg->x(), dlg->y(), dlg->z(), newSubsetIndex);
 			}
 			obj->geometry_changed();
 		}
@@ -282,10 +265,6 @@ class ToolCreateEdge : public ITool
 	public:
 		void execute(LGObject* obj, QWidget*){
 		//	build an edge or a face between selected vertices.
-			ug::Selector& sel = obj->get_selector();
-			ug::Grid& grid = obj->get_grid();
-			ug::SubsetHandler& sh = obj->get_subset_handler();
-
 			int newSubsetIndex = 0;
 			if(obj == app::getActiveObject())
 				newSubsetIndex = app::getActiveSubsetIndex();
@@ -293,29 +272,7 @@ class ToolCreateEdge : public ITool
 			if(newSubsetIndex < 0)
 				newSubsetIndex = 0;
 
-			size_t numVrts = sel.num<ug::VertexBase>();
-			vector<ug::VertexBase*> vrts;
-			vrts.reserve(numVrts);
-			vrts.assign(sel.begin<ug::VertexBase>(), sel.end<ug::VertexBase>());
-
-			ug::Edge* e = NULL;
-			switch(numVrts){
-				case 2:{//	create edge
-						if(!grid.get_edge(vrts[0], vrts[1]))
-							e = *grid.create<ug::Edge>(ug::EdgeDescriptor(vrts[0], vrts[1]));
-						else{
-							UG_LOG("Can't create edge: Edge already exists.\n");
-						}
-					}break;
-
-				default:
-					UG_LOG("Can't create edge: Bad number of vertices. 2 are required.\n");
-					break;
-			}
-
-		//todo: use the currently marked subset.
-			if(e)
-				sh.assign_subset(e, newSubsetIndex);
+			promesh::CreateEdge(obj, newSubsetIndex);
 
 			obj->geometry_changed();
 		}
@@ -329,12 +286,7 @@ class ToolCreateFace : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			using namespace ug;
 		//	build an edge or a face between selected vertices.
-			Selector& sel = obj->get_selector();
-			Grid& grid = obj->get_grid();
-			SubsetHandler& sh = obj->get_subset_handler();
-
 			int newSubsetIndex = 0;
 			if(obj == app::getActiveObject())
 				newSubsetIndex = app::getActiveSubsetIndex();
@@ -342,38 +294,7 @@ class ToolCreateFace : public ITool
 			if(newSubsetIndex < 0)
 				newSubsetIndex = 0;
 
-			size_t numVrts = sel.num<VertexBase>();
-			vector<VertexBase*> vrts;
-			vrts.reserve(numVrts);
-			vrts.assign(sel.begin<VertexBase>(), sel.end<VertexBase>());
-
-			FaceDescriptor fd(numVrts);
-			for(size_t i = 0; i < numVrts; ++i)
-				fd.set_vertex(i, vrts[i]);
-
-			if(grid.get_face(fd)){
-				UG_LOG("A face connecting the given vertices already exists. Won't create a new one!");
-				return;
-			}
-
-			Face* f = NULL;
-			switch(numVrts){
-				case 3:{//	create triangle
-					f = *grid.create<Triangle>(TriangleDescriptor(vrts[0], vrts[1], vrts[2]));
-				}break;
-
-				case 4:{//	create quadrilateral
-					f = *grid.create<Quadrilateral>(QuadrilateralDescriptor(vrts[0], vrts[1],
-																					vrts[2], vrts[3]));
-				}break;
-
-				default:
-					UG_LOG("Can't create face: Bad number of vertices. 3 or 4 are supported.\n");
-					break;
-			}
-
-			if(f)
-				sh.assign_subset(f, newSubsetIndex);
+			promesh::CreateFace(obj, newSubsetIndex);
 
 			obj->geometry_changed();
 		}
@@ -388,12 +309,7 @@ class ToolCreateVolume : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			using namespace ug;
 		//	build an edge or a face between selected vertices.
-			Selector& sel = obj->get_selector();
-			Grid& grid = obj->get_grid();
-			SubsetHandler& sh = obj->get_subset_handler();
-
 			int newSubsetIndex = 0;
 			if(obj == app::getActiveObject())
 				newSubsetIndex = app::getActiveSubsetIndex();
@@ -401,62 +317,7 @@ class ToolCreateVolume : public ITool
 			if(newSubsetIndex < 0)
 				newSubsetIndex = 0;
 
-			size_t numVrts = sel.num<VertexBase>();
-
-			if(numVrts < 4 || numVrts > 8){
-				UG_LOG("Bad number of vertices! Can't create a volume element from " << numVrts << " vertices.");
-				return;
-			}
-
-			vector<VertexBase*> vrts;
-			vrts.reserve(numVrts);
-			vrts.assign(sel.begin<VertexBase>(), sel.end<VertexBase>());
-
-			VolumeDescriptor vd(numVrts);
-			for(size_t i = 0; i < numVrts; ++i)
-				vd.set_vertex(i, vrts[i]);
-
-			if(grid.get_volume(vd)){
-				UG_LOG("A volume connecting the given vertices already exists. Won't create a new one!");
-				return;
-			}
-
-			Volume* v = NULL;
-			switch(numVrts){
-				case 4:{//	create tetrahedron
-					v = *grid.create<Tetrahedron>(TetrahedronDescriptor(vrts[0], vrts[1],
-																		vrts[2], vrts[3]));
-				}break;
-
-				case 5:{//	create pyramid
-					v = *grid.create<Pyramid>(PyramidDescriptor(vrts[0], vrts[1],
-																vrts[2], vrts[3], vrts[4]));
-				}break;
-
-				case 6:{//	create prism
-					v = *grid.create<Prism>(PrismDescriptor(vrts[0], vrts[1], vrts[2],
-															vrts[3], vrts[4], vrts[5]));
-				}break;
-
-				case 8:{//	create hexahedron
-					v = *grid.create<Hexahedron>(HexahedronDescriptor(vrts[0], vrts[1], vrts[2], vrts[3],
-																	  vrts[4], vrts[5], vrts[6], vrts[7]));
-				}break;
-
-				default:
-					UG_LOG("Can't create volume: Bad number of vertices. 4, 5, 6, and 8 are supported.\n");
-					break;
-			}
-
-			if(v){
-			//	check and fix orientation
-				Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
-				if(!CheckOrientation(v, aaPos)){
-					grid.flip_orientation(v);
-				}
-
-				sh.assign_subset(v, newSubsetIndex);
-			}
+			promesh::CreateVolume(obj, newSubsetIndex);
 
 			obj->geometry_changed();
 		}
@@ -472,7 +333,6 @@ class ToolCreatePlane : public ITool
 public:
 	void execute(LGObject* obj, QWidget* widget){
 		ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
-		using namespace ug;
 
 	//	since we're accepting NULL-Ptr Objects, we have to create a new one
 	//	if none was supplied.
@@ -497,20 +357,6 @@ public:
 			fill = dlg->to_bool(7);
 		}
 
-		Grid& grid = obj->get_grid();
-		Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
-		Selector& sel = obj->get_selector();
-		SubsetHandler& sh = obj->get_subset_handler();
-
-		sel.clear();
-		bool autoselEnabled = sel.autoselection_enabled();
-		sel.enable_autoselection(true);
-
-	//	create the vertices
-		VertexBase* vrts[4];
-		for(size_t i = 0; i < 4; ++i)
-			vrts[i] = *grid.create<Vertex>();
-
 		vector3 dirWidth, dirHeight;
 
 		switch(orientation){
@@ -531,36 +377,20 @@ public:
 			}break;
 		}//	end of switch
 
-		VecSubtract(aaPos[vrts[0]], center, dirWidth);
-		VecAdd(aaPos[vrts[0]], aaPos[vrts[0]], dirHeight);
+		vector3 upLeft, upRight, lowLeft, lowRight;
+		VecSubtract(upLeft, center, dirWidth);
+		VecAdd(upLeft, upLeft, dirHeight);
 
-		VecSubtract(aaPos[vrts[1]], center, dirWidth);
-		VecSubtract(aaPos[vrts[1]], aaPos[vrts[1]], dirHeight);
+		VecSubtract(lowLeft, center, dirWidth);
+		VecSubtract(lowLeft, lowLeft, dirHeight);
 
-		VecAdd(aaPos[vrts[2]], center, dirWidth);
-		VecSubtract(aaPos[vrts[2]], aaPos[vrts[2]], dirHeight);
+		VecAdd(lowRight, center, dirWidth);
+		VecSubtract(lowRight, lowRight, dirHeight);
 
-		VecAdd(aaPos[vrts[3]], center, dirWidth);
-		VecAdd(aaPos[vrts[3]], aaPos[vrts[3]], dirHeight);
+		VecAdd(upRight, center, dirWidth);
+		VecAdd(upRight, upRight, dirHeight);
 
-	//	create the plane
-		if(fill)
-			grid.create<Quadrilateral>(QuadrilateralDescriptor(vrts[0], vrts[1], vrts[2], vrts[3]));
-		else{
-			for(size_t i = 0; i < 4; ++i){
-				int i0 = i;
-				int i1 = (i + 1) % 4;
-				grid.create<Edge>(EdgeDescriptor(vrts[i0], vrts[i1]));
-			}
-		}
-
-	//	assign subset
-		sh.assign_subset(sel.begin<VertexBase>(), sel.end<VertexBase>(), newSI);
-		sh.assign_subset(sel.begin<EdgeBase>(), sel.end<EdgeBase>(), newSI);
-		sh.assign_subset(sel.begin<Face>(), sel.end<Face>(), newSI);
-
-	//	restore selector
-		sel.enable_autoselection(autoselEnabled);
+		promesh::CreatePlane(obj, upLeft, upRight, lowLeft, lowRight, newSI, fill);
 
 		obj->geometry_changed();
 	}
@@ -595,8 +425,6 @@ class ToolCreateCircle : public ITool
 public:
 	void execute(LGObject* obj, QWidget* widget){
 		ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
-		using namespace ug;
-
 	//	since we're accepting NULL-Ptr Objects, we have to create a new one
 	//	if none was supplied.
 		if(!obj)
@@ -618,57 +446,7 @@ public:
 			fill = dlg->to_bool(4);
 		}
 
-		Grid& grid = obj->get_grid();
-		Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
-		Selector& sel = obj->get_selector();
-		SubsetHandler& sh = obj->get_subset_handler();
-
-		sel.clear();
-		bool autoselEnabled = sel.autoselection_enabled();
-		sel.enable_autoselection(true);
-
-	//	create the vertices
-	//	create one upfront, the others in a loop
-		VertexBase* centerVrt = NULL;
-		if(fill){
-			centerVrt = *grid.create<Vertex>();
-			aaPos[centerVrt] = center;
-		}
-		VertexBase* firstVrt = *grid.create<Vertex>();
-		aaPos[firstVrt] = vector3(0, radius, 0);
-		VecAdd(aaPos[firstVrt], aaPos[firstVrt], center);
-		VertexBase* lastVrt = firstVrt;
-		for(int i = 1; i < numRimVertices; ++i){
-		//	create a new vertex
-			number ia = (float)i / (float)numRimVertices;
-			VertexBase* vNew = *grid.create<Vertex>();
-			aaPos[vNew] = vector3(sin(2. * PI * ia), cos(2. * PI * ia), 0);
-			VecScale(aaPos[vNew], aaPos[vNew], radius);
-			VecAdd(aaPos[vNew], aaPos[vNew], center);
-
-		//	create a new triangle or a new edge
-			if(fill)
-				grid.create<Triangle>(TriangleDescriptor(centerVrt, vNew, lastVrt));
-			else
-				grid.create<Edge>(EdgeDescriptor(lastVrt, vNew));
-
-		//	prepare the next iteration
-			lastVrt = vNew;
-		}
-
-	//	one triangle / edge is still missing
-		if(fill)
-			grid.create<Triangle>(TriangleDescriptor(centerVrt, firstVrt, lastVrt));
-		else
-			grid.create<Edge>(EdgeDescriptor(lastVrt, firstVrt));
-			
-	//	assign subset
-		sh.assign_subset(sel.begin<VertexBase>(), sel.end<VertexBase>(), newSI);
-		sh.assign_subset(sel.begin<EdgeBase>(), sel.end<EdgeBase>(), newSI);
-		sh.assign_subset(sel.begin<Face>(), sel.end<Face>(), newSI);
-
-	//	restore selector
-		sel.enable_autoselection(autoselEnabled);
+		promesh::CreateCircle(obj, center, radius, numRimVertices, newSI, fill);
 
 		obj->geometry_changed();
 	}
@@ -696,8 +474,6 @@ class ToolCreateBox : public ITool
 public:
 	void execute(LGObject* obj, QWidget* widget){
 		ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
-		using namespace ug;
-
 	//	since we're accepting NULL-Ptr Objects, we have to create a new one
 	//	if none was supplied.
 		if(!obj)
@@ -719,49 +495,7 @@ public:
 			createVolume = dlg->to_bool(7);
 		}
 
-		Grid& grid = obj->get_grid();
-		Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
-		Selector& sel = obj->get_selector();
-		SubsetHandler& sh = obj->get_subset_handler();
-
-		sel.clear();
-		bool autoselEnabled = sel.autoselection_enabled();
-		sel.enable_autoselection(true);
-
-	//	create the vertices
-		VertexBase* vrts[8];
-		for(size_t i = 0; i < 8; ++i)
-			vrts[i] = *grid.create<Vertex>();
-
-		aaPos[vrts[0]] = vector3(boxMin.x, boxMin.y, boxMin.z);
-		aaPos[vrts[1]] = vector3(boxMax.x, boxMin.y, boxMin.z);
-		aaPos[vrts[2]] = vector3(boxMax.x, boxMax.y, boxMin.z);
-		aaPos[vrts[3]] = vector3(boxMin.x, boxMax.y, boxMin.z);
-		aaPos[vrts[4]] = vector3(boxMin.x, boxMin.y, boxMax.z);
-		aaPos[vrts[5]] = vector3(boxMax.x, boxMin.y, boxMax.z);
-		aaPos[vrts[6]] = vector3(boxMax.x, boxMax.y, boxMax.z);
-		aaPos[vrts[7]] = vector3(boxMin.x, boxMax.y, boxMax.z);
-
-	//	we'll use a hexahedron and let it create all faces
-		Hexahedron hexa(vrts[0], vrts[1], vrts[2], vrts[3],
-						vrts[4],vrts[5], vrts[6], vrts[7]);
-
-	//	now create the faces and register them at the grid
-		for(size_t i = 0; i < hexa.num_faces(); ++i)
-			grid.register_element(hexa.create_face(i));
-
-	//	if a volume shall be created, do so now
-		if(createVolume)
-			grid.create_by_cloning(&hexa, hexa, NULL);
-
-	//	assign subset
-		sh.assign_subset(sel.begin<VertexBase>(), sel.end<VertexBase>(), newSI);
-		sh.assign_subset(sel.begin<EdgeBase>(), sel.end<EdgeBase>(), newSI);
-		sh.assign_subset(sel.begin<Face>(), sel.end<Face>(), newSI);
-		sh.assign_subset(sel.begin<Volume>(), sel.end<Volume>(), newSI);
-
-	//	restore selector
-		sel.enable_autoselection(autoselEnabled);
+		promesh::CreateBox(obj, boxMin, boxMax, newSI, createVolume);
 
 		obj->geometry_changed();
 	}
@@ -792,8 +526,6 @@ class ToolCreateSphere : public ITool
 public:
 	void execute(LGObject* obj, QWidget* widget){
 		ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
-		using namespace ug;
-
 	//	since we're accepting NULL-Ptr Objects, we have to create a new one
 	//	if none was supplied.
 		if(!obj)
@@ -813,17 +545,7 @@ public:
 			newSI = dlg->to_int(3);
 		}
 
-		Grid& grid = obj->get_grid();
-		Selector& sel = obj->get_selector();
-		SubsetHandler& sh = obj->get_subset_handler();
-
-	//	create the sphere
-		GenerateIcosphere(grid, center, radius, numRefinements, aPosition, &sel);
-
-	//	assign subset
-		sh.assign_subset(sel.begin<VertexBase>(), sel.end<VertexBase>(), newSI);
-		sh.assign_subset(sel.begin<EdgeBase>(), sel.end<EdgeBase>(), newSI);
-		sh.assign_subset(sel.begin<Face>(), sel.end<Face>(), newSI);
+		promesh::CreateSphere(obj, center, radius, numRefinements, newSI);
 
 		obj->geometry_changed();
 	}
@@ -851,8 +573,6 @@ class ToolCreateTetrahedron: public ITool
 public:
 	void execute(LGObject* obj, QWidget* widget){
 		ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
-		using namespace ug;
-
 	//	since we're accepting NULL-Ptr Objects, we have to create a new one
 	//	if none was supplied.
 		if(!obj)
@@ -866,44 +586,7 @@ public:
 			createVolume = dlg->to_bool(1);
 		}
 
-		Grid& grid = obj->get_grid();
-		Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
-		Selector& sel = obj->get_selector();
-		SubsetHandler& sh = obj->get_subset_handler();
-
-		sel.clear();
-		bool autoselEnabled = sel.autoselection_enabled();
-		sel.enable_autoselection(true);
-
-	//	create the vertices
-		VertexBase* vrts[4];
-		for(size_t i = 0; i < 4; ++i)
-			vrts[i] = *grid.create<Vertex>();
-
-		aaPos[vrts[0]] = vector3(1, 1, 1);
-		aaPos[vrts[1]] = vector3(-1, -1, 1);
-		aaPos[vrts[2]] = vector3(-1, 1, -1);
-		aaPos[vrts[3]] = vector3(1, -1, -1);
-
-	//	we'll use a hexahedron and let it create all faces
-		Tetrahedron tet(vrts[0], vrts[1], vrts[2], vrts[3]);
-
-	//	now create the faces and register them at the grid
-		for(size_t i = 0; i < tet.num_faces(); ++i)
-			grid.register_element(tet.create_face(i));
-
-	//	if a volume shall be created, do so now
-		if(createVolume)
-			grid.create_by_cloning(&tet, tet, NULL);
-
-	//	assign subset
-		sh.assign_subset(sel.begin<VertexBase>(), sel.end<VertexBase>(), newSI);
-		sh.assign_subset(sel.begin<EdgeBase>(), sel.end<EdgeBase>(), newSI);
-		sh.assign_subset(sel.begin<Face>(), sel.end<Face>(), newSI);
-		sh.assign_subset(sel.begin<Volume>(), sel.end<Volume>(), newSI);
-
-	//	restore selector
-		sel.enable_autoselection(autoselEnabled);
+		promesh::CreateTetrahedron(obj, newSI, createVolume);
 
 		obj->geometry_changed();
 	}
@@ -927,8 +610,6 @@ class ToolCreatePyramid: public ITool
 public:
 	void execute(LGObject* obj, QWidget* widget){
 		ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
-		using namespace ug;
-
 	//	since we're accepting NULL-Ptr Objects, we have to create a new one
 	//	if none was supplied.
 		if(!obj)
@@ -942,45 +623,7 @@ public:
 			createVolume = dlg->to_bool(1);
 		}
 
-		Grid& grid = obj->get_grid();
-		Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
-		Selector& sel = obj->get_selector();
-		SubsetHandler& sh = obj->get_subset_handler();
-
-		sel.clear();
-		bool autoselEnabled = sel.autoselection_enabled();
-		sel.enable_autoselection(true);
-
-	//	create the vertices
-		VertexBase* vrts[5];
-		for(size_t i = 0; i < 5; ++i)
-			vrts[i] = *grid.create<Vertex>();
-
-		aaPos[vrts[0]] = vector3(-1, -1, -1);
-		aaPos[vrts[1]] = vector3(1, -1, -1);
-		aaPos[vrts[2]] = vector3(1, 1, -1);
-		aaPos[vrts[3]] = vector3(-1, 1, -1);
-		aaPos[vrts[4]] = vector3(0, 0, 1);
-
-	//	we'll use a hexahedron and let it create all faces
-		Pyramid pyra(vrts[0], vrts[1], vrts[2], vrts[3], vrts[4]);
-
-	//	now create the faces and register them at the grid
-		for(size_t i = 0; i < pyra.num_faces(); ++i)
-			grid.register_element(pyra.create_face(i));
-
-	//	if a volume shall be created, do so now
-		if(createVolume)
-			grid.create_by_cloning(&pyra, pyra, NULL);
-
-	//	assign subset
-		sh.assign_subset(sel.begin<VertexBase>(), sel.end<VertexBase>(), newSI);
-		sh.assign_subset(sel.begin<EdgeBase>(), sel.end<EdgeBase>(), newSI);
-		sh.assign_subset(sel.begin<Face>(), sel.end<Face>(), newSI);
-		sh.assign_subset(sel.begin<Volume>(), sel.end<Volume>(), newSI);
-
-	//	restore selector
-		sel.enable_autoselection(autoselEnabled);
+		promesh::CreatePyramid(obj, newSI, createVolume);
 
 		obj->geometry_changed();
 	}
@@ -1019,46 +662,7 @@ public:
 			createVolume = dlg->to_bool(1);
 		}
 
-		Grid& grid = obj->get_grid();
-		Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
-		Selector& sel = obj->get_selector();
-		SubsetHandler& sh = obj->get_subset_handler();
-
-		sel.clear();
-		bool autoselEnabled = sel.autoselection_enabled();
-		sel.enable_autoselection(true);
-
-	//	create the vertices
-		VertexBase* vrts[6];
-		for(size_t i = 0; i < 6; ++i)
-			vrts[i] = *grid.create<Vertex>();
-
-		aaPos[vrts[0]] = vector3(-1, -1, -1);
-		aaPos[vrts[1]] = vector3(1, -1, -1);
-		aaPos[vrts[2]] = vector3(1, 1, -1);
-		aaPos[vrts[3]] = vector3(-1, -1, 1);
-		aaPos[vrts[4]] = vector3(1, -1, 1);
-		aaPos[vrts[5]] = vector3(1, 1, 1);
-
-	//	we'll use a hexahedron and let it create all faces
-		Prism prism(vrts[0], vrts[1], vrts[2], vrts[3], vrts[4], vrts[5]);
-
-	//	now create the faces and register them at the grid
-		for(size_t i = 0; i < prism.num_faces(); ++i)
-			grid.register_element(prism.create_face(i));
-
-	//	if a volume shall be created, do so now
-		if(createVolume)
-			grid.create_by_cloning(&prism, prism, NULL);
-
-	//	assign subset
-		sh.assign_subset(sel.begin<VertexBase>(), sel.end<VertexBase>(), newSI);
-		sh.assign_subset(sel.begin<EdgeBase>(), sel.end<EdgeBase>(), newSI);
-		sh.assign_subset(sel.begin<Face>(), sel.end<Face>(), newSI);
-		sh.assign_subset(sel.begin<Volume>(), sel.end<Volume>(), newSI);
-
-	//	restore selector
-		sel.enable_autoselection(autoselEnabled);
+		promesh::CreatePrism(obj, newSI, createVolume);
 
 		obj->geometry_changed();
 	}

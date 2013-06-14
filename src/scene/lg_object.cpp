@@ -24,7 +24,7 @@ LGObject* CreateEmptyLGObject(const char* name)
 {
     LGObject* obj = new LGObject;
     obj->set_name(name);
-    Grid& grid = obj->m_grid;
+    Grid& grid = obj->get_grid();
     grid.enable_options(GRIDOPT_STANDARD_INTERCONNECTION | FACEOPT_STORE_ASSOCIATED_VOLUMES);
     return obj;
 }
@@ -33,8 +33,8 @@ bool LoadLGObjectFromFile(LGObject* pObjOut, const char* filename)
 {
 	LOG("loading " << filename << " ... ");
 
-	Grid& grid = pObjOut->m_grid;
-	SubsetHandler& sh = pObjOut->m_subsetHandler;
+	Grid& grid = pObjOut->get_grid();
+	SubsetHandler& sh = pObjOut->get_subset_handler();
 
 	grid.enable_options(GRIDOPT_STANDARD_INTERCONNECTION | FACEOPT_STORE_ASSOCIATED_VOLUMES);
 
@@ -66,7 +66,7 @@ bool LoadLGObjectFromFile(LGObject* pObjOut, const char* filename)
 					ugxReader.subset_handler(sh, 0, 0);
 
 				if(ugxReader.num_subset_handlers(0) > 1)
-					ugxReader.subset_handler(pObjOut->m_creaseHandler, 1, 0);
+					ugxReader.subset_handler(pObjOut->get_crease_handler(), 1, 0);
 
 				bLoadSuccessful = true;
 			}
@@ -238,7 +238,7 @@ bool SaveLGObjectToFile(LGObject* pObj, const char* filename)
 			return SaveGridToLGB(pObj->get_grid(), filename, ppSH, 2);
 		}
 		else
-			return SaveGridToFile(pObj->m_grid, pObj->m_subsetHandler, filename);
+			return SaveGridToFile(pObj->get_grid(), pObj->get_subset_handler(), filename);
 	}
 	return false;
 }
@@ -264,23 +264,14 @@ LGObject::~LGObject()
 
 void LGObject::init()
 {
-	m_grid.attach_to_vertices(aPosition);
-    m_grid.attach_to_faces(aNormal);
-	m_subsetHandler.assign_grid(m_grid);
-	m_subsetHandler.enable_strict_inheritance(true);
-	m_creaseHandler.assign_grid(m_grid);
-
 	m_shFacesForVolRendering.set_supported_elements(SHE_FACE);
 	m_shFacesForVolRendering.assign_grid(m_grid);
 
-	m_selector.assign_grid(m_grid);
 	m_name = "default name";
 	m_bVisible = true;
 	set_color(QColor(Qt::white));
 	m_elementMode = LGEM_VOLUME;
 	m_numInitializedSubsets = 0;
-
-	m_pivot = ug::vector3(0, 0, 0);
 
 //	set the default subset-info
 	SubsetInfo defSI;

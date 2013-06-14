@@ -9,6 +9,7 @@
 #include <QObject>
 #include "scene_interface.h"
 #include "lg_include.h"
+#include "mesh_object.h"
 #include "undo.h"
 
 ////////////////////////////////////////////////////////////////////////
@@ -61,7 +62,7 @@ bool SaveLGObjectToFile(LGObject* pObj, const char* filename);
 ////////////////////////////////////////////////////////////////////////
 //	LGObject
 ///	holds a grid, a subset-handler and the render-object.
-class LGObject : public ISceneObject
+class LGObject : public ISceneObject, public ug::promesh::MeshObject
 {
 	public:
 		LGObject();
@@ -141,22 +142,6 @@ class LGObject : public ISceneObject
 		inline void get_bounding_box(ug::vector3& vMinOut, ug::vector3& vMaxOut)
 			{vMinOut = m_boundBoxMin; vMaxOut = m_boundBoxMax;}
 
-	//	pivot
-		inline ug::vector3& pivot()					{return m_pivot;}
-		inline const ug::vector3& pivot() const		{return m_pivot;}
-
-	//	grid
-		inline ug::Grid& get_grid()	{return m_grid;}
-
-	//	subset handler
-		inline ug::SubsetHandler& get_subset_handler()	{return m_subsetHandler;}
-
-	//	crease handler
-		inline ug::SubsetHandler& get_crease_handler()	{return m_creaseHandler;}
-
-	//	selector
-		inline ug::Selector& get_selector()	{return m_selector;}
-
 	//	undo / redo
 		bool undo();
 		bool redo();
@@ -198,17 +183,12 @@ class LGObject : public ISceneObject
 	//protected:
 		std::string			m_fileName;
 		std::string			m_name;
-		ug::Grid			m_grid;
-		ug::SubsetHandler	m_subsetHandler;
-		ug::SubsetHandler	m_creaseHandler;
-		ug::Selector		m_selector;
 
 		ug::SubsetHandler	m_shFacesForVolRendering;
 
 		ug::vector3			m_boundBoxMin;
 		ug::vector3			m_boundBoxMax;
 		ug::Sphere			m_boundSphere;
-		ug::vector3			m_pivot;
 
 		DisplayListVec		m_displayLists;
 		DisplayModeVec		m_displayModes;
