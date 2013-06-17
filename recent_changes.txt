@@ -4,6 +4,8 @@ Recent changes:
 -------------------------------------------------------------------------------
 v 4.0.8
 Changes and additions:
+- Added Info-PrintLeastSquaresPlane
+- Added CoordinateTransform-ProjectToPlane
 
 Fixes:
 - Fixed Smooth-Refinement for edge geometries.

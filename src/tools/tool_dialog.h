@@ -81,6 +81,7 @@ class ToolWidget : public QFrame
 		ug::vector3 to_vector3(int paramIndex, bool* bOKOut = NULL);
 		ug::matrix33 to_matrix33(int paramIndex, bool* bOKOut = NULL);
 		ug::matrix44 to_matrix44(int paramIndex, bool* bOKOut = NULL);
+		QWidget* to_widget(int paramIndex, bool* bOkOut = NULL);
 
 /*
 		void to_vector3(double& xOut, double& yOut, double& zOut,
@@ -122,7 +123,8 @@ class ToolWidget : public QFrame
 			WT_LIST_BOX,
 			WT_TEXT_BOX,
 			WT_MATRIX,
-			WT_FILE_BROWSER
+			WT_FILE_BROWSER,
+			WT_WIDGET
 		};
 
 		struct WidgetEntry{

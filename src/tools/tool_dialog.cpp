@@ -90,6 +90,7 @@ QFormLayout* ToolWidget::current_form_layout()
 void ToolWidget::addWidget(const QString& caption, QWidget* widget)
 {
 	current_form_layout()->addRow(caption, widget);
+	m_widgets.push_back(WidgetEntry(widget, WT_WIDGET));
 }
 
 void ToolWidget::addSlider(const QString& caption,
@@ -417,6 +418,26 @@ ug::matrix44 ToolWidget::to_matrix44(int paramIndex, bool* bOKOut)
 	}
 
 	return ug::matrix44();
+}
+
+QWidget* ToolWidget::to_widget(int paramIndex, bool* bOkOut)
+{
+	if(paramIndex < 0 || paramIndex >= (int)m_widgets.size()){
+		UG_LOG("ERROR: bad parameter index in ToolDialog::to_widget: " << paramIndex << std::endl);
+		if(bOkOut)
+			*bOkOut = false;
+		return NULL;
+	}
+
+	WidgetEntry& we = m_widgets[paramIndex];
+	if(we.m_widgetType == WT_WIDGET){
+		if(bOkOut)
+			*bOkOut = true;
+		return we.m_widget;
+	}
+	if(bOkOut)
+		*bOkOut = false;
+	return NULL;
 }
 
 bool ToolWidget::setNumber(int paramIndex, double val)

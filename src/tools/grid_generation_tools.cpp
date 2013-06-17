@@ -244,7 +244,8 @@ class ToolCreateVertex : public ITool
 
 			CoordinatesWidget* dlg = dynamic_cast<CoordinatesWidget*>(widget);
 			if(dlg){
-				promesh::CreateVertex(obj, dlg->x(), dlg->y(), dlg->z(), newSubsetIndex);
+				vector3 pos(dlg->x(), dlg->y(), dlg->z());
+				promesh::CreateVertex(obj, pos, newSubsetIndex);
 			}
 			obj->geometry_changed();
 		}

@@ -19,7 +19,8 @@ class CoordinatesWidget: public QFrame
 
 	public:
 		CoordinatesWidget(const QString& name, QWidget* parent,
-						  ITool* tool, bool applyOnChange = false) :
+						  ITool* tool, bool applyOnChange = false,
+						  bool showApplyButton = true) :
 			QFrame(parent),
 			m_applyOnChange(applyOnChange),
 			m_bRefreshingCoords(false)
@@ -73,9 +74,11 @@ class CoordinatesWidget: public QFrame
 			formLayout->addRow(tr("text input:"), m_lineEdit);
 
 		//	create apply, ok and cancel buttons
-			QPushButton* btn = new QPushButton(tr("Apply"), this);
-			vLayout->addWidget(btn, 0, Qt::AlignLeft);
-			connect(btn, SIGNAL(clicked()), this, SLOT(apply()));
+			if(showApplyButton){
+				QPushButton* btn = new QPushButton(tr("Apply"), this);
+				vLayout->addWidget(btn, 0, Qt::AlignLeft);
+				connect(btn, SIGNAL(clicked()), this, SLOT(apply()));
+			}
 		}
 
 		void set_coords(double x, double y, double z)

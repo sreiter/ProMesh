@@ -213,6 +213,49 @@ class ToolPrintVertexDistance : public ITool
 		const char* get_group()		{return "Info";}
 };
 
+
+class ToolPrintLeastSquaresPlane: public ITool
+{
+	public:
+		void execute(LGObject* obj, QWidget*){
+			using namespace ug;
+			ug::Grid& grid = obj->get_grid();
+			ug::Selector& sel = obj->get_selector();
+			Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
+
+			std::vector<VertexBase*> vrts;
+			CollectVerticesTouchingSelection(vrts, sel);
+			std::vector<vector3> points;
+			points.reserve(vrts.size());
+
+			for(size_t i = 0; i < vrts.size(); ++i){
+				points.push_back(aaPos[vrts[i]]);
+			}
+
+			if(!points.empty()){
+				vector3 center, normal;
+				if(FindClosestPlane(center, normal, &points.front(), points.size())){
+					UG_LOG("LeastSquaresPlane:\n");
+					UG_LOG("  center: " << center << "\n");
+					UG_LOG("  normal: " << normal<< "\n");
+				}
+				else{
+					UG_LOG("Problem in PrintLeastSquaresPlane:\n");
+					UG_LOG("Couldn't find least squares plane. Please alter your selection.\n");
+				}
+			}
+			else{
+				UG_LOG("Problem in PrintLeastSquaresPlane:\n");
+				UG_LOG("At least 3 vertices, 2 edges or 1 face has to be selected!\n");
+			}
+		}
+
+		const char* get_name()		{return "Print Least Squares Plane";}
+		const char* get_tooltip()	{return "Prints the position and normal of the least squares fitting plane";}
+		const char* get_group()		{return "Info";}
+};
+
+
 void RegisterInfoTools(ToolManager* toolMgr)
 {
 	toolMgr->set_group_icon("Info", ":images/tool_info.png");
@@ -223,5 +266,6 @@ void RegisterInfoTools(ToolManager* toolMgr)
 	toolMgr->register_tool(new ToolPrintSelectionInfo);
 	toolMgr->register_tool(new ToolPrintSelectionContainingSubsets);
 	toolMgr->register_tool(new ToolPrintVertexDistance);
+	toolMgr->register_tool(new ToolPrintLeastSquaresPlane);
 }
 
