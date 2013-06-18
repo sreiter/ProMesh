@@ -7,50 +7,15 @@
 #include "app.h"
 #include "standard_tools.h"
 #include "tools_util.h"
-#include "common/node_tree/node_tree.h"
+#include "tools/selection_tools.h"
+
+using namespace ug;
 
 class ToolSelectLinkedManifoldFaces : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			using namespace ug;
-			using namespace std;
-
-			Grid& grid = obj->get_grid();
-			Selector& sel = obj->get_selector();
-		//	select associated faces of selected elements
-			SelectAssociatedFaces(sel, sel.vertices_begin(), sel.vertices_end());
-			SelectAssociatedFaces(sel, sel.edges_begin(), sel.edges_end());
-			SelectAssociatedFaces(sel, sel.volumes_begin(), sel.volumes_end());
-
-		//	push all selected faces to a stack
-			stack<Face*> stk;
-			for(FaceIterator iter = sel.faces_begin(); iter != sel.faces_end(); ++iter){
-				stk.push(*iter);
-			}
-
-		//	while there are faces in the stack, get their associated edges.
-		//	if those edges are adjacent to exactly two faces, then select the
-		//	neighboured face and push it to the stack (if it was unselected previously)
-			vector<EdgeBase*> edges;
-			while(!stk.empty()){
-				Face* f = stk.top();
-				stk.pop();
-				CollectEdges(edges, grid, f);
-
-				for(size_t i = 0; i < edges.size(); ++i){
-					Face* faces[2];
-					if(GetAssociatedFaces(faces, grid, edges[i], 2) == 2){
-						for(size_t j = 0; j < 2; ++j){
-							if(!sel.is_selected(faces[j])){
-								sel.select(faces[j]);
-								stk.push(faces[j]);
-							}
-						}
-					}
-				}
-			}
-
+			promesh::SelectLinkedManifoldFaces(obj);
 			obj->selection_changed();
 		}
 
@@ -63,21 +28,7 @@ class ToolSelectNonManifoldEdges : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			using namespace ug;
-			using namespace std;
-
-			Grid& grid = obj->get_grid();
-			Selector& sel = obj->get_selector();
-
-		//	iterate over all edges and check how many adjacent faces each has.
-		//	if there are more than 2, the edge will be selected
-			for(EdgeBaseIterator iter = grid.edges_begin();
-				iter != grid.edges_end(); ++iter)
-			{
-				if(NumAssociatedFaces(grid, *iter) != 2)
-					sel.select(*iter);
-			}
-
+			promesh::SelectNonManifoldEdges(obj);
 			obj->selection_changed();
 		}
 
@@ -90,7 +41,7 @@ class ToolClearSelection : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			obj->get_selector().clear();
+			promesh::ClearSelection(obj);
 			obj->selection_changed();
 		}
 
@@ -106,11 +57,11 @@ class ToolSelectSmoothEdgePath : public ITool
 		void execute(LGObject* obj, QWidget* widget){
 			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 			if(dlg)
-				SelectSmoothEdgePath(obj->get_selector(),
-									dlg->to_double(0),
-									dlg->to_bool(1));
+				promesh::SelectSmoothEdgePath(obj,
+											  dlg->to_double(0),
+											  dlg->to_bool(1));
 			else
-				SelectSmoothEdgePath(obj->get_selector(), 15., true);
+				promesh::SelectSmoothEdgePath(obj, 15., true);
 			obj->selection_changed();
 		}
 
@@ -131,15 +82,7 @@ class ToolSelectBoundaryVertices : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			using namespace ug;
-			Grid& grid = obj->get_grid();
-			Selector& sel = obj->get_selector();
-
-			size_t numSel = sel.num<ug::VertexBase>();
-
-			ug::SelectBoundaryElements(sel, grid.begin<VertexBase>(), grid.end<VertexBase>());
-
-			UG_LOG("Selected " << sel.num<ug::VertexBase>() - numSel << " boundary vertices.\n");
+			promesh::SelectBoundaryVertices(obj);
 			obj->selection_changed();
 		}
 
@@ -152,15 +95,7 @@ class ToolSelectInnerVertices : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			using namespace ug;
-			Grid& grid = obj->get_grid();
-			Selector& sel = obj->get_selector();
-
-			size_t numSel = sel.num<ug::VertexBase>();
-
-			ug::SelectInnerElements(sel, grid.begin<VertexBase>(), grid.end<VertexBase>());
-
-			UG_LOG("Selected " << sel.num<ug::VertexBase>() - numSel << " inner vertices.\n");
+			promesh::SelectInnerVertices(obj);
 			obj->selection_changed();
 		}
 
@@ -173,15 +108,7 @@ class ToolSelectBoundaryEdges : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			using namespace ug;
-			Grid& grid = obj->get_grid();
-			Selector& sel = obj->get_selector();
-
-			size_t numSelEdges = sel.num<ug::EdgeBase>();
-
-			ug::SelectBoundaryElements(sel, grid.begin<EdgeBase>(), grid.end<EdgeBase>());
-
-			UG_LOG("Selected " << sel.num<ug::EdgeBase>() - numSelEdges << " boundary edges.\n");
+			promesh::SelectBoundaryEdges(obj);
 			obj->selection_changed();
 		}
 
@@ -194,15 +121,7 @@ class ToolSelectInnerEdges : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			using namespace ug;
-			Grid& grid = obj->get_grid();
-			Selector& sel = obj->get_selector();
-
-			size_t numSelEdges = sel.num<ug::EdgeBase>();
-
-			ug::SelectInnerElements(sel, grid.begin<EdgeBase>(), grid.end<EdgeBase>());
-
-			UG_LOG("Selected " << sel.num<ug::EdgeBase>() - numSelEdges << " inner edges.\n");
+			promesh::SelectInnerEdges(obj);
 			obj->selection_changed();
 		}
 
@@ -215,15 +134,7 @@ class ToolSelectBoundaryFaces : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			using namespace ug;
-			Grid& grid = obj->get_grid();
-			Selector& sel = obj->get_selector();
-
-			size_t numSel = sel.num<ug::Face>();
-
-			ug::SelectBoundaryElements(sel, grid.begin<Face>(), grid.end<Face>());
-
-			UG_LOG("Selected " << sel.num<ug::Face>() - numSel << " boundary faces.\n");
+			promesh::SelectBoundaryFaces(obj);
 			obj->selection_changed();
 		}
 
@@ -236,15 +147,7 @@ class ToolSelectInnerFaces : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			using namespace ug;
-			Grid& grid = obj->get_grid();
-			Selector& sel = obj->get_selector();
-
-			size_t numSel = sel.num<ug::Face>();
-
-			ug::SelectInnerElements(sel, grid.begin<Face>(), grid.end<Face>());
-
-			UG_LOG("Selected " << sel.num<ug::Face>() - numSel << " inner faces.\n");
+			promesh::SelectInnerFaces(obj);
 			obj->selection_changed();
 		}
 
@@ -259,28 +162,16 @@ class ToolSelectShortEdges : public ITool
 	public:
 		void execute(LGObject* obj, QWidget* widget){
 			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
-			using namespace ug;
 
 			number maxLength = 0.0001;
 			if(dlg){
 				maxLength = dlg->to_double(0);
 			}
 
-			number maxLengthSq = maxLength * maxLength;
-			Grid& grid = obj->get_grid();
-			Selector& sel = obj->get_selector();
-			Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
-
-			size_t numSelEdges = sel.num<EdgeBase>();
-			for(EdgeBaseIterator iter = grid.begin<EdgeBase>();
-				iter != grid.end<EdgeBase>(); ++iter)
-			{
-				EdgeBase* e = *iter;
-				if(VecDistanceSq(aaPos[e->vertex(0)], aaPos[e->vertex(1)]) < maxLengthSq)
-					sel.select(e);
-			}
-
-			UG_LOG(  sel.num<EdgeBase>() - numSelEdges << " short edges selected.\n");
+			size_t numSel = obj->get_selector().num<EdgeBase>();
+			promesh::SelectShortEdges(obj, maxLength);
+			UG_LOG(obj->get_selector().num<EdgeBase>() - numSel
+				   << " short edges selected.\n");
 
 			obj->selection_changed();
 		}
@@ -302,28 +193,17 @@ class ToolSelectLongEdges : public ITool
 	public:
 		void execute(LGObject* obj, QWidget* widget){
 			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
-			using namespace ug;
 
 			number minLength = 1;
 			if(dlg){
 				minLength = dlg->to_double(0);
 			}
 
-			number minLengthSq = minLength * minLength;
-			Grid& grid = obj->get_grid();
-			Selector& sel = obj->get_selector();
-			Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
+			size_t numSel = obj->get_selector().num<EdgeBase>();
+			promesh::SelectLongEdges(obj, minLength);
+			UG_LOG(obj->get_selector().num<EdgeBase>() - numSel
+				   << " long edges selected.\n");
 
-			size_t numSelEdges = sel.num<EdgeBase>();
-			for(EdgeBaseIterator iter = grid.begin<EdgeBase>();
-				iter != grid.end<EdgeBase>(); ++iter)
-			{
-				EdgeBase* e = *iter;
-				if(VecDistanceSq(aaPos[e->vertex(0)], aaPos[e->vertex(1)]) > minLengthSq)
-					sel.select(e);
-			}
-
-			UG_LOG(  sel.num<EdgeBase>() - numSelEdges << " long edges selected.\n");
 
 			obj->selection_changed();
 		}
@@ -345,51 +225,16 @@ class ToolSelectDegenerateFaces : public ITool
 	public:
 		void execute(LGObject* obj, QWidget* widget){
 			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
-			using namespace ug;
 
 			number maxHeight = 0.0001;
 			if(dlg){
 				maxHeight = dlg->to_double(0);
 			}
 
-			number maxHeightSq = maxHeight * maxHeight;
-			Grid& grid = obj->get_grid();
-			Selector& sel = obj->get_selector();
-			Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
-
-			size_t numSelFaces = sel.num<Face>();
-			for(FaceIterator iter = grid.begin<Face>();
-				iter != grid.end<Face>(); ++iter)
-			{
-				Face* f = *iter;
-			//	iterate over the edges and check which is the longest.
-				number maxLenSq = -1;
-				size_t bestInd = -1;
-				EdgeDescriptor ed;
-				for(size_t i = 0; i < f->num_edges(); ++i){
-					f->edge_desc(i, ed);
-					number lenSq = VecDistanceSq(aaPos[ed.vertex(0)], aaPos[ed.vertex(1)]);
-					if(lenSq > maxLenSq){
-						maxLenSq = lenSq;
-						bestInd = i;
-					}
-				}
-
-				if(maxLenSq < maxHeightSq)
-					sel.select(f);
-				else{
-				//	project the other vertices to the line and check the height
-				//todo: this is not enough for quadrilaterals
-					vector3 p;
-					vector3& v = aaPos[f->vertex((bestInd + 2) % f->num_vertices())];
-					f->edge_desc(bestInd, ed);
-					number t;
-					if(DistancePointToLine(t, v, aaPos[ed.vertex(0)], aaPos[ed.vertex(1)]) < maxHeight)
-						sel.select(f);
-				}
-			}
-
-			UG_LOG(  sel.num<Face>() - numSelFaces << " degenerated faces selected.\n");
+			size_t numSelFaces = obj->get_selector().num<Face>();
+			promesh::SelectDegenerateFaces(obj, maxHeight);
+			UG_LOG(obj->get_selector().num<Face>() - numSelFaces
+				   << " degenerated faces selected.\n");
 
 			obj->selection_changed();
 		}
@@ -411,7 +256,6 @@ class ToolSelectLinkedFlatFaces : public ITool
 	public:
 		void execute(LGObject* obj, QWidget* widget){
 			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
-			using namespace ug;
 
 			number maxDeviationAngle = 1;
 			bool traverseFlipped = false;
@@ -425,14 +269,8 @@ class ToolSelectLinkedFlatFaces : public ITool
 				stopAtSelectedEdges = dlg->to_bool(3);
 			}
 
-			Selector& sel = obj->get_selector();
-			if(traverseDegeneratedFaces)
-				ug::SelectLinkedFlatAndDegeneratedFaces(sel, maxDeviationAngle,
-														traverseFlipped,
-														stopAtSelectedEdges);
-			else
-				ug::SelectLinkedFlatFaces(sel, maxDeviationAngle, traverseFlipped,
-										  stopAtSelectedEdges);
+			promesh::SelectLinkedFlatFaces(obj, maxDeviationAngle, traverseFlipped,
+										   traverseDegeneratedFaces, stopAtSelectedEdges);
 
 			obj->selection_changed();
 		}
@@ -459,21 +297,13 @@ class ToolSelectLinkedBoundaryEdges : public ITool
 	public:
 		void execute(LGObject* obj, QWidget* widget){
 			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
-			using namespace ug;
 
 			bool stopAtSelectedVrts = true;
-
 			if(dlg){
 				stopAtSelectedVrts = dlg->to_bool(0);
 			}
 
-			Grid& grid = obj->get_grid();
-			Selector& sel = obj->get_selector();
-
-			if(stopAtSelectedVrts)
-				SelectLinkedElements<EdgeBase>(sel, IsOnBoundary(grid), IsNotSelected(sel));
-			else
-				SelectLinkedElements<EdgeBase>(sel, IsOnBoundary(grid));
+			promesh::SelectLinkedBoundaryEdges(obj, stopAtSelectedVrts);
 
 			obj->selection_changed();
 		}
@@ -496,7 +326,6 @@ class ToolSelectLinkedBoundaryFaces : public ITool
 	public:
 		void execute(LGObject* obj, QWidget* widget){
 			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
-			using namespace ug;
 
 			bool stopAtSelectedEdges = true;
 
@@ -504,13 +333,7 @@ class ToolSelectLinkedBoundaryFaces : public ITool
 				stopAtSelectedEdges = dlg->to_bool(0);
 			}
 
-			Grid& grid = obj->get_grid();
-			Selector& sel = obj->get_selector();
-
-			if(stopAtSelectedEdges)
-				SelectLinkedElements<Face>(sel, IsOnBoundary(grid), IsNotSelected(sel));
-			else
-				SelectLinkedElements<Face>(sel, IsOnBoundary(grid));
+			SelectLinkedBoundaryFaces(obj, stopAtSelectedEdges);
 
 			obj->selection_changed();
 		}
@@ -532,79 +355,11 @@ class ToolSelectIntersectingTriangles : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			using namespace ug;
-			using namespace ug::node_tree;
 
-			Grid& grid = obj->get_grid();
-			Selector& sel = obj->get_selector();
-
-		//	make sure that triangles are present.
-			if(grid.num<Triangle>() == 0){
-				UG_LOG("Given grid does not contain any triangles. Aborting 'Select Intersecting Triangles'.\n");
-				return;
-			}
-
-			if(grid.num<Quadrilateral>() > 0){
-				UG_LOG("WARNING: Quadrilateral intersections are ignored during 'Select Intersecting Triangles'.\n");
-			}
-
-		//	create an octree
-		//	sort the triangles of grid into an octree to speed-up projection performance
-			SPOctree octree;
-			octree = CreateOctree(grid, grid.begin<Triangle>(),
-										grid.end<Triangle>(),
-										10, 30, false, aPosition);
-
-			if(!octree.valid()){
-				UG_LOG("  Octree creation failed in ToolSelectIntersectingTriangles. Aborting.\n");
-				return;
-			}
-
-		//	access the position attachment of the grid
-			Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
-
-		//	we'll use a traverser to find the intersections.
-			Traverser_IntersectFaces intersectionTraverser;
-
-		//	for each face the face itself and direct neighbors shall be ignored
-			std::vector<Face*> ignoreList;
-
-			UG_LOG("intersections found:");
-			bool gotOne = false;
-			size_t triCount = 0;
-		//	now iterate over all triangles of the grid and find intersections
-			for(TriangleIterator iter = grid.begin<Triangle>();
-				iter != grid.end<Triangle>(); ++iter, ++triCount)
-			{
-				Triangle* t = *iter;
-
-			//	add neighbors and the face itself to the ignore list
-				CollectNeighbors(ignoreList, t, grid, NHT_VERTEX_NEIGHBORS);
-				intersectionTraverser.clear_ignore_list();
-				for(size_t i = 0; i < ignoreList.size(); ++i){
-					intersectionTraverser.ignore_element(ignoreList[i]);
-				}
-				intersectionTraverser.ignore_element(t);
-
-				if(intersectionTraverser.intersect_tri(aaPos[t->vertex(0)], aaPos[t->vertex(1)],
-														aaPos[t->vertex(2)], octree))
-				{
-				//	check the intersecting face:
-					/*
-					const std::vector<CollisionElementID>& faces =
-						intersectionTraverser.get_intersected_element_ids();
-					*/
-				//	an intersection occurred. Log the index and select the triangle.
-					gotOne = true;
-					UG_LOG(" " << triCount);
-					sel.select(t);
-				}
-			}
-
-			if(!gotOne){
-				UG_LOG(" none");
-			}
-			UG_LOG(std::endl);
+			size_t numSelFaces = obj->get_selector().num<Face>();
+			promesh::SelectIntersectingTriangles(obj);
+			UG_LOG(obj->get_selector().num<Face>() - numSelFaces
+				   << " intersecting faces selected.\n");
 
 			obj->selection_changed();
 		}
@@ -618,16 +373,7 @@ class ToolSelectAssociatedVertices : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			ug::Selector& sel = obj->get_selector();
-			ug::SelectAssociatedVertices(sel,
-										sel.begin<ug::EdgeBase>(),
-										sel.end<ug::EdgeBase>());
-			ug::SelectAssociatedVertices(sel,
-										sel.begin<ug::Face>(),
-										sel.end<ug::Face>());
-			ug::SelectAssociatedVertices(sel,
-										sel.begin<ug::Volume>(),
-										sel.end<ug::Volume>());
+			promesh::SelectAssociatedVertices(obj);
 			obj->selection_changed();
 		}
 
@@ -640,14 +386,7 @@ class ToolSelectAssociatedEdges : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			ug::Selector& sel = obj->get_selector();
-
-			ug::SelectAssociatedEdges(sel,
-										sel.begin<ug::Face>(),
-										sel.end<ug::Face>());
-			ug::SelectAssociatedEdges(sel,
-										sel.begin<ug::Volume>(),
-										sel.end<ug::Volume>());
+			promesh::SelectAssociatedEdges(obj);
 			obj->selection_changed();
 		}
 
@@ -660,11 +399,7 @@ class ToolSelectAssociatedFaces : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			ug::Selector& sel = obj->get_selector();
-
-			ug::SelectAssociatedFaces(sel,
-										sel.begin<ug::Volume>(),
-										sel.end<ug::Volume>());
+			promesh::SelectAssociatedFaces(obj);
 			obj->selection_changed();
 		}
 
@@ -677,12 +412,7 @@ class ToolSelectAll : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			ug::Grid& grid = obj->get_grid();
-			ug::Selector& sel = obj->get_selector();
-			sel.select(grid.vertices_begin(), grid.vertices_end());
-			sel.select(grid.edges_begin(), grid.edges_end());
-			sel.select(grid.faces_begin(), grid.faces_end());
-			sel.select(grid.volumes_begin(), grid.volumes_end());
+			promesh::SelectAll(obj);
 			obj->selection_changed();
 		}
 
@@ -695,9 +425,7 @@ class ToolSelectAllVertices : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			ug::Grid& grid = obj->get_grid();
-			ug::Selector& sel = obj->get_selector();
-			sel.select(grid.vertices_begin(), grid.vertices_end());
+			promesh::SelectAllVertices(obj);
 			obj->selection_changed();
 		}
 
@@ -710,8 +438,7 @@ class ToolDeselectAllVertices : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			ug::Selector& sel = obj->get_selector();
-			sel.deselect(sel.vertices_begin(), sel.vertices_end());
+			promesh::DeselectAllVertices(obj);
 			obj->selection_changed();
 		}
 
@@ -724,9 +451,7 @@ class ToolSelectAllEdges : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			ug::Grid& grid = obj->get_grid();
-			ug::Selector& sel = obj->get_selector();
-			sel.select(grid.edges_begin(), grid.edges_end());
+			promesh::SelectAllEdges(obj);
 			obj->selection_changed();
 		}
 
@@ -739,8 +464,7 @@ class ToolDeselectAllEdges : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			ug::Selector& sel = obj->get_selector();
-			sel.deselect(sel.edges_begin(), sel.edges_end());
+			promesh::DeselectAllEdges(obj);
 			obj->selection_changed();
 		}
 
@@ -753,9 +477,7 @@ class ToolSelectAllFaces : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			ug::Grid& grid = obj->get_grid();
-			ug::Selector& sel = obj->get_selector();
-			sel.select(grid.faces_begin(), grid.faces_end());
+			promesh::SelectAllFaces(obj);
 			obj->selection_changed();
 		}
 
@@ -768,8 +490,7 @@ class ToolDeselectAllFaces : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			ug::Selector& sel = obj->get_selector();
-			sel.deselect(sel.faces_begin(), sel.faces_end());
+			promesh::DeselectAllFaces(obj);
 			obj->selection_changed();
 		}
 
@@ -782,9 +503,7 @@ class ToolSelectAllVolumes : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			ug::Grid& grid = obj->get_grid();
-			ug::Selector& sel = obj->get_selector();
-			sel.select(grid.volumes_begin(), grid.volumes_end());
+			promesh::SelectAllVolumes(obj);
 			obj->selection_changed();
 		}
 
@@ -797,8 +516,7 @@ class ToolDeselectAllVolumes : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			ug::Selector& sel = obj->get_selector();
-			sel.deselect(sel.volumes_begin(), sel.volumes_end());
+			promesh::DeselectAllVolumes(obj);
 			obj->selection_changed();
 		}
 
@@ -811,11 +529,8 @@ class ToolSelectMarkedVertices : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			using namespace ug;
-			obj->get_selector().select(
-					obj->get_crease_handler().begin<VertexBase>(REM_FIXED),
-					obj->get_crease_handler().end<VertexBase>(REM_FIXED));
-			obj->marks_changed();
+			promesh::SelectMarkedVertices(obj);
+			obj->selection_changed();
 		}
 
 		const char* get_name()		{return "Marked Vertices";}
@@ -827,11 +542,8 @@ class ToolSelectMarkedEdges : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			using namespace ug;
-			obj->get_selector().select(
-					obj->get_crease_handler().begin<EdgeBase>(REM_CREASE),
-					obj->get_crease_handler().end<EdgeBase>(REM_CREASE));
-			obj->marks_changed();
+			promesh::SelectMarkedEdges(obj);
+			obj->selection_changed();
 		}
 
 		const char* get_name()		{return "Marked Edges";}
@@ -843,34 +555,7 @@ class ToolSelectUnorientableVolumes : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			using namespace ug;
-			Grid& grid = obj->get_grid();
-			Selector& sel = obj->get_selector();
-
-			Grid::AttachmentAccessor<VertexBase, APosition> aaPos(grid, aPosition);
-
-			int numUnorientable = 0;
-
-		//	iterate over all volumes. Check whether the orientation can be determined.
-			for(VolumeIterator iter = grid.volumes_begin();
-				iter != grid.volumes_end(); ++iter)
-			{
-				Volume* v = *iter;
-			//	get orientation of original volume
-				bool bOriented = CheckOrientation(v, aaPos);
-			//	flip the volume
-				grid.flip_orientation(v);
-
-			//	if orientations match, then the volume can not be oriented.
-				if(bOriented == CheckOrientation(v, aaPos)){
-					sel.select(v);
-					++numUnorientable;
-				}
-
-			//	reflip orientation
-				grid.flip_orientation(v);
-			}
-
+			int numUnorientable = promesh::SelectUnorientableVolumes(obj);
 			UG_LOG("Unorientable volumes: " << numUnorientable << "\n");
 			obj->selection_changed();
 		}
@@ -885,15 +570,13 @@ class ToolExtendSelection : public ITool
 	public:
 		void execute(LGObject* obj, QWidget* widget){
 			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
-			using namespace ug;
 
 			int neighborhoodSize = 1;
 			if(dlg){
 				neighborhoodSize = dlg->to_int(0);
 			}
 
-			Selector& sel = obj->get_selector();
-			ExtendSelection(sel, (size_t)neighborhoodSize);
+			promesh::ExtendSelection(obj, neighborhoodSize);
 
 			obj->selection_changed();
 		}
@@ -916,20 +599,11 @@ class ToolSelectVertexByIndex : public ITool
 		void execute(LGObject* obj, QWidget* widget){
 			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 			if(dlg){
-				ug::Grid& grid = obj->get_grid();
 				int index = dlg->to_int(0);
-				int counter = 0;
 
-				ug::VertexBaseIterator iter = grid.begin<ug::VertexBase>();
-				while(counter < index && iter != grid.end<ug::VertexBase>()){
-					++counter;
-					++iter;
-				}
+				promesh::SelectVertexByIndex(obj, index);
 
-				if(counter == index){
-					obj->get_selector().select(*iter);
-					obj->selection_changed();
-				}
+				obj->selection_changed();
 			}
 		}
 
@@ -951,20 +625,9 @@ class ToolSelectEdgeByIndex : public ITool
 		void execute(LGObject* obj, QWidget* widget){
 			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 			if(dlg){
-				ug::Grid& grid = obj->get_grid();
 				int index = dlg->to_int(0);
-				int counter = 0;
-
-				ug::EdgeBaseIterator iter = grid.begin<ug::EdgeBase>();
-				while(counter < index && iter != grid.end<ug::EdgeBase>()){
-					++counter;
-					++iter;
-				}
-
-				if(counter == index){
-					obj->get_selector().select(*iter);
-					obj->selection_changed();
-				}
+				promesh::SelectEdgeByIndex(obj, index);
+				obj->selection_changed();
 			}
 		}
 
@@ -986,20 +649,9 @@ class ToolSelectFaceByIndex : public ITool
 		void execute(LGObject* obj, QWidget* widget){
 			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 			if(dlg){
-				ug::Grid& grid = obj->get_grid();
 				int index = dlg->to_int(0);
-				int counter = 0;
-
-				ug::FaceIterator iter = grid.begin<ug::Face>();
-				while(counter < index && iter != grid.end<ug::Face>()){
-					++counter;
-					++iter;
-				}
-
-				if(counter == index){
-					obj->get_selector().select(*iter);
-					obj->selection_changed();
-				}
+				promesh::SelectFaceByIndex(obj, index);
+				obj->selection_changed();
 			}
 		}
 
@@ -1021,20 +673,9 @@ class ToolSelectVolumeByIndex : public ITool
 		void execute(LGObject* obj, QWidget* widget){
 			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 			if(dlg){
-				ug::Grid& grid = obj->get_grid();
 				int index = dlg->to_int(0);
-				int counter = 0;
-
-				ug::VolumeIterator iter = grid.begin<ug::Volume>();
-				while(counter < index && iter != grid.end<ug::Volume>()){
-					++counter;
-					++iter;
-				}
-
-				if(counter == index){
-					obj->get_selector().select(*iter);
-					obj->selection_changed();
-				}
+				promesh::SelectVolumeByIndex(obj, index);
+				obj->selection_changed();
 			}
 		}
 
@@ -1057,24 +698,18 @@ class ToolSelectVertexByCoordinate : public ITool
 			using namespace ug;
 			CoordinatesWidget* dlg = dynamic_cast<CoordinatesWidget*>(widget);
 			if(dlg){
-				Grid& grid = obj->get_grid();
-				Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
+				vector3 coord(dlg->x(), dlg->y(), dlg->z());
+				VertexBase* e = promesh::SelectElemByCoordinate<VertexBase>(obj, coord);
 
-				vector3 coord;
-				coord.x = dlg->x();
-				coord.y = dlg->y();
-				coord.z = dlg->z();
-
-				VertexBase* vrt = FindClosestByCoordinate<VertexBase>(coord,
-												 grid.vertices_begin(),
-												 grid.vertices_end(),
-												 aaPos);
-				if(vrt){
+				if(e){
 				//	This message is important, since the user can see
 				//	whether the correct vertex was chosen.
-					UG_LOG("Selected vertex at: " << aaPos[vrt] << "\n");
-					obj->get_selector().select(vrt);
+					UG_LOG("Selected vertex at: "
+							<< CalculateCenter(e, obj->position_accessor()) << "\n");
 					obj->selection_changed();
+				}
+				else{
+					UG_LOG("No matching vertex found\n");
 				}
 			}
 		}
@@ -1095,27 +730,18 @@ class ToolSelectEdgeByCoordinate : public ITool
 			using namespace ug;
 			CoordinatesWidget* dlg = dynamic_cast<CoordinatesWidget*>(widget);
 			if(dlg){
-				Grid& grid = obj->get_grid();
-				Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
+				vector3 coord(dlg->x(), dlg->y(), dlg->z());
+				EdgeBase* e = promesh::SelectElemByCoordinate<EdgeBase>(obj, coord);
 
-				vector3 coord;
-				coord.x = dlg->x();
-				coord.y = dlg->y();
-				coord.z = dlg->z();
-
-				EdgeBase* e = FindClosestByCoordinate<EdgeBase>(coord,
-												 grid.edges_begin(),
-												 grid.edges_end(),
-												 aaPos);
 				if(e){
 				//	This message is important, since the user can see
-				//	whether the correct vertex was chosen.
-					UG_LOG("Selected edge with center: " << CalculateCenter(e, aaPos) << "\n");
-					obj->get_selector().select(e);
+				//	whether the correct edge was chosen.
+					UG_LOG("Selected edge at: "
+							<< CalculateCenter(e, obj->position_accessor()) << "\n");
 					obj->selection_changed();
 				}
 				else{
-					UG_LOG("No matching edge found.\n");
+					UG_LOG("No matching edge found\n");
 				}
 			}
 		}
@@ -1136,27 +762,18 @@ class ToolSelectFaceByCoordinate : public ITool
 			using namespace ug;
 			CoordinatesWidget* dlg = dynamic_cast<CoordinatesWidget*>(widget);
 			if(dlg){
-				Grid& grid = obj->get_grid();
-				Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
+				vector3 coord(dlg->x(), dlg->y(), dlg->z());
+				Face* e = promesh::SelectElemByCoordinate<Face>(obj, coord);
 
-				vector3 coord;
-				coord.x = dlg->x();
-				coord.y = dlg->y();
-				coord.z = dlg->z();
-
-				Face* f = FindClosestByCoordinate<Face>(coord,
-												 grid.faces_begin(),
-												 grid.faces_end(),
-												 aaPos);
-				if(f){
+				if(e){
 				//	This message is important, since the user can see
-				//	whether the correct vertex was chosen.
-					UG_LOG("Selected face with center: " << CalculateCenter(f, aaPos) << "\n");
-					obj->get_selector().select(f);
+				//	whether the correct face was chosen.
+					UG_LOG("Selected face at: "
+							<< CalculateCenter(e, obj->position_accessor()) << "\n");
 					obj->selection_changed();
 				}
 				else{
-					UG_LOG("No matching face found.\n");
+					UG_LOG("No matching face found\n");
 				}
 			}
 		}
@@ -1177,27 +794,18 @@ class ToolSelectVolumeByCoordinate : public ITool
 			using namespace ug;
 			CoordinatesWidget* dlg = dynamic_cast<CoordinatesWidget*>(widget);
 			if(dlg){
-				Grid& grid = obj->get_grid();
-				Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
+				vector3 coord(dlg->x(), dlg->y(), dlg->z());
+				Volume* e = promesh::SelectElemByCoordinate<Volume>(obj, coord);
 
-				vector3 coord;
-				coord.x = dlg->x();
-				coord.y = dlg->y();
-				coord.z = dlg->z();
-
-				Volume* v = FindClosestByCoordinate<Volume>(coord,
-												 grid.volumes_begin(),
-												 grid.volumes_end(),
-												 aaPos);
-				if(v){
+				if(e){
 				//	This message is important, since the user can see
-				//	whether the correct vertex was chosen.
-					UG_LOG("Selected volume with center: " << CalculateCenter(v, aaPos) << "\n");
-					obj->get_selector().select(v);
+				//	whether the correct volume was chosen.
+					UG_LOG("Selected volume at: "
+							<< CalculateCenter(e, obj->position_accessor()) << "\n");
 					obj->selection_changed();
 				}
 				else{
-					UG_LOG("No matching volume found.\n");
+					UG_LOG("No matching volume found\n");
 				}
 			}
 		}
@@ -1211,25 +819,6 @@ class ToolSelectVolumeByCoordinate : public ITool
 		}
 };
 
-template <class TElem>
-static size_t SelectUnconnectedVertices(ug::Grid& grid, ug::Selector& sel)
-{
-	using namespace ug;
-	std::vector<TElem*> elems;
-
-	size_t numUnconnected = 0;
-	for(VertexBaseIterator iter = grid.vertices_begin();
-		iter != grid.vertices_end(); ++iter)
-	{
-		CollectAssociated(elems, grid, *iter);
-		if(elems.size() == 0){
-			sel.select(*iter);
-			numUnconnected++;
-		}
-	}
-	return numUnconnected;
-}
-
 class ToolSelectUnconnectedVertices : public ITool
 {
 	public:
@@ -1241,13 +830,12 @@ class ToolSelectUnconnectedVertices : public ITool
 				Selector& sel = obj->get_selector();
 
 				int choice = dlg->to_int(0);
+				bool edgeCons = (choice == 0);
+				bool faceCons = (choice == 1);
+				bool volCons = (choice == 2);
 
-				size_t numUnconnected = 0;
-				switch(choice){
-					case 0:	numUnconnected = SelectUnconnectedVertices<EdgeBase>(grid, sel); break;
-					case 1:	numUnconnected = SelectUnconnectedVertices<Face>(grid, sel); break;
-					case 2:	numUnconnected = SelectUnconnectedVertices<Volume>(grid, sel); break;
-				}
+				size_t numUnconnected = promesh::SelectUnconnectedVertices(obj, edgeCons,
+																		   faceCons, volCons);
 
 				UG_LOG(numUnconnected << " unconnected vertices found.\n");
 				if(numUnconnected > 0)
@@ -1272,41 +860,12 @@ class ToolSelectUnconnectedVertices : public ITool
 		}
 };
 
-class ToolSelectLastUnselectedFace : public ITool
-{
-	public:
-		void execute(LGObject* obj, QWidget*){
-			ug::Grid& grid = obj->get_grid();
-			ug::Selector& sel = obj->get_selector();
-			ug::Face* lastUnselected = NULL;
-
-			for(ug::FaceIterator iter = grid.faces_begin();
-				iter != grid.faces_end(); ++iter)
-			{
-				if(!sel.is_selected(*iter))
-					lastUnselected = *iter;
-			}
-
-			if(lastUnselected)
-				sel.select(lastUnselected);
-
-			obj->selection_changed();
-		}
-
-		const char* get_name()		{return "Last Unselected Face";}
-		const char* get_tooltip()	{return "Selects the last unselected face. Mainly used for debugging.";}
-		const char* get_group()		{return "Selection | Faces";}
-};
-
 class ToolSelectSubset : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget* widget){
 			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 			if(dlg){
-				ug::SubsetHandler& sh = obj->get_subset_handler();
-				ug::Selector& sel = obj->get_selector();
-
 				bool selVrts = true;
 				bool selEdges = true;
 				bool selFaces = true;
@@ -1321,53 +880,7 @@ class ToolSelectSubset : public ITool
 					si = dlg->to_int(4);
 				}
 
-				if(si >= 0){
-					if(selVrts)
-						sel.select(sh.begin<ug::VertexBase>(si), sh.end<ug::VertexBase>(si));
-					if(selEdges)
-						sel.select(sh.begin<ug::EdgeBase>(si), sh.end<ug::EdgeBase>(si));
-					if(selFaces)
-						sel.select(sh.begin<ug::Face>(si), sh.end<ug::Face>(si));
-					if(selVols)
-						sel.select(sh.begin<ug::Volume>(si), sh.end<ug::Volume>(si));
-				}
-				else{
-					ug::Grid& grid = obj->get_grid();
-				//	subset -1 has to be selected. Those are not directly accessible.
-					if(selVrts){
-						for(ug::VertexBaseIterator iter = grid.vertices_begin();
-							iter != grid.vertices_end(); ++iter)
-						{
-							if(sh.get_subset_index(*iter) == -1)
-								sel.select(*iter);
-						}
-					}
-					if(selEdges){
-						for(ug::EdgeBaseIterator iter = grid.edges_begin();
-							iter != grid.edges_end(); ++iter)
-						{
-							if(sh.get_subset_index(*iter) == -1)
-								sel.select(*iter);
-						}
-					}
-					if(selFaces){
-						for(ug::FaceIterator iter = grid.faces_begin();
-							iter != grid.faces_end(); ++iter)
-						{
-							if(sh.get_subset_index(*iter) == -1)
-								sel.select(*iter);
-						}
-					}
-					if(selVols){
-						for(ug::VolumeIterator iter = grid.volumes_begin();
-							iter != grid.volumes_end(); ++iter)
-						{
-							if(sh.get_subset_index(*iter) == -1)
-								sel.select(*iter);
-						}
-					}
-				}
-
+				promesh::SelectSubset(obj, si, selVrts, selEdges, selFaces, selVols);
 				obj->selection_changed();
 			}
 		}
@@ -1392,9 +905,6 @@ class ToolSelectSubsetBoundary : public ITool
 			using namespace ug;
 			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 			if(dlg){
-				ug::SubsetHandler& sh = obj->get_subset_handler();
-				ug::Selector& sel = obj->get_selector();
-
 				bool edgeBnds = true;
 				bool faceBnds = true;
 				bool volBnds = true;
@@ -1407,12 +917,7 @@ class ToolSelectSubsetBoundary : public ITool
 					si = dlg->to_int(3);
 				}
 
-				if(edgeBnds)
-					SelectAreaBoundary(sel, sh.begin<EdgeBase>(si), sh.end<EdgeBase>(si));
-				if(faceBnds)
-					SelectAreaBoundary(sel, sh.begin<Face>(si), sh.end<Face>(si));
-				if(volBnds)
-					SelectAreaBoundary(sel, sh.begin<Volume>(si), sh.end<Volume>(si));
+				promesh::SelectSubsetBoundary(obj, si, edgeBnds, faceBnds, volBnds);
 
 				obj->selection_changed();
 			}
@@ -1433,17 +938,6 @@ class ToolSelectSubsetBoundary : public ITool
 		}
 };
 
-template <class TGeomObj>
-static void SelectUnassignedElements(ug::Grid& grid, ug::SubsetHandler& sh, ug::Selector& sel)
-{
-	typedef typename ug::geometry_traits<TGeomObj>::iterator	iterator;
-	for(iterator iter = grid.begin<TGeomObj>(); iter != grid.end<TGeomObj>(); ++iter)
-	{
-		if(sh.get_subset_index(*iter) == -1){
-			sel.select(*iter);
-		}
-	}
-}
 
 class ToolSelectUnassignedElements : public ITool
 {
@@ -1451,10 +945,6 @@ class ToolSelectUnassignedElements : public ITool
 		void execute(LGObject* obj, QWidget* widget){
 			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 			if(dlg){
-				ug::Grid& grid = obj->get_grid();
-				ug::SubsetHandler& sh = obj->get_subset_handler();
-				ug::Selector& sel = obj->get_selector();
-
 				bool selVrts = true;
 				bool selEdges = true;
 				bool selFaces = true;
@@ -1467,15 +957,7 @@ class ToolSelectUnassignedElements : public ITool
 					selVols = dlg->to_bool(3);
 				}
 
-
-				if(selVrts)
-					SelectUnassignedElements<ug::VertexBase>(grid, sh, sel);
-				if(selEdges)
-					SelectUnassignedElements<ug::EdgeBase>(grid, sh, sel);
-				if(selFaces)
-					SelectUnassignedElements<ug::Face>(grid, sh, sel);
-				if(selVols)
-					SelectUnassignedElements<ug::Volume>(grid, sh, sel);
+				promesh::SelectUnassignedElements(obj, selVrts, selEdges, selFaces, selVrts);
 
 				obj->selection_changed();
 			}
@@ -1500,9 +982,6 @@ class ToolInvertSelection : public ITool
 			using namespace ug;
 			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 			if(dlg){
-				Grid& grid = obj->get_grid();
-				Selector& sel = obj->get_selector();
-
 				bool invVrts = true;
 				bool invEdges = true;
 				bool invFaces = true;
@@ -1515,21 +994,7 @@ class ToolInvertSelection : public ITool
 					invVols = dlg->to_bool(3);
 				}
 
-				if(invVrts)
-					ug::InvertSelection(sel, grid.begin<VertexBase>(),
-										grid.end<VertexBase>());
-
-				if(invEdges)
-					ug::InvertSelection(sel, grid.begin<EdgeBase>(),
-										grid.end<EdgeBase>());
-
-				if(invFaces)
-					ug::InvertSelection(sel, grid.begin<Face>(),
-										grid.end<Face>());
-
-				if(invVols)
-					ug::InvertSelection(sel, grid.begin<Volume>(),
-										grid.end<Volume>());
+				promesh::InvertSelection(obj, invVrts, invEdges, invFaces, invVols);
 
 				obj->selection_changed();
 			}
@@ -1552,8 +1017,7 @@ class ToolEdgeSelectionFill : public ITool
 	public:
 		void execute(LGObject* obj, QWidget*)
 		{
-			ug::Selector& sel = obj->get_selector();
-			ug::SelectionFill<ug::EdgeBase>(sel, ug::IsSelected(sel));
+			promesh::EdgeSelectionFill(obj);
 			obj->selection_changed();
 		}
 
@@ -1567,8 +1031,7 @@ class ToolFaceSelectionFill : public ITool
 	public:
 		void execute(LGObject* obj, QWidget*)
 		{
-			ug::Selector& sel = obj->get_selector();
-			ug::SelectionFill<ug::Face>(sel, ug::IsSelected(sel));
+			promesh::FaceSelectionFill(obj);
 			obj->selection_changed();
 		}
 
@@ -1582,8 +1045,7 @@ class ToolVolumeSelectionFill : public ITool
 	public:
 		void execute(LGObject* obj, QWidget*)
 		{
-			ug::Selector& sel = obj->get_selector();
-			ug::SelectionFill<ug::Volume>(sel, ug::IsSelected(sel));
+			promesh::VolumeSelectionFill(obj);
 			obj->selection_changed();
 		}
 
@@ -1597,15 +1059,7 @@ class ToolSelectSelectionBoundary : public ITool
 	public:
 		void execute(LGObject* obj, QWidget*)
 		{
-			using namespace ug;
-
-			Selector& sel = obj->get_selector();
-
-			if(sel.num<Volume>() > 0)
-				SelectAreaBoundary(sel, sel.begin<Volume>(), sel.end<Volume>());
-			if(sel.num<Face>() > 0)
-				SelectAreaBoundary(sel, sel.begin<Face>(), sel.end<Face>());
-
+			promesh::SelectSelectionBoundary(obj);
 			obj->selection_changed();
 		}
 
@@ -1621,39 +1075,13 @@ class ToolSelectBentQuadrilaterals: public ITool
 		void execute(LGObject* obj, QWidget* widget)
 		{
 			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
-			using namespace ug;
 
-		//	this is the threshold for the dot-products
 			number dotThreshold = 0.95;
 			if(dlg){
 				dotThreshold = dlg->to_double(0);
 			}
 
-			Grid& grid = obj->get_grid();
-			Selector& sel = obj->get_selector();
-			Grid::AttachmentAccessor<VertexBase, APosition> aaPos(grid, aPosition);
-
-		//	iterate over all quadrilaterals and search for bent ones
-			size_t selCount = 0;
-			for(QuadrilateralIterator iter = grid.begin<Quadrilateral>();
-				iter != grid.end<Quadrilateral>(); ++iter)
-			{
-				Quadrilateral* q = *iter;
-
-			//	we'll compare the dot-product of the normals
-				vector3 n1, n2;
-				CalculateTriangleNormal(n1, aaPos[q->vertex(0)],
-										aaPos[q->vertex(1)], aaPos[q->vertex(2)]);
-				CalculateTriangleNormal(n2, aaPos[q->vertex(2)],
-										aaPos[q->vertex(3)], aaPos[q->vertex(0)]);
-
-				number d1 = VecDot(n1, n2);
-
-				if(d1 < dotThreshold){
-					++selCount;
-					sel.select(q);
-				}
-			}
+			size_t selCount = promesh::SelectBentQuadrilaterals(obj, dotThreshold);
 
 			UG_LOG("Found " << selCount << " bent quadrilaterals\n");
 			obj->selection_changed();
@@ -1676,15 +1104,7 @@ class ToolCloseSelection: public ITool
 	public:
 		void execute(LGObject* obj, QWidget*)
 		{
-			using namespace ug;
-
-			Selector& sel = obj->get_selector();
-
-			SelectAssociatedFaces(sel, sel.begin<Volume>(), sel.end<Volume>());
-			SelectAssociatedEdges(sel, sel.begin<Face>(), sel.end<Face>());
-			SelectAssociatedVertices(sel, sel.begin<EdgeBase>(), sel.end<EdgeBase>());
-
-
+			promesh::CloseSelection(obj);
 			obj->selection_changed();
 		}
 
@@ -1749,7 +1169,6 @@ void RegisterSelectionTools(ToolManager* toolMgr)
 	toolMgr->register_tool(new ToolSelectFaceByIndex);
 	toolMgr->register_tool(new ToolSelectFaceByCoordinate);
 	toolMgr->register_tool(new ToolSelectBentQuadrilaterals);
-	//toolMgr->register_tool(new ToolSelectLastUnselectedFace);
 
 //	VOLUMES
 	toolMgr->register_tool(new ToolSelectAllVolumes);

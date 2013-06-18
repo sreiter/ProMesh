@@ -9,6 +9,7 @@ Changes and additions:
 
 Fixes:
 - Fixed Smooth-Refinement for edge geometries.
+- Fixed a bug in ico-sphere generation when volume elements were present.
 
 
 
