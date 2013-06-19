@@ -10,6 +10,13 @@ Changes and additions:
 Fixes:
 - Fixed Smooth-Refinement for edge geometries.
 - Fixed a bug in ico-sphere generation when volume elements were present.
+- Fixed a bug in Remeshing-Triangulation-TriangleFill occurred in 3d geometries
+  when triangles outside the remeshing region were in a completely different
+  plane than the remeshing zone itself.
+- Tetrahedralization now automatically removes vertices which are not connected
+  to any edge or face. This was required since tetrahedralization may not terminate
+  with such vertices present and since a user may have a hard time to find them
+  (or to remember to remove them).
 
 
 
