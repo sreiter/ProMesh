@@ -826,9 +826,6 @@ class ToolSelectUnconnectedVertices : public ITool
 			using namespace ug;
 			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 			if(dlg){
-				Grid& grid = obj->get_grid();
-				Selector& sel = obj->get_selector();
-
 				int choice = dlg->to_int(0);
 				bool edgeCons = (choice == 0);
 				bool faceCons = (choice == 1);
@@ -957,7 +954,7 @@ class ToolSelectUnassignedElements : public ITool
 					selVols = dlg->to_bool(3);
 				}
 
-				promesh::SelectUnassignedElements(obj, selVrts, selEdges, selFaces, selVrts);
+				promesh::SelectUnassignedElements(obj, selVrts, selEdges, selFaces, selVols);
 
 				obj->selection_changed();
 			}

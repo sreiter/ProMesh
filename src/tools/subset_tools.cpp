@@ -4,8 +4,10 @@
 
 #include "app.h"
 #include "standard_tools.h"
+#include "tools/subset_tools.h"
 
 using namespace std;
+using namespace ug;
 
 class ToolAssignSubset : public ITool
 {
@@ -21,20 +23,9 @@ class ToolAssignSubset : public ITool
 				newIndex = dlg->to_int(1);
 			}
 
-			ug::Selector& sel = obj->get_selector();
-			ug::SubsetHandler& sh = obj->get_subset_handler();
-
-			sh.assign_subset(sel.begin<ug::VertexBase>(),
-							 sel.end<ug::VertexBase>(), newIndex);
-			sh.assign_subset(sel.begin<ug::EdgeBase>(),
-							 sel.end<ug::EdgeBase>(), newIndex);
-			sh.assign_subset(sel.begin<ug::Face>(),
-							 sel.end<ug::Face>(), newIndex);
-			sh.assign_subset(sel.begin<ug::Volume>(),
-							 sel.end<ug::Volume>(), newIndex);
-
+			promesh::AssignSubset(obj, newIndex);
 			if(!subsetName.isEmpty())
-				sh.subset_info(newIndex).name = subsetName.toLocal8Bit().constData();
+				promesh::SetSubsetName(obj, newIndex, subsetName.toLocal8Bit().constData());
 
 			dlg->setString(0, QString(""));
 
@@ -58,7 +49,7 @@ class ToolAssignSubsetColors : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			AssignSubsetColors(obj->get_subset_handler());
+			promesh::AssignSubsetColors(obj);
 			obj->visuals_changed();
 		}
 
@@ -72,11 +63,7 @@ class ToolSeparateFacesByEdgeSubsets : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget* widget){
-			ug::Grid& grid = obj->get_grid();
-			ug::SubsetHandler& sh = obj->get_subset_handler();
-
-			ug::SeparateSubsetsByLowerDimSubsets<ug::Face>(grid, sh);
-
+			promesh::SeparateFacesByEdgeSubsets(obj);
 			obj->geometry_changed();
 		}
 
@@ -88,13 +75,8 @@ class ToolSeparateFacesByEdgeSubsets : public ITool
 class ToolSeparateFacesBySelectedEdges : public ITool
 {
 	public:
-		void execute(LGObject* obj, QWidget* widget){
-			ug::Grid& grid = obj->get_grid();
-			ug::SubsetHandler& sh = obj->get_subset_handler();
-			ug::Selector& sel = obj->get_selector();
-
-			ug::SeparateSubsetsByLowerDimSelection<ug::Face>(grid, sh, sel);
-
+		void execute(LGObject* obj, QWidget*){
+			promesh::SeparateFacesBySelectedEdges(obj);
 			obj->geometry_changed();
 		}
 
@@ -107,11 +89,7 @@ class ToolSeparateVolumesByFaceSubsets : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			ug::Grid& grid = obj->get_grid();
-			ug::SubsetHandler& sh = obj->get_subset_handler();
-
-			ug::SeparateSubsetsByLowerDimSubsets<ug::Volume>(grid, sh);
-
+			promesh::SeparateVolumesByFaceSubsets(obj);
 			obj->geometry_changed();
 		}
 
@@ -124,12 +102,7 @@ class ToolSeparateVolumesBySelectedFaces : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			ug::Grid& grid = obj->get_grid();
-			ug::SubsetHandler& sh = obj->get_subset_handler();
-			ug::Selector& sel = obj->get_selector();
-
-			ug::SeparateSubsetsByLowerDimSelection<ug::Volume>(grid, sh, sel);
-
+			promesh::SeparateVolumesBySelectedFaces(obj);
 			obj->geometry_changed();
 		}
 
@@ -142,13 +115,7 @@ class ToolSeparateIrregularManifoldSubsets : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			ug::SubsetHandler& sh = obj->get_subset_handler();
-
-			for(int i = 0; i < sh.num_subsets(); ++i){
-				int firstFree = ug::GetMaxSubsetIndex<ug::Face>(sh) + 1;
-				ug::SplitIrregularManifoldSubset(sh, i, firstFree);
-			}
-
+			promesh::SeparateIrregularManifoldSubsets(obj);
 			obj->geometry_changed();
 		}
 
@@ -170,10 +137,7 @@ class ToolMoveSubset : public ITool
 				newIndex = dlg->to_int(1);
 			}
 
-			if(newIndex != oldIndex){
-				ug::SubsetHandler& sh = obj->get_subset_handler();
-				sh.move_subset(oldIndex, newIndex);
-			}
+			promesh::MoveSubset(obj, oldIndex, newIndex);
 
 			obj->geometry_changed();
 		}
@@ -204,13 +168,7 @@ class ToolSwapSubsets : public ITool
 				newIndex = dlg->to_int(1);
 			}
 
-			ug::SubsetHandler& sh = obj->get_subset_handler();
-
-			if(newIndex != oldIndex && newIndex < sh.num_subsets()
-				&& oldIndex < sh.num_subsets())
-			{
-				sh.swap_subsets(oldIndex, newIndex);
-			}
+			promesh::SwapSubsets(obj, oldIndex, newIndex);
 
 			obj->geometry_changed();
 		}
@@ -245,9 +203,7 @@ class ToolJoinSubsets : public ITool
 				eraseUnused = dlg->to_bool(3);
 			}
 
-			ug::SubsetHandler& sh = obj->get_subset_handler();
-
-			sh.join_subsets(target, s1, s2, eraseUnused);
+			promesh::JoinSubsets(obj, target, s1, s2, eraseUnused);
 
 			obj->geometry_changed();
 		}
@@ -267,7 +223,7 @@ class ToolJoinSubsets : public ITool
 		}
 };
 
-class EraseSubset : public ITool
+class ToolEraseSubset : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget* widget){
@@ -279,21 +235,7 @@ class EraseSubset : public ITool
 				eraseGeometry = dlg->to_bool(0);
 				index = dlg->to_int(1);
 			}
-
-			ug::Grid& grid = obj->get_grid();
-			ug::SubsetHandler& sh = obj->get_subset_handler();
-
-			if(index < sh.num_subsets())
-			{
-				if(eraseGeometry){
-					grid.erase(sh.begin<ug::Volume>(index), sh.end<ug::Volume>(index));
-					grid.erase(sh.begin<ug::Face>(index), sh.end<ug::Face>(index));
-					grid.erase(sh.begin<ug::EdgeBase>(index), sh.end<ug::EdgeBase>(index));
-					grid.erase(sh.begin<ug::VertexBase>(index), sh.end<ug::VertexBase>(index));
-				}
-				sh.erase_subset(index);
-			}
-
+			promesh::EraseSubset(obj, index, eraseGeometry);
 			obj->geometry_changed();
 		}
 
@@ -314,16 +256,7 @@ class ToolEraseEmptySubsets : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			ug::SubsetHandler& sh = obj->get_subset_handler();
-
-			int i = 0;
-			while(i < sh.num_subsets()){
-				if(sh.empty(i))
-					sh.erase_subset(i);
-				else
-					++i;
-			}
-
+			promesh::EraseEmptySubsets(obj);
 			obj->geometry_changed();
 		}
 
@@ -341,9 +274,7 @@ class ToolAdjustSubsetsForUG3 : public ITool
 			if(dlg){
 				keepIntfSubs = dlg->to_bool(0);
 			}
-
-			ug::AdjustSubsetsForLgmNg(obj->get_grid(), obj->get_subset_handler(),
-									  keepIntfSubs);
+			promesh::AdjustSubsetsForUG3(obj, keepIntfSubs);
 			obj->geometry_changed();
 		}
 
@@ -365,13 +296,10 @@ class ToolAdjustSubsetsForUG4 : public ITool
 		void execute(LGObject* obj, QWidget* widget){
 			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 			bool preserveExistingSubsets = false;
-
 			if(dlg){
 				preserveExistingSubsets = dlg->to_bool(0);
 			}
-
-			ug::AdjustSubsetsForSimulation(obj->get_subset_handler(),
-										   preserveExistingSubsets);
+			promesh::AdjustSubsetsForUG4(obj, preserveExistingSubsets);
 			obj->geometry_changed();
 		}
 
@@ -391,7 +319,7 @@ class ToolSeparateFaceSubsetsByNormal : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			ug::SeparateFaceSubsetsByNormal(obj->get_grid(), obj->get_subset_handler());
+			promesh::SeparateFaceSubsetsByNormal(obj);
 			obj->geometry_changed();
 		}
 
@@ -408,9 +336,7 @@ class ToolSeparateFaceSubsetByNormal : public ITool
 			int si = 0;
 			if(dlg)
 				si = dlg->to_int(0);
-			if(si < obj->get_subset_handler().num_subsets())
-				ug::SeparateFaceSubsetsByNormal(obj->get_grid(), obj->get_subset_handler(),
-												ug::aPosition, NULL, si);
+			promesh::SeparateFaceSubsetByNormal(obj, si);
 			obj->geometry_changed();
 		}
 
@@ -437,39 +363,7 @@ class ToolAssignSubsetsByQuality : public ITool
 			if(dlg){
 				numSecs = dlg->to_int(0);
 			}
-
-			std::vector<number> intervals;
-			intervals.push_back(0);
-			for(int i = 1; i < numSecs; ++i)
-				intervals.push_back((number)i / (number)numSecs);
-			intervals.push_back(1.);
-
-			ug::Grid& grid = obj->get_grid();
-			ug::Selector& sel = obj->get_selector();
-			ug::SubsetHandler& sh = obj->get_subset_handler();
-
-			ug::AssignSubsetsByQuality(grid, sh, sel.begin<ug::Face>(),
-										sel.end<ug::Face>(), intervals);
-
-		//	log how many faces were assigned to the different subsets.
-		//	since potentially only a subset of faces has been considered,
-		//	we may not simply output the subset sizes.
-
-			UG_LOG("Assigned faces to subsets:\n");
-			for(size_t i = 0; i < intervals.size() - 1; ++i){
-			//	count the number of selected faces in this section
-				size_t counter = 0;
-				for(FaceIterator iter = sel.begin<Face>(); iter != sel.end<Face>(); ++iter)
-				{
-					if(sh.get_subset_index(*iter) == (int)i)
-						++counter;
-				}
-
-				UG_LOG("  quality " << intervals[i] << " - " << intervals[i+1] << ": \t" << counter << "\n");
-			}
-
-			UG_LOG(endl);
-
+			promesh::AssignSubsetsByQuality(obj, numSecs);
 			obj->geometry_changed();
 		}
 
@@ -495,139 +389,7 @@ class ToolSeparateDegeneratedBoundaryFaceSubsets : public ITool
 			if(dlg)
 				angle = (number)dlg->to_double(0);
 
-			number thresholdDot = cos(deg_to_rad(angle));
-
-			Grid& g = obj->get_grid();
-			SubsetHandler& sh = obj->get_subset_handler();
-
-			Grid::AttachmentAccessor<VertexBase, APosition> aaPos(g, aPosition);
-
-			vector<EdgeBase*> edges;
-			vector<EdgeBase*> edges2;
-			vector<Face*> faces;
-			vector<Face*> assembledSubset;
-			queue<Face*> queFaces;
-
-		//	we'll use this vector to check whether we have to assign faces which
-		//	we assembled to a subset to a new subset or whether it can stay where it
-		//	is. The first assembled face-pack can always stay in its subset.
-			vector<bool> vAssignNewSubset(sh.num_subsets(), false);
-
-		//	the index at which we'll add new subsets (increases during the algorithm)
-			int newSI = GetMaxSubsetIndex<Face>(sh) + 1;
-
-		//	we use marks to mark all processed elements
-			g.begin_marking();
-
-		//	iterate over all faces and search for a degenerated boundary face.
-			for(FaceIterator iter = g.begin<Face>(); iter != g.end<Face>(); ++iter){
-				Face* f = *iter;
-			//	the face may have been marked during subset assembly below
-				if(g.is_marked(f))
-					continue;
-				g.mark(f);
-
-				if(IsDegenerated(f, aaPos)){
-					if(IsVolumeBoundaryFace(g, f)){
-					//	the face is a candidate. Get subset index and push it to the queue
-						int origSI = sh.get_subset_index(f);
-						queFaces.push(f);
-						assembledSubset.clear();
-
-						while(!queFaces.empty()){
-							Face* curFace = queFaces.front();
-							queFaces.pop();
-							assembledSubset.push_back(curFace);
-
-						//	check all degenerated neighbor faces
-							CollectAssociated(edges, g, curFace);
-
-							vector3 dir(0, 0, 0);
-							bool gotOne = false;
-						//	the first non-degenerated edge defines the direction of the face
-							for(size_t i_edge = 0; i_edge < edges.size(); ++i_edge){
-								EdgeBase* e = edges[i_edge];
-								if(VecDistanceSq(aaPos[e->vertex(0)], aaPos[e->vertex(1)]) >= SMALL*SMALL){
-									VecSubtract(dir, aaPos[e->vertex(1)], aaPos[e->vertex(0)]);
-									VecNormalize(dir, dir);
-									gotOne = true;
-									break;
-								}
-							}
-
-						//	if we haven't found a non-degenerated edge, we won't continue.
-							if(!gotOne)
-								continue;
-
-						//	now find associated degenerated faces
-							for(size_t i_edge = 0; i_edge < edges.size(); ++i_edge){
-								EdgeBase* e = edges[i_edge];
-
-							//	we have to know whether the edge is degenerated or not.
-								bool bDegEdge = (VecDistanceSq(aaPos[e->vertex(0)], aaPos[e->vertex(1)]) < SMALL*SMALL);
-
-								CollectAssociated(faces, g, e);
-
-								for(size_t i_face = 0; i_face < faces.size(); ++i_face){
-									Face* nbrFace = faces[i_face];
-									if(!g.is_marked(nbrFace) && sh.get_subset_index(nbrFace) == origSI){
-										if(IsVolumeBoundaryFace(g, nbrFace)){
-											if(IsDegenerated(nbrFace, aaPos)){
-											//	if the edge was non-degenerated, it is automatically part of the
-											//	assembled subset.
-												if(!bDegEdge){
-													g.mark(nbrFace);
-													queFaces.push(nbrFace);
-												}
-												else{
-												//	we have to compare the directions of the faces
-													CollectAssociated(edges2, g, nbrFace);
-
-													vector3 dir2(0, 0, 0);
-													bool gotOne2 = false;
-												//	the first non-degenerated edge defines the direction of the face
-													for(size_t i_edge = 0; i_edge < edges2.size(); ++i_edge){
-														EdgeBase* e = edges2[i_edge];
-														if(VecDistanceSq(aaPos[e->vertex(0)], aaPos[e->vertex(1)]) >= SMALL*SMALL){
-															VecSubtract(dir2, aaPos[e->vertex(1)], aaPos[e->vertex(0)]);
-															VecNormalize(dir2, dir2);
-															gotOne2 = true;
-															break;
-														}
-													}
-
-													if(gotOne2){
-													//	we now got both directions. compare the angle.
-														if(fabs(VecDot(dir, dir2)) >= thresholdDot){
-														//	both are in the same subset
-															g.mark(nbrFace);
-															queFaces.push(nbrFace);
-														}
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-
-						}
-
-					//	now add the assembledSubset to its new destination
-						if(vAssignNewSubset[origSI]){
-							sh.assign_subset(assembledSubset.begin(), assembledSubset.end(), newSI);
-							++newSI;
-						}
-						else{
-						//	if more degenerated faces are contained in this subset, they shall be
-						//	assigned to another subset.
-							vAssignNewSubset[origSI] = true;
-						}
-					}
-				}
-			}
-
-			g.end_marking();
+			promesh::SeparateDegeneratedBoundaryFaceSubsets(obj, angle);
 
 			obj->geometry_changed();
 		}
@@ -648,18 +410,7 @@ class ToolAssignSubsetsByElementType : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			ug::SubsetHandler& sh = obj->get_subset_handler();
-
-			ug::AssignSubsetsByElementType(sh);
-
-			int i = 0;
-			while(i < sh.num_subsets()){
-				if(sh.empty(i))
-					sh.erase_subset(i);
-				else
-					++i;
-			}
-
+			promesh::AssignSubsetsByElementType(obj);
 			obj->geometry_changed();
 		}
 
@@ -677,7 +428,7 @@ void RegisterSubsetTools(ToolManager* toolMgr)
 	toolMgr->register_tool(new ToolMoveSubset);
 	toolMgr->register_tool(new ToolSwapSubsets);
 	toolMgr->register_tool(new ToolJoinSubsets);
-	toolMgr->register_tool(new EraseSubset);
+	toolMgr->register_tool(new ToolEraseSubset);
 	toolMgr->register_tool(new ToolAdjustSubsetsForUG3);
 	toolMgr->register_tool(new ToolAdjustSubsetsForUG4);
 	toolMgr->register_tool(new ToolAssignSubsetsByQuality);

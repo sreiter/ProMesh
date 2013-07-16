@@ -170,9 +170,10 @@ void View3D::paintGL()
 
 	//	draw selection rect
 		if(m_bDrawSelRect){
+			glDisable(GL_DEPTH_TEST);
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
-			glOrtho(0, m_viewWidth, 0, m_viewHeight, 0.01, 100);
+			glOrtho(0, m_viewWidth, 0, m_viewHeight, -1, 1);
 			glMatrixMode(GL_MODELVIEW);
 			glLoadIdentity();
 
@@ -350,7 +351,7 @@ void View3D::refocus_by_screen_coords(int screenX, int screenY)
 	//	set new camera state:
 		//m_csFrom = m_camera.get_camera_state();
 		cam::vector3 nvTo(vx, vy, vz);
-		clog << "new focus at: " << nvTo << endl;
+		UG_LOG("new focus at: " << nvTo << endl);
 
 		m_csOld = m_camera.get_camera_state();
 		m_csNew = calculate_camera_state(m_csOld, m_camera.get_from(), &nvTo);

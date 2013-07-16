@@ -5,29 +5,15 @@
 
 #include "app.h"
 #include "standard_tools.h"
-#include "lib_grid/algorithms/remeshing/delaunay_triangulation.h"
+#include "tools/remeshing_tools.h"
 
-using namespace std;
-
-
-///	Volume constraints are used during Retetrahedralization.
-/**	Check whether they are attached, before using them!*/
-static ug::ANumber aVolumeConstraint;
-
+using namespace ug;
 
 class ToolConvertToTriangles : public ITool
 {
 	public:
-		void execute(LGObject* obj, QWidget* widget){
-			using namespace ug;
-
-			ug::Grid& grid = obj->get_grid();
-			ug::Selector& sel = obj->get_selector();
-			Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
-
-			Triangulate(grid, sel.begin<Quadrilateral>(),
-						sel.end<Quadrilateral>(), &aaPos);
-
+		void execute(LGObject* obj, QWidget*){
+			ConvertToTriangles(obj);
 			obj->geometry_changed();
 		}
 
@@ -36,72 +22,10 @@ class ToolConvertToTriangles : public ITool
 		const char* get_group()		{return "Remeshing | Triangulation";}
 };
 
-
-/*
 class ToolTriangleFill : public ITool
-{
-public:
-	void execute(LGObject* obj, QWidget* widget){
-		ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
-		UG_LOG("performing triangle_fill... ");
-		int newSubsetIndex = 0;
-		bool triangulateInside = true;
-
-		if(dlg){
-			newSubsetIndex = dlg->to_int(0);
-			triangulateInside = dlg->to_bool(1);
-		}
-
-		ug::Grid& grid = obj->get_grid();
-		ug::Selector& sel = obj->get_selector();
-
-	//	clear all faces from the selector
-		sel.clear<ug::Face>();
-
-	//	temporarily enable autoselection
-		bool bAutoselectionEnabled = sel.autoselection_enabled();
-		sel.enable_autoselection(true);
-
-		//size_t numTris = grid.num<ug::Triangle>();
-
-		if(ug::TriangleFill(grid, sel.begin<ug::EdgeBase>(),
-							sel.end<ug::EdgeBase>(), triangulateInside))
-		{
-			UG_LOG("done. Created " << sel.num<ug::Triangle>() //grid.num<ug::Triangle>() - numTris
-					<< " triangles.\n");
-
-			obj->get_subset_handler().assign_subset(sel.begin<ug::EdgeBase>(), sel.end<ug::EdgeBase>(), newSubsetIndex);
-			obj->get_subset_handler().assign_subset(sel.begin<ug::Triangle>(), sel.end<ug::Triangle>(), newSubsetIndex);
-
-			obj->geometry_changed();
-		}
-		else{
-			UG_LOG("failed. Make sure that only one closed poly-chain with no "
-					<< "self-intersections is selected.\n");
-		}
-
-	//	restore autoselection
-		sel.enable_autoselection(bAutoselectionEnabled);
-	}
-
-	const char* get_name()		{return "Triangle Fill";}
-	const char* get_tooltip()	{return "Fills a closed poly-chain with triangles.";}
-	const char* get_group()		{return "Grid Generation";}
-
-	ToolWidget* get_dialog(QWidget* parent){
-		ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
-										IDB_APPLY | IDB_OK | IDB_CANCEL);
-		dlg->addSpinBox("new subset index:", -1, 1.e+9, 0, 1, 0);
-		dlg->addCheckBox("triangulate inside", true);
-		return dlg;
-	}
-};
-*/
-class ToolTriangleFill_SweepLine : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget* widget){
-			using namespace ug;
 			int newSubsetIndex = 0;
 			bool constrainedDelaunay = true;
 			number minAngle = 0;
@@ -113,90 +37,7 @@ class ToolTriangleFill_SweepLine : public ITool
 				minAngle = dlg->to_double(2);
 			}
 
-			Grid& grid = obj->get_grid();
-			SubsetHandler& sh = obj->get_subset_handler();
-			Selector& sel = obj->get_selector();
-
-		//	if no edges are selected, nothing can be triangulated
-			if(sel.num<EdgeBase>() < 3){
-				UG_LOG("ERROR in TriangleFill: A closed outer edge-chain has to be selected.\n");
-				return;
-			}
-
-		//	before triangulating, we'll make sure that no double-edges exist
-		//	in the current selection.
-			RemoveDoubleEdges(grid, sel.begin<EdgeBase>(), sel.end<EdgeBase>());
-
-			Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
-			AInt aInt;
-			grid.attach_to_vertices(aInt);
-
-		//	we don't want to select new edges. This would be a problem for
-		//	delaunay constraints.
-			bool autoselEnabled = sel.autoselection_enabled();
-			sel.enable_autoselection(false);
-
-		//	Collect all new faces in this selector.
-			FaceSelector faceSel(grid);
-			faceSel.enable_autoselection(true);
-
-			if(!TriangleFill_SweepLine(grid, sel.edges_begin(),
-									sel.edges_end(), aPosition, aInt,
-									&sh, newSubsetIndex))
-			{
-				UG_LOG("TriangleFill_SweepLine failed.\n");
-
-			// ONLY FOR DEBUGGING - BEGIN
-			/*
-				static int fileCounter = 1;
-				string filenamePrefix = "/Users/sreiter/Desktop/failed_sweeplines/failed_sweepline_";
-				//string filenamePrefix = "C:/sweep_errors/failed_sweepline_";
-				stringstream ss2d, ss3d;
-				ss2d << filenamePrefix << "2d_" << fileCounter << ".obj";
-				ss3d << filenamePrefix << "3d_" << fileCounter << ".obj";
-				++fileCounter;
-				//UG_LOG("TriangleFill_SweepLine failed!\n");
-				UG_LOG("Saving failed geometries to " << ss2d.str() << " and " << ss3d.str() << endl);
-				SaveGridToFile(grid, ss3d.str().c_str(), aPosition);
-			//	perform transformation to 2d and save that too.
-				std::vector<vector3> vrts;
-				for(VertexBaseIterator iter = grid.vertices_begin();
-					iter != grid.vertices_end(); ++iter)
-				{
-					vrts.push_back(aaPos[*iter]);
-				}
-				std::vector<vector2> vrts2d(vrts.size());
-				TransformPointSetTo2D(&vrts2d.front(), &vrts.front(),
-									  vrts.size());
-
-				size_t counter = 0;
-				for(VertexBaseIterator iter = grid.vertices_begin();
-					iter != grid.vertices_end(); ++iter, ++counter)
-				{
-					aaPos[*iter] = vector3(vrts2d[counter].x, vrts2d[counter].y, 0);
-				}
-
-				SaveGridToFile(grid, ss2d.str().c_str(), aPosition);
-
-				counter = 0;
-				for(VertexBaseIterator iter = grid.vertices_begin();
-					iter != grid.vertices_end(); ++iter, ++counter)
-				{
-					aaPos[*iter] = vector3(vrts[counter].x, vrts[counter].y, 0);
-				}
-			*/
-			// ONLY FOR DEBUGGING - END
-
-			}
-
-			grid.detach_from_vertices(aInt);
-
-			if(constrainedDelaunay){
-				QualityGridGeneration(grid, faceSel.begin(), faceSel.end(),
-							 aaPos, minAngle, IsSelected(sel));
-			}
-
-			sel.enable_autoselection(autoselEnabled);
+			promesh::TriangleFill(obj, constrainedDelaunay, minAngle, newSubsetIndex);
 
 			obj->geometry_changed();
 		}
@@ -220,7 +61,7 @@ class ToolRetriangulate : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget* widget){
-			using namespace ug;
+
 			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 
 			number minAngle = 0;
@@ -228,14 +69,7 @@ class ToolRetriangulate : public ITool
 				minAngle = dlg->to_double(0);
 			}
 
-			Grid& g = obj->get_grid();
-			Selector& sel = obj->get_selector();
-			SubsetHandler& creases = obj->get_crease_handler();
-
-			Grid::AttachmentAccessor<VertexBase, APosition> aaPos(g, aPosition);
-
-			QualityGridGeneration(g, sel.begin<Triangle>(), sel.end<Triangle>(),
-						 	 	  aaPos, minAngle, IsNotInSubset(creases, -1));
+			promesh::Retriangulate(obj, minAngle);
 
 			obj->geometry_changed();
 		}
@@ -257,7 +91,7 @@ class ToolAdjustEdgeLength : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget* widget){
-			using namespace ug;
+
 			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 			double minEdgeLen = 1.;
 			double maxEdgeLen = 3.;
@@ -273,21 +107,9 @@ class ToolAdjustEdgeLength : public ITool
 				automarkBoundaries = dlg->to_bool(4);
 			}
 			
-			Grid& grid = obj->get_grid();
-			SubsetHandler& shCrease = obj->get_crease_handler();
+			promesh::AdjustEdgeLength(obj, minEdgeLen, maxEdgeLen, numIterations,
+							 	 	  adaptive, automarkBoundaries);
 			
-			if(automarkBoundaries){
-				for(EdgeBaseIterator iter = grid.begin<EdgeBase>();
-					iter != grid.end<EdgeBase>(); ++iter)
-				{
-					if(IsBoundaryEdge2D(grid, *iter))
-						shCrease.assign_subset(*iter, REM_CREASE);
-				}
-			}
-
-			ug::AdjustEdgeLength(grid, shCrease, minEdgeLen, maxEdgeLen,
-								 numIterations, true, adaptive);
-
 			obj->geometry_changed();
 		}
 
@@ -312,7 +134,7 @@ class ToolAdaptSurfaceToCylinder : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget* widget){
-			using namespace ug;
+
 			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 			double radius = 1.;
 			double threshold = 0.1;
@@ -322,27 +144,7 @@ class ToolAdaptSurfaceToCylinder : public ITool
 				threshold = dlg->to_double(1);
 			}
 
-			Grid& g = obj->get_grid();
-			ug::Selector& sel = obj->get_selector();
-			ug::Grid::VertexAttachmentAccessor<ug::APosition> aaPos(g, ug::aPosition);
-
-		//	store all source-vertices in a list
-			vector<ug::VertexBase*> vrts;
-			vrts.assign(sel.begin<ug::VertexBase>(), sel.end<ug::VertexBase>());
-
-		//	iterate over selected vertices
-			for(vector<ug::VertexBase*>::iterator iter = vrts.begin();
-				iter != vrts.end(); ++iter)
-			{
-				ug::VertexBase* vrt = *iter;
-				ug::vector3 n;
-				ug::CalculateVertexNormal(n, g, vrt, aaPos);
-
-				if(!ug::AdaptSurfaceGridToCylinder(sel, g, vrt, n, radius, threshold))
-				{
-					UG_LOG("AdaptSurfaceGridToCylinder failed for the vertex at " << aaPos[vrt] << "\n");
-				}
-			}
+			promesh::AdaptSurfaceToCylinder(obj, radius, threshold);
 
 			obj->geometry_changed();
 		}
@@ -365,7 +167,7 @@ class ToolTetrahedralize : public ITool
 {
 public:
 	void execute(LGObject* obj, QWidget* widget){
-		using namespace ug;
+
 		ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 		number quality = 5;
 		int preserveOpt = 0;
@@ -382,27 +184,9 @@ public:
 		bool preserveOuter = (preserveOpt >= 1);
 		bool preserveAll = (preserveOpt == 2);
 
-		Grid& grid = obj->get_grid();
-		SubsetHandler& sh = obj->get_subset_handler();
-		UG_LOG("tetrahedralizing using 'tetgen' by Hang Si... ");
-		ug::Tetrahedralize(grid, sh, quality, preserveOuter, preserveAll, aPosition);
-		UG_LOG("done. Created " << grid.num<ug::Tetrahedron>() << " tetrahedrons.\n");
+		promesh::Tetrahedralize(obj, quality, preserveOuter, preserveAll, separateVolumes,
+					   	   	    appendSubsetsAtEnd);
 
-		int oldNumSubsets = sh.num_subsets();
-		if(separateVolumes){
-			ug::SeparateSubsetsByLowerDimSubsets<ug::Volume>(grid, sh,
-															 appendSubsetsAtEnd);
-		}
-		else if(appendSubsetsAtEnd){
-		//todo:	only assign newly generated tetrahedrons.
-			sh.assign_subset(grid.begin<ug::Tetrahedron>(),
-							 grid.end<ug::Tetrahedron>(), sh.num_subsets());
-		}
-
-	//	assign a subset name
-		for(int i = oldNumSubsets; i < sh.num_subsets(); ++i)
-			sh.subset_info(i).name = "tetrahedrons";
-			
 		obj->geometry_changed();
 	}
 
@@ -429,7 +213,7 @@ class ToolAssignVolumeConstraints : public ITool
 {
 public:
 	void execute(LGObject* obj, QWidget* widget){
-		using namespace ug;
+
 		ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 
 		number volConstraint = 1;
@@ -437,18 +221,7 @@ public:
 			volConstraint = (number)dlg->to_double(0);
 		}
 
-		Grid& g = obj->get_grid();
-		if(!g.has_volume_attachment(aVolumeConstraint)){
-			g.attach_to_volumes_dv<ANumber>(aVolumeConstraint, 10.e12, true);
-		}
-		Grid::AttachmentAccessor<Volume, ANumber> aaVolCon(g, aVolumeConstraint);
-
-		Selector& sel = obj->get_selector();
-		for(Selector::traits<Volume>::iterator iter = sel.begin<Volume>();
-			iter != sel.end<Volume>(); ++iter)
-		{
-			aaVolCon[*iter] = volConstraint;
-		}
+		promesh::AssignVolumeConstraints(obj, volConstraint);
 
 		obj->geometry_changed();
 	}
@@ -469,13 +242,7 @@ class ToolClearVolumeConstraints : public ITool
 {
 public:
 	void execute(LGObject* obj, QWidget*){
-		using namespace ug;
-
-		Grid& g = obj->get_grid();
-		if(g.has_volume_attachment(aVolumeConstraint)){
-			g.detach_from_volumes(aVolumeConstraint);
-		}
-
+		promesh::ClearVolumeConstraints(obj);
 		obj->geometry_changed();
 	}
 
@@ -488,14 +255,8 @@ class ToolRetetrahedralize : public ITool
 {
 public:
 	void execute(LGObject* obj, QWidget* widget){
-		using namespace ug;
-		ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 
-	//	we can only retetrahedralize, if volume constraints are present.
-		Grid& g = obj->get_grid();
-		if(!g.has_volume_attachment(aVolumeConstraint)){
-			g.attach_to_volumes_dv<ANumber>(aVolumeConstraint, 10.e12, true);
-		}
+		ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 
 		number quality = 5;
 		int preserveOpt = 0;
@@ -509,15 +270,7 @@ public:
 		bool preserveOuter = (preserveOpt >= 1);
 		bool preserveAll = (preserveOpt == 2);
 
-		UG_LOG("retetrahedralizing using 'tetgen' by Hang Si... ");
-		ug::Retetrahedralize(obj->get_grid(),
-							obj->get_subset_handler(),
-							aVolumeConstraint,
-							quality,
-							preserveOuter, preserveAll,
-							ug::aPosition,
-							applyVolumeConstraint);
-		UG_LOG("done.\n");
+		promesh::Retetrahedralize(obj, quality, preserveOuter, preserveAll, applyVolumeConstraint);
 
 		obj->geometry_changed();
 	}
@@ -545,7 +298,6 @@ class ToolDuplicate : public ITool
 public:
 	void execute(LGObject* obj, QWidget* widget){
 		ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
-		using namespace ug;
 
 		vector3 offset(0, 0, 0);
 		bool deselectOld = true;
@@ -558,9 +310,7 @@ public:
 			selectNew = dlg->to_bool(4);
 		}
 
-		Grid& grid = obj->get_grid();
-		Selector& sel = obj->get_selector();
-		Duplicate(grid, sel, offset, aPosition, deselectOld, selectNew);
+		promesh::Duplicate(obj, offset, deselectOld, selectNew);
 
 		obj->geometry_changed();
 	}
@@ -591,7 +341,7 @@ class ToolExtrude : public ITool
 		ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 			bool createFaces = true;
 			bool createVolumes = true;
-			ug::vector3 totalDir(0, 1., 0);
+			vector3 totalDir(0, 1., 0);
 			int numSteps = 1;
 			int newSubsetIndex = 0;
 
@@ -602,54 +352,9 @@ class ToolExtrude : public ITool
 				totalDir.y = dlg->to_double(3);
 				totalDir.z = dlg->to_double(4);
 				numSteps = dlg->to_int(5);
-				newSubsetIndex = dlg->to_int(6);
 			}
 
-			ug::vector3 stepDir;
-			VecScale(stepDir, totalDir, 1./(float)numSteps);
-
-			ug::Grid& grid = obj->get_grid();
-			ug::Selector& sel = obj->get_selector();
-			ug::SubsetHandler& sh = obj->get_subset_handler();
-
-			vector<ug::VertexBase*> vrts;
-			vrts.assign(sel.vertices_begin(), sel.vertices_end());
-			vector<ug::EdgeBase*> edges;
-			edges.assign(sel.edges_begin(), sel.edges_end());
-			vector<ug::Face*> faces;
-			faces.assign(sel.faces_begin(), sel.faces_end());
-
-			uint extrusionOptions = 0;
-			if(createFaces)
-				extrusionOptions |= ug::EO_CREATE_FACES;
-			if(createVolumes)
-				extrusionOptions |= ug::EO_CREATE_VOLUMES;
-
-		//	we use sel to collect the newly created volumes
-			sel.clear();
-			sel.enable_autoselection(true);
-
-		//	mark all elements that were already in the selector.
-			for(int i = 0; i < numSteps; ++i)
-			{
-				ug::Extrude(grid, &vrts, &edges, &faces, stepDir,
-							extrusionOptions, ug::aPosition);
-			}
-
-			sel.enable_autoselection(false);
-			sh.assign_subset(sel.volumes_begin(), sel.volumes_end(), newSubsetIndex);
-			sh.assign_subset(sel.faces_begin(), sel.faces_end(), newSubsetIndex);
-			sh.assign_subset(sel.edges_begin(), sel.edges_end(), newSubsetIndex);
-			sh.assign_subset(sel.vertices_begin(), sel.vertices_end(), newSubsetIndex);
-
-
-		//	select faces, edges and vertices from the new top-layer.
-			sel.clear<ug::VertexBase>();
-			sel.clear<ug::EdgeBase>();
-			sel.clear<ug::Face>();
-			sel.select(vrts.begin(), vrts.end());
-			sel.select(edges.begin(), edges.end());
-			sel.select(faces.begin(), faces.end());
+			promesh::Extrude(obj, totalDir, numSteps, createFaces, createVolumes);
 
 			obj->geometry_changed();
 		}
@@ -667,7 +372,6 @@ class ToolExtrude : public ITool
 			dlg->addSpinBox("y-total:", -1.e+9, 1.e+9, 0., 0.1, 9);
 			dlg->addSpinBox("z-total:", -1.e+9, 1.e+9, 0., 0.1, 9);
 			dlg->addSpinBox("num steps:", 1, 1.e+9, 1, 1, 0);
-			dlg->addSpinBox("new subset index:", 0, 1.e+9, 0, 1, 0);
 			return dlg;
 		}
 };
@@ -689,30 +393,7 @@ public:
 			//createVolumes = dlg->to_bool(3);
 		}
 
-		ug::Grid& g = obj->get_grid();
-		ug::Selector& sel = obj->get_selector();
-		ug::SubsetHandler& sh = obj->get_subset_handler();
-		ug::Grid::VertexAttachmentAccessor<ug::APosition> aaPos(g, ug::aPosition);
-
-	//	store all source-vertices in a list
-		vector<ug::VertexBase*> vrts;
-		vrts.assign(sel.begin<ug::VertexBase>(), sel.end<ug::VertexBase>());
-
-	//	iterate over selected vertices
-		for(vector<ug::VertexBase*>::iterator iter = vrts.begin();
-			iter != vrts.end(); ++iter)
-		{
-			ug::VertexBase* vrt = *iter;
-			ug::vector3 n;
-			ug::CalculateVertexNormal(n, g, vrt, aaPos);
-
-			int numSubs = sh.num_subsets();
-			if(!ug::ExtrudeCylinder(g, sh, vrt, n, height, radius, snapThreshold,
-									aaPos, numSubs, numSubs + 1))
-			{
-				UG_LOG("Cylinder-Extrude failed for the vertex at " << aaPos[vrt] << "\n");
-			}
-		}
+		promesh::ExtrudeCylinders(obj, height, radius, snapThreshold);
 
 		obj->geometry_changed();
 	}
@@ -738,8 +419,7 @@ void RegisterRemeshingTools(ToolManager* toolMgr)
 
 	toolMgr->register_tool(new ToolConvertToTriangles);
 
-	//toolMgr->register_tool(new ToolTriangleFill);
-	toolMgr->register_tool(new ToolTriangleFill_SweepLine);
+	toolMgr->register_tool(new ToolTriangleFill);
 	toolMgr->register_tool(new ToolRetriangulate);
 	toolMgr->register_tool(new ToolAdjustEdgeLength);
 	toolMgr->register_tool(new ToolAdaptSurfaceToCylinder);

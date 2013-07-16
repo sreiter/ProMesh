@@ -140,7 +140,6 @@ public:
 	void execute(LGObject* obj, QWidget* widget){
 	ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 		ug::vector3 vScale(1, 1, 1);
-		bool object = true;
 		bool scaleAroundPivot = false;
 		if(dlg){
 			vScale.x = dlg->to_double(0);
@@ -424,7 +423,6 @@ class ToolProjectToLimitSmoothBoundary : public ITool
 {
 public:
 	void execute(LGObject* obj, QWidget*){
-		Grid& grid = obj->get_grid();
 		promesh::ProjectToLimitSmoothBoundary(obj);
 
 		obj->geometry_changed();

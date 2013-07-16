@@ -6,8 +6,10 @@ v 4.0.8
 Changes and additions:
 - Added Info-PrintLeastSquaresPlane
 - Added CoordinateTransform-ProjectToPlane
+- During extrude, Subsets-indices are now copied from the source-elements.
 
 Fixes:
+- Fixed selection rect (wasn't visible in some versions)
 - Fixed Smooth-Refinement for edge geometries.
 - Fixed a bug in ico-sphere generation when volume elements were present.
 - Fixed a bug in Remeshing-Triangulation-TriangleFill occurred in 3d geometries
