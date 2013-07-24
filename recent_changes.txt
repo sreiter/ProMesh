@@ -343,7 +343,8 @@ Fixes:
 v 3.3.3
 Changes and additions:
 - Added AdjustSubsetsForUG4
-- Improved vertex rendering. Vertices are now rendered with the colors of their respective subsets. Only visible vertices are rendered in selections.
+- Improved vertex rendering. Vertices are now rendered with the colors of their
+  respective subsets. Only visible vertices are rendered in selections.
 - Improved edge selection. Edges are now selected by a LineLineDistance comparision.
 
 Fixes:
@@ -354,7 +355,8 @@ Fixes:
 v 3.3.2
 Changes and additions:
 - ExpandLayers2d and ExpandLayers3d have been improved for the non degenerated case.
-  Outer boundary segments of fractures now have the same normal as the edges and vertices from which they were expanded.
+  Outer boundary segments of fractures now have the same normal as the edges and
+  vertices from which they were expanded.
 
 Fixes:
 - Fixed axis restriction bug in scaling with shortcut 's'
@@ -401,7 +403,8 @@ Changes and additions:
 - Improved AdjustEdgeLength (only slightly).
 
 Fixes:
-- Added a fix in the triangle-fill sweepline algorithm, which occured during ResolveTriangleIntersections.
+- Added a fix in the triangle-fill sweepline algorithm, which occured during
+  ResolveTriangleIntersections.
 
 
 
@@ -422,7 +425,8 @@ v 3.2.37
 Changes and additions:
 
 Fixes:
-- Fixed problems in TriangleFill (SweepLine). The algorithm failed on some geometries. Seems to work now.
+- Fixed problems in TriangleFill (SweepLine). The algorithm failed on some geometries.
+  Seems to work now.
 
 
 
@@ -488,7 +492,8 @@ v 3.2.31
 Changes and additions:
 
 Fixes:
-- Fixed a bug in TriangleFill_SweepLine: When searching for the left edge a special case was not handled correctly.
+- Fixed a bug in TriangleFill_SweepLine: When searching for the left edge a special
+  case was not handled correctly.
 
 
 
@@ -531,7 +536,9 @@ v 3.2.27
 
 Changes and additions:
 - Renamed Tools->Fractures to Tools->Layers.
-- Tools->Layers->ExpandLayers... now has an additional option "Expand Outer Boundaries". This option controls, whether boundaries of layers, which lie on the geometries boundary, shall be extended.
+- Tools->Layers->ExpandLayers... now has an additional option "Expand Outer Boundaries".
+  This option controls, whether boundaries of layers, which lie on the geometries boundary,
+  shall be extended.
 
 Fixes:
 
@@ -543,7 +550,8 @@ v 3.2.26
 Changes and additions:
 
 Fixes:
-- Fixed bug during tetrahedralization (this bug occured in tetgen. Fixed it by compiling tetgen with -O2 instead of -O3).
+- Fixed bug during tetrahedralization (this bug occured in tetgen. Fixed it by
+  compiling tetgen with -O2 instead of -O3).
 
 
 
@@ -575,7 +583,8 @@ v 3.2.23
 Changes and additions:
 - Extended SelectLinkedFlatFaces. Degenerated and flipped vertices can now be traversed.
 - Added Info->PrintSelectionInfo, which gives an overview over selected elements
-- Added Info->PrintSelectionContainingSubsets, which prints a list of all subsets which contain selected elements.
+- Added Info->PrintSelectionContainingSubsets, which prints a list of all subsets which
+  contain selected elements.
 - Updated tetgen to its latest version.
 - Enhanced the tetrahedralize dialog (min dihedral angle, preserve none, preserve bnds, peserve all)
 
@@ -588,8 +597,11 @@ Fixes:
 v 3.2.22
 
 Changes and additions:
-- Added Selection->Vertices->UnconnectedVertices, which allows to select vertices which are not connected to other elements.
-- Added Subsets->Separation->SeparateDegeneratedBoundaryFaceSubsets, which can be applied after AdjustSubsetsToUG3 in order to separate subsets consisting of degnerated boundary faces.
+- Added Selection->Vertices->UnconnectedVertices, which allows to select vertices
+  which are not connected to other elements.
+- Added Subsets->Separation->SeparateDegeneratedBoundaryFaceSubsets, which can be 
+  applied after AdjustSubsetsToUG3 in order to separate subsets consisting of
+  degnerated boundary faces.
 
 Fixes:
 - Fixed a bug in ExportToUG3 which could cause a crash.
@@ -633,11 +645,13 @@ Fixes:
 v 3.2.19
 
 Changes and additions:
-- Files can now be opened by dragging them on the ProMesh symbol or by double clicking them (At least on MacOSX).
+- Files can now be opened by dragging them on the ProMesh symbol or by double
+  clicking them (At least on MacOSX).
 - Added "recent changes" file.
 - ExpandFractures2D/3D now expand fractures at the geometries boundary.
 - ExpandFractures2D/3D now support special "neumann boundaries" for degenerated elements.
-- Selecting an element with click-select now automatically selects the associated subset in the SceneInspector.
+- Selecting an element with click-select now automatically selects the associated
+  subset in the SceneInspector.
 - Added a pivot to Objects and reworked Move, Scale and Rotate accordingly.
 - AdjustSubsetsForUG3 now optionally removes all initially existing interface subsets.
 
