@@ -13,9 +13,9 @@ class ToolCenterObject : public ITool
 			ug::Sphere s = obj->get_bounding_sphere();
 
 			app::getMainWindow()->getView3D()->fly_to(
-								cam::vector3(s.get_center().x,
-											s.get_center().y,
-											s.get_center().z),
+								cam::vector3(s.get_center().x(),
+											s.get_center().y(),
+											s.get_center().z()),
 								s.get_radius() * 4.f + 0.001);
 		}
 
@@ -38,7 +38,7 @@ class ToolCenterSelection : public ITool
 
 		//	calculate and focus the center
 			if(ug::CalculateCenter(center, sel, aaPos)){
-				view->fly_to(cam::vector3(center.x, center.y,center.z),
+				view->fly_to(cam::vector3(center.x(), center.y(),center.z()),
 							 oldCam.fDistance);
 			}
 		}
@@ -59,7 +59,7 @@ class ToolTopView : public ITool
 			newCam.fDistance = oldCam.fDistance;
 			newCam.vTo = oldCam.vTo;
 			newCam.vFrom = newCam.vTo;
-			newCam.vFrom.z += newCam.fDistance;
+			newCam.vFrom.z() += newCam.fDistance;
 			newCam.quatOrientation.set_values(0, 0, -1, 0);
 
 			view->camera().set_camera_state(newCam);
@@ -82,7 +82,7 @@ class ToolFrontView : public ITool
 			newCam.fDistance = oldCam.fDistance;
 			newCam.vTo = oldCam.vTo;
 			newCam.vFrom = newCam.vTo;
-			newCam.vFrom.y -= newCam.fDistance;
+			newCam.vFrom.y() -= newCam.fDistance;
 			newCam.quatOrientation.set_values(0, 1, 0, 0);
 
 			view->camera().set_camera_state(newCam);
@@ -105,7 +105,7 @@ class ToolSideView : public ITool
 			newCam.fDistance = oldCam.fDistance;
 			newCam.vTo = oldCam.vTo;
 			newCam.vFrom = newCam.vTo;
-			newCam.vFrom.x -= newCam.fDistance;
+			newCam.vFrom.x() -= newCam.fDistance;
 			newCam.quatOrientation.set_values(1, 0, 0, 0);
 
 			view->camera().set_camera_state(newCam);

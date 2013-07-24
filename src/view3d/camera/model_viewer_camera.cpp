@@ -143,9 +143,9 @@ matrix44* CModelViewerCamera::get_camera_transform()
 	m_quatOrientation = *m_ArcBall.get_rotation_quaternion();
 	matrix44* matRot = m_ArcBall.get_rotation_matrix();
 
-	m_vX.x = (*matRot)[0][0];	m_vY.x = (*matRot)[0][1];	m_vZ.x = -(*matRot)[0][2];
-	m_vX.y = (*matRot)[1][0];	m_vY.y = (*matRot)[1][1];	m_vZ.y = -(*matRot)[1][2];
-	m_vX.z = (*matRot)[2][0];	m_vY.z = (*matRot)[2][1];	m_vZ.z = -(*matRot)[2][2];
+	m_vX.x() = (*matRot)[0][0];	m_vY.x() = (*matRot)[0][1];	m_vZ.x() = -(*matRot)[0][2];
+	m_vX.y() = (*matRot)[1][0];	m_vY.y() = (*matRot)[1][1];	m_vZ.y() = -(*matRot)[1][2];
+	m_vX.z() = (*matRot)[2][0];	m_vY.z() = (*matRot)[2][1];	m_vZ.z() = -(*matRot)[2][2];
 
 	Vec3Normalize(m_vX, m_vX);
 	Vec3Normalize(m_vY, m_vY);
@@ -154,7 +154,7 @@ matrix44* CModelViewerCamera::get_camera_transform()
 	Vec3Scale(m_vFrom, m_vZ, -m_fDistance);
 	Vec3Add(m_vFrom, m_vFrom, m_vTo);
 
-	MatTranslation(m_matTransform, -m_vFrom.x, -m_vFrom.y, -m_vFrom.z);
+	MatTranslation(m_matTransform, -m_vFrom.x(), -m_vFrom.y(), -m_vFrom.z());
 
 	MatMultiply(m_matTransform, m_matTransform, *matRot);
 

@@ -351,9 +351,9 @@ public:
 			orientation = dlg->to_int(0);
 			width = dlg->to_double(1);
 			height = dlg->to_double(2);
-			center.x = dlg->to_double(3);
-			center.y = dlg->to_double(4);
-			center.z = dlg->to_double(5);
+			center.x() = dlg->to_double(3);
+			center.y() = dlg->to_double(4);
+			center.z() = dlg->to_double(5);
 			newSI = dlg->to_int(6);
 			fill = dlg->to_bool(7);
 		}
@@ -486,12 +486,12 @@ public:
 		bool createVolume = false;
 
 		if(dlg){
-			boxMin.x = dlg->to_double(0);
-			boxMin.y = dlg->to_double(1);
-			boxMin.z = dlg->to_double(2);
-			boxMax.x = dlg->to_double(3);
-			boxMax.y = dlg->to_double(4);
-			boxMax.z = dlg->to_double(5);
+			boxMin.x() = dlg->to_double(0);
+			boxMin.y() = dlg->to_double(1);
+			boxMin.z() = dlg->to_double(2);
+			boxMax.x() = dlg->to_double(3);
+			boxMax.y() = dlg->to_double(4);
+			boxMax.z() = dlg->to_double(5);
 			newSI = dlg->to_int(6);
 			createVolume = dlg->to_bool(7);
 		}

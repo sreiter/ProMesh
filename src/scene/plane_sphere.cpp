@@ -40,7 +40,7 @@ RelativePositionIndicator PlaneSphereTest(const Plane& plane, const Sphere& sphe
 RelativePositionIndicator PlanePointTest(const Plane& plane, const vector3& point)
 {
 	const vector4& equ = plane.get_equation();
-	number d = equ.x * point.x + equ.y * point.y + equ.z * point.z + equ.w;
+	number d = equ.x() * point.x() + equ.y() * point.y() + equ.z() * point.z() + equ.w();
 
 	if(d < 0)
 		return RPI_INSIDE;

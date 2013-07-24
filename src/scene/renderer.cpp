@@ -78,7 +78,7 @@ void Renderer::standard_render(GLuint displayList, libGrid::Grid& grid,
 		for(uint i = 0; i < sh.num_subsets(); ++i)
 		{
 			const vector4& col = app::get_surface_color_rgba(i + colorBaseIndex);
-			GLfloat faceColor[4] = {col.x, col.y, col.z, col.w};
+			GLfloat faceColor[4] = {col.x(), col.y(), col.z(), col.w};
 			glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, faceColor);
 
 		//	draw triangles
@@ -90,22 +90,22 @@ void Renderer::standard_render(GLuint displayList, libGrid::Grid& grid,
 				Triangle* tri = *iter;
 
 				vector3& n = aaNorm[tri];
-				glNormal3f(n.x, n.y, n.z);
+				glNormal3f(n.x(), n.y(), n.z());
 				glColor3f(0.0, 0.0, 0.0);
 
 				for(int i = 0; i < 3; ++i)
 				{
 					vector3& v = aaPos[tri->vertex(i)];
-					glVertex3f(v.x, v.y, v.z);
+					glVertex3f(v.x(), v.y(), v.z());
 				}
 
 			//	draw both sides
-				glNormal3f(-n.x, -n.y, -n.z);
+				glNormal3f(-n.x(), -n.y(), -n.z());
 
 				for(int i = 2; i >= 0; --i)
 				{
 					vector3& v = aaPos[tri->vertex(i)];
-					glVertex3f(v.x, v.y, v.z);
+					glVertex3f(v.x(), v.y(), v.z());
 				}
 			}
 
@@ -120,22 +120,22 @@ void Renderer::standard_render(GLuint displayList, libGrid::Grid& grid,
 				Quadrilateral* q = *iter;
 
 				vector3& n = aaNorm[q];
-				glNormal3f(n.x, n.y, n.z);
+				glNormal3f(n.x(), n.y(), n.z());
 				glColor3f(0.0, 0.0, 0.0);
 
 				for(int i = 0; i < 4; ++i)
 				{
 					vector3& v = aaPos[q->vertex(i)];
-					glVertex3f(v.x, v.y, v.z);
+					glVertex3f(v.x(), v.y(), v.z());
 				}
 
 			//	draw both sides
-				glNormal3f(-n.x, -n.y, -n.z);
+				glNormal3f(-n.x(), -n.y(), -n.z());
 
 				for(int i = 3; i >= 0; --i)
 				{
 					vector3& v = aaPos[q->vertex(i)];
-					glVertex3f(v.x, v.y, v.z);
+					glVertex3f(v.x(), v.y(), v.z());
 				}
 
 			}
@@ -153,7 +153,7 @@ void Renderer::standard_render(GLuint displayList, libGrid::Grid& grid,
 		for(uint sInd = 0; sInd < sh.num_subsets(); ++sInd)
 		{
 			const vector4& col = app::get_surface_color_rgba(sInd + colorBaseIndex);
-			GLfloat faceColor[4] = {col.x, col.y, col.z, col.w};
+			GLfloat faceColor[4] = {col.x(), col.y(), col.z(), col.w};
 			glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, faceColor);
 			glBegin(GL_TRIANGLES);
 			for(TriangleIterator iter = sh.begin<Triangle>(sInd); iter != sh.end<Triangle>(sInd); ++iter)
@@ -163,23 +163,23 @@ void Renderer::standard_render(GLuint displayList, libGrid::Grid& grid,
 				if(!ClipFace(tri, aaSphereFACE[tri], m_clipPlane, aaPos))
 				{
 					vector3& n = aaNorm[tri];
-					glNormal3f(n.x, n.y, n.z);
+					glNormal3f(n.x(), n.y(), n.z());
 					glColor3f(0.0, 0.0, 0.0);
 
 					for(int i = 0; i < 3; ++i)
 					{
 						vector3& v = aaPos[tri->vertex(i)];
-						glVertex3f(v.x, v.y, v.z);
+						glVertex3f(v.x(), v.y(), v.z());
 					}
 
 				//	draw both sides
-					glNormal3f(-n.x, -n.y, -n.z);
+					glNormal3f(-n.x(), -n.y(), -n.z());
 					glColor3f(0.0, 0.0, 0.0);
 
 					for(int i = 2; i >= 0; --i)
 					{
 						vector3& v = aaPos[tri->vertex(i)];
-						glVertex3f(v.x, v.y, v.z);
+						glVertex3f(v.x(), v.y(), v.z());
 					}
 				}
 			}
@@ -191,7 +191,7 @@ void Renderer::standard_render(GLuint displayList, libGrid::Grid& grid,
 		for(uint sInd = 0; sInd < sh.num_subsets(); ++sInd)
 		{
 			const vector4& col = app::get_surface_color_rgba(sInd + colorBaseIndex);
-			GLfloat faceColor[4] = {col.x, col.y, col.z, col.w};
+			GLfloat faceColor[4] = {col.x(), col.y(), col.z(), col.w};
 			glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, faceColor);
 			glBegin(GL_QUADS);
 			for(QuadrilateralIterator iter = sh.begin<Quadrilateral>(sInd); iter != sh.end<Quadrilateral>(sInd); ++iter)
@@ -201,23 +201,23 @@ void Renderer::standard_render(GLuint displayList, libGrid::Grid& grid,
 				if(!ClipFace(q, aaSphereFACE[q], m_clipPlane, aaPos))
 				{
 					vector3& n = aaNorm[q];
-					glNormal3f(n.x, n.y, n.z);
+					glNormal3f(n.x(), n.y(), n.z());
 					glColor3f(0.0, 0.0, 0.0);
 
 					for(int i = 0; i < 4; ++i)
 					{
 						vector3& v = aaPos[q->vertex(i)];
-						glVertex3f(v.x, v.y, v.z);
+						glVertex3f(v.x(), v.y(), v.z());
 					}
 
 				//	draw both sides
-					glNormal3f(-n.x, -n.y, -n.z);
+					glNormal3f(-n.x(), -n.y(), -n.z());
 					glColor3f(0.0, 0.0, 0.0);
 
 					for(int i = 3; i >= 0; --i)
 					{
 						vector3& v = aaPos[q->vertex(i)];
-						glVertex3f(v.x, v.y, v.z);
+						glVertex3f(v.x(), v.y(), v.z());
 					}
 				}
 			}
@@ -229,7 +229,7 @@ void Renderer::standard_render(GLuint displayList, libGrid::Grid& grid,
 		for(uint sInd = 0; sInd < sh.num_subsets(); ++sInd)
 		{
 			const vector4& col = app::get_volume_color_rgba(sInd + colorBaseIndex);
-			GLfloat faceColor[4] = {col.x, col.y, col.z, col.w};
+			GLfloat faceColor[4] = {col.x(), col.y(), col.z(), col.w};
 			glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, faceColor);
 			for(VolumeIterator vIter = sh.begin<Volume>(sInd); vIter != sh.end<Volume>(sInd); ++vIter)
 			{
@@ -278,23 +278,23 @@ void Renderer::standard_render(GLuint displayList, libGrid::Grid& grid,
 									continue;
 								}
 								vector3& n = aaNorm[f];
-								glNormal3f(n.x, n.y, n.z);
+								glNormal3f(n.x(), n.y(), n.z());
 								glColor3f(0.0, 0.0, 0.0);
 
 								for(int i = 0; i < numVrts; ++i)
 								{
 									vector3& v = aaPos[f->vertex(i)];
-									glVertex3f(v.x, v.y, v.z);
+									glVertex3f(v.x(), v.y(), v.z());
 								}
 
 							//	draw both sides
-								glNormal3f(-n.x, -n.y, -n.z);
+								glNormal3f(-n.x(), -n.y(), -n.z());
 								glColor3f(0.0, 0.0, 0.0);
 
 								for(int i = numVrts-1; i >= 0; --i)
 								{
 									vector3& v = aaPos[f->vertex(i)];
-									glVertex3f(v.x, v.y, v.z);
+									glVertex3f(v.x(), v.y(), v.z());
 								}
 
 								glEnd();

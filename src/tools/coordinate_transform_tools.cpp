@@ -21,9 +21,9 @@ public:
 
 		vector3 nc(0, 0, 0);
 		if(dlg){
-			nc.x = dlg->to_double(0);
-			nc.y = dlg->to_double(1);
-			nc.z = dlg->to_double(2);
+			nc.x() = dlg->to_double(0);
+			nc.y() = dlg->to_double(1);
+			nc.z() = dlg->to_double(2);
 		}
 
 		promesh::SetSelectionCenter(obj, nc);
@@ -65,9 +65,9 @@ public:
 			CalculateCenter(center, obj->get_selector(), aaPos);
 		}
 
-		dlg->setNumber(0, center.x);
-		dlg->setNumber(1, center.y);
-		dlg->setNumber(2, center.z);
+		dlg->setNumber(0, center.x());
+		dlg->setNumber(1, center.y());
+		dlg->setNumber(2, center.z());
 	}
 };
 
@@ -79,9 +79,9 @@ public:
 		ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 		ug::vector3 vMove(0, 0, 0);
 		if(dlg){
-			vMove.x = dlg->to_double(0);
-			vMove.y = dlg->to_double(1);
-			vMove.z = dlg->to_double(2);
+			vMove.x() = dlg->to_double(0);
+			vMove.y() = dlg->to_double(1);
+			vMove.z() = dlg->to_double(2);
 		}
 
 		promesh::Move(obj, vMove);
@@ -142,9 +142,9 @@ public:
 		ug::vector3 vScale(1, 1, 1);
 		bool scaleAroundPivot = false;
 		if(dlg){
-			vScale.x = dlg->to_double(0);
-			vScale.y = dlg->to_double(1);
-			vScale.z = dlg->to_double(2);
+			vScale.x() = dlg->to_double(0);
+			vScale.y() = dlg->to_double(1);
+			vScale.z() = dlg->to_double(2);
 			scaleAroundPivot = dlg->to_bool(3);
 		}
 
@@ -183,9 +183,9 @@ public:
 
 		if(dlg){
 		//	convert to radiants on the fly
-			rot.x = dlg->to_double(0) * (PI / 180.);
-			rot.y = dlg->to_double(1) * (PI / 180.);
-			rot.z = dlg->to_double(2) * (PI / 180.);
+			rot.x() = dlg->to_double(0) * (PI / 180.);
+			rot.y() = dlg->to_double(1) * (PI / 180.);
+			rot.z() = dlg->to_double(2) * (PI / 180.);
 			rotateAroundPivot = dlg->to_bool(3);
 		}
 
@@ -256,12 +256,12 @@ public:
 			ug::vector3 v = aaPos[*iter];
 			VecSubtract(v, v, center);
 
-			vector4 v4(v.x, v.y, v.z, 1.);
+			vector4 v4(v.x(), v.y(), v.z(), 1.);
 			ug::vector4 vtmp;
 			MatVecMult(vtmp, mat, v4);
-			v = vector3(vtmp.x, vtmp.y, vtmp.z);
-			if(fabs(vtmp.w) > SMALL)
-				VecScale(v, v, 1. / vtmp.w);
+			v = vector3(vtmp.x(), vtmp.y(), vtmp.z());
+			if(fabs(vtmp.w()) > SMALL)
+				VecScale(v, v, 1. / vtmp.w());
 			else{
 				UG_LOG("Error during Transform: 4-th component in result is 0. Aborting\n");
 				obj->geometry_changed();
@@ -373,16 +373,16 @@ class ToolProjectToPlane: public ITool
 				CoordinatesWidget* dlgPoint = dynamic_cast<CoordinatesWidget*>(dlg->to_widget(0));
 				assert(dlgPoint);
 				vector3 point;
-				point.x = dlgPoint->x();
-				point.y = dlgPoint->y();
-				point.z = dlgPoint->z();
+				point.x() = dlgPoint->x();
+				point.y() = dlgPoint->y();
+				point.z() = dlgPoint->z();
 
 				CoordinatesWidget* dlgNormal = dynamic_cast<CoordinatesWidget*>(dlg->to_widget(1));
 				assert(dlgNormal);
 				vector3 normal;
-				normal.x = dlgNormal->x();
-				normal.y = dlgNormal->y();
-				normal.z = dlgNormal->z();
+				normal.x() = dlgNormal->x();
+				normal.y() = dlgNormal->y();
+				normal.z() = dlgNormal->z();
 
 				ProjectToPlane(obj, point, normal);
 
@@ -443,9 +443,9 @@ public:
 
 		if(dlg){
 		//	convert to radiants on the fly
-			newPivot.x = dlg->x();
-			newPivot.y = dlg->y();
-			newPivot.z = dlg->z();
+			newPivot.x() = dlg->x();
+			newPivot.y() = dlg->y();
+			newPivot.z() = dlg->z();
 		}
 
 		promesh::SetPivot(obj, newPivot);
@@ -537,15 +537,15 @@ public:
 
 			CalculateBoundingBox(min, max, g.vertices_begin(), g.vertices_end(), aaPos);
 
-			if(hf->initialize(filename.toStdString().c_str(), min.x, min.y,
-							max.x, max.y))
+			if(hf->initialize(filename.toStdString().c_str(), min.x(), min.y(),
+							max.x(), max.y()))
 			{
 			//	iterate over all nodes and adjust height.
 				for(Grid::traits<VertexBase>::iterator iter = g.vertices_begin();
 					iter != g.vertices_end(); ++iter)
 				{
 					vector3& v = aaPos[*iter];
-					v.z = hf->height(v.x, v.y);
+					v.z() = hf->height(v.x(), v.y());
 				}
 			}
 

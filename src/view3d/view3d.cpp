@@ -102,13 +102,13 @@ void View3D::paintGL()
 		const cam::vector3* vTo = m_camera.get_to();
 		cam::vector3 camDir = m_camera.get_to_dir();
 		cam::vector3 camUp = m_camera.get_up_dir();
-		m_pRenderer->set_camera_parameters(vFrom->x, vFrom->y, vFrom->z,
-										   camDir.x, camDir.y, camDir.z,
-										   camUp.x, camUp.y, camUp.z);
+		m_pRenderer->set_camera_parameters(vFrom->x(), vFrom->y(), vFrom->z(),
+										   camDir.x(), camDir.y(), camDir.z(),
+										   camUp.x(), camUp.y(), camUp.z());
 
 		m_pRenderer->get_clip_distance_estimate(m_zNear, m_zFar,
-												vFrom->x, vFrom->y, vFrom->z,
-												vTo->x, vTo->y, vTo->z);
+												vFrom->x(), vFrom->y(), vFrom->z(),
+												vTo->x(), vTo->y(), vTo->z());
 	//	set render-attributes
 		//m_pRenderer->set_draw_mode(m_drawMode);
 		m_pRenderer->set_transform((float*)&mat);
@@ -179,21 +179,21 @@ void View3D::paintGL()
 
 			glColor3f(0, 0, 0);
 			glBegin(GL_POINTS);
-			glVertex3f(m_selRectMin.x, m_selRectMin.y, 0);
-			glVertex3f(m_selRectMax.x, m_selRectMin.y, 0);
-			glVertex3f(m_selRectMax.x, m_selRectMax.y, 0);
-			glVertex3f(m_selRectMin.x, m_selRectMax.y, 0);
+			glVertex3f(m_selRectMin.x(), m_selRectMin.y(), 0);
+			glVertex3f(m_selRectMax.x(), m_selRectMin.y(), 0);
+			glVertex3f(m_selRectMax.x(), m_selRectMax.y(), 0);
+			glVertex3f(m_selRectMin.x(), m_selRectMax.y(), 0);
 			glEnd();
 
 			glBegin(GL_LINES);
-			glVertex3f(m_selRectMin.x, m_selRectMin.y, 0);
-			glVertex3f(m_selRectMax.x, m_selRectMin.y, 0);
-			glVertex3f(m_selRectMax.x, m_selRectMin.y, 0);
-			glVertex3f(m_selRectMax.x, m_selRectMax.y, 0);
-			glVertex3f(m_selRectMax.x, m_selRectMax.y, 0);
-			glVertex3f(m_selRectMin.x, m_selRectMax.y, 0);
-			glVertex3f(m_selRectMin.x, m_selRectMax.y, 0);
-			glVertex3f(m_selRectMin.x, m_selRectMin.y, 0);
+			glVertex3f(m_selRectMin.x(), m_selRectMin.y(), 0);
+			glVertex3f(m_selRectMax.x(), m_selRectMin.y(), 0);
+			glVertex3f(m_selRectMax.x(), m_selRectMin.y(), 0);
+			glVertex3f(m_selRectMax.x(), m_selRectMax.y(), 0);
+			glVertex3f(m_selRectMax.x(), m_selRectMax.y(), 0);
+			glVertex3f(m_selRectMin.x(), m_selRectMax.y(), 0);
+			glVertex3f(m_selRectMin.x(), m_selRectMax.y(), 0);
+			glVertex3f(m_selRectMin.x(), m_selRectMin.y(), 0);
 			glEnd();
 		}
 

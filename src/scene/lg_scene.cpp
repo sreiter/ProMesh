@@ -368,7 +368,7 @@ void LGScene::get_clip_distance_estimate(float& nearOut, float& farOut,
 
 	bool correctDistX = true;
 
-//	if dist.x < 0 (camera is inside the bounding sphere) we will check
+//	if dist.x() < 0 (camera is inside the bounding sphere) we will check
 //	for active clip-planes and adjust the distance accordingly.
 	if(nearOut < 0)
 	{
@@ -882,7 +882,7 @@ void LGScene::render_points(LGObject* pObj, const ug::vector4& color,
 {
 	Grid::VertexAttachmentAccessor<ABool> aaRenderedVRT(pObj->get_grid(), m_aRendered);
 
-	glColor4f(color.x, color.y, color.z, color.w);
+	glColor4f(color.x(), color.y(), color.z(), color.w());
 	glPointSize(5.f);
 
 	glBegin(GL_POINTS);
@@ -892,7 +892,7 @@ void LGScene::render_points(LGObject* pObj, const ug::vector4& color,
 	{
 		if(aaRenderedVRT[*iter]){
 			vector3& v = aaPos[*iter];
-			glVertex3f(v.x, v.y, v.z);
+			glVertex3f(v.x(), v.y(), v.z());
 		}
 	}
 
@@ -933,7 +933,7 @@ void LGScene::render_point_subsets(LGObject* pObj, int baseDisplayListIndex)
 			if((!aaHiddenVRT[vrt]) && (!clip_vertex(vrt, aaPos))){
 				aaRenderedVRT[vrt] = true;
 				vector3& v = aaPos[vrt];
-				glVertex3f(v.x, v.y, v.z);
+				glVertex3f(v.x(), v.y(), v.z());
 			}
 		}
 
@@ -952,7 +952,7 @@ void LGScene::render_edges(LGObject* pObj, const ug::vector4& color,
 	Grid::EdgeAttachmentAccessor<ABool> aaRenderedEDGE(grid, m_aRendered);
 
 //	draw edges
-	glColor4f(color.x, color.y, color.z, color.w);
+	glColor4f(color.x(), color.y(), color.z(), color.w());
 	glBegin(GL_LINES);
 
 	for(EdgeBaseIterator iter = edgesBegin;
@@ -963,7 +963,7 @@ void LGScene::render_edges(LGObject* pObj, const ug::vector4& color,
 			for(int i = 0; i < 2; ++i)
 			{
 				vector3& v = aaPos[e->vertex(i)];
-				glVertex3f(v.x, v.y, v.z);
+				glVertex3f(v.x(), v.y(), v.z());
 			}
 		}
 	}
@@ -1007,7 +1007,7 @@ void LGScene::render_edge_subsets(LGObject* pObj, int baseDisplayListIndex)
 				for(int i = 0; i < 2; ++i){
 					aaRenderedVRT[e->vertex(i)] = true;
 					vector3& v = aaPos[e->vertex(i)];
-					glVertex3f(v.x, v.y, v.z);
+					glVertex3f(v.x(), v.y(), v.z());
 				}
 			}
 		}
@@ -1026,7 +1026,7 @@ void LGScene::render_triangles(LGObject* pObj, const ug::vector4& color,
 {
 	Grid::FaceAttachmentAccessor<ABool> aaRenderedFACE(pObj->get_grid(), m_aRendered);
 
-	glColor4f(color.x, color.y, color.z, color.w);
+	glColor4f(color.x(), color.y(), color.z(), color.w());
 	glBegin(GL_TRIANGLES);
 
 	for(FaceIterator iter = trisBegin;
@@ -1036,12 +1036,12 @@ void LGScene::render_triangles(LGObject* pObj, const ug::vector4& color,
 
 		if(aaRenderedFACE[tri]){
 			vector3& n = aaNorm[tri];
-			glNormal3f(n.x, n.y, n.z);
+			glNormal3f(n.x(), n.y(), n.z());
 
 			for(int i = 0; i < 3; ++i)
 			{
 				vector3& v = aaPos[tri->vertex(i)];
-				glVertex3f(v.x, v.y, v.z);
+				glVertex3f(v.x(), v.y(), v.z());
 			}
 		}
 	}
@@ -1058,7 +1058,7 @@ void LGScene::render_quadrilaterals(LGObject* pObj,
 {
 	Grid::FaceAttachmentAccessor<ABool> aaRenderedFACE(pObj->get_grid(), m_aRendered);
 
-	glColor4f(color.x, color.y, color.z, color.w);
+	glColor4f(color.x(), color.y(), color.z(), color.w());
 	glBegin(GL_QUADS);
 
 	for(FaceIterator iter = quadsBegin;
@@ -1068,12 +1068,12 @@ void LGScene::render_quadrilaterals(LGObject* pObj,
 
 		if(aaRenderedFACE[q]){
 			vector3& n = aaNorm[q];
-			glNormal3f(n.x, n.y, n.z);
+			glNormal3f(n.x(), n.y(), n.z());
 
 			for(int i = 0; i < 4; ++i)
 			{
 				vector3& v = aaPos[q->vertex(i)];
-				glVertex3f(v.x, v.y, v.z);
+				glVertex3f(v.x(), v.y(), v.z());
 			}
 		}
 	}
@@ -1118,7 +1118,7 @@ void LGScene::rerender_volumes(LGObject* pObj,
 		}
 	}
 
-	glColor4f(color.x, color.y, color.z, color.w);
+	glColor4f(color.x(), color.y(), color.z(), color.w());
 
 	if(tris.size() > 0){
 		glBegin(GL_TRIANGLES);
@@ -1127,11 +1127,11 @@ void LGScene::rerender_volumes(LGObject* pObj,
 			Face* tri = tris[j];
 
 			vector3& n = aaNorm[tri];
-			glNormal3f(n.x, n.y, n.z);
+			glNormal3f(n.x(), n.y(), n.z());
 
 			for(int i = 0; i < 3; ++i){
 				vector3& v = aaPos[tri->vertex(i)];
-				glVertex3f(v.x, v.y, v.z);
+				glVertex3f(v.x(), v.y(), v.z());
 			}
 		}
 
@@ -1145,11 +1145,11 @@ void LGScene::rerender_volumes(LGObject* pObj,
 			Face* q = quads[j];
 
 			vector3& n = aaNorm[q];
-			glNormal3f(n.x, n.y, n.z);
+			glNormal3f(n.x(), n.y(), n.z());
 
 			for(int i = 0; i < 4; ++i){
 				vector3& v = aaPos[q->vertex(i)];
-				glVertex3f(v.x, v.y, v.z);
+				glVertex3f(v.x(), v.y(), v.z());
 			}
 		}
 
@@ -1199,13 +1199,13 @@ void LGScene::render_faces(LGObject* pObj, Grid& grid,
 			aaRenderedFACE[tri] = true;
 
 			vector3& n = aaNorm[tri];
-			glNormal3f(n.x, n.y, n.z);
+			glNormal3f(n.x(), n.y(), n.z());
 
 			for(int i = 0; i < 3; ++i)
 			{
 				aaRenderedVRT[tri->vertex(i)] = true;
 				vector3& v = aaPos[tri->vertex(i)];
-				glVertex3f(v.x, v.y, v.z);
+				glVertex3f(v.x(), v.y(), v.z());
 			}
 
 			for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(tri);
@@ -1223,13 +1223,13 @@ void LGScene::render_faces(LGObject* pObj, Grid& grid,
 			aaRenderedFACE[tri] = true;
 
 			vector3& n = aaNorm[tri];
-			glNormal3f(n.x, n.y, n.z);
+			glNormal3f(n.x(), n.y(), n.z());
 
 			for(int i = 0; i < 3; ++i)
 			{
 				aaRenderedVRT[tri->vertex(i)] = true;
 				vector3& v = aaPos[tri->vertex(i)];
-				glVertex3f(v.x, v.y, v.z);
+				glVertex3f(v.x(), v.y(), v.z());
 			}
 
 			for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(tri);
@@ -1247,13 +1247,13 @@ void LGScene::render_faces(LGObject* pObj, Grid& grid,
 			aaRenderedFACE[tri] = true;
 
 			vector3& n = aaNorm[tri];
-			glNormal3f(n.x, n.y, n.z);
+			glNormal3f(n.x(), n.y(), n.z());
 
 			for(int i = 0; i < 3; ++i)
 			{
 				aaRenderedVRT[tri->vertex(i)] = true;
 				vector3& v = aaPos[tri->vertex(i)];
-				glVertex3f(v.x, v.y, v.z);
+				glVertex3f(v.x(), v.y(), v.z());
 			}
 
 			for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(tri);
@@ -1276,13 +1276,13 @@ void LGScene::render_faces(LGObject* pObj, Grid& grid,
 			aaRenderedFACE[q] = true;
 
 			vector3& n = aaNorm[q];
-			glNormal3f(n.x, n.y, n.z);
+			glNormal3f(n.x(), n.y(), n.z());
 
 			for(int i = 0; i < 4; ++i)
 			{
 				aaRenderedVRT[q->vertex(i)] = true;
 				vector3& v = aaPos[q->vertex(i)];
-				glVertex3f(v.x, v.y, v.z);
+				glVertex3f(v.x(), v.y(), v.z());
 			}
 
 			for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(q);
@@ -1300,13 +1300,13 @@ void LGScene::render_faces(LGObject* pObj, Grid& grid,
 			aaRenderedFACE[q] = true;
 
 			vector3& n = aaNorm[q];
-			glNormal3f(n.x, n.y, n.z);
+			glNormal3f(n.x(), n.y(), n.z());
 
 			for(int i = 0; i < 4; ++i)
 			{
 				aaRenderedVRT[q->vertex(i)] = true;
 				vector3& v = aaPos[q->vertex(i)];
-				glVertex3f(v.x, v.y, v.z);
+				glVertex3f(v.x(), v.y(), v.z());
 			}
 
 			for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(q);
@@ -1324,13 +1324,13 @@ void LGScene::render_faces(LGObject* pObj, Grid& grid,
 			aaRenderedFACE[q] = true;
 
 			vector3& n = aaNorm[q];
-			glNormal3f(n.x, n.y, n.z);
+			glNormal3f(n.x(), n.y(), n.z());
 
 			for(int i = 0; i < 4; ++i)
 			{
 				aaRenderedVRT[q->vertex(i)] = true;
 				vector3& v = aaPos[q->vertex(i)];
-				glVertex3f(v.x, v.y, v.z);
+				glVertex3f(v.x(), v.y(), v.z());
 			}
 
 			for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(q);
@@ -1568,13 +1568,13 @@ void LGScene::render_faces_with_clip_plane(LGObject* pObj)
 				{
 					aaRenderedFACE[tri] = true;
 					vector3& n = aaNorm[tri];
-					glNormal3f(n.x, n.y, n.z);
+					glNormal3f(n.x(), n.y(), n.z());
 
 					for(int j = 0; j < 3; ++j)
 					{
 						aaRenderedVRT[tri->vertex(j)] = true;
 						vector3& v = aaPos[tri->vertex(j)];
-						glVertex3f(v.x, v.y, v.z);
+						glVertex3f(v.x(), v.y(), v.z());
 					}
 					for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(tri);
 						eiter != grid.associated_edges_end(tri); ++eiter)
@@ -1593,13 +1593,13 @@ void LGScene::render_faces_with_clip_plane(LGObject* pObj)
 					aaRenderedFACE[tri] = true;
 
 					vector3& n = aaNorm[tri];
-					glNormal3f(n.x, n.y, n.z);
+					glNormal3f(n.x(), n.y(), n.z());
 
 					for(int i = 0; i < 3; ++i)
 					{
 						aaRenderedVRT[tri->vertex(i)] = true;
 						vector3& v = aaPos[tri->vertex(i)];
-						glVertex3f(v.x, v.y, v.z);
+						glVertex3f(v.x(), v.y(), v.z());
 					}
 
 					for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(tri);
@@ -1620,13 +1620,13 @@ void LGScene::render_faces_with_clip_plane(LGObject* pObj)
 					aaRenderedFACE[tri] = true;
 
 					vector3& n = aaNorm[tri];
-					glNormal3f(n.x, n.y, n.z);
+					glNormal3f(n.x(), n.y(), n.z());
 
 					for(int i = 0; i < 3; ++i)
 					{
 						aaRenderedVRT[tri->vertex(i)] = true;
 						vector3& v = aaPos[tri->vertex(i)];
-						glVertex3f(v.x, v.y, v.z);
+						glVertex3f(v.x(), v.y(), v.z());
 					}
 
 					for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(tri);
@@ -1654,13 +1654,13 @@ void LGScene::render_faces_with_clip_plane(LGObject* pObj)
 				{
 					aaRenderedFACE[q] = true;
 					vector3& n = aaNorm[q];
-					glNormal3f(n.x, n.y, n.z);
+					glNormal3f(n.x(), n.y(), n.z());
 
 					for(int j = 0; j < 4; ++j)
 					{
 						aaRenderedVRT[q->vertex(j)] = true;
 						vector3& v = aaPos[q->vertex(j)];
-						glVertex3f(v.x, v.y, v.z);
+						glVertex3f(v.x(), v.y(), v.z());
 					}
 					for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(q);
 						eiter != grid.associated_edges_end(q); ++eiter)
@@ -1679,13 +1679,13 @@ void LGScene::render_faces_with_clip_plane(LGObject* pObj)
 				{
 					aaRenderedFACE[q] = true;
 					vector3& n = aaNorm[q];
-					glNormal3f(n.x, n.y, n.z);
+					glNormal3f(n.x(), n.y(), n.z());
 
 					for(int j = 0; j < 4; ++j)
 					{
 						aaRenderedVRT[q->vertex(j)] = true;
 						vector3& v = aaPos[q->vertex(j)];
-						glVertex3f(v.x, v.y, v.z);
+						glVertex3f(v.x(), v.y(), v.z());
 					}
 
 					for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(q);
@@ -1705,13 +1705,13 @@ void LGScene::render_faces_with_clip_plane(LGObject* pObj)
 				{
 					aaRenderedFACE[q] = true;
 					vector3& n = aaNorm[q];
-					glNormal3f(n.x, n.y, n.z);
+					glNormal3f(n.x(), n.y(), n.z());
 
 					for(int j = 0; j < 4; ++j)
 					{
 						aaRenderedVRT[q->vertex(j)] = true;
 						vector3& v = aaPos[q->vertex(j)];
-						glVertex3f(v.x, v.y, v.z);
+						glVertex3f(v.x(), v.y(), v.z());
 					}
 
 					for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(q);
@@ -1777,12 +1777,12 @@ void LGScene::render_faces_with_clip_plane(LGObject* pObj)
 
 							//	draw the face
 								vector3& n = aaNorm[f];
-								glNormal3f(n.x, n.y, n.z);
+								glNormal3f(n.x(), n.y(), n.z());
 
 								for(uint j = 0; j < numVrts; ++j)
 								{
 									vector3& v = aaPos[f->vertex(j)];
-									glVertex3f(v.x, v.y, v.z);
+									glVertex3f(v.x(), v.y(), v.z());
 								}
 
 								glEnd();
@@ -2104,9 +2104,9 @@ get_vertices_in_rect(std::vector<VertexBase*>& vrtsOut,
 				if(PlanePointTest(plane, pos) == RPI_INSIDE)
 					continue;
 					
-				GLdouble px = pos.x;
-				GLdouble py = pos.y;
-				GLdouble pz = pos.z;
+				GLdouble px = pos.x();
+				GLdouble py = pos.y();
+				GLdouble pz = pos.z();
 
 				gluProject(px, py, pz, modelMat, projMat,
 		   				   viewport, &vx, &vy, &vz);
@@ -2164,9 +2164,9 @@ get_edges_in_rect(std::vector<EdgeBase*>& edgesOut,
 					break;
 				}
 					
-				GLdouble px = pos.x;
-				GLdouble py = pos.y;
-				GLdouble pz = pos.z;
+				GLdouble px = pos.x();
+				GLdouble py = pos.y();
+				GLdouble pz = pos.z();
 
 				gluProject(px, py, pz, modelMat, projMat,
 						   viewport, &vx, &vy, &vz);
@@ -2226,9 +2226,9 @@ get_faces_in_rect(std::vector<Face*>& facesOut,
 					break;
 				}
 				
-				GLdouble px = pos.x;
-				GLdouble py = pos.y;
-				GLdouble pz = pos.z;
+				GLdouble px = pos.x();
+				GLdouble py = pos.y();
+				GLdouble pz = pos.z();
 
 				gluProject(px, py, pz, modelMat, projMat,
 						   viewport, &vx, &vy, &vz);
@@ -2293,9 +2293,9 @@ get_volumes_in_rect(std::vector<Volume*>& volsOut,
 					break;
 				}
 				
-				GLdouble px = pos.x;
-				GLdouble py = pos.y;
-				GLdouble pz = pos.z;
+				GLdouble px = pos.x();
+				GLdouble py = pos.y();
+				GLdouble pz = pos.z();
 
 				gluProject(px, py, pz, modelMat, projMat,
 						   viewport, &vx, &vy, &vz);
@@ -2363,12 +2363,12 @@ get_edges_in_rect_cut(std::vector<EdgeBase*>& edgesOut,
 				continue;
 			}
 			
-			GLdouble px1 = pos1.x;
-			GLdouble py1 = pos1.y;
-			GLdouble pz1 = pos1.z;
-			GLdouble px2 = pos2.x;
-			GLdouble py2 = pos2.y;
-			GLdouble pz2 = pos2.z;
+			GLdouble px1 = pos1.x();
+			GLdouble py1 = pos1.y();
+			GLdouble pz1 = pos1.z();
+			GLdouble px2 = pos2.x();
+			GLdouble py2 = pos2.y();
+			GLdouble pz2 = pos2.z();
 
 			gluProject(px1, py1, pz1, modelMat, projMat,
 					   viewport, &vx1, &vy1, &vz1);
@@ -2452,17 +2452,17 @@ get_faces_in_rect_cut(std::vector<Face*>& facesOut,
 					if(PlanePointTest(plane, pos) == RPI_OUTSIDE)
 						oneLiesInFront = true;
 											
-					GLdouble px = pos.x;
-					GLdouble py = pos.y;
-					GLdouble pz = pos.z;
+					GLdouble px = pos.x();
+					GLdouble py = pos.y();
+					GLdouble pz = pos.z();
 					GLdouble vx, vy, vz;
 
 					gluProject(px, py, pz, modelMat, projMat,
 							   viewport, &vx, &vy, &vz);
 
-					projPos[i].x = vx;
-					projPos[i].y = vy;
-					projPos[i].z = vz;
+					projPos[i].x() = vx;
+					projPos[i].y() = vy;
+					projPos[i].z() = vz;
 				}
 
 				if(!oneLiesInFront)
@@ -2533,17 +2533,17 @@ get_volumes_in_rect_cut(std::vector<Volume*>& volsOut,
 				if(PlanePointTest(plane, pos) == RPI_OUTSIDE)
 					oneLiesInFront = true;
 				
-				GLdouble px = pos.x;
-				GLdouble py = pos.y;
-				GLdouble pz = pos.z;
+				GLdouble px = pos.x();
+				GLdouble py = pos.y();
+				GLdouble pz = pos.z();
 				GLdouble vx, vy, vz;
 
 				gluProject(px, py, pz, modelMat, projMat,
 						   viewport, &vx, &vy, &vz);
 
-				projPos[i].x = vx;
-				projPos[i].y = vy;
-				projPos[i].z = vz;
+				projPos[i].x() = vx;
+				projPos[i].y() = vy;
+				projPos[i].z() = vz;
 			}
 
 			if(!oneLiesInFront)

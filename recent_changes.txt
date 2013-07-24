@@ -1,9 +1,12 @@
 Recent changes:
 
 
+
 -------------------------------------------------------------------------------
+v 4.0.9
 v 4.0.8
 Changes and additions:
+- Added .stl export
 - Added Info-PrintLeastSquaresPlane
 - Added CoordinateTransform-ProjectToPlane
 - During extrude, Subsets-indices are now copied from the source-elements.

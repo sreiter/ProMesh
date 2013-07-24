@@ -503,9 +503,9 @@ bool MainWindow::load_grid_from_file(const char* filename)
 				{
 					bFirstLoad = false;
 					ug::Sphere s = pObj->get_bounding_sphere();
-					m_pView->fly_to(cam::vector3(s.get_center().x,
-													s.get_center().y,
-													s.get_center().z),
+					m_pView->fly_to(cam::vector3(s.get_center().x(),
+													s.get_center().y(),
+													s.get_center().z()),
 									s.get_radius() * 3.f);
 				}
 
@@ -602,7 +602,7 @@ bool MainWindow::saveToFile()
 									this,
 									tr("Save Geometry"),
 									path,
-									tr("geometry files (*.ugx *.ncdf *.lgb *.obj *.txt *.ele)"));
+									tr("geometry files (*.ugx *.ncdf *.lgb *.obj *.txt *.ele *.stl)"));
 
 		if(!fileName.isEmpty())
 		{

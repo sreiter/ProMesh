@@ -366,12 +366,12 @@ class ToolPlaneCut : public ITool
 			//double threshold = 0.0001;
 
 			if(dlg){
-				p.x = dlg->to_double(0);
-				p.y = dlg->to_double(1);
-				p.z = dlg->to_double(2);
-				n.x = dlg->to_double(3);
-				n.y = dlg->to_double(4);
-				n.z = dlg->to_double(5);
+				p.x() = dlg->to_double(0);
+				p.y() = dlg->to_double(1);
+				p.z() = dlg->to_double(2);
+				n.x() = dlg->to_double(3);
+				n.y() = dlg->to_double(4);
+				n.z() = dlg->to_double(5);
 				//threshold = dlg->to_double(6);
 			}
 

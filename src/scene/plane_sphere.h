@@ -49,17 +49,17 @@ class Plane
 		inline void set_p(const vector3& p)
 			{
 				m_p = p;
-				m_equ = vector4(m_n.x, m_n.y, m_n.z, -VecDot(m_n, m_p));
+				m_equ = vector4(m_n.x(), m_n.y(), m_n.z(), -VecDot(m_n, m_p));
 			}
 
 		inline const vector3& get_n() const		{return m_n;}
 		inline void set_n(const vector3& n)
 			{
 				VecNormalize(m_n, n);
-				m_equ = vector4(m_n.x, m_n.y, m_n.z, -VecDot(m_n, m_p));
+				m_equ = vector4(m_n.x(), m_n.y(), m_n.z(), -VecDot(m_n, m_p));
 			}
 
-	///	equation: equ.x*x + equ.y*y + equ.z*z + equ.w = 0
+	///	equation: equ.x*x + equ.y*y + equ.z*z + equ.w() = 0
 		inline const vector4& get_equation() const 	{return m_equ;}
 
 	protected:

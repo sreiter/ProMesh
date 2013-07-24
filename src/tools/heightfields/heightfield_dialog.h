@@ -107,15 +107,15 @@ class HeightfieldDialog : public QDialog
 
 				CalculateBoundingBox(min, max, g.vertices_begin(), g.vertices_end(), aaPos);
 
-				if(hf->initialize(m_fileName.toStdString().c_str(), min.x, min.y,
-								max.x, max.y))
+				if(hf->initialize(m_fileName.toStdString().c_str(), min.x(), min.y(),
+								max.x(), max.y()))
 				{
 				//	iterate over all nodes and adjust height.
 					for(Grid::traits<VertexBase>::iterator iter = g.vertices_begin();
 						iter != g.vertices_end(); ++iter)
 					{
 						vector3& v = aaPos[*iter];
-						v.z = hf->height(v.x, v.y);
+						v.z() = hf->height(v.x(), v.y());
 					}
 				}
 

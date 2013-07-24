@@ -303,12 +303,12 @@ void LGObject::visuals_changed()
 	{
 		SubsetInfo& si = m_subsetHandler.subset_info(i);
 	//	check whether the color is still uninitialized.
-		if(si.color.w < 0){
+		if(si.color.w() < 0){
 			vector3 col = GetColorFromStandardPalette(i);
-			si.color.x = col.x;
-			si.color.y = col.y;
-			si.color.z = col.z;
-			si.color.w = 1.f;
+			si.color.x() = col.x();
+			si.color.y() = col.y();
+			si.color.z() = col.z();
+			si.color.w() = 1.f;
 		}
 	}
 	m_numInitializedSubsets = m_subsetHandler.num_subsets();
@@ -500,16 +500,16 @@ QColor LGObject::get_subset_color(int index) const
 {
 	const vector4& col = m_subsetHandler.subset_info(index).color;
 	QColor qcol;
-	qcol.setRgbF(col.x, col.y, col.z);
+	qcol.setRgbF(col.x(), col.y(), col.z());
 	return qcol;
 }
 
 void LGObject::set_subset_color(int index, const QColor& color)
 {
 	vector4& col = m_subsetHandler.subset_info(index).color;
-	col.x = color.redF();
-	col.y = color.greenF();
-	col.z = color.blueF();
+	col.x() = color.redF();
+	col.y() = color.greenF();
+	col.z() = color.blueF();
 }
 
 bool LGObject::subset_is_initialized(int index) const
@@ -597,9 +597,9 @@ void LGObject::scale(const ug::vector3& scaleFacs)
 	vector3 d;
 	for(size_t i = 0; i < m_transformVertices.size(); ++i){
 		VecSubtract(d, m_transformInitialPositions[i], m_transformCur);
-		d.x *= scaleFacs.x;
-		d.y *= scaleFacs.y;
-		d.z *= scaleFacs.z;
+		d.x() *= scaleFacs.x();
+		d.y() *= scaleFacs.y();
+		d.z() *= scaleFacs.z();
 		VecAdd(aaPos[m_transformVertices[i]], m_transformCur, d);
 	}
 

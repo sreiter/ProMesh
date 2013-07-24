@@ -303,9 +303,9 @@ public:
 		bool deselectOld = true;
 		bool selectNew = true;
 		if(dlg){
-			offset.x = dlg->to_double(0);
-			offset.y = dlg->to_double(1);
-			offset.z = dlg->to_double(2);
+			offset.x() = dlg->to_double(0);
+			offset.y() = dlg->to_double(1);
+			offset.z() = dlg->to_double(2);
 			deselectOld = dlg->to_bool(3);
 			selectNew = dlg->to_bool(4);
 		}
@@ -348,9 +348,9 @@ class ToolExtrude : public ITool
 			if(dlg){
 				createFaces = dlg->to_bool(0);
 				createVolumes = dlg->to_bool(1);
-				totalDir.x = dlg->to_double(2);
-				totalDir.y = dlg->to_double(3);
-				totalDir.z = dlg->to_double(4);
+				totalDir.x() = dlg->to_double(2);
+				totalDir.y() = dlg->to_double(3);
+				totalDir.z() = dlg->to_double(4);
 				numSteps = dlg->to_int(5);
 			}
 

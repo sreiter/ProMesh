@@ -64,11 +64,11 @@ void MainWindow::updateMouseMoveAction()
 			vector3 dir;
 			VecScaleAdd(dir, dx, right, - dy, up);
 			if(m_activeAxis == X_AXIS)
-				dir.y = dir.z = 0;
+				dir.y() = dir.z() = 0;
 			if(m_activeAxis == Y_AXIS)
-				dir.x = dir.z = 0;
+				dir.x() = dir.z() = 0;
 			if(m_activeAxis == Z_AXIS)
-				dir.x = dir.y = 0;
+				dir.x() = dir.y() = 0;
 
 			VecScale(dir, dir, camDist / 1000.f);
 			obj->grab(dir);
@@ -80,11 +80,11 @@ void MainWindow::updateMouseMoveAction()
 			number scale = 1. + (dx-dy) / 250.;
 			vector3 scaleFacs(1,1,1);
 			if(m_activeAxis & X_AXIS)
-				scaleFacs.x = scale;
+				scaleFacs.x() = scale;
 			if(m_activeAxis & Y_AXIS)
-				scaleFacs.y = scale;
+				scaleFacs.y() = scale;
 			if(m_activeAxis & Z_AXIS)
-				scaleFacs.z = scale;
+				scaleFacs.z() = scale;
 
 			obj->scale(scaleFacs);
 		}break;

@@ -33,9 +33,9 @@ void CQuaternion::set_values(float angle, vector3& axis)
 	float s = (float)sin(angle / 2.f);
 	float c = (float)cos(angle / 2.f);
 
-	x = s * axis.x;
-	y = s * axis.y;
-	z = s * axis.z;
+	x = s * axis.x();
+	y = s * axis.y();
+	z = s * axis.z();
 	w = c;
 }
 
@@ -202,7 +202,7 @@ void quaternion_from_ball_points(CQuaternion* quatOut, vector3* vFrom, vector3* 
     vector3 vPart;
     Vec3Cross(vPart, *vTo, *vFrom);
 
-	*quatOut = CQuaternion(vPart.x, vPart.y, vPart.z, fDot);
+	*quatOut = CQuaternion(vPart.x(), vPart.y(), vPart.z(), fDot);
 	quatOut->normalize();
 }
 
@@ -215,17 +215,17 @@ void axis_from_quaternion(vector3* vXout, vector3* vYout, vector3* vZout, CQuate
 	yy = quat->y * y2;   yz = quat->y * z2;   zz = quat->z * z2;
 	wx = quat->w * x2;   wy = quat->w * y2;   wz = quat->w * z2;
 
-	vXout->x = 1.0 - (yy + zz);
-	vYout->x = xy - wz;
-	vZout->z = xz + wy;
+	vXout->x() = 1.0 - (yy + zz);
+	vYout->x() = xy - wz;
+	vZout->z() = xz + wy;
 
-	vXout->y = xy + wz;
-	vYout->y = 1.0 - (xx + zz);
-	vZout->y = yz - wx;
+	vXout->y() = xy + wz;
+	vYout->y() = 1.0 - (xx + zz);
+	vZout->y() = yz - wx;
 
-	vXout->z = xz - wy;
-	vYout->z = yz + wx;
-	vZout->z = 1.0 - (xx + yy);
+	vXout->z() = xz - wy;
+	vYout->z() = yz + wx;
+	vZout->z() = 1.0 - (xx + yy);
 }
 
 void quaternion_from_axis(CQuaternion* quatOut, vector3* vX, vector3* vY, vector3* vZ)
@@ -253,9 +253,9 @@ void quaternion_from_axis(CQuaternion* quatOut, vector3* vX, vector3* vY, vector
 
 	s = 0.5 / s;
 
-    quatOut->x = (vY->z - vZ->y) * s;
-    quatOut->y = (vZ->x - vX->z) * s;
-    quatOut->z = (vX->y - vY->x) * s;
+    quatOut->x = (vY->z() - vZ->y()) * s;
+    quatOut->y = (vZ->x() - vX->z()) * s;
+    quatOut->z = (vX->y() - vY->x()) * s;
 
   } else {
 
@@ -263,8 +263,8 @@ void quaternion_from_axis(CQuaternion* quatOut, vector3* vX, vector3* vY, vector
 
 	  i = 0;
 
-      if (vY->y > vX->x) i = 1;
-	  if (vZ->z > (*mat[i])[i]) i = 2;
+      if (vY->y() > vX->x()) i = 1;
+	  if (vZ->z() > (*mat[i])[i]) i = 2;
 
 	  j = nxt[i];
       k = nxt[j];

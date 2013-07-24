@@ -46,7 +46,7 @@ void CArcBall::begin_drag(int x, int y)
 		end_drag();
 
 	m_quatDown = m_quatRotation;
-	m_vDown = get_ball_point_from_screen_coords(x, (int)m_Screen.y - y);
+	m_vDown = get_ball_point_from_screen_coords(x, (int)m_Screen.y() - y);
 
 	m_bDrag = true;
 }
@@ -55,7 +55,7 @@ void CArcBall::drag_to(int x, int y)
 {
 	if(m_bDrag)
 	{
-		vector3 v = get_ball_point_from_screen_coords(x, (int)m_Screen.y - y);
+		vector3 v = get_ball_point_from_screen_coords(x, (int)m_Screen.y() - y);
 		m_quatRotation = m_quatDown * get_quat_from_ball_points(m_vDown, v);
 	}
 }
@@ -70,8 +70,8 @@ void CArcBall::end_drag()
 vector3 CArcBall::get_ball_point_from_screen_coords(int nx, int ny)
 {
     // Scale to screen
-    float x   = ((float)nx - m_Offset.x - m_Screen.x/2.f) / (m_fRadius*m_Screen.x/2.f);
-    float y   = ((float)ny - m_Offset.y - m_Screen.y/2.f) / (m_fRadius*m_Screen.y/2.f);
+    float x   = ((float)nx - m_Offset.x() - m_Screen.x()/2.f) / (m_fRadius*m_Screen.x()/2.f);
+    float y   = ((float)ny - m_Offset.y() - m_Screen.y()/2.f) / (m_fRadius*m_Screen.y()/2.f);
 
     float z   = 0.0f;
     float mag = x*x + y*y;
@@ -95,7 +95,7 @@ CQuaternion CArcBall::get_quat_from_ball_points(vector3& vFrom, vector3& vTo)
     vector3 vPart;
     Vec3Cross(vPart, vTo, vFrom);
 
-	CQuaternion quat(vPart.x, vPart.y, vPart.z, fDot);
+	CQuaternion quat(vPart.x(), vPart.y(), vPart.z(), fDot);
 	quat.normalize();
     return quat;
 }
