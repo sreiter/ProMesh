@@ -343,7 +343,6 @@ class ToolExtrude : public ITool
 			bool createVolumes = true;
 			vector3 totalDir(0, 1., 0);
 			int numSteps = 1;
-			int newSubsetIndex = 0;
 
 			if(dlg){
 				createFaces = dlg->to_bool(0);

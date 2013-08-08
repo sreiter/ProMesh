@@ -1,6 +1,14 @@
 Recent changes:
 
 
+-------------------------------------------------------------------------------
+v 4.1.0
+Changes and additions:
+- Vertex-Marks are visible now
+- The names of the subsets in the "markSH" subset-handler in the written ugx file
+  were changed
+
+
 
 -------------------------------------------------------------------------------
 v 4.0.9

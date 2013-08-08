@@ -132,8 +132,8 @@ set_suffix(const char *suffix)
 //	UndoHistoryProvider implementation
 UndoHistoryProvider::
 UndoHistoryProvider() :
-	m_historyCounter(0),
-	m_maxUndoSteps(100)
+	m_maxUndoSteps(100),
+	m_historyCounter(0)
 {
 }
 

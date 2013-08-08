@@ -706,8 +706,9 @@ void LGScene::update_visuals(LGObject* pObj)
 	if(bDrawSelection)
 		numDisplayLists++;
 
-	bool bDrawCreases = (pObj->get_crease_handler().num<EdgeBase>(REM_CREASE) > 0);
-	if(bDrawCreases)
+	bool bDrawMarks = (pObj->get_crease_handler().num<VertexBase>(REM_FIXED) > 0)
+					  || (pObj->get_crease_handler().num<EdgeBase>(REM_CREASE) > 0);
+	if(bDrawMarks)
 		numDisplayLists++;
 
 	pObj->set_num_display_lists(numDisplayLists);
@@ -755,7 +756,7 @@ void LGScene::update_visuals(LGObject* pObj)
 	}
 
 //	if there are crease edges, we'll render them
-	if(bDrawCreases){
+	if(bDrawMarks){
 		assert(curDisplayListIndex < numDisplayLists);
 		render_creases(pObj, curDisplayListIndex);
 		++curDisplayListIndex;
@@ -797,6 +798,9 @@ void LGScene::render_creases(LGObject* pObj, int displayListIndex)
 	glDeleteLists(displayList, 1);
 	glNewList(displayList, GL_COMPILE);
 
+//	draw vertices
+	render_points(pObj, vector4(0.1f, 0.1f, 0.9f, 1.f),
+				 sh.begin<VertexBase>(REM_FIXED), sh.end<VertexBase>(REM_FIXED), aaPos);
 //	draw edges
 	render_edges(pObj, vector4(0.1f, 0.1f, 0.9f, 1.f),
 				 sh.begin<EdgeBase>(REM_CREASE), sh.end<EdgeBase>(REM_CREASE), aaPos);

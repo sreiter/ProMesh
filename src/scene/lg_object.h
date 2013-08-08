@@ -176,6 +176,9 @@ class LGObject : public ISceneObject, public ug::promesh::MeshObject
 	/**	Uses Grid::mark()*/
 		void init_transform();
 
+	///	loads a file from ugx without emitting signals
+		bool load_ugx(const char* filename);
+
 	protected:
 		typedef std::vector<GLuint>	DisplayListVec;
 		typedef std::vector<int>	DisplayModeVec;

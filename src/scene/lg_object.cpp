@@ -44,7 +44,7 @@ bool LoadLGObjectFromFile(LGObject* pObjOut, const char* filename)
 		return false;
 
 	bool bLoadSuccessful = false;
-	bool bSetDefaultSubsetColors = true;
+	bool bSetDefaultSubsetColors = false;
 	if(strcmp(pSuffix, ".ugx") == 0)
 	{
 	//	load from ugx
@@ -68,6 +68,9 @@ bool LoadLGObjectFromFile(LGObject* pObjOut, const char* filename)
 				if(ugxReader.num_subset_handlers(0) > 1)
 					ugxReader.subset_handler(pObjOut->get_crease_handler(), 1, 0);
 
+				if(ugxReader.num_selectors(0) > 0)
+					ugxReader.selector(pObjOut->get_selector(), 0, 0);
+
 				bLoadSuccessful = true;
 			}
 		}
@@ -79,17 +82,20 @@ bool LoadLGObjectFromFile(LGObject* pObjOut, const char* filename)
 
 	//	since there are no subsets in txt's we'll assign them manually
 		sh.assign_subset(grid.faces_begin(), grid.faces_end(), 0);
+		bSetDefaultSubsetColors = true;
 	}
 	else if(strcmp(pSuffix, ".obj") == 0)
 	{
 	//	load from obj
 		bLoadSuccessful = LoadGridFromOBJ(grid, filename, aPosition,
 											NULL, &sh);
+		bSetDefaultSubsetColors = true;
 	}
 	else if(strcmp(pSuffix, ".stl") == 0)
 	{
 	//	load from obj
 		bLoadSuccessful = LoadGridFromSTL(grid, filename, &sh, aPosition, aNormal);
+		bSetDefaultSubsetColors = true;
 	}
 	else if(strcmp(pSuffix, ".lgb") == 0)
 	{
@@ -98,7 +104,6 @@ bool LoadLGObjectFromFile(LGObject* pObjOut, const char* filename)
 		ppSH[0] = &pObjOut->get_subset_handler();
 		ppSH[1] = &pObjOut->get_crease_handler();
 		bLoadSuccessful = LoadGridFromLGB(grid, filename, ppSH, 2);
-		bSetDefaultSubsetColors = false;
 	}
 	else if(strcmp(pSuffix, ".ele") == 0)
 	{
@@ -129,16 +134,19 @@ bool LoadLGObjectFromFile(LGObject* pObjOut, const char* filename)
 		}
 
 		grid.detach_from_volumes(aVolAttrib);
+		bSetDefaultSubsetColors = true;
 	}
 	else if(strcmp(pSuffix, ".lgm") == 0)
 	{
 		bLoadSuccessful = ImportGridFromLGM(grid, filename,
 											aPosition, &sh);
+		bSetDefaultSubsetColors = true;
 	}
 	else if(strcmp(pSuffix, ".ng") == 0)
 	{
 		bLoadSuccessful = ImportGridFromNG(grid, filename,
 											aPosition, &sh);
+		bSetDefaultSubsetColors = true;
 	}
 	else{
 		bLoadSuccessful = LoadGridFromFile(grid, sh, filename, aPosition);
@@ -158,6 +166,10 @@ bool LoadLGObjectFromFile(LGObject* pObjOut, const char* filename)
 		if(pointPos == std::string::npos)
 			pointPos = name.size() - 1;
 		pObjOut->set_name(name.substr(slashPos + 1, pointPos - slashPos - 1).c_str());
+
+	//	initialize the subset-colors
+		if(bSetDefaultSubsetColors)
+			AssignSubsetColors(pObjOut->get_subset_handler());
 
 		pObjOut->geometry_changed();
 
@@ -227,6 +239,7 @@ bool SaveLGObjectToFile(LGObject* pObj, const char* filename)
 			ugxWriter.add_grid(pObj->get_grid(), "defGrid", aPosition);
 			ugxWriter.add_subset_handler(pObj->get_subset_handler(), "defSH", 0);
 			ugxWriter.add_subset_handler(pObj->get_crease_handler(), "markSH", 0);
+			ugxWriter.add_selector(pObj->get_selector(), "defSel", 0);
 			return ugxWriter.write_to_file(filename);
 		}
 		else if(strcmp(pSuffix, ".lgb") == 0)
@@ -283,21 +296,13 @@ void LGObject::init()
 	m_subsetHandler.set_default_subset_info(defSI);
 
 	m_undoHistory = UndoHistoryProvider::inst().create_undo_history();
-	m_undoHistory.set_suffix(".lgb");
+	m_undoHistory.set_suffix(".ugx");
 
 	m_transformType = TT_NONE;
 }
 
 void LGObject::visuals_changed()
 {
-//	add an entry to the history
-//	we have some situations in which we don't want to store undos.
-//	especially if we're currently transforming.
-	if(m_transformType == TT_NONE){
-		const char* filename = m_undoHistory.create_history_entry();
-		SaveLGObjectToFile(this, filename);
-	}
-
 //	set colors of new subsets
 	for(int i = m_numInitializedSubsets; i < m_subsetHandler.num_subsets(); ++i)
 	{
@@ -312,6 +317,14 @@ void LGObject::visuals_changed()
 		}
 	}
 	m_numInitializedSubsets = m_subsetHandler.num_subsets();
+
+//	add an entry to the history
+//	we have some situations in which we don't want to store undos.
+//	especially if we're currently transforming.
+	if(m_transformType == TT_NONE){
+		const char* filename = m_undoHistory.create_history_entry();
+		SaveLGObjectToFile(this, filename);
+	}
 
 	ISceneObject::visuals_changed();
 }
@@ -364,6 +377,39 @@ size_t LGObject::num_indicator_points()
 	return m_indicatorPoints.size();
 }
 
+bool LGObject::load_ugx(const char* filename)
+{
+	m_subsetHandler.clear();
+	m_creaseHandler.clear();
+	m_selector.clear();
+	m_grid.clear_geometry();
+
+	GridReaderUGX ugxReader;
+	if(!ugxReader.parse_file(filename)){
+		UG_LOG("ERROR in LGObject::load_ugx: File not found: " << filename << std::endl);
+		return false;
+	}
+	else{
+		if(ugxReader.num_grids() < 1){
+			UG_LOG("ERROR in LGObject::load_ugx: File contains no grid.\n");
+			return false;
+		}
+		else{
+			ugxReader.grid(m_grid, 0, aPosition);
+
+			if(ugxReader.num_subset_handlers(0) > 0)
+				ugxReader.subset_handler(m_subsetHandler, 0, 0);
+
+			if(ugxReader.num_subset_handlers(0) > 1)
+				ugxReader.subset_handler(m_creaseHandler, 1, 0);
+
+			if(ugxReader.num_selectors(0) > 0)
+				ugxReader.selector(m_selector, 0, 0);
+			return true;
+		}
+	}
+	return false;
+}
 
 bool LGObject::undo()
 {
@@ -371,14 +417,12 @@ bool LGObject::undo()
 		return false;
 
 	const char* filename = m_undoHistory.undo();
-	m_subsetHandler.clear();
-	m_creaseHandler.clear();
-	m_grid.clear_geometry();
 
-	ISubsetHandler* ppSH[2];
-	ppSH[0] = &get_subset_handler();
-	ppSH[1] = &get_crease_handler();
-	bool bLoadSuccessful = LoadGridFromLGB(m_grid, filename, ppSH, 2);
+//	ISubsetHandler* ppSH[2];
+//	ppSH[0] = &get_subset_handler();
+//	ppSH[1] = &get_crease_handler();
+//	bool bLoadSuccessful = LoadGridFromLGB(m_grid, filename, ppSH, 2);
+	bool bLoadSuccessful = load_ugx(filename);
 
 	CalculateFaceNormals(m_grid, m_grid.faces_begin(), m_grid.faces_end(), aPosition, aNormal);
 	update_bounding_shapes();
@@ -395,14 +439,12 @@ bool LGObject::redo()
 		return false;
 
 	const char* filename = m_undoHistory.redo();
-	m_subsetHandler.clear();
-	m_creaseHandler.clear();
-	m_grid.clear_geometry();
 
-	ISubsetHandler* ppSH[2];
-	ppSH[0] = &get_subset_handler();
-	ppSH[1] = &get_crease_handler();
-	bool bLoadSuccessful = LoadGridFromLGB(m_grid, filename, ppSH, 2);
+//	ISubsetHandler* ppSH[2];
+//	ppSH[0] = &get_subset_handler();
+//	ppSH[1] = &get_crease_handler();
+//	bool bLoadSuccessful = LoadGridFromLGB(m_grid, filename, ppSH, 2);
+	bool bLoadSuccessful = load_ugx(filename);
 
 	CalculateFaceNormals(m_grid, m_grid.faces_begin(), m_grid.faces_end(), aPosition, aNormal);
 	update_bounding_shapes();

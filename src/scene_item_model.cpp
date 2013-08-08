@@ -59,10 +59,10 @@ void SceneItemModel::refreshSubsets()
 		SceneItemInfo* psii = m_itemInfos[i];
 		ISceneObject* obj = psii->obj;
 
-		if(psii->children.size() > obj->num_subsets()){
+		if((int)psii->children.size() > obj->num_subsets()){
 		//	notify that subsets are removed from the list
 			beginRemoveRows(objModelIndex, obj->num_subsets(),
-							psii->children.size()-1);
+							(int)psii->children.size()-1);
 
 		//	call update to adjust children
 			updateItemInfo(psii);
@@ -70,7 +70,7 @@ void SceneItemModel::refreshSubsets()
 		//	removal done. inform the model.
 			endRemoveRows();
 		}
-		else if(psii->children.size() < obj->num_subsets()){
+		else if((int)psii->children.size() < obj->num_subsets()){
 		//	notify base class
 			beginInsertRows(objModelIndex, psii->children.size(),
 							obj->num_subsets()-1);
@@ -439,7 +439,7 @@ void SceneItemModel::updateItemInfo(SceneItemInfo* itemInfo)
 		case SIT_OBJECT:
 		{
 		//	clear children
-			if(itemInfo->obj->num_subsets() < itemInfo->children.size())
+			if(itemInfo->obj->num_subsets() < (int)itemInfo->children.size())
 			{
 				for(size_t i = itemInfo->obj->num_subsets();
 					i < itemInfo->children.size(); ++i){
@@ -449,7 +449,7 @@ void SceneItemModel::updateItemInfo(SceneItemInfo* itemInfo)
 			}
 
 		//	add children
-			for(size_t i = itemInfo->children.size();
+			for(int i = (int)itemInfo->children.size();
 				i < itemInfo->obj->num_subsets(); ++i)
 			{
 				SceneItemInfo* newInfo = new SceneItemInfo;
