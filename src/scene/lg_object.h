@@ -179,6 +179,9 @@ class LGObject : public ISceneObject, public ug::promesh::MeshObject
 	///	loads a file from ugx without emitting signals
 		bool load_ugx(const char* filename);
 
+	///	creates an undo-point
+		void create_undo_point();
+
 	protected:
 		typedef std::vector<GLuint>	DisplayListVec;
 		typedef std::vector<int>	DisplayModeVec;
@@ -205,6 +208,7 @@ class LGObject : public ISceneObject, public ug::promesh::MeshObject
 		UndoHistory			m_undoHistory;
 
 		int					m_numInitializedSubsets;
+		bool				m_selectionChangedSinceLastUndoPoint;
 
 	private:
 	//	transform

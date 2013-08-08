@@ -277,6 +277,8 @@ LGObject::~LGObject()
 
 void LGObject::init()
 {
+	m_selectionChangedSinceLastUndoPoint = false;
+
 	m_shFacesForVolRendering.set_supported_elements(SHE_FACE);
 	m_shFacesForVolRendering.assign_grid(m_grid);
 
@@ -322,8 +324,7 @@ void LGObject::visuals_changed()
 //	we have some situations in which we don't want to store undos.
 //	especially if we're currently transforming.
 	if(m_transformType == TT_NONE){
-		const char* filename = m_undoHistory.create_history_entry();
-		SaveLGObjectToFile(this, filename);
+		create_undo_point();
 	}
 
 	ISceneObject::visuals_changed();
@@ -336,6 +337,7 @@ void LGObject::marks_changed()
 
 void LGObject::selection_changed()
 {
+	m_selectionChangedSinceLastUndoPoint = true;
 	ISceneObject::selection_changed();
 }
 
@@ -411,8 +413,18 @@ bool LGObject::load_ugx(const char* filename)
 	return false;
 }
 
+void LGObject::create_undo_point()
+{
+	m_selectionChangedSinceLastUndoPoint = false;
+	const char* filename = m_undoHistory.create_history_entry();
+	SaveLGObjectToFile(this, filename);
+}
+
 bool LGObject::undo()
 {
+	if(m_selectionChangedSinceLastUndoPoint)
+		create_undo_point();
+
 	if(!m_undoHistory.can_undo())
 		return false;
 
@@ -437,6 +449,8 @@ bool LGObject::redo()
 {
 	if(!m_undoHistory.can_redo())
 		return false;
+
+	m_selectionChangedSinceLastUndoPoint = false;
 
 	const char* filename = m_undoHistory.redo();
 

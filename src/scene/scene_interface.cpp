@@ -18,7 +18,8 @@ void ISceneObject::visuals_changed()
 void ISceneObject::selection_changed()
 {
 	emit sig_selection_changed();
-	visuals_changed();
+	//visuals_changed();	//this triggers an undo point
+	emit sig_visuals_changed();	//call this only if visuals_changed() won't be called
 }
 
 void ISceneObject::properties_changed()
