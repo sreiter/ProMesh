@@ -12,6 +12,9 @@ Changes and additions:
 - The names of the subsets in the "markSH" subset-handler in the written ugx file
   were changed
 
+Fixes:
+- CoordinateTransform->Scale now scales around the selections center again.
+
 
 
 -------------------------------------------------------------------------------
