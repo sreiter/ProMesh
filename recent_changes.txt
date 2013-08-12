@@ -2,6 +2,18 @@ Recent changes:
 
 
 -------------------------------------------------------------------------------
+v 4.1.1
+Changes and additions:
+- Marks can no longer be accidentially applied to faces.
+- ugx now also stores subset-visibility (important for undo)
+- scene-inspector-rclick-show/hide-all now works in reasonable speed.
+- added a toggle-all-subset-visibilities to scene-inspector-rclick-menu
+
+Fixes:
+
+
+
+-------------------------------------------------------------------------------
 v 4.1.0
 Changes and additions:
 - Vertex-Marks are visible now

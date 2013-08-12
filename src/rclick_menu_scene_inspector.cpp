@@ -27,6 +27,10 @@ RClickMenu_SceneInspector(SceneInspector * sceneInspector) :
 	connect(m_actHideAllSubsets, SIGNAL(triggered()), this, SLOT(hideAllSubsets()));
 	m_menu->addAction(m_actHideAllSubsets);
 
+	m_actToggleAllSubsetVisibilities = new QAction(tr("Toggle All Subset Visibilities"), this);
+	connect(m_actToggleAllSubsetVisibilities, SIGNAL(triggered()), this, SLOT(toggleAllSubsetVisibilities()));
+	m_menu->addAction(m_actToggleAllSubsetVisibilities);
+
 	m_actPrintSubsetContents = new QAction(tr("Print Subset Contents"), this);
 	connect(m_actPrintSubsetContents, SIGNAL(triggered()), this, SLOT(printSubsetContents()));
 	m_menu->addAction(m_actPrintSubsetContents);
@@ -104,11 +108,10 @@ void RClickMenu_SceneInspector::rename()
 
 void RClickMenu_SceneInspector::
 showAllSubsets(){
-	int objInd = m_sceneInspector->getActiveObjectIndex();
 	ISceneObject* obj = m_sceneInspector->getActiveObject();
 	if(obj){
 		for(int i = 0; i < obj->num_subsets(); ++i){
-			m_sceneInspector->showSubset(objInd, i);
+			obj->set_subset_visibility(i, true);
 		}
 		obj->visuals_changed();
 		m_sceneInspector->refreshView();
@@ -127,11 +130,22 @@ printSubsetContents()
 
 void RClickMenu_SceneInspector::
 hideAllSubsets(){
-	int objInd = m_sceneInspector->getActiveObjectIndex();
 	ISceneObject* obj = m_sceneInspector->getActiveObject();
 	if(obj){
 		for(int i = 0; i < obj->num_subsets(); ++i){
-			m_sceneInspector->hideSubset(objInd, i);
+			obj->set_subset_visibility(i, false);
+		}
+		obj->visuals_changed();
+		m_sceneInspector->refreshView();
+	}
+}
+
+void RClickMenu_SceneInspector::
+toggleAllSubsetVisibilities(){
+	ISceneObject* obj = m_sceneInspector->getActiveObject();
+	if(obj){
+		for(int i = 0; i < obj->num_subsets(); ++i){
+			obj->set_subset_visibility(i, !obj->subset_is_visible(i));
 		}
 		obj->visuals_changed();
 		m_sceneInspector->refreshView();

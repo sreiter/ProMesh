@@ -21,6 +21,7 @@ class RClickMenu_SceneInspector : public QWidget
 		void rename();
 		void showAllSubsets();
 		void hideAllSubsets();
+		void toggleAllSubsetVisibilities();
 		void printSubsetContents();
 
 	private:
@@ -31,6 +32,7 @@ class RClickMenu_SceneInspector : public QWidget
 		QAction*	m_actShowAllSubsets;
 		QAction*	m_actHideAllSubsets;
 		QAction*	m_actPrintSubsetContents;
+		QAction*	m_actToggleAllSubsetVisibilities;
 		//QAction*	m_actHideOtherSubsets;
 };
 
