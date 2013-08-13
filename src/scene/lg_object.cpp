@@ -171,6 +171,8 @@ bool LoadLGObjectFromFile(LGObject* pObjOut, const char* filename)
 		if(bSetDefaultSubsetColors)
 			AssignSubsetColors(pObjOut->get_subset_handler());
 
+		pObjOut->init_subsets();
+
 		pObjOut->geometry_changed();
 
 	//	assign all faces that are volume-boundaries to a subset.
@@ -575,8 +577,10 @@ bool LGObject::subset_is_initialized(int index) const
 
 void LGObject::init_subset(int index)
 {
-	enable_subset_state(index, LGSS_INITIALIZED);
-	enable_subset_state(index, LGSS_VISIBLE);
+	if(!subset_is_initialized(index)){
+		enable_subset_state(index, LGSS_INITIALIZED);
+		enable_subset_state(index, LGSS_VISIBLE);
+	}
 }
 
 void LGObject::init_subsets()
