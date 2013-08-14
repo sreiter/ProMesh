@@ -406,6 +406,34 @@ class ToolSeparateDegeneratedBoundaryFaceSubsets : public ITool
 		}
 };
 
+class ToolCopySubsetIndicesToSides : public ITool
+{
+	public:
+		void execute(LGObject* obj, QWidget* widget){
+			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
+			bool selectionOnly = true;
+			bool toUnassignedOnly = false;
+			if(dlg){
+				selectionOnly = dlg->to_bool(0);
+				toUnassignedOnly = dlg->to_bool(1);
+			}
+			promesh::CopySubsetIndicesToSides(obj, selectionOnly, toUnassignedOnly);
+			obj->geometry_changed();
+		}
+
+		const char* get_name()		{return "Copy Subset Indices To Sides";}
+		const char* get_tooltip()	{return "Copies subset indices of selected elements to sides of those elements.";}
+		const char* get_group()		{return "Subsets";}
+
+		ToolWidget* get_dialog(QWidget* parent){
+			ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
+											IDB_APPLY | IDB_OK | IDB_CLOSE);
+			dlg->addCheckBox(tr("selection only"), true);
+			dlg->addCheckBox(tr("copy to unassigned sides only"), false);
+			return dlg;
+		}
+};
+
 class ToolAssignSubsetsByElementType : public ITool
 {
 	public:
@@ -440,6 +468,7 @@ void RegisterSubsetTools(ToolManager* toolMgr)
 	toolMgr->register_tool(new ToolSeparateFaceSubsetsByNormal);
 	toolMgr->register_tool(new ToolSeparateIrregularManifoldSubsets);
 	toolMgr->register_tool(new ToolSeparateDegeneratedBoundaryFaceSubsets);
+	toolMgr->register_tool(new ToolCopySubsetIndicesToSides);
 	toolMgr->register_tool(new ToolAssignSubsetColors);
 	toolMgr->register_tool(new ToolAssignSubsetsByElementType);
 	toolMgr->register_tool(new ToolEraseEmptySubsets);

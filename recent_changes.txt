@@ -8,6 +8,7 @@ Changes and additions:
 - ugx now also stores subset-visibility (important for undo)
 - scene-inspector-rclick-show/hide-all now works in reasonable speed.
 - added a toggle-all-subset-visibilities to scene-inspector-rclick-menu
+- added Subsets->CopySubsetIndicesToSides
 
 Fixes:
 
