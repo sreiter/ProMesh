@@ -2,6 +2,19 @@ Recent changes:
 
 
 -------------------------------------------------------------------------------
+v 4.1.2
+Changes and additions:
+- Added Remeshing-Orientation-FixFaceSubsetOrientations which fixes face orientation
+  for each subset separately.
+
+Fixes:
+- Subsets-AssignSubset(-1) now ignores the specified subset name (avoids unnecessary
+  error message)
+- Fixed bug in ExpandLayers dialog: Large subset-indices can now be entered.
+
+
+
+-------------------------------------------------------------------------------
 v 4.1.1
 Changes and additions:
 - Marks can no longer be accidentially applied to faces.

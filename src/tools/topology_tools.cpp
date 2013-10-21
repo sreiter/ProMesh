@@ -428,7 +428,22 @@ class ToolFixFaceOrientation : public ITool
 		}
 
 		const char* get_name()		{return "Fix Face Orientation";}
-		const char* get_tooltip()	{return "Tries to change orientation of selected faces so that all neighbouring faces point into the same direction.";}
+		const char* get_tooltip()	{return "Tries to change orientation of selected faces so that all neighbouring faces point into the same direction. Only works correctly for manifold selections.";}
+		const char* get_group()		{return "Remeshing | Orientation";}
+};
+
+class ToolFixFaceSubsetOrientations : public ITool
+{
+	public:
+		void execute(LGObject* obj, QWidget*){
+			promesh::FixFaceSubsetOrientations(obj);
+
+		//	done
+			obj->geometry_changed();
+		}
+
+		const char* get_name()		{return "Fix Face Subset Orientations";}
+		const char* get_tooltip()	{return "Iterates over all subset and tries to fix face orientation for each. Only works correctly for manifold subsets.";}
 		const char* get_group()		{return "Remeshing | Orientation";}
 };
 
@@ -479,6 +494,7 @@ void RegisterTopologyTools(ToolManager* toolMgr)
 	toolMgr->register_tool(new ToolAdjustEdgeOrientation);
 	toolMgr->register_tool(new ToolInvertFaceOrientation);
 	toolMgr->register_tool(new ToolFixFaceOrientation);
+	toolMgr->register_tool(new ToolFixFaceSubsetOrientations);
 	toolMgr->register_tool(new ToolFixVolumeOrientation);
 	toolMgr->register_tool(new ToolProjectVerticesToCloseEdges);
 	toolMgr->register_tool(new ToolProjectVerticesToCloseFaces);

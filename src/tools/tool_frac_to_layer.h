@@ -53,6 +53,9 @@ class FracToLayerWidget : public QWidget
 			connect(btnAdd, SIGNAL(clicked()), this, SLOT(addClicked()));
 
 			m_qSubsetIndex = new QSpinBox(this);
+			m_qSubsetIndex->setRange(0, 1e+9);
+			m_qSubsetIndex->setValue(0);
+			m_qSubsetIndex->setSingleStep(1);
 			hAddLayout->addWidget(btnAdd);
 			hAddLayout->addWidget(m_qSubsetIndex);
 
@@ -81,6 +84,7 @@ class FracToLayerWidget : public QWidget
 			m_qNewSubset = new QSpinBox(this);
 			m_qNewSubset->setValue(0);
 			m_qNewSubset->setRange(0, 1e+9);
+			m_qNewSubset->setSingleStep(1);
 			formLayout->addRow(tr("new subset:"), m_qNewSubset);
 			connect(m_qNewSubset, SIGNAL(valueChanged(int)), this, SLOT(newSubsetIndexChanged(int)));
 

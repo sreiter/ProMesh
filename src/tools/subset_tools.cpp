@@ -24,7 +24,7 @@ class ToolAssignSubset : public ITool
 			}
 
 			promesh::AssignSubset(obj, newIndex);
-			if(!subsetName.isEmpty())
+			if((newIndex >= 0) && (!subsetName.isEmpty()))
 				promesh::SetSubsetName(obj, newIndex, subsetName.toLocal8Bit().constData());
 
 			dlg->setString(0, QString(""));
