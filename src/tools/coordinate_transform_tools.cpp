@@ -362,6 +362,38 @@ public:
 };
 
 
+class ToolTangentialSmooth : public ITool
+{
+public:
+	void execute(LGObject* obj, QWidget* widget){
+	ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
+		double alpha = 0.25;
+		int numIterations = 10;
+
+		if(dlg){
+			alpha = dlg->to_double(0);
+			numIterations = dlg->to_int(1);
+		}
+
+		promesh::TangentialSmooth(obj, alpha, numIterations);
+
+		obj->geometry_changed();
+	}
+
+	const char* get_name()		{return "Tangential Smooth";}
+	const char* get_tooltip()	{return "Smoothes vertices on a manifold.";}
+	const char* get_group()		{return "Coordinate Transform";}
+
+	ToolWidget* get_dialog(QWidget* parent){
+		ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
+								IDB_APPLY | IDB_OK | IDB_CLOSE);
+		dlg->addSpinBox(tr("alpha:"), 0, 1., 0.25, 0.001, 5);
+		dlg->addSpinBox(tr("iterations:"), 1, 10000000, 10, 1, 0);
+		return dlg;
+	}
+};
+
+
 class ToolProjectToPlane: public ITool
 {
 	public:
@@ -582,6 +614,7 @@ void RegisterCoordinateTransformTools(ToolManager* toolMgr)
 	toolMgr->register_tool(new ToolTransform);
 	toolMgr->register_tool(new ToolConeTransform);
 	toolMgr->register_tool(new ToolLaplacianSmooth);
+	toolMgr->register_tool(new ToolTangentialSmooth);
 	toolMgr->register_tool(new ToolProjectToPlane);
 	toolMgr->register_tool(new ToolProjectToLimitPLoop);
 	toolMgr->register_tool(new ToolProjectToLimitSmoothBoundary);

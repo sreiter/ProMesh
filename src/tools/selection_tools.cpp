@@ -220,6 +220,34 @@ class ToolSelectLongEdges : public ITool
 		}
 };
 
+class ToolSelectCreaseEdges : public ITool
+{
+	public:
+		void execute(LGObject* obj, QWidget* widget){
+			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
+
+			number minAngle = 1;
+			if(dlg){
+				minAngle = dlg->to_double(0);
+			}
+
+			promesh::SelectCreaseEdges(obj, minAngle);
+
+			obj->selection_changed();
+		}
+
+		const char* get_name()		{return "Crease Edges";}
+		const char* get_tooltip()	{return "Selects edges that at which triangles meet in a given angle.";}
+		const char* get_group()		{return "Selection | Edges";}
+
+		ToolWidget* get_dialog(QWidget* parent){
+			ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
+											IDB_APPLY | IDB_OK | IDB_CLOSE);
+			dlg->addSpinBox(tr("minAngle:"), 0, 360, 1, 0.1, 9);
+			return dlg;
+		}
+};
+
 class ToolSelectDegenerateFaces : public ITool
 {
 	public:
@@ -1147,6 +1175,7 @@ void RegisterSelectionTools(ToolManager* toolMgr)
 	toolMgr->register_tool(new ToolSelectSmoothEdgePath);
 	toolMgr->register_tool(new ToolSelectShortEdges);
 	toolMgr->register_tool(new ToolSelectLongEdges);
+	toolMgr->register_tool(new ToolSelectCreaseEdges);
 	toolMgr->register_tool(new ToolSelectEdgeByIndex);
 	toolMgr->register_tool(new ToolSelectEdgeByCoordinate);
 

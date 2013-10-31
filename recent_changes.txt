@@ -2,6 +2,17 @@ Recent changes:
 
 
 -------------------------------------------------------------------------------
+v 4.1.3
+Changes and additions:
+- Added CoordinateTransform-TangentialSmooth, which prevents manifolds from shrinking
+  during smoothing.
+- Added Selection-SelectCreaseEdges
+
+Fixes:
+
+
+
+-------------------------------------------------------------------------------
 v 4.1.2
 Changes and additions:
 - Added Remeshing-Orientation-FixFaceSubsetOrientations which fixes face orientation
