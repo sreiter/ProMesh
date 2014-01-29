@@ -38,7 +38,7 @@ class ToolWidget : public QFrame
 
 	/**	retrieve value with to_int.*/
 		void addSlider(const QString& caption,
-						int min, int max, int value);
+						double min, double max, double value);
 
 	/**	retrieve value with to_double.*/
 		void addSpinBox(const QString& caption,

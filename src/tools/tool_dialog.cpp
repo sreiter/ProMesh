@@ -9,6 +9,7 @@
 #include "tool_manager.h"
 #include "app.h"
 #include "dialog_components/matrix_widget.h"
+#include "../widgets/double_slider.h"
 
 using namespace std;
 
@@ -94,9 +95,9 @@ void ToolWidget::addWidget(const QString& caption, QWidget* widget)
 }
 
 void ToolWidget::addSlider(const QString& caption,
-							int min, int max, int value)
+							double min, double max, double value)
 {
-	QSlider* slider = new QSlider(Qt::Horizontal, this);
+	DoubleSlider* slider = new DoubleSlider(this);
 	slider->setRange(min, max);
 	slider->setValue(value);
 	current_form_layout()->addRow(caption, slider);
@@ -228,7 +229,7 @@ TNumber ToolWidget::to_number(int paramIndex, bool* bOKOut)
 
 	switch(we.m_widgetType){
 	case WT_SLIDER:{
-			QSlider* slider = qobject_cast<QSlider*>(we.m_widget);
+			DoubleSlider* slider = dynamic_cast<DoubleSlider*>(we.m_widget);
 			return (TNumber)slider->value();
 		}break;
 	case WT_SPIN_BOX:{

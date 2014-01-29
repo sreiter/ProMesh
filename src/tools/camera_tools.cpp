@@ -6,6 +6,30 @@
 #include "standard_tools.h"
 
 
+//class ToolSliderTest : public ITool
+//{
+//	public:
+//		void execute(LGObject* obj, QWidget* w){
+//			ToolWidget* dlg = dynamic_cast<ToolWidget*>(w);
+//			if(dlg){
+//				UG_LOG("value: " << dlg->to_double(0) << std::endl);
+//			}
+//		}
+//
+//		const char* get_name()	{return "Slider Test";}
+//		const char* get_tooltip()	{return "Tests the DoubleSlider.";}
+//		const char* get_group()		{return "Camera";}
+//
+//		ToolWidget* get_dialog(QWidget* parent)
+//		{
+//			ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
+//									IDB_APPLY | IDB_OK | IDB_CLOSE);
+//
+//			dlg->addSlider(tr("x:"),-11.11, 13.13, -1.2345);
+//			return dlg;
+//		}
+//};
+
 class ToolCenterObject : public ITool
 {
 	public:
