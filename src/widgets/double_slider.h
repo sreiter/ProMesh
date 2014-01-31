@@ -26,7 +26,6 @@ class DoubleSlider : public QWidget
 		void setRange(double min, double max);
 		void setResolution(int resolution);
 
-		void setValue(double val);
 		double value() const;
 
 		void setSingleStep(double singleStep);
@@ -37,6 +36,9 @@ class DoubleSlider : public QWidget
 
 	signals:
 		void valueChanged(double value);
+
+	public slots:
+		void setValue(double val);
 
 	protected slots:
 		void sliderValueChanged(int value);
