@@ -149,8 +149,8 @@ class ToolHideSelectedElements : public ITool
 			using namespace ug;
 			LGScene* scene = app::getActiveScene();
 			ug::Selector& sel = obj->get_selector();
-			scene->hide_elements(obj, sel.begin<VertexBase>(), sel.end<VertexBase>());
-			scene->hide_elements(obj, sel.begin<EdgeBase>(), sel.end<EdgeBase>());
+			scene->hide_elements(obj, sel.begin<Vertex>(), sel.end<Vertex>());
+			scene->hide_elements(obj, sel.begin<Edge>(), sel.end<Edge>());
 			scene->hide_elements(obj, sel.begin<Face>(), sel.end<Face>());
 			scene->hide_elements(obj, sel.begin<Volume>(), sel.end<Volume>());
 			obj->visuals_changed();

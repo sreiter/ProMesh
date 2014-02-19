@@ -73,12 +73,12 @@ void CalculateBoundingSphere(Sphere& sphereOut, Volume* v,
 
 ////////////////////////////////////////////////////////////////////////
 //	ClipEdge
-bool ClipEdge(EdgeBase* e, Plane& clipPlane,
+bool ClipEdge(Edge* e, Plane& clipPlane,
 			  Grid::VertexAttachmentAccessor<APosition>& aaPos)
 {
 //	check whether one of the vertices lies outside of the plane.
 //	if so, the whole edge will be clipped.
-	EdgeBase::ConstVertexArray vrts = e->vertices();
+	Edge::ConstVertexArray vrts = e->vertices();
 	if((PlanePointTest(clipPlane, aaPos[vrts[0]]) == RPI_OUTSIDE)
 		|| (PlanePointTest(clipPlane, aaPos[vrts[1]]) == RPI_OUTSIDE))
 	{

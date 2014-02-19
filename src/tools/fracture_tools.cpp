@@ -117,8 +117,8 @@ public:
 		Grid::VertexAttachmentAccessor<ANumber> aaDist(grid, aDist);
 
 	//	deselect all vertices, edges and volumes
-		sel.deselect_all<VertexBase>();
-		sel.deselect_all<EdgeBase>();
+		sel.deselect_all<Vertex>();
+		sel.deselect_all<Edge>();
 		sel.deselect_all<Volume>();
 
 	//	select all associated vertices of selected faces
@@ -131,16 +131,16 @@ public:
 
 	//	push all selected vertices to a queue. Also assign a distance of 0.
 	//	all vertices which have ever been on the queue have to be marked.
-		queue<VertexBase*>	queVrts;
-		for(VertexBaseIterator iter = sel.begin<VertexBase>();
-			iter != sel.end<VertexBase>(); ++iter)
+		queue<Vertex*>	queVrts;
+		for(VertexIterator iter = sel.begin<Vertex>();
+			iter != sel.end<Vertex>(); ++iter)
 		{
 			aaDist[*iter] = 0;
 			queVrts.push(*iter);
 		}
 
 	//	we'll gather associated edges in this array
-		vector<EdgeBase*>	edges;
+		vector<Edge*>	edges;
 
 	//	The following states are used to classify the objects.
 	//	UNKNOWN corresponds to unselected. is select is called without a
@@ -156,7 +156,7 @@ public:
 	//	the new layer.
 		while(!queVrts.empty()){
 		//	pop a vertex from the queue
-			VertexBase* vrt = queVrts.front();
+			Vertex* vrt = queVrts.front();
 			queVrts.pop();
 
 		//	collect associated edges.
@@ -168,14 +168,14 @@ public:
 		//		- partially to the new subset,
 		//		- not to the new subset at all.
 			for(size_t i_edge = 0; i_edge < edges.size(); ++i_edge){
-				EdgeBase* e = edges[i_edge];
+				Edge* e = edges[i_edge];
 
 			//	if the edge has already been processed, then do not process it again.
 				if(sel.is_selected(e))
 					continue;
 
 			//	e = [vrt, vcon]
-				VertexBase* vcon = GetConnectedVertex(e, vrt);
+				Vertex* vcon = GetConnectedVertex(e, vrt);
 
 			//	if the distance of the associated vertex to the selected faces
 			//	is not yet known, determine it now.
@@ -238,7 +238,7 @@ static bool CollectLines(Grid& grid, const SubsetHandler& shFace, EdgeSelector& 
 
 //	iterate through all edges in the grid and identify lines by comparing the subset-membership
 //	of the associated faces
-	for(EdgeBaseIterator EIter = grid.edges_begin(); EIter != grid.edges_end(); ++EIter)
+	for(EdgeIterator EIter = grid.edges_begin(); EIter != grid.edges_end(); ++EIter)
 	{
 		CollectFaces(vFaces, grid, *EIter);
 
@@ -335,12 +335,12 @@ public:
 	//	now find all edges which are adjacent to marked faces of
 	//	different subsets and which are not assigned to a subset.
 		vector<Face*> faces;
-		vector<EdgeBase*> intersectionEdges;
+		vector<Edge*> intersectionEdges;
 
-		for(EdgeBaseIterator iter = grid.edges_begin();
+		for(EdgeIterator iter = grid.edges_begin();
 			iter != grid.edges_end(); ++iter)
 		{
-			EdgeBase* e = *iter;
+			Edge* e = *iter;
 			if(sh.get_subset_index(e) != -1)
 				continue;
 
@@ -396,7 +396,7 @@ public:
 				//	search for the first edge in intersections, which is connected
 				//	with the frac
 					for(size_t k = 0; k < intersectionEdges.size(); ++k){
-						EdgeBase* e = intersectionEdges[k];
+						Edge* e = intersectionEdges[k];
 						CollectFaces(faces, grid, e);
 						bool gotFrac = false;
 						bool gotOther = false;

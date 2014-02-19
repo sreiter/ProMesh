@@ -235,23 +235,23 @@ public:
 		Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
 		Selector& sel = obj->get_selector();
 
-		GeometricObjectCollection goc;
+		GridObjectCollection goc;
 		vector3 center(0, 0, 0);
 		if(applyToSelection){
-			goc = sel.get_geometric_objects();
+			goc = sel.get_grid_objects();
 			if(local)
-				center = CalculateCenter(goc.begin<VertexBase>(),
-										goc.end<VertexBase>(),
+				center = CalculateCenter(goc.begin<Vertex>(),
+										goc.end<Vertex>(),
 										aaPos);
 		}
 		else{
-			goc = grid.get_geometric_objects();
+			goc = grid.get_grid_objects();
 			if(local)
 				center = obj->pivot();
 		}
 
-		for(ug::VertexBaseIterator iter = goc.begin<VertexBase>();
-			iter != goc.end<VertexBase>(); ++iter)
+		for(ug::VertexIterator iter = goc.begin<Vertex>();
+			iter != goc.end<Vertex>(); ++iter)
 		{
 			ug::vector3 v = aaPos[*iter];
 			VecSubtract(v, v, center);
@@ -573,7 +573,7 @@ public:
 							max.x(), max.y()))
 			{
 			//	iterate over all nodes and adjust height.
-				for(Grid::traits<VertexBase>::iterator iter = g.vertices_begin();
+				for(Grid::traits<Vertex>::iterator iter = g.vertices_begin();
 					iter != g.vertices_end(); ++iter)
 				{
 					vector3& v = aaPos[*iter];

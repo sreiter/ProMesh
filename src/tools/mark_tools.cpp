@@ -37,8 +37,8 @@ class ToolMarkCreaseEdges : public ITool
 
 			ug::MarkCreaseEdges(obj->get_grid(),
 							obj->get_crease_handler(),
-							obj->get_grid().begin<EdgeBase>(),
-							obj->get_grid().end<EdgeBase>(),
+							obj->get_grid().begin<Edge>(),
+							obj->get_grid().end<Edge>(),
 							REM_CREASE, minAngle);
 			ug::MarkFixedCreaseVertices(obj->get_grid(),
 									obj->get_crease_handler(),
@@ -64,12 +64,12 @@ class ToolMarkSelection : public ITool
 	public:
 		void execute(LGObject* obj, QWidget*){
 			obj->get_crease_handler().assign_subset(
-				obj->get_selector().begin<VertexBase>(),
-				obj->get_selector().end<VertexBase>(),
+				obj->get_selector().begin<Vertex>(),
+				obj->get_selector().end<Vertex>(),
 				ug::REM_FIXED);
 			obj->get_crease_handler().assign_subset(
-				obj->get_selector().begin<EdgeBase>(),
-				obj->get_selector().end<EdgeBase>(),
+				obj->get_selector().begin<Edge>(),
+				obj->get_selector().end<Edge>(),
 				ug::REM_CREASE);
 			obj->marks_changed();
 		}
@@ -85,13 +85,13 @@ class ToolUnmarkSelection : public ITool
 		void execute(LGObject* obj, QWidget*)
 		{
 			obj->get_crease_handler().assign_subset(
-				obj->get_selector().begin<VertexBase>(),
-				obj->get_selector().end<VertexBase>(),
+				obj->get_selector().begin<Vertex>(),
+				obj->get_selector().end<Vertex>(),
 				ug::REM_NONE);
 
 			obj->get_crease_handler().assign_subset(
-				obj->get_selector().begin<EdgeBase>(),
-				obj->get_selector().end<EdgeBase>(),
+				obj->get_selector().begin<Edge>(),
+				obj->get_selector().end<Edge>(),
 				ug::REM_NONE);
 
 			obj->marks_changed();

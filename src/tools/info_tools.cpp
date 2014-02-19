@@ -51,8 +51,8 @@ class ToolPrintGeometryInfo : public ITool
 			UG_LOG("  bounding box:\t" << vMin << ", " << vMax << endl);
 			UG_LOG("  dimensions:\t" << vDim << endl);
 
-			UG_LOG("  vertices:\t" << grid.num<VertexBase>() << endl);
-			UG_LOG("  edges:\t" << grid.num<EdgeBase>() << endl);
+			UG_LOG("  vertices:\t" << grid.num<Vertex>() << endl);
+			UG_LOG("  edges:\t" << grid.num<Edge>() << endl);
 			UG_LOG("  faces:\t" << grid.num<Face>() << endl);
 			UG_LOG("  volumes:\t " << grid.num<Volume>() << endl);
 
@@ -93,7 +93,7 @@ class ToolPrintSelectionInfo : public ITool
 			ug::Grid& grid = obj->get_grid();
 			ug::Selector& sel = obj->get_selector();
 			UG_LOG("Selection Info:\n");
-			PrintElementNumbers(sel.get_geometric_objects());
+			PrintElementNumbers(sel.get_grid_objects());
 
 		//	count the number of selected boundary faces
 			if(grid.num_volumes() > 0 && sel.num<Face>() > 0){
@@ -141,10 +141,10 @@ class ToolPrintSelectionContainingSubsets : public ITool
 		//	check for each subset whether it contains selected elements
 			for(int i = 0; i < sh.num_subsets(); ++i){
 			//	check vertices
-				bool gotOne = SubsetContainsSelected<VertexBase>(sh, sel, i);
+				bool gotOne = SubsetContainsSelected<Vertex>(sh, sel, i);
 			//	check edges
 				if(!gotOne)
-					gotOne = SubsetContainsSelected<EdgeBase>(sh, sel, i);
+					gotOne = SubsetContainsSelected<Edge>(sh, sel, i);
 			//	check faces
 				if(!gotOne)
 					gotOne = SubsetContainsSelected<Face>(sh, sel, i);
@@ -179,7 +179,7 @@ class ToolPrintVertexDistance : public ITool
 			number max = 0;
 			number min = obj->get_bounding_sphere().get_radius() * 3.;
 
-			vector<VertexBase*> vrts;
+			vector<Vertex*> vrts;
 			CollectVerticesTouchingSelection(vrts, sel);
 
 		//	if there are less than 2 vertices, both distances are set to 0
@@ -187,7 +187,7 @@ class ToolPrintVertexDistance : public ITool
 				min = max = 0;
 			else{
 			//	iterate over all selected vertices
-				typedef vector<VertexBase*>::iterator VrtIter;
+				typedef vector<Vertex*>::iterator VrtIter;
 				for(VrtIter baseIter = vrts.begin();
 					baseIter != vrts.end(); ++baseIter)
 				{
@@ -223,7 +223,7 @@ class ToolPrintLeastSquaresPlane: public ITool
 			ug::Selector& sel = obj->get_selector();
 			Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
 
-			std::vector<VertexBase*> vrts;
+			std::vector<Vertex*> vrts;
 			CollectVerticesTouchingSelection(vrts, sel);
 			std::vector<vector3> points;
 			points.reserve(vrts.size());

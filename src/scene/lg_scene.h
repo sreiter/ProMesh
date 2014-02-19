@@ -36,11 +36,11 @@ class LGScene : public TScene<LGObject>
 	///	updates the visuals of pObj.
 		virtual void update_visuals(LGObject* pObj);
 
-		ug::VertexBase* get_clicked_vertex(LGObject* pObj,
+		ug::Vertex* get_clicked_vertex(LGObject* pObj,
 									const ug::vector3& from,
 									const ug::vector3& to);
 
-		ug::EdgeBase* get_clicked_edge(LGObject* pObj,
+		ug::Edge* get_clicked_edge(LGObject* pObj,
 									const ug::vector3& from,
 									const ug::vector3& to,
 									bool closestToTo = false);
@@ -56,14 +56,14 @@ class LGScene : public TScene<LGObject>
 	/**	given a rect in screen coordinates, this methods finds all
 	 *	vertices which lie in that rect and writes them to vrtsOut.
 	 * \return number of vertices in the rect.*/
-		size_t get_vertices_in_rect(std::vector<ug::VertexBase*>& vrtsOut,
+		size_t get_vertices_in_rect(std::vector<ug::Vertex*>& vrtsOut,
 									LGObject* obj,
 									float xMin, float yMin, float xMax, float yMax);
 
 	/**	given a rect in screen coordinates, this methods finds all
 	 *	edges which lie completly in that rect and writes them to edgesOut.
 	 * \return number of edges in the rect.*/
-		size_t get_edges_in_rect(std::vector<ug::EdgeBase*>& edgesOut,
+		size_t get_edges_in_rect(std::vector<ug::Edge*>& edgesOut,
 								 LGObject* obj,
 								 float xMin, float yMin, float xMax, float yMax);
 
@@ -86,7 +86,7 @@ class LGScene : public TScene<LGObject>
 	/**	given a rect in screen coordinates, this methods finds all
 	 *	edges which intersect that rect and writes them to edgesOut.
 	 * \return number of edges in the rect.*/
-		size_t get_edges_in_rect_cut(std::vector<ug::EdgeBase*>& edgesOut,
+		size_t get_edges_in_rect_cut(std::vector<ug::Edge*>& edgesOut,
 								 LGObject* obj,
 								 float xMin, float yMin, float xMax, float yMax);
 
@@ -193,15 +193,15 @@ class LGScene : public TScene<LGObject>
 		void render_selection(LGObject* pObj, int displayListIndex);
 
 		void render_points(LGObject* pObj, const ug::vector4& color,
-						  ug::VertexBaseIterator vrtsBegin,
-						  ug::VertexBaseIterator vrtsEnd,
+						  ug::VertexIterator vrtsBegin,
+						  ug::VertexIterator vrtsEnd,
 						  ug::Grid::VertexAttachmentAccessor<ug::APosition>& aaPos);
 
 		void render_point_subsets(LGObject* pObj, int baseDisplayListIndex = 0);
 
 		void render_edges(LGObject* pObj, const ug::vector4& color,
-						  ug::EdgeBaseIterator edgesBegin,
-						  ug::EdgeBaseIterator edgesEnd,
+						  ug::EdgeIterator edgesBegin,
+						  ug::EdgeIterator edgesEnd,
 						  ug::Grid::VertexAttachmentAccessor<ug::APosition>& aaPos);
 
 		void render_edge_subsets(LGObject* pObj, int baseDisplayListIndex = 0);
@@ -232,9 +232,9 @@ class LGScene : public TScene<LGObject>
 		void render_faces_without_clip_plane(LGObject* pObj);
 		void render_faces_with_clip_plane(LGObject* pObj);
 
-		bool clip_vertex(ug::VertexBase* vrt,
+		bool clip_vertex(ug::Vertex* vrt,
 						 ug::Grid::VertexAttachmentAccessor<ug::APosition>& aaPos);
-		bool clip_edge(ug::EdgeBase* e,
+		bool clip_edge(ug::Edge* e,
 					   ug::Grid::VertexAttachmentAccessor<ug::APosition>& aaPos);
 		bool clip_face(ug::Face* f, const ug::Sphere& boundingSphere,
 					   ug::Grid::VertexAttachmentAccessor<ug::APosition>& aaPos);

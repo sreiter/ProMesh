@@ -111,7 +111,7 @@ class HeightfieldDialog : public QDialog
 								max.x(), max.y()))
 				{
 				//	iterate over all nodes and adjust height.
-					for(Grid::traits<VertexBase>::iterator iter = g.vertices_begin();
+					for(Grid::traits<Vertex>::iterator iter = g.vertices_begin();
 						iter != g.vertices_end(); ++iter)
 					{
 						vector3& v = aaPos[*iter];

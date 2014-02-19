@@ -215,7 +215,7 @@ class LGObject : public ISceneObject, public ug::promesh::MeshObject
 		TransformType		m_transformType;
 		ug::vector3			m_transformStart;	// center where transform started
 		ug::vector3			m_transformCur;		// center of the current selection
-		std::vector<ug::VertexBase*>	m_transformVertices;
+		std::vector<ug::Vertex*>	m_transformVertices;
 		std::vector<ug::vector3>		m_transformInitialPositions;
 
 	protected:

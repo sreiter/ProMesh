@@ -239,7 +239,7 @@ void LGScene::calculate_bounding_spheres(LGObject* pObj)
 		CalculateBoundingSphere(aaSphereVOL[*iter], *iter, aaPos);
 }
 
-bool LGScene::clip_vertex(VertexBase* v, Grid::VertexAttachmentAccessor<APosition>& aaPos)
+bool LGScene::clip_vertex(Vertex* v, Grid::VertexAttachmentAccessor<APosition>& aaPos)
 {
 //	exact version
 	for(int i = 0; i < numClipPlanes(); ++i){
@@ -252,7 +252,7 @@ bool LGScene::clip_vertex(VertexBase* v, Grid::VertexAttachmentAccessor<APositio
 	return false;
 }
 
-bool LGScene::clip_edge(EdgeBase* e, Grid::VertexAttachmentAccessor<APosition>& aaPos)
+bool LGScene::clip_edge(Edge* e, Grid::VertexAttachmentAccessor<APosition>& aaPos)
 {
 //	exact version
 	for(int i = 0; i < numClipPlanes(); ++i){
@@ -706,8 +706,8 @@ void LGScene::update_visuals(LGObject* pObj)
 	if(bDrawSelection)
 		numDisplayLists++;
 
-	bool bDrawMarks = (pObj->get_crease_handler().num<VertexBase>(REM_FIXED) > 0)
-					  || (pObj->get_crease_handler().num<EdgeBase>(REM_CREASE) > 0);
+	bool bDrawMarks = (pObj->get_crease_handler().num<Vertex>(REM_FIXED) > 0)
+					  || (pObj->get_crease_handler().num<Edge>(REM_CREASE) > 0);
 	if(bDrawMarks)
 		numDisplayLists++;
 
@@ -800,10 +800,10 @@ void LGScene::render_creases(LGObject* pObj, int displayListIndex)
 
 //	draw vertices
 	render_points(pObj, vector4(0.1f, 0.1f, 0.9f, 1.f),
-				 sh.begin<VertexBase>(REM_FIXED), sh.end<VertexBase>(REM_FIXED), aaPos);
+				 sh.begin<Vertex>(REM_FIXED), sh.end<Vertex>(REM_FIXED), aaPos);
 //	draw edges
 	render_edges(pObj, vector4(0.1f, 0.1f, 0.9f, 1.f),
-				 sh.begin<EdgeBase>(REM_CREASE), sh.end<EdgeBase>(REM_CREASE), aaPos);
+				 sh.begin<Edge>(REM_CREASE), sh.end<Edge>(REM_CREASE), aaPos);
 
 	glEndList();
 }
@@ -867,21 +867,21 @@ void LGScene::render_selection(LGObject* pObj, int displayListIndex)
 //	draw edges
 	if(drawEdges || drawFaces || drawVolumes){
 		render_edges(pObj, edgeColor,
-					 sel.begin<EdgeBase>(), sel.end<EdgeBase>(), aaPos);
+					 sel.begin<Edge>(), sel.end<Edge>(), aaPos);
 	}
 
 //	draw points
 	if(drawVertices || drawEdges || drawFaces || drawVolumes){
 		render_points(pObj, vrtColor,
-					 sel.begin<VertexBase>(), sel.end<VertexBase>(), aaPos);
+					 sel.begin<Vertex>(), sel.end<Vertex>(), aaPos);
 	}
 
 	glEndList();
 }
 
 void LGScene::render_points(LGObject* pObj, const ug::vector4& color,
-							  ug::VertexBaseIterator vrtsBegin,
-							  ug::VertexBaseIterator vrtsEnd,
+							  ug::VertexIterator vrtsBegin,
+							  ug::VertexIterator vrtsEnd,
 							  Grid::VertexAttachmentAccessor<APosition>& aaPos)
 {
 	Grid::VertexAttachmentAccessor<ABool> aaRenderedVRT(pObj->get_grid(), m_aRendered);
@@ -891,7 +891,7 @@ void LGScene::render_points(LGObject* pObj, const ug::vector4& color,
 
 	glBegin(GL_POINTS);
 
-	for(VertexBaseIterator iter = vrtsBegin;
+	for(VertexIterator iter = vrtsBegin;
 		iter != vrtsEnd; ++iter)
 	{
 		if(aaRenderedVRT[*iter]){
@@ -926,14 +926,14 @@ void LGScene::render_point_subsets(LGObject* pObj, int baseDisplayListIndex)
 		}
 
 		//SubsetInfo& si = sh.subset_info(i);
-		//render_edges(pObj, si.color, sh.begin<EdgeBase>(i), sh.end<EdgeBase>(i), aaPos);
+		//render_edges(pObj, si.color, sh.begin<Edge>(i), sh.end<Edge>(i), aaPos);
 		glPointSize(5.f);
 		glBegin(GL_POINTS);
 		glColor4f(1., 1., 1., 1.);
-		for(VertexBaseIterator iter = sh.begin<VertexBase>(i);
-			iter != sh.end<VertexBase>(i); ++iter)
+		for(VertexIterator iter = sh.begin<Vertex>(i);
+			iter != sh.end<Vertex>(i); ++iter)
 		{
-			VertexBase* vrt = *iter;
+			Vertex* vrt = *iter;
 			if((!aaHiddenVRT[vrt]) && (!clip_vertex(vrt, aaPos))){
 				aaRenderedVRT[vrt] = true;
 				vector3& v = aaPos[vrt];
@@ -948,8 +948,8 @@ void LGScene::render_point_subsets(LGObject* pObj, int baseDisplayListIndex)
 }
 
 void LGScene::render_edges(LGObject* pObj, const ug::vector4& color,
-						  ug::EdgeBaseIterator edgesBegin,
-						  ug::EdgeBaseIterator edgesEnd,
+						  ug::EdgeIterator edgesBegin,
+						  ug::EdgeIterator edgesEnd,
 						  Grid::VertexAttachmentAccessor<APosition>& aaPos)
 {
 	Grid& grid = pObj->get_grid();
@@ -959,10 +959,10 @@ void LGScene::render_edges(LGObject* pObj, const ug::vector4& color,
 	glColor4f(color.x(), color.y(), color.z(), color.w());
 	glBegin(GL_LINES);
 
-	for(EdgeBaseIterator iter = edgesBegin;
+	for(EdgeIterator iter = edgesBegin;
 		iter != edgesEnd; ++iter)
 	{
-		EdgeBase* e = *iter;
+		Edge* e = *iter;
 		if(aaRenderedEDGE[e]){
 			for(int i = 0; i < 2; ++i)
 			{
@@ -999,13 +999,13 @@ void LGScene::render_edge_subsets(LGObject* pObj, int baseDisplayListIndex)
 		}
 
 		//SubsetInfo& si = sh.subset_info(i);
-		//render_edges(pObj, si.color, sh.begin<EdgeBase>(i), sh.end<EdgeBase>(i), aaPos);
+		//render_edges(pObj, si.color, sh.begin<Edge>(i), sh.end<Edge>(i), aaPos);
 		glBegin(GL_LINES);
 		glColor4f(1., 1., 1., 1.);
-		for(EdgeBaseIterator iter = sh.begin<EdgeBase>(i);
-			iter != sh.end<EdgeBase>(i); ++iter)
+		for(EdgeIterator iter = sh.begin<Edge>(i);
+			iter != sh.end<Edge>(i); ++iter)
 		{
-			EdgeBase* e = *iter;
+			Edge* e = *iter;
 			if((!aaHiddenEDGE[e]) && (!clip_edge(e, aaPos))){
 				aaRenderedEDGE[e] = true;
 				for(int i = 0; i < 2; ++i){
@@ -1827,11 +1827,11 @@ Don't forget subset indices and draw order!
 					shFace(face) = -1
 */
 
-ug::VertexBase* LGScene::
+ug::Vertex* LGScene::
 get_clicked_vertex(LGObject* obj, const ug::vector3& from,
 				   const ug::vector3& to)
 {
-	VertexBase* vrtClosest = NULL;
+	Vertex* vrtClosest = NULL;
 
 	if(obj){
 		Grid& grid = obj->get_grid();
@@ -1841,10 +1841,10 @@ get_clicked_vertex(LGObject* obj, const ug::vector3& from,
 	//	max distance - a safe overestimation
 		number minDist = m_zFar * 2.;
 
-		for(VertexBaseIterator iter = grid.begin<VertexBase>();
-			iter != grid.end<VertexBase>(); ++iter)
+		for(VertexIterator iter = grid.begin<Vertex>();
+			iter != grid.end<Vertex>(); ++iter)
 		{
-			VertexBase* vrt = *iter;
+			Vertex* vrt = *iter;
 			if(aaRenderedVRT[vrt]){
 				number t;
 				number dist = DistancePointToLine(t, aaPos[vrt], from, to);
@@ -1859,11 +1859,11 @@ get_clicked_vertex(LGObject* obj, const ug::vector3& from,
 	return vrtClosest;
 }
 
-ug::EdgeBase* LGScene::
+ug::Edge* LGScene::
 get_clicked_edge(LGObject* obj, const ug::vector3& from,
 				 const ug::vector3& to, bool closestToTo)
 {
-	EdgeBase* eClosest = NULL;
+	Edge* eClosest = NULL;
 
 	if(obj){
 	//	iterate through the edges and check the center of each against
@@ -1879,10 +1879,10 @@ get_clicked_edge(LGObject* obj, const ug::vector3& from,
 
 		if(closestToTo){
 		//	calculate the minimal distance of each edge to 'to'
-			for(EdgeBaseIterator iter = grid.begin<EdgeBase>();
-				iter != grid.end<EdgeBase>(); ++iter)
+			for(EdgeIterator iter = grid.begin<Edge>();
+				iter != grid.end<Edge>(); ++iter)
 			{
-				EdgeBase* e = *iter;
+				Edge* e = *iter;
 				if(!aaRenderedEDGE[e])
 					continue;
 				number t;
@@ -1899,10 +1899,10 @@ get_clicked_edge(LGObject* obj, const ug::vector3& from,
 
 		//	calculate the minimal distance of the center of each edge
 		//	to the ray (from, to)
-			for(EdgeBaseIterator iter = grid.begin<EdgeBase>();
-				iter != grid.end<EdgeBase>(); ++iter)
+			for(EdgeIterator iter = grid.begin<Edge>();
+				iter != grid.end<Edge>(); ++iter)
 			{
-				EdgeBase* e = *iter;
+				Edge* e = *iter;
 				if(!aaRenderedEDGE[e])
 					continue;
 
@@ -2071,7 +2071,7 @@ get_clicked_volume(LGObject* pObj, const ug::vector3& from,
 }
 
 size_t LGScene::
-get_vertices_in_rect(std::vector<VertexBase*>& vrtsOut,
+get_vertices_in_rect(std::vector<Vertex*>& vrtsOut,
 					LGObject* obj,
 					float xMin, float yMin, float xMax, float yMax)
 {
@@ -2098,10 +2098,10 @@ get_vertices_in_rect(std::vector<VertexBase*>& vrtsOut,
 		Grid::VertexAttachmentAccessor<ABool> aaRenderedVRT(grid, m_aRendered);
 
 		Plane plane = near_clip_plane();
-		for(VertexBaseIterator iter = grid.begin<VertexBase>();
-			iter != grid.end<VertexBase>(); ++iter)
+		for(VertexIterator iter = grid.begin<Vertex>();
+			iter != grid.end<Vertex>(); ++iter)
 		{
-			VertexBase* vrt = *iter;
+			Vertex* vrt = *iter;
 			if(aaRenderedVRT[vrt]){
 				vector3& pos = aaPos[vrt];
 				
@@ -2126,7 +2126,7 @@ get_vertices_in_rect(std::vector<VertexBase*>& vrtsOut,
 }
 
 size_t LGScene::
-get_edges_in_rect(std::vector<EdgeBase*>& edgesOut,
+get_edges_in_rect(std::vector<Edge*>& edgesOut,
 					LGObject* obj,
 					float xMin, float yMin, float xMax, float yMax)
 {
@@ -2151,16 +2151,16 @@ get_edges_in_rect(std::vector<EdgeBase*>& edgesOut,
 		Grid::EdgeAttachmentAccessor<ABool> aaRenderedEDGE(grid, m_aRendered);
 		Plane plane = near_clip_plane();
 		
-		for(EdgeBaseIterator iter = grid.begin<EdgeBase>();
-			iter != grid.end<EdgeBase>(); ++iter)
+		for(EdgeIterator iter = grid.begin<Edge>();
+			iter != grid.end<Edge>(); ++iter)
 		{
-			EdgeBase* e = *iter;
+			Edge* e = *iter;
 			if(!aaRenderedEDGE[e])
 				continue;
 
 			bool allIn = true;
 			for(size_t i = 0; i < e->num_vertices(); ++i){
-				VertexBase* vrt = e->vertex(i);
+				Vertex* vrt = e->vertex(i);
 				vector3& pos = aaPos[vrt];
 				
 				if(PlanePointTest(plane, pos) == RPI_INSIDE){
@@ -2223,7 +2223,7 @@ get_faces_in_rect(std::vector<Face*>& facesOut,
 
 			bool allIn = true;
 			for(size_t i = 0; i < f->num_vertices(); ++i){
-				VertexBase* vrt = f->vertex(i);
+				Vertex* vrt = f->vertex(i);
 				vector3& pos = aaPos[vrt];
 				if(PlanePointTest(plane, pos) == RPI_INSIDE){
 					allIn = false;
@@ -2290,7 +2290,7 @@ get_volumes_in_rect(std::vector<Volume*>& volsOut,
 
 			bool allIn = true;
 			for(size_t i = 0; i < v->num_vertices(); ++i){
-				VertexBase* vrt = v->vertex(i);
+				Vertex* vrt = v->vertex(i);
 				vector3& pos = aaPos[vrt];
 				if(PlanePointTest(plane, pos) == RPI_INSIDE){
 					allIn = false;
@@ -2318,7 +2318,7 @@ get_volumes_in_rect(std::vector<Volume*>& volsOut,
 }
 
 size_t LGScene::
-get_edges_in_rect_cut(std::vector<EdgeBase*>& edgesOut,
+get_edges_in_rect_cut(std::vector<Edge*>& edgesOut,
 					LGObject* obj,
 					float xMin, float yMin, float xMax, float yMax)
 {
@@ -2348,15 +2348,15 @@ get_edges_in_rect_cut(std::vector<EdgeBase*>& edgesOut,
 		Grid::EdgeAttachmentAccessor<ABool> aaRenderedEDGE(grid, m_aRendered);
 		Plane plane = near_clip_plane();
 		
-		for(EdgeBaseIterator iter = grid.begin<EdgeBase>();
-			iter != grid.end<EdgeBase>(); ++iter)
+		for(EdgeIterator iter = grid.begin<Edge>();
+			iter != grid.end<Edge>(); ++iter)
 		{
-			EdgeBase* e = *iter;
+			Edge* e = *iter;
 			if(!aaRenderedEDGE[e])
 				continue;
 
-			VertexBase* vrt1 = e->vertex(0);
-			VertexBase* vrt2 = e->vertex(1);
+			Vertex* vrt1 = e->vertex(0);
+			Vertex* vrt2 = e->vertex(1);
 			vector3& pos1 = aaPos[vrt1];
 			vector3& pos2 = aaPos[vrt2];
 			
@@ -2449,7 +2449,7 @@ get_faces_in_rect_cut(std::vector<Face*>& facesOut,
 				bool oneLiesInFront = false;
 			
 				for(size_t i = 0; i < f->num_vertices(); ++i){
-					VertexBase* vrt = f->vertex(i);
+					Vertex* vrt = f->vertex(i);
 					vector3& pos = aaPos[vrt];
 					
 				//	at least one of the vertices has to lie in front of the clip plane
@@ -2531,7 +2531,7 @@ get_volumes_in_rect_cut(std::vector<Volume*>& volsOut,
 			vector3 projPos[4];
 			bool oneLiesInFront = false;
 			for(size_t i = 0; i < f->num_vertices(); ++i){
-				VertexBase* vrt = f->vertex(i);
+				Vertex* vrt = f->vertex(i);
 				vector3& pos = aaPos[vrt];
 			//	at least one of the vertices has to lie in front of the clip plane
 				if(PlanePointTest(plane, pos) == RPI_OUTSIDE)
@@ -2587,8 +2587,8 @@ void LGScene::
 unhide_elements(LGObject* obj)
 {
 	using namespace ug;
-	unhide_elements<VertexBase>(obj);
-	unhide_elements<EdgeBase>(obj);
+	unhide_elements<Vertex>(obj);
+	unhide_elements<Edge>(obj);
 	unhide_elements<Face>(obj);
 	unhide_elements<Volume>(obj);
 }

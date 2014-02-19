@@ -271,12 +271,12 @@ void MainWindow::view3dMousePressed(QMouseEvent *event)
 			switch(m_selectionElement){
 				case 0:// vertices
 					{
-						VertexBase* v = m_scene->get_clicked_vertex(obj, from, to);
+						Vertex* v = m_scene->get_clicked_vertex(obj, from, to);
 						if(v){
 							int si = obj->get_subset_handler().get_subset_index(v);
 							if(selectSubset && (si != -1)){
 								if(!extendSelection)	obj->get_selector().clear();
-								SelectSubsetElements<VertexBase>(obj->get_selector(),
+								SelectSubsetElements<Vertex>(obj->get_selector(),
 																 obj->get_subset_handler(), si);
 								obj->selection_changed();
 							}
@@ -291,12 +291,12 @@ void MainWindow::view3dMousePressed(QMouseEvent *event)
 					}break;
 				case 1://edges
 					{
-						EdgeBase* e = m_scene->get_clicked_edge(obj, from, to, pointOnGeom);
+						Edge* e = m_scene->get_clicked_edge(obj, from, to, pointOnGeom);
 						if(e){
 							int si = obj->get_subset_handler().get_subset_index(e);
 							if(selectSubset && (si != -1)){
 								if(!extendSelection)	obj->get_selector().clear();
-								SelectSubsetElements<EdgeBase>(obj->get_selector(),
+								SelectSubsetElements<Edge>(obj->get_selector(),
 															   obj->get_subset_handler(), si);
 								obj->selection_changed();
 							}
@@ -412,7 +412,7 @@ void MainWindow::view3dMouseReleased(QMouseEvent *event)
 		switch(m_selectionElement){
 			case 0:// vertices
 			{
-				vector<VertexBase*> vrts;
+				vector<Vertex*> vrts;
 				m_scene->get_vertices_in_rect(vrts, obj, xMin, yMin, xMax, yMax);
 				for(size_t i = 0; i < vrts.size(); ++i)
 					sel.select(vrts[i]);
@@ -420,7 +420,7 @@ void MainWindow::view3dMouseReleased(QMouseEvent *event)
 
 			case 1://edges
 			{
-				vector<EdgeBase*> edges;
+				vector<Edge*> edges;
 				if(m_selectionMode == 1)
 					m_scene->get_edges_in_rect_cut(edges, obj, xMin, yMin, xMax, yMax);
 				else

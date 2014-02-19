@@ -168,9 +168,9 @@ class ToolSelectShortEdges : public ITool
 				maxLength = dlg->to_double(0);
 			}
 
-			size_t numSel = obj->get_selector().num<EdgeBase>();
+			size_t numSel = obj->get_selector().num<Edge>();
 			promesh::SelectShortEdges(obj, maxLength);
-			UG_LOG(obj->get_selector().num<EdgeBase>() - numSel
+			UG_LOG(obj->get_selector().num<Edge>() - numSel
 				   << " short edges selected.\n");
 
 			obj->selection_changed();
@@ -199,9 +199,9 @@ class ToolSelectLongEdges : public ITool
 				minLength = dlg->to_double(0);
 			}
 
-			size_t numSel = obj->get_selector().num<EdgeBase>();
+			size_t numSel = obj->get_selector().num<Edge>();
 			promesh::SelectLongEdges(obj, minLength);
-			UG_LOG(obj->get_selector().num<EdgeBase>() - numSel
+			UG_LOG(obj->get_selector().num<Edge>() - numSel
 				   << " long edges selected.\n");
 
 
@@ -727,7 +727,7 @@ class ToolSelectVertexByCoordinate : public ITool
 			CoordinatesWidget* dlg = dynamic_cast<CoordinatesWidget*>(widget);
 			if(dlg){
 				vector3 coord(dlg->x(), dlg->y(), dlg->z());
-				VertexBase* e = promesh::SelectElemByCoordinate<VertexBase>(obj, coord);
+				Vertex* e = promesh::SelectElemByCoordinate<Vertex>(obj, coord);
 
 				if(e){
 				//	This message is important, since the user can see
@@ -759,7 +759,7 @@ class ToolSelectEdgeByCoordinate : public ITool
 			CoordinatesWidget* dlg = dynamic_cast<CoordinatesWidget*>(widget);
 			if(dlg){
 				vector3 coord(dlg->x(), dlg->y(), dlg->z());
-				EdgeBase* e = promesh::SelectElemByCoordinate<EdgeBase>(obj, coord);
+				Edge* e = promesh::SelectElemByCoordinate<Edge>(obj, coord);
 
 				if(e){
 				//	This message is important, since the user can see

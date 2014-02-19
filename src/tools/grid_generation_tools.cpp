@@ -79,10 +79,10 @@ class ToolMergeObjects : public ITool
 			SubsetHandler& mrgSH = mergedObj->get_subset_handler();
 
 		//	The position attachment for mrgGrid
-			Grid::AttachmentAccessor<VertexBase, APosition> aaPosMRG(mrgGrid, aPosition);
+			Grid::AttachmentAccessor<Vertex, APosition> aaPosMRG(mrgGrid, aPosition);
 
 		//	we'll use this attachment later on on the vertices of each source grid.
-			AVertexBase aVrt;
+			AVertex aVrt;
 
 		//	iterate through all selected objects and copy their content to mergedObj
 			LGScene* scene = app::getActiveScene();
@@ -107,16 +107,16 @@ class ToolMergeObjects : public ITool
 
 			//	we need an attachment, which tells us the associated vertex in
 			//	mrgGrid for each vertex in grid.
-				Grid::AttachmentAccessor<VertexBase, AVertexBase> aaVrt(grid, aVrt, true);
+				Grid::AttachmentAccessor<Vertex, AVertex> aaVrt(grid, aVrt, true);
 
 			//	and we need an accessor for the position attachment
-				Grid::AttachmentAccessor<VertexBase, APosition> aaPos(grid, aPosition);
+				Grid::AttachmentAccessor<Vertex, APosition> aaPos(grid, aPosition);
 
 			//	copy vertices
-				for(VertexBaseIterator iter = grid.begin<VertexBase>();
-					iter != grid.end<VertexBase>(); ++iter)
+				for(VertexIterator iter = grid.begin<Vertex>();
+					iter != grid.end<Vertex>(); ++iter)
 				{
-					VertexBase* nvrt = *mrgGrid.create_by_cloning(*iter);
+					Vertex* nvrt = *mrgGrid.create_by_cloning(*iter);
 					aaPosMRG[nvrt] = aaPos[*iter];
 					aaVrt[*iter] = nvrt;
 					mrgSH.assign_subset(nvrt, subsetBaseInd + sh.get_subset_index(*iter));
@@ -124,12 +124,12 @@ class ToolMergeObjects : public ITool
 
 			//	copy edges
 				EdgeDescriptor ed;
-				for(EdgeBaseIterator iter = grid.begin<EdgeBase>();
-					iter != grid.end<EdgeBase>(); ++iter)
+				for(EdgeIterator iter = grid.begin<Edge>();
+					iter != grid.end<Edge>(); ++iter)
 				{
-					EdgeBase* eSrc = *iter;
+					Edge* eSrc = *iter;
 					ed.set_vertices(aaVrt[eSrc->vertex(0)], aaVrt[eSrc->vertex(1)]);
-					EdgeBase* e = *mrgGrid.create_by_cloning(eSrc, ed);
+					Edge* e = *mrgGrid.create_by_cloning(eSrc, ed);
 					mrgSH.assign_subset(e, subsetBaseInd + sh.get_subset_index(eSrc));
 				}
 
@@ -743,7 +743,7 @@ public:
                     // convert to 2d positions (FVGeometry depends on PositionCoordinates)
                     grid.attach_to_vertices(aPosition2);
                     dualGrid.attach_to_vertices(aPosition2);
-                    ConvertMathVectorAttachmentValues<VertexBase>(grid, aPosition, aPosition2);
+                    ConvertMathVectorAttachmentValues<Vertex>(grid, aPosition, aPosition2);
 
                     switch(iGeom)
                     {
@@ -753,7 +753,7 @@ public:
                     }
 
                     // convert back to 3d positions (ProMesh only handles 3d)
-                    ConvertMathVectorAttachmentValues<VertexBase>(dualGrid, aPosition2, aPosition);
+                    ConvertMathVectorAttachmentValues<Vertex>(dualGrid, aPosition2, aPosition);
                     grid.detach_from_vertices(aPosition2);
                     dualGrid.detach_from_vertices(aPosition2);
                 }
@@ -762,7 +762,7 @@ public:
                     // convert to 1d positions (FVGeometry depends on PositionCoordinates)
                     grid.attach_to_vertices(aPosition1);
                     dualGrid.attach_to_vertices(aPosition1);
-                    ConvertMathVectorAttachmentValues<VertexBase>(grid, aPosition, aPosition1);
+                    ConvertMathVectorAttachmentValues<Vertex>(grid, aPosition, aPosition1);
 
                     switch(iGeom)
                     {
@@ -772,7 +772,7 @@ public:
                     }
 
                     // convert back to 3d positions (ProMesh only handles 3d)
-                    ConvertMathVectorAttachmentValues<VertexBase>(dualGrid, aPosition1, aPosition);
+                    ConvertMathVectorAttachmentValues<Vertex>(dualGrid, aPosition1, aPosition);
                     grid.detach_from_vertices(aPosition1);
                     dualGrid.detach_from_vertices(aPosition1);
                 }
@@ -814,7 +814,7 @@ public:
                     // convert to 2d positions (FVGeometry depends on PositionCoordinates)
                     grid.attach_to_vertices(aPosition2);
                     dualGrid.attach_to_vertices(aPosition2);
-                    ConvertMathVectorAttachmentValues<VertexBase>(grid, aPosition, aPosition2);
+                    ConvertMathVectorAttachmentValues<Vertex>(grid, aPosition, aPosition2);
 
                     switch(iGeom)
                     {
@@ -824,7 +824,7 @@ public:
                     }
 
                     // convert back to 3d positions (ProMesh only handles 3d)
-                    ConvertMathVectorAttachmentValues<VertexBase>(dualGrid, aPosition2, aPosition);
+                    ConvertMathVectorAttachmentValues<Vertex>(dualGrid, aPosition2, aPosition);
                     grid.detach_from_vertices(aPosition2);
                     dualGrid.detach_from_vertices(aPosition2);
                 }
@@ -833,7 +833,7 @@ public:
                     // convert to 1d positions (FVGeometry depends on PositionCoordinates)
                     grid.attach_to_vertices(aPosition1);
                     dualGrid.attach_to_vertices(aPosition1);
-                    ConvertMathVectorAttachmentValues<VertexBase>(grid, aPosition, aPosition1);
+                    ConvertMathVectorAttachmentValues<Vertex>(grid, aPosition, aPosition1);
 
                     switch(iGeom)
                     {
@@ -843,7 +843,7 @@ public:
                     }
 
                     // convert back to 3d positions (ProMesh only handles 3d)
-                    ConvertMathVectorAttachmentValues<VertexBase>(dualGrid, aPosition1, aPosition);
+                    ConvertMathVectorAttachmentValues<Vertex>(dualGrid, aPosition1, aPosition);
                     grid.detach_from_vertices(aPosition1);
                     dualGrid.detach_from_vertices(aPosition1);
                 }
@@ -885,7 +885,7 @@ public:
                     // convert to 2d positions (FVGeometry depends on PositionCoordinates)
                     grid.attach_to_vertices(aPosition2);
                     dualGrid.attach_to_vertices(aPosition2);
-                    ConvertMathVectorAttachmentValues<VertexBase>(grid, aPosition, aPosition2);
+                    ConvertMathVectorAttachmentValues<Vertex>(grid, aPosition, aPosition2);
 
                     switch(iGeom)
                     {
@@ -895,7 +895,7 @@ public:
                     }
 
                     // convert back to 3d positions (ProMesh only handles 3d)
-                    ConvertMathVectorAttachmentValues<VertexBase>(dualGrid, aPosition2, aPosition);
+                    ConvertMathVectorAttachmentValues<Vertex>(dualGrid, aPosition2, aPosition);
                     grid.detach_from_vertices(aPosition2);
                     dualGrid.detach_from_vertices(aPosition2);
                 }
@@ -904,7 +904,7 @@ public:
                     // convert to 1d positions (FVGeometry depends on PositionCoordinates)
                     grid.attach_to_vertices(aPosition1);
                     dualGrid.attach_to_vertices(aPosition1);
-                    ConvertMathVectorAttachmentValues<VertexBase>(grid, aPosition, aPosition1);
+                    ConvertMathVectorAttachmentValues<Vertex>(grid, aPosition, aPosition1);
 
                     switch(iGeom)
                     {
@@ -914,7 +914,7 @@ public:
                     }
 
                     // convert back to 3d positions (ProMesh only handles 3d)
-                    ConvertMathVectorAttachmentValues<VertexBase>(dualGrid, aPosition1, aPosition);
+                    ConvertMathVectorAttachmentValues<Vertex>(dualGrid, aPosition1, aPosition);
                     grid.detach_from_vertices(aPosition1);
                     dualGrid.detach_from_vertices(aPosition1);
                 }
