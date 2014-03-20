@@ -35,6 +35,7 @@ bool LoadLGObjectFromFile(LGObject* pObjOut, const char* filename)
 
 	Grid& grid = pObjOut->get_grid();
 	SubsetHandler& sh = pObjOut->get_subset_handler();
+	pObjOut->m_fileName = filename;
 
 	grid.enable_options(GRIDOPT_STANDARD_INTERCONNECTION | FACEOPT_STORE_ASSOCIATED_VOLUMES);
 
@@ -226,6 +227,17 @@ bool LoadLGObjectFromFile(LGObject* pObjOut, const char* filename)
 		LOG("failed\n");
 	}
 	return bLoadSuccessful;
+}
+
+bool ReloadLGObject(LGObject* obj)
+{
+	obj->get_grid().clear_geometry();
+	obj->get_subset_handler().clear();
+	if(!LoadLGObjectFromFile(obj, obj->m_fileName.c_str())){
+		UG_LOG("Reload Failed!" << std::endl);
+		return false;
+	}
+	return true;
 }
 
 bool SaveLGObjectToFile(LGObject* pObj, const char* filename)

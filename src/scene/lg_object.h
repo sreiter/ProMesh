@@ -58,6 +58,7 @@ LGObject* CreateLGObjectFromFile(const char* filename);
 LGObject* CreateEmptyLGObject(const char* name);
 bool LoadLGObjectFromFile(LGObject* pObjOut, const char* filename);
 bool SaveLGObjectToFile(LGObject* pObj, const char* filename);
+bool ReloadLGObject(LGObject* obj);
 
 ////////////////////////////////////////////////////////////////////////
 //	LGObject

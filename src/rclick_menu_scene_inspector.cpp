@@ -34,6 +34,11 @@ RClickMenu_SceneInspector(SceneInspector * sceneInspector) :
 	m_actPrintSubsetContents = new QAction(tr("Print Subset Contents"), this);
 	connect(m_actPrintSubsetContents, SIGNAL(triggered()), this, SLOT(printSubsetContents()));
 	m_menu->addAction(m_actPrintSubsetContents);
+
+	m_actReload = new QAction(tr("Reload"), this);
+	connect(m_actReload, SIGNAL(triggered()), this, SLOT(reload()));
+	m_menu->addAction(m_actReload);
+
 //	m_actHideOtherSubsets = new QAction(tr("Hide Other Subsets"), this);
 }
 
@@ -149,5 +154,14 @@ toggleAllSubsetVisibilities(){
 		}
 		obj->visuals_changed();
 		m_sceneInspector->refreshView();
+	}
+}
+
+void RClickMenu_SceneInspector::
+reload(){
+	this->close();
+	LGObject* obj = app::getActiveObject();
+	if(obj){
+		ReloadLGObject(obj);
 	}
 }

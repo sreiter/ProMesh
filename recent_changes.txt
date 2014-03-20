@@ -7,6 +7,7 @@ Changes and additions:
 - Added CoordinateTransform-TangentialSmooth, which prevents manifolds from shrinking
   during smoothing.
 - Added Selection-SelectCreaseEdges
+- Added File->Reload (shortcut F5)
 
 Fixes:
 

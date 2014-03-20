@@ -89,6 +89,12 @@ void MainWindow::init()
 	m_actOpen->setStatusTip(tr("Load a geometry from file."));
 	connect(m_actOpen, SIGNAL(triggered()), this, SLOT(openFile()));
 
+	m_actReload = new QAction(tr("&Reload"), this);
+	//m_actReload->setIcon(QIcon(":images/fileopen.png"));
+	m_actReload->setShortcut(tr("F5"));
+	m_actReload->setStatusTip(tr("Reloads the active geometry."));
+	connect(m_actReload, SIGNAL(triggered()), this, SLOT(reloadActiveGeometry()));
+
 	m_actSave = new QAction(tr("&Save"), this);
 	m_actSave->setIcon(QIcon(":images/filesave.png"));
 	m_actSave->setShortcut(tr("Ctrl+S"));
@@ -111,8 +117,7 @@ void MainWindow::init()
 	m_actHelpControls->setStatusTip(tr("displays help."));
 	connect(m_actHelpControls, SIGNAL(triggered()), this, SLOT(showHelp()));
 
-	m_actRecentChanges = new QAction(tr("&Recent Changes"), this);
-	m_actRecentChanges->setShortcut(tr("Ctrl+R"));
+	m_actRecentChanges = new QAction(tr("Recent Changes"), this);
 	m_actRecentChanges->setStatusTip(tr("displays recent changes."));
 	connect(m_actRecentChanges, SIGNAL(triggered()), this, SLOT(showRecentChanges()));
 
@@ -128,6 +133,7 @@ void MainWindow::init()
 	QMenu* filemenu = menuBar()->addMenu("&File");
 	filemenu->addAction(m_actNew);
 	filemenu->addAction(m_actOpen);
+	filemenu->addAction(m_actReload);
 	filemenu->addAction(m_actSave);
 	filemenu->addAction(m_actErase);
 	filemenu->addSeparator();
@@ -587,6 +593,15 @@ int MainWindow::openFile()
 	}
 
 	return numOpened;
+}
+
+bool MainWindow::reloadActiveGeometry()
+{
+	LGObject* obj = app::getActiveObject();
+	if(obj){
+		return ReloadLGObject(obj);
+	}
+	return false;
 }
 
 bool MainWindow::saveToFile()

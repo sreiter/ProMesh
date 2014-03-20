@@ -78,6 +78,7 @@ class MainWindow : public QMainWindow
 		void setActiveObject(int index);
 		void newGeometry();
 		int openFile();///< returns the number of successfully opened files.
+		bool reloadActiveGeometry();
 		bool saveToFile();
 		bool exportToUG3();
 		void eraseActiveSceneObject();///< erases the active scene object.
@@ -169,6 +170,7 @@ class MainWindow : public QMainWindow
 		QAction*	m_actRecentChanges;
 		QAction*	m_actShortcuts;
 		QAction*	m_actLicense;
+		QAction*	m_actReload;
 
 		QToolButton*	m_tbSelVrts;
 		QToolButton*	m_tbSelEdges;
