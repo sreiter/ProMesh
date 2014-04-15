@@ -7,6 +7,7 @@
 #include "app.h"
 #include "standard_tools.h"
 #include "tool_frac_to_layer.h"
+#include "tooltips.h"
 
 using namespace std;
 using namespace ug;
@@ -35,7 +36,7 @@ public:
 	}
 
 	const char* get_name()		{return "Expand Layers 2d";}
-	const char* get_tooltip()	{return "Expands a 1d layer to a 2d layer by introducing quadrilaterals.";}
+	const char* get_tooltip()	{return TOOLTIP_EXPAND_LAYERS_2D;}
 	const char* get_group()		{return "Remeshing | Layers";}
 
 	QWidget* get_dialog(QWidget* parent){
@@ -68,7 +69,7 @@ public:
 	}
 
 	const char* get_name()		{return "Expand Layers 3d";}
-	const char* get_tooltip()	{return "Expands a 2d layer to a 3d layer by introducing prisms.";}
+	const char* get_tooltip()	{return TOOLTIP_EXPAND_LAYERS_3D;}
 	const char* get_group()		{return "Remeshing | Layers";}
 
 	QWidget* get_dialog(QWidget* parent){
@@ -204,7 +205,7 @@ public:
 	}
 
 	const char* get_name()		{return "Expand Layers By Adaption 3d";}
-	const char* get_tooltip()	{return "Expands a 2d layer to a 3d layer by adapting the surrounding grid.";}
+	const char* get_tooltip()	{return TOOLTIP_EXPAND_LAYERS_3D;}
 	const char* get_group()		{return "Layers";}
 
 	QWidget* get_dialog(QWidget* parent){
@@ -490,7 +491,7 @@ public:
 	}
 
 	const char* get_name()		{return "Frac To Layer";}
-	const char* get_tooltip()	{return "Enhances a 2d fracture to a 3d fracture.";}
+	const char* get_tooltip()	{return TOOLTIP_FRAC_TO_LAYER;}
 	const char* get_group()		{return "Fractures";}
 
 	QWidget* get_dialog(QWidget* parent){

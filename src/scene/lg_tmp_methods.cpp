@@ -14,7 +14,7 @@ namespace ug
 
 ////////////////////////////////////////////////////////////////////////
 // CalculateBoundingSphere
-void CalculateBoundingSphere(Sphere& sphereOut, Face* f,
+void CalculateBoundingSphere(Sphere3& sphereOut, Face* f,
 								Grid::VertexAttachmentAccessor<APosition>& aaPos)
 {
 //	calculate center
@@ -43,7 +43,7 @@ void CalculateBoundingSphere(Sphere& sphereOut, Face* f,
 
 ////////////////////////////////////////////////////////////////////////
 // CalculateBoundingSphere
-void CalculateBoundingSphere(Sphere& sphereOut, Volume* v,
+void CalculateBoundingSphere(Sphere3& sphereOut, Volume* v,
 							Grid::VertexAttachmentAccessor<APosition>& aaPos)
 {
 //	calculate center
@@ -92,7 +92,7 @@ bool ClipEdge(Edge* e, Plane& clipPlane,
 
 ////////////////////////////////////////////////////////////////////////
 //	ClipFace
-bool ClipFace(Face* f, const Sphere& boundingSphere, Plane& clipPlane,
+bool ClipFace(Face* f, const Sphere3& boundingSphere, Plane& clipPlane,
 				Grid::VertexAttachmentAccessor<APosition>& aaPos)
 {
 	RelativePositionIndicator rpi = PlaneSphereTest(clipPlane, boundingSphere);
@@ -122,7 +122,7 @@ bool ClipFace(Face* f, const Sphere& boundingSphere, Plane& clipPlane,
 
 ////////////////////////////////////////////////////////////////////////
 //	ClipVolume
-bool ClipVolume(Volume* v, const ug::Sphere& boundingSphere, ug::Plane& clipPlane,
+bool ClipVolume(Volume* v, const ug::Sphere3& boundingSphere, ug::Plane& clipPlane,
 				Grid::VertexAttachmentAccessor<APosition>& aaPos)
 {
 	RelativePositionIndicator rpi = PlaneSphereTest(clipPlane, boundingSphere);

@@ -5,6 +5,7 @@
 #include "app.h"
 #include "standard_tools.h"
 #include "tools/refinement_tools.h"
+#include "tooltips.h"
 
 using namespace ug;
 
@@ -24,7 +25,7 @@ class ToolRefine : public ITool
 		}
 
 		const char* get_name()		{return "Refine";}
-		const char* get_tooltip()	{return "Refines selected elements and builds a regular closure.";}
+		const char* get_tooltip()	{return TOOLTIP_REFINE;}
 		const char* get_group()		{return "Remeshing | Refinement";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -71,7 +72,7 @@ class ToolHangingNodeRefine : public ITool
 		}
 
 		const char* get_name()		{return "Hanging Node Refine";}
-		const char* get_tooltip()	{return "Refines selected elements using hanging nodes";}
+		const char* get_tooltip()	{return TOOLTIP_HANGING_NODE_REFINE;}
 		const char* get_group()		{return "Remeshing | Refinement";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -100,7 +101,7 @@ class ToolRefineSmooth : public ITool
 		}
 
 		const char* get_name()		{return "Refine Smooth";}
-		const char* get_tooltip()	{return "Refines selected elements using piecewise smooth refinement.";}
+		const char* get_tooltip()	{return TOOLTIP_REFINE_SMOOTH;}
 		const char* get_group()		{return "Remeshing | Refinement";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -128,7 +129,7 @@ class ToolRefineSmoothBoundary2D : public ITool
 		}
 
 		const char* get_name()		{return "Refine Smooth Boudary 2d";}
-		const char* get_tooltip()	{return "Refines selected elements using smooth subdivision rules on the boundary edges.";}
+		const char* get_tooltip()	{return TOOLTIP_REFINE_SMOOTH_BOUNDARY_2D;}
 		const char* get_group()		{return "Remeshing | Refinement";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -190,7 +191,7 @@ class ToolFracturedMediaRefine : public ITool
 		}
 
 		const char* get_name()		{return "Fractured Media Refine";}
-		const char* get_tooltip()	{return "Refines selected elements using hanging nodes. Fractures are refined anisotropic.";}
+		const char* get_tooltip()	{return TOOLTIP_FRACTURED_MEDIA_REFINE;}
 		const char* get_group()		{return "Remeshing | Refinement";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -225,7 +226,7 @@ public:
 	}
 
 	const char* get_name()		{return "Fractal Refine";}
-	const char* get_tooltip()	{return "Refines the whole geometry using a fractal-refinement scheme-";}
+	const char* get_tooltip()	{return TOOLTIP_CREATE_FRACTAL;}
 	const char* get_group()		{return "Remeshing | Refinement";}
 
 	ToolWidget* get_dialog(QWidget* parent){
@@ -254,7 +255,7 @@ class ToolInsertCenter : public ITool
 		}
 
 		const char* get_name()		{return "Insert Center";}
-		const char* get_tooltip()	{return "Inserts a central vertex in all selected elements.";}
+		const char* get_tooltip()	{return TOOLTIP_INSERT_CENTER;}
 		const char* get_group()		{return "Remeshing | Refinement";}
 
 		ToolWidget* get_dialog(QWidget* parent){

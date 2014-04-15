@@ -7,7 +7,6 @@
 #include "app.h"
 #include "standard_tools.h"
 
-
 using namespace std;
 using namespace ug;
 

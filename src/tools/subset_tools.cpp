@@ -5,6 +5,7 @@
 #include "app.h"
 #include "standard_tools.h"
 #include "tools/subset_tools.h"
+#include "tooltips.h"
 
 using namespace std;
 using namespace ug;
@@ -33,7 +34,7 @@ class ToolAssignSubset : public ITool
 		}
 
 		const char* get_name()		{return "Assign Subset";}
-		const char* get_tooltip()	{return "Assigns the selected elements to a subset.";}
+		const char* get_tooltip()	{return TOOLTIP_ASSIGN_SUBSET;}
 		const char* get_group()		{return "Subsets";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -54,7 +55,7 @@ class ToolAssignSubsetColors : public ITool
 		}
 
 		const char* get_name()		{return "Assign Subset Colors";}
-		const char* get_tooltip()	{return "assigns subset colors by a procedural scheme.";}
+		const char* get_tooltip()	{return TOOLTIP_ASSIGN_SUBSET_COLORS;}
 		const char* get_group()		{return "Subsets";}
 };
 
@@ -68,7 +69,7 @@ class ToolSeparateFacesByEdgeSubsets : public ITool
 		}
 
 		const char* get_name()	{return "Separate Faces By Edge Subsets";}
-		const char* get_tooltip()	{return "Assigns faces that are surrounded by a set of edge-subsets to a common subset.";}
+		const char* get_tooltip()	{return TOOLTIP_SEPARATE_FACES_BY_EDGE_SUBSETS;}
 		const char* get_group()		{return "Subsets | Separate";}
 };
 
@@ -81,7 +82,7 @@ class ToolSeparateFacesBySelectedEdges : public ITool
 		}
 
 		const char* get_name()		{return "Separate Faces By Selected Edges";}
-		const char* get_tooltip()	{return "Assigns faces that are surrounded by a set of selected edges to a common subset.";}
+		const char* get_tooltip()	{return TOOLTIP_SEPARATE_FACES_BY_SELECTED_EDGES;}
 		const char* get_group()		{return "Subsets | Separate";}
 };
 
@@ -94,7 +95,7 @@ class ToolSeparateVolumesByFaceSubsets : public ITool
 		}
 
 		const char* get_name()	{return "Separate Volumes By Face Subsets";}
-		const char* get_tooltip()	{return "Assigns volumes that are surrounded by a set of face-subsets to a common subset.";}
+		const char* get_tooltip()	{return TOOLTIP_SEPARATE_VOLUMES_BY_FACE_SUBSETS;}
 		const char* get_group()		{return "Subsets | Separate";}
 };
 
@@ -107,7 +108,7 @@ class ToolSeparateVolumesBySelectedFaces : public ITool
 		}
 
 		const char* get_name()	{return "Separate Volumes By Selected Faces";}
-		const char* get_tooltip()	{return "Assigns volumes that are surrounded by a set of selected faces to a common subset.";}
+		const char* get_tooltip()	{return TOOLTIP_SEPARATE_VOLUMES_BY_SELECTED_FACES;}
 		const char* get_group()		{return "Subsets | Separate";}
 };
 
@@ -120,7 +121,7 @@ class ToolSeparateIrregularManifoldSubsets : public ITool
 		}
 
 		const char* get_name()	{return "Separate Irregular Manifold Faces";}
-		const char* get_tooltip()	{return "After this algorithm all face-subsets are regular manifolds.";}
+		const char* get_tooltip()	{return TOOLTIP_SEPARATE_IRREGULAR_MANIFOLD_SUBSETS;}
 		const char* get_group()		{return "Subsets | Separate";}
 };
 
@@ -143,7 +144,7 @@ class ToolMoveSubset : public ITool
 		}
 
 		const char* get_name()		{return "Move Subset";}
-		const char* get_tooltip()	{return "Moves a subset to another index.";}
+		const char* get_tooltip()	{return TOOLTIP_MOVE_SUBSET;}
 		const char* get_group()		{return "Subsets";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -174,7 +175,7 @@ class ToolSwapSubsets : public ITool
 		}
 
 		const char* get_name()		{return "Swap Subsets";}
-		const char* get_tooltip()	{return "Swaps two subsets";}
+		const char* get_tooltip()	{return TOOLTIP_SWAP_SUBSETS;}
 		const char* get_group()		{return "Subsets";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -209,7 +210,7 @@ class ToolJoinSubsets : public ITool
 		}
 
 		const char* get_name()		{return "Join Subsets";}
-		const char* get_tooltip()	{return "Joins two subsets";}
+		const char* get_tooltip()	{return TOOLTIP_JOIN_SUBSETS;}
 		const char* get_group()		{return "Subsets";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -240,7 +241,7 @@ class ToolEraseSubset : public ITool
 		}
 
 		const char* get_name()		{return "Erase Subset";}
-		const char* get_tooltip()	{return "Erases a subset, but not its associated geometry.";}
+		const char* get_tooltip()	{return TOOLTIP_ERASE_SUBSET;}
 		const char* get_group()		{return "Subsets";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -261,7 +262,7 @@ class ToolEraseEmptySubsets : public ITool
 		}
 
 		const char* get_name()		{return "Erase Empty Subsets";}
-		const char* get_tooltip()	{return "Erases Subsets, which do not contain any elements at all.";}
+		const char* get_tooltip()	{return TOOLTIP_ERASE_EMPTY_SUBSETS;}
 		const char* get_group()		{return "Subsets";}
 };
 
@@ -279,7 +280,7 @@ class ToolAdjustSubsetsForUG3 : public ITool
 		}
 
 		const char* get_name()		{return "Adjust Subsets For UG3";}
-		const char* get_tooltip()	{return "Assigns face and edge indices so that the geometry can be used with ug3.";}
+		const char* get_tooltip()	{return TOOLTIP_ADJUST_SUBSETS_FOR_UG3;}
 		const char* get_group()		{return "Subsets";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -304,7 +305,7 @@ class ToolAdjustSubsetsForUG4 : public ITool
 		}
 
 		const char* get_name()		{return "Adjust Subsets For UG4";}
-		const char* get_tooltip()	{return "Adjusts subsets for simulation with ug4.";}
+		const char* get_tooltip()	{return TOOLTIP_ADJUST_SUBSETS_FOR_UG4;}
 		const char* get_group()		{return "Subsets";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -324,7 +325,7 @@ class ToolSeparateFaceSubsetsByNormal : public ITool
 		}
 
 		const char* get_name()		{return "Separate Face Subsets By Normal";}
-		const char* get_tooltip()	{return "Collects faces of each subset that have a similar normal and assigns them to new subsets.";}
+		const char* get_tooltip()	{return TOOLTIP_SEPARATE_FACE_SUBSETS_BY_NORMAL;}
 		const char* get_group()		{return "Subsets | Separate";}
 };
 
@@ -341,7 +342,7 @@ class ToolSeparateFaceSubsetByNormal : public ITool
 		}
 
 		const char* get_name()		{return "Separate Face Subset By Normal";}
-		const char* get_tooltip()	{return "Collects faces of a given subset that have a similar normal and assigns them to new subsets.";}
+		const char* get_tooltip()	{return TOOLTIP_SEPARATE_FACE_SUBSET_BY_NORMAL;}
 		const char* get_group()		{return "Subsets | Separate";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -368,7 +369,7 @@ class ToolAssignSubsetsByQuality : public ITool
 		}
 
 		const char* get_name()	{return "Assign Subsets by Quality";}
-		const char* get_tooltip()	{return "Assigns the selected to a subset depending on their quality.";}
+		const char* get_tooltip()	{return TOOLTIP_ASSIGN_SUBSETS_BY_QUALITY;}
 		const char* get_group()		{return "Subsets";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -395,7 +396,7 @@ class ToolSeparateDegeneratedBoundaryFaceSubsets : public ITool
 		}
 
 		const char* get_name()		{return "Separate Degenerated Boundary Face Subsets";}
-		const char* get_tooltip()	{return "Separates degenerated boundary face subsets at sharp creases.";}
+		const char* get_tooltip()	{return TOOLTIP_SEPARATE_DEGENERATED_BOUNDARY_FACE_SUBSETS;}
 		const char* get_group()		{return "Subsets | Separate";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -422,7 +423,7 @@ class ToolCopySubsetIndicesToSides : public ITool
 		}
 
 		const char* get_name()		{return "Copy Subset Indices To Sides";}
-		const char* get_tooltip()	{return "Copies subset indices of selected elements to sides of those elements.";}
+		const char* get_tooltip()	{return TOOLTIP_COPY_SUBSET_INDICES_TO_SIDES;}
 		const char* get_group()		{return "Subsets";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -443,7 +444,7 @@ class ToolAssignSubsetsByElementType : public ITool
 		}
 
 		const char* get_name()	{return "Assign Subsets By Element Type";}
-		const char* get_tooltip()	{return "Assigns elemets to subsets based on their concrete type.";}
+		const char* get_tooltip()	{return TOOLTIP_ASSIGN_SUBSETS_BY_ELEMENT_TYPE;}
 		const char* get_group()		{return "Subsets";}
 };
 

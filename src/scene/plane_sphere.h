@@ -13,11 +13,11 @@ namespace ug
 ////////////////////////////////////////////////////////////////////////
 //	Sphere
 ///	a simple sphere, described by a center and a radius.
-class Sphere
+class Sphere3
 {
 	public:
-		Sphere()	{}
-		Sphere(const vector3& center, number radius) : m_center(center), m_radius(radius)	{}
+		Sphere3()	{}
+		Sphere3(const vector3& center, number radius) : m_center(center), m_radius(radius)	{}
 
 		inline const vector3& get_center() const		{return m_center;}
 		inline void set_center(const vector3& center)	{m_center = center;}
@@ -83,7 +83,7 @@ enum RelativePositionIndicator
 ////////////////////////////////////////////////////////////////////////
 //	PlaneSphereTest
 ///	returns whether a sphere lies behind (inside), in front (outside) a plane or cuts it.
-RelativePositionIndicator PlaneSphereTest(const Plane& plane, const Sphere& sphere);
+RelativePositionIndicator PlaneSphereTest(const Plane& plane, const Sphere3& sphere);
 
 ////////////////////////////////////////////////////////////////////////
 //	PlanePointTest

@@ -8,6 +8,7 @@
 #include "tools_util.h"
 #include "heightfields/interpolated_heightfield.h"
 #include "tools/coordinate_transform_tools.h"
+#include "tooltips.h"
 
 using namespace ug;
 using namespace std;
@@ -32,7 +33,7 @@ public:
 	}
 
 	const char* get_name()		{return "Coordinates";}
-	const char* get_tooltip()	{return "Coordinates of the center of the current selection";}
+	const char* get_tooltip()	{return TOOLTIP_COORDINATES;}
 	const char* get_group()		{return "Coordinate Transform";}
 
 	ToolWidget* get_dialog(QWidget* parent)
@@ -90,7 +91,38 @@ public:
 	}
 
 	const char* get_name()		{return "Move";}
-	const char* get_tooltip()	{return "Moves selected vertices.";}
+	const char* get_tooltip()	{return TOOLTIP_MOVE;}
+	const char* get_group()		{return "Coordinate Transform";}
+
+	ToolWidget* get_dialog(QWidget* parent){
+		ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
+								IDB_APPLY | IDB_OK | IDB_CLOSE);
+		dlg->addSpinBox(tr("x:"), -1.e+9, 1.e+9, 0, 1, 9);
+		dlg->addSpinBox(tr("y:"), -1.e+9, 1.e+9, 0, 1, 9);
+		dlg->addSpinBox(tr("z:"), -1.e+9, 1.e+9, 0, 1, 9);
+		return dlg;
+	}
+};
+
+class ToolMoveMeshTo : public ITool
+{
+public:
+	void execute(LGObject* obj, QWidget* widget){
+		ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
+		ug::vector3 vMove(0, 0, 0);
+		if(dlg){
+			vMove.x() = dlg->to_double(0);
+			vMove.y() = dlg->to_double(1);
+			vMove.z() = dlg->to_double(2);
+		}
+
+		promesh::MoveMeshTo(obj, vMove);
+
+		obj->geometry_changed();
+	}
+
+	const char* get_name()		{return "Move Mesh To";}
+	const char* get_tooltip()	{return TOOLTIP_MOVE_MESH_TO;}
 	const char* get_group()		{return "Coordinate Transform";}
 
 	ToolWidget* get_dialog(QWidget* parent){
@@ -122,7 +154,7 @@ public:
 	}
 
 	const char* get_name()		{return "Normal Move";}
-	const char* get_tooltip()	{return "Moves selected vertices along their normal.";}
+	const char* get_tooltip()	{return TOOLTIP_NORMAL_MOVE;}
 	const char* get_group()		{return "Coordinate Transform";}
 
 	ToolWidget* get_dialog(QWidget* parent){
@@ -157,7 +189,7 @@ public:
 	}
 
 	const char* get_name()		{return "Scale";}
-	const char* get_tooltip()	{return "Scales the coordinates of the selected vertices around their center.";}
+	const char* get_tooltip()	{return TOOLTIP_SCALE;}
 	const char* get_group()		{return "Coordinate Transform";}
 
 	ToolWidget* get_dialog(QWidget* parent){
@@ -166,7 +198,6 @@ public:
 		dlg->addSpinBox(tr("x:"), -1.e+9, 1.e+9, 1., 0.1, 9);
 		dlg->addSpinBox(tr("y:"), -1.e+9, 1.e+9, 1., 0.1, 9);
 		dlg->addSpinBox(tr("z:"), -1.e+9, 1.e+9, 1., 0.1, 9);
-
 		dlg->addCheckBox(tr("scale around pivot"), false);
 
 		return dlg;
@@ -198,7 +229,7 @@ public:
 	}
 
 	const char* get_name()		{return "Rotate";}
-	const char* get_tooltip()	{return "Rotates the geometry by the given degrees around its center.";}
+	const char* get_tooltip()	{return TOOLTIP_ROTATE;}
 	const char* get_group()		{return "Coordinate Transform";}
 
 	ToolWidget* get_dialog(QWidget* parent){
@@ -274,7 +305,7 @@ public:
 	}
 
 	const char* get_name()		{return "Transform";}
-	const char* get_tooltip()	{return "Transforms the vertices with the given matrix";}
+	const char* get_tooltip()	{return TOOLTIP_TRANSFORM;}
 	const char* get_group()		{return "Coordinate Transform";}
 
 	ToolWidget* get_dialog(QWidget* parent){
@@ -317,7 +348,7 @@ public:
 	}
 
 	const char* get_name()		{return "Cone Transform";}
-	const char* get_tooltip()	{return "Transforms the vertices with the given cone transformation";}
+	const char* get_tooltip()	{return TOOLTIP_CONE_TRANSFORM;}
 	const char* get_group()		{return "Coordinate Transform";}
 
 	ToolWidget* get_dialog(QWidget* parent){
@@ -349,7 +380,7 @@ public:
 	}
 
 	const char* get_name()		{return "Laplacian Smooth";}
-	const char* get_tooltip()	{return "Smoothes vertices in a grid.";}
+	const char* get_tooltip()	{return TOOLTIP_LAPLACIAN_SMOOTH;}
 	const char* get_group()		{return "Coordinate Transform";}
 
 	ToolWidget* get_dialog(QWidget* parent){
@@ -381,7 +412,7 @@ public:
 	}
 
 	const char* get_name()		{return "Tangential Smooth";}
-	const char* get_tooltip()	{return "Smoothes vertices on a manifold.";}
+	const char* get_tooltip()	{return TOOLTIP_TANGENTIAL_SMOOTH;}
 	const char* get_group()		{return "Coordinate Transform";}
 
 	ToolWidget* get_dialog(QWidget* parent){
@@ -423,7 +454,7 @@ class ToolProjectToPlane: public ITool
 		}
 
 		const char* get_name()		{return "Project To Plane";}
-		const char* get_tooltip()	{return "Projects all selected elements to the specified plane";}
+		const char* get_tooltip()	{return TOOLTIP_RPOJECT_TO_PLANE;}
 		const char* get_group()		{return "Coordinate Transform";}
 
 		QWidget* get_dialog(QWidget* parent){
@@ -446,8 +477,7 @@ public:
 	}
 
 	const char* get_name()		{return "Project to Limit PLoop";}
-	const char* get_tooltip()	{return "Projects all vertices in the grid to their limit "
-										"positions as defined by the piecewise loop scheme.";}
+	const char* get_tooltip()	{return TOOLTIP_PROJECT_TO_LIMIT_PLOOP;}
 	const char* get_group()		{return "Coordinate Transform | Loop Projection";}
 };
 
@@ -461,8 +491,7 @@ public:
 	}
 
 	const char* get_name()		{return "Project to Limit Smooth Boundary";}
-	const char* get_tooltip()	{return "Projects all boundary-vertices in the grid to their limit "
-										"positions as defined by the b-spline subdivision scheme.";}
+	const char* get_tooltip()	{return TOOLTIP_PROJECT_TO_LIMIT_SMOOTH_BOUNDARY;}
 	const char* get_group()		{return "Coordinate Transform | Loop Projection";}
 };
 
@@ -484,7 +513,7 @@ public:
 	}
 
 	const char* get_name()		{return "Set Pivot";}
-	const char* get_tooltip()	{return "Sets the pivot point of the selected object.";}
+	const char* get_tooltip()	{return TOOLTIP_SET_PIVOT;}
 	const char* get_group()		{return "Coordinate Transform | Pivot";}
 
 	QWidget* get_dialog(QWidget* parent){
@@ -492,15 +521,27 @@ public:
 	}
 };
 
-class ToolSetPivotToCenter : public ITool
+class ToolSetPivotToSelectionCenter : public ITool
 {
 public:
 	void execute(LGObject* obj, QWidget*){
-		promesh::SetPivotToCenter(obj);
+		promesh::SetPivotToSelectionCenter(obj);
 	}
 
-	const char* get_name()		{return "Set Pivot To Center";}
-	const char* get_tooltip()	{return "Sets the pivot point of the selected object to the center of the bounding box.";}
+	const char* get_name()		{return "Set Pivot To Selection Center";}
+	const char* get_tooltip()	{return TOOLTIP_SET_PIVOT_TO_SELECTION_CENTER;}
+	const char* get_group()		{return "Coordinate Transform | Pivot";}
+};
+
+class ToolSetPivotToMeshCenter : public ITool
+{
+public:
+	void execute(LGObject* obj, QWidget*){
+		promesh::SetPivotToMeshCenter(obj);
+	}
+
+	const char* get_name()		{return "Set Pivot To Mesh Center";}
+	const char* get_tooltip()	{return TOOLTIP_SET_PIVOT_TO_MESH_CENTER;}
 	const char* get_group()		{return "Coordinate Transform | Pivot";}
 };
 
@@ -527,7 +568,7 @@ public:
 	}
 
 	const char* get_name()		{return "Flatten Bent Quads";}
-	const char* get_tooltip()	{return "Flattens bent quadrilaterals using an iterative flattening scheme";}
+	const char* get_tooltip()	{return TOOLTIP_FLATTEN_BENT_QUADRILATERALS;}
 	const char* get_group()		{return "Coordinate Transform";}
 
 	QWidget* get_dialog(QWidget* parent){
@@ -587,7 +628,7 @@ public:
 	}
 
 	const char* get_name()		{return "Apply Heightfield";}
-	const char* get_tooltip()	{return "Calculates z-values of all nodes in terms of their x and y values.";}
+	const char* get_tooltip()	{return TOOLTIP_APPLY_HEIGHT_FIELD;}
 	const char* get_group()		{return "Coordinate Transform | Heightfields";}
 
 	QWidget* get_dialog(QWidget* parent){
@@ -604,10 +645,12 @@ void RegisterCoordinateTransformTools(ToolManager* toolMgr)
 	toolMgr->set_group_icon("Coordinate Transform", ":images/tool_transform.png");
 
 	toolMgr->register_tool(new ToolCoordinates);
-	toolMgr->register_tool(new ToolSetPivotToCenter);
+	toolMgr->register_tool(new ToolSetPivotToSelectionCenter);
+	toolMgr->register_tool(new ToolSetPivotToMeshCenter);
 	toolMgr->register_tool(new ToolSetPivot);
 
 	toolMgr->register_tool(new ToolMove);
+	toolMgr->register_tool(new ToolMoveMeshTo);
 	toolMgr->register_tool(new ToolNormalMove);
 	toolMgr->register_tool(new ToolScale);
 	toolMgr->register_tool(new ToolRotate);

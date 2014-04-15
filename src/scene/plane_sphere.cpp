@@ -8,7 +8,7 @@
 namespace ug
 {
 
-RelativePositionIndicator PlaneSphereTest(const Plane& plane, const Sphere& sphere)
+RelativePositionIndicator PlaneSphereTest(const Plane& plane, const Sphere3& sphere)
 {
 //	perform a dot-product between the normal of the plane and the vector
 //	pointing from the planes position-vec to the center of the sphere.

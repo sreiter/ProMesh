@@ -29,17 +29,17 @@
 namespace ug
 {
 
-typedef Attachment<ug::Sphere> ASphere;
+typedef Attachment<ug::Sphere3> ASphere;
 
 
 ////////////////////////////////////////////////////////////////////////
 //	Methods
 ///	calculates the a bounding sphere of a face.
-void CalculateBoundingSphere(ug::Sphere& sphereOut, ug::Face* f,
+void CalculateBoundingSphere(ug::Sphere3& sphereOut, ug::Face* f,
 							Grid::VertexAttachmentAccessor<APosition>& aaPos);
 
 ///	calculates the a bounding sphere of a volume.
-void CalculateBoundingSphere(ug::Sphere& sphereOut, ug::Volume* v,
+void CalculateBoundingSphere(ug::Sphere3& sphereOut, ug::Volume* v,
 							Grid::VertexAttachmentAccessor<APosition>& aaPos);
 
 ///	if at least one point of the edge lies outside of the plane, the method returns true.
@@ -47,11 +47,11 @@ bool ClipEdge(Edge* e, ug::Plane& clipPlane,
 			  Grid::VertexAttachmentAccessor<APosition>& aaPos);
 
 ///	if at least one point of the face lies outside of the plane, the method returns true.
-bool ClipFace(Face* f, const ug::Sphere& boundingSphere, ug::Plane& clipPlane,
+bool ClipFace(Face* f, const ug::Sphere3& boundingSphere, ug::Plane& clipPlane,
 			  Grid::VertexAttachmentAccessor<APosition>& aaPos);
 
 ///	if at least one point of the volume lies outside of the plane, the method returns true.
-bool ClipVolume(Volume* v, const ug::Sphere& boundingSphere, ug::Plane& clipPlane,
+bool ClipVolume(Volume* v, const ug::Sphere3& boundingSphere, ug::Plane& clipPlane,
 				Grid::VertexAttachmentAccessor<APosition>& aaPos);
 
 }

@@ -4,6 +4,7 @@
 
 #include "app.h"
 #include "standard_tools.h"
+#include "tooltips.h"
 
 using namespace ug;
 
@@ -16,7 +17,7 @@ class ToolClearMarks : public ITool
 		}
 
 		const char* get_name()		{return "Clear Marks";}
-		const char* get_tooltip()	{return "Clears all marks";}
+		const char* get_tooltip()	{return TOOLTIP_CLEAR_MARKS;}
 		const char* get_group()		{return "Selection | Marks";}
 };
 
@@ -47,7 +48,7 @@ class ToolMarkCreaseEdges : public ITool
 		}
 
 		const char* get_name()		{return "Mark Crease Edges";}
-		const char* get_tooltip()	{return "Marks edges whose associated faces have a certain angle as crease-edge.";}
+		const char* get_tooltip()	{return TOOLTIP_MARK_CREASE_EDGES;}
 		const char* get_group()		{return "Selection | Marks";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -75,7 +76,7 @@ class ToolMarkSelection : public ITool
 		}
 
 		const char* get_name()		{return "Mark Selection";}
-		const char* get_tooltip()	{return "Marks selected vertices and edges.";}
+		const char* get_tooltip()	{return TOOLTIP_MARK_SELECTION;}
 		const char* get_group()		{return "Selection | Marks";}
 };
 
@@ -98,7 +99,7 @@ class ToolUnmarkSelection : public ITool
 		}
 
 		const char* get_name()		{return "Unmark Selection";}
-		const char* get_tooltip()	{return "Unmarks selected elements.";}
+		const char* get_tooltip()	{return TOOLTIP_UNMARK_SELECTION;}
 		const char* get_group()		{return "Selection | Marks";}
 };
 

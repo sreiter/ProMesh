@@ -12,8 +12,40 @@
 #include "app.h"
 #include "standard_tools.h"
 #include "tools/topology_tools.h"
+#include "tooltips.h"
 
 using namespace ug;
+
+class ToolResolveSelfIntersections : public ITool
+{
+	public:
+		void execute(LGObject* obj, QWidget* widget){
+			using namespace ug;
+			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
+
+			number snapThreshold = SMALL;
+
+			if(dlg){
+				snapThreshold = dlg->to_double(0);
+			}
+
+			promesh::ResolveSelfIntersections(obj, snapThreshold);
+
+			obj->geometry_changed();
+		}
+
+		const char* get_name()		{return "Resolve Self Intersections";}
+		const char* get_tooltip()	{return TOOLTIP_RESOLVE_SELF_INTERSECTIONS;}
+		const char* get_group()		{return "Remeshing | Resolve Intersections";}
+
+		ToolWidget* get_dialog(QWidget* parent){
+			ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
+											IDB_APPLY | IDB_OK | IDB_CANCEL);
+			dlg->addSpinBox(tr("snap threshold:"), 0, 1.e10, 0, 1, 9);
+
+			return dlg;
+		}
+};
 
 class ToolResolveEdgeIntersections : public ITool
 {
@@ -34,8 +66,8 @@ class ToolResolveEdgeIntersections : public ITool
 		}
 
 		const char* get_name()		{return "Resolve Edge Intersections";}
-		const char* get_tooltip()	{return "Makes sure that all edge intersections are represented by a vertex.";}
-		const char* get_group()		{return "Remeshing | Resolve Intersections";}
+		const char* get_tooltip()	{return TOOLTIP_RESOLVE_EDGE_INTERSECTIONS;}
+		const char* get_group()		{return "Remeshing | Resolve Intersections | Advanced";}
 
 		ToolWidget* get_dialog(QWidget* parent){
 			ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
@@ -65,8 +97,8 @@ class ToolResolveTriangleIntersections : public ITool
 		}
 
 		const char* get_name()		{return "Resolve Triangle Intersections";}
-		const char* get_tooltip()	{return "Makes sure that all triangle intersections are represented by an edge and vertices.";}
-		const char* get_group()		{return "Remeshing | Resolve Intersections";}
+		const char* get_tooltip()	{return TOOLTIP_RESOLVE_TRIANGLE_INTERSECTIONS;}
+		const char* get_group()		{return "Remeshing | Resolve Intersections | Advanced";}
 
 		ToolWidget* get_dialog(QWidget* parent){
 			ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
@@ -96,8 +128,8 @@ class ToolProjectVerticesToCloseEdges : public ITool
 		}
 
 		const char* get_name()		{return "Project Vertices To Close Edges";}
-		const char* get_tooltip()	{return "Projects selected vertices to selected close edges.";}
-		const char* get_group()		{return "Remeshing | Resolve Intersections";}
+		const char* get_tooltip()	{return TOOLTIP_PROJECT_VERTICES_TO_CLOSE_EDGES;}
+		const char* get_group()		{return "Remeshing | Resolve Intersections | Advanced";}
 
 		ToolWidget* get_dialog(QWidget* parent){
 			ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
@@ -127,8 +159,8 @@ class ToolProjectVerticesToCloseFaces : public ITool
 		}
 
 		const char* get_name()		{return "Project Vertices To Close Faces";}
-		const char* get_tooltip()	{return "Projects selected vertices to selected close faces.";}
-		const char* get_group()		{return "Remeshing | Resolve Intersections";}
+		const char* get_tooltip()	{return TOOLTIP_PROJECT_VERTICES_TO_CLOSE_FACES;}
+		const char* get_group()		{return "Remeshing | Resolve Intersections | Advanced";}
 
 		ToolWidget* get_dialog(QWidget* parent){
 			ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
@@ -158,8 +190,8 @@ class ToolIntersectCloseEdges : public ITool
 		}
 
 		const char* get_name()		{return "Intersect Close Edges";}
-		const char* get_tooltip()	{return "Performs intersections between selected close edges.";}
-		const char* get_group()		{return "Remeshing | Resolve Intersections";}
+		const char* get_tooltip()	{return TOOLTIP_INTERSECT_CLOSE_EDGES;}
+		const char* get_group()		{return "Remeshing | Resolve Intersections | Advanced";}
 
 		ToolWidget* get_dialog(QWidget* parent){
 			ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
@@ -194,7 +226,7 @@ class ToolEraseSelectedElements : public ITool
 		}
 
 		const char* get_name()		{return "Erase Selected Elements";}
-		const char* get_tooltip()	{return "Erases selected elements and associated unreferenced geometry.";}
+		const char* get_tooltip()	{return TOOLTIP_ERASE_SELECTED_ELEMENTS;}
 		const char* get_group()		{return "Remeshing";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -227,7 +259,7 @@ class ToolRemoveDoubles : public ITool
 		}
 
 		const char* get_name()		{return "Remove Double Vertices";}
-		const char* get_tooltip()	{return "Removes selected vertices that are close to each other";}
+		const char* get_tooltip()	{return TOOLTIP_REMOVE_DOUBLES;}
 		const char* get_group()		{return "Remeshing | Remove Doubles";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -254,7 +286,7 @@ class ToolRemoveDoubleEdges : public ITool
 		}
 
 		const char* get_name()		{return "Remove Double Edges";}
-		const char* get_tooltip()	{return "Removes selected doubles of selected edges.";}
+		const char* get_tooltip()	{return TOOLTIP_REMOVE_DOUBLE_EDGES;}
 		const char* get_group()		{return "Remeshing | Remove Doubles";}
 };
 
@@ -272,7 +304,7 @@ class ToolMergeAtFirst : public ITool
 		}
 
 		const char* get_name()		{return "Merge at First";}
-		const char* get_tooltip()	{return "Merges all selected objects into a single vertex at the first selected vertex.";}
+		const char* get_tooltip()	{return TOOLTIP_MERGE_AT_FIRST;}
 		const char* get_group()		{return "Remeshing | Merge Vertices";}
 };
 
@@ -290,7 +322,7 @@ class ToolMergeAtCenter : public ITool
 		}
 
 		const char* get_name()		{return "Merge at Center";}
-		const char* get_tooltip()	{return "Merges all selected objects into a single vertex at the center of the selection.";}
+		const char* get_tooltip()	{return TOOLTIP_MERGE_AT_CENTER;}
 		const char* get_group()		{return "Remeshing | Merge Vertices";}
 };
 
@@ -308,7 +340,7 @@ class ToolMergeAtLast : public ITool
 		}
 
 		const char* get_name()		{return "Merge at Last";}
-		const char* get_tooltip()	{return "Merges all selected objects into a single vertex at the last selected vertex.";}
+		const char* get_tooltip()	{return TOOLTIP_MERGE_AT_LAST;}
 		const char* get_group()		{return "Remeshing | Merge Vertices";}
 };
 
@@ -322,7 +354,7 @@ class ToolCollapseEdge : public ITool
 		}
 
 		const char* get_name()		{return "Collapse Edge";}
-		const char* get_tooltip()	{return "Collapses the edge and removes adjacent triangles.";}
+		const char* get_tooltip()	{return TOOLTIP_COLLAPSE_EDGE;}
 		const char* get_group()		{return "Remeshing | Edge Operations";}
 };
 
@@ -337,7 +369,7 @@ class ToolSplitEdge : public ITool
 		}
 
 		const char* get_name()		{return "Split Edge";}
-		const char* get_tooltip()	{return "Splits the edge and inserts new triangles.";}
+		const char* get_tooltip()	{return TOOLTIP_SPLIT_EDGE;}
 		const char* get_group()		{return "Remeshing | Edge Operations";}
 };
 
@@ -352,7 +384,7 @@ class ToolSwapEdge : public ITool
 		}
 
 		const char* get_name()		{return "Swap Edge";}
-		const char* get_tooltip()	{return "Swaps selected edges that are adjacent to exactly two triangles.";}
+		const char* get_tooltip()	{return TOOLTIP_SWAP_EDGE;}
 		const char* get_group()		{return "Remeshing | Edge Operations";}
 };
 
@@ -385,7 +417,7 @@ class ToolPlaneCut : public ITool
 		}
 
 		const char* get_name()		{return "Plane Cut";}
-		const char* get_tooltip()	{return "Cuts selected edges along the given plane.";}
+		const char* get_tooltip()	{return TOOLTIP_PLANE_CUT;}
 		const char* get_group()		{return "Remeshing";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -413,7 +445,7 @@ class ToolAdjustEdgeOrientation : public ITool
 		}
 
 		const char* get_name()		{return "Adjust Edge Orientation";}
-		const char* get_tooltip()	{return "Adjusts the orientation of boundary edges to associated faces.";}
+		const char* get_tooltip()	{return TOOLTIP_ADJUST_EDGE_ORIENTATION;}
 		const char* get_group()		{return "Remeshing | Orientation";}
 };
 
@@ -428,7 +460,7 @@ class ToolFixFaceOrientation : public ITool
 		}
 
 		const char* get_name()		{return "Fix Face Orientation";}
-		const char* get_tooltip()	{return "Tries to change orientation of selected faces so that all neighbouring faces point into the same direction. Only works correctly for manifold selections.";}
+		const char* get_tooltip()	{return TOOLTIP_FIX_FACE_ORIENTATION;}
 		const char* get_group()		{return "Remeshing | Orientation";}
 };
 
@@ -443,7 +475,7 @@ class ToolFixFaceSubsetOrientations : public ITool
 		}
 
 		const char* get_name()		{return "Fix Face Subset Orientations";}
-		const char* get_tooltip()	{return "Iterates over all subset and tries to fix face orientation for each. Only works correctly for manifold subsets.";}
+		const char* get_tooltip()	{return TOOLTIP_FIX_FACE_SUBSET_ORIENTATIONS;}
 		const char* get_group()		{return "Remeshing | Orientation";}
 };
 
@@ -459,7 +491,7 @@ class ToolFixVolumeOrientation : public ITool
 		}
 
 		const char* get_name()		{return "Fix Volume Orientation";}
-		const char* get_tooltip()	{return "Changes orientation of selected volumes, so that they are oriented correctly.";}
+		const char* get_tooltip()	{return TOOLTIP_FIX_VOLUME_ORIENTATION;}
 		const char* get_group()		{return "Remeshing | Orientation";}
 };
 
@@ -474,7 +506,7 @@ class ToolInvertFaceOrientation : public ITool
 		}
 
 		const char* get_name()		{return "Invert Face Orientation";}
-		const char* get_tooltip()	{return "Inverts the orientation of all selected faces.";}
+		const char* get_tooltip()	{return TOOLTIP_INVERT_FACE_ORIENTATION;}
 		const char* get_group()		{return "Remeshing | Orientation";}
 };
 
@@ -496,6 +528,7 @@ void RegisterTopologyTools(ToolManager* toolMgr)
 	toolMgr->register_tool(new ToolFixFaceOrientation);
 	toolMgr->register_tool(new ToolFixFaceSubsetOrientations);
 	toolMgr->register_tool(new ToolFixVolumeOrientation);
+	toolMgr->register_tool(new ToolResolveSelfIntersections);
 	toolMgr->register_tool(new ToolProjectVerticesToCloseEdges);
 	toolMgr->register_tool(new ToolProjectVerticesToCloseFaces);
 	toolMgr->register_tool(new ToolIntersectCloseEdges);

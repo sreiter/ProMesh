@@ -139,7 +139,7 @@ class LGScene : public TScene<LGObject>
 	//	geometry
 	///	returns the bounding box of the scene
 		void get_bounding_box(ug::vector3& vMinOut, ug::vector3& vMaxOut);
-		ug::Sphere get_bounding_sphere();
+		ug::Sphere3 get_bounding_sphere();
 
 	//	clipping planes
 		inline int numClipPlanes()					{return MAX_NUM_CLIP_PLANES;}
@@ -236,12 +236,12 @@ class LGScene : public TScene<LGObject>
 						 ug::Grid::VertexAttachmentAccessor<ug::APosition>& aaPos);
 		bool clip_edge(ug::Edge* e,
 					   ug::Grid::VertexAttachmentAccessor<ug::APosition>& aaPos);
-		bool clip_face(ug::Face* f, const ug::Sphere& boundingSphere,
+		bool clip_face(ug::Face* f, const ug::Sphere3& boundingSphere,
 					   ug::Grid::VertexAttachmentAccessor<ug::APosition>& aaPos);
-		bool clip_volume(ug::Volume* v, const ug::Sphere& boundingSphere,
+		bool clip_volume(ug::Volume* v, const ug::Sphere3& boundingSphere,
 						 ug::Grid::VertexAttachmentAccessor<ug::APosition>& aaPos);
 
-		ug::RelativePositionIndicator clip_sphere(const ug::Sphere& sphere);
+		ug::RelativePositionIndicator clip_sphere(const ug::Sphere3& sphere);
 		ug::RelativePositionIndicator clip_point(const ug::vector3& point);
 
 	protected:

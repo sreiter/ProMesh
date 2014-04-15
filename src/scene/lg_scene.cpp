@@ -198,7 +198,7 @@ void LGScene::get_bounding_box(ug::vector3& vMinOut, ug::vector3& vMaxOut)
 	}
 }
 
-ug::Sphere LGScene::get_bounding_sphere()
+ug::Sphere3 LGScene::get_bounding_sphere()
 {
 //	approximate center and radius
 	vector3 vMin, vMax;
@@ -208,7 +208,7 @@ ug::Sphere LGScene::get_bounding_sphere()
 	VecAdd(vCenter, vMin, vMax);
 	VecScale(vCenter, vCenter, 0.5);
 
-	return Sphere(vCenter, 0.5 * VecDistance(vMin, vMax));
+	return Sphere3(vCenter, 0.5 * VecDistance(vMin, vMax));
 }
 
 //	index from 0 to 2: xy, xz, yz
@@ -265,7 +265,7 @@ bool LGScene::clip_edge(Edge* e, Grid::VertexAttachmentAccessor<APosition>& aaPo
 	return false;
 }
 
-bool LGScene::clip_face(Face* f, const ug::Sphere& boundingSphere,
+bool LGScene::clip_face(Face* f, const ug::Sphere3& boundingSphere,
 						Grid::VertexAttachmentAccessor<APosition>& aaPos)
 {
 //	exact version
@@ -291,7 +291,7 @@ bool LGScene::clip_face(Face* f, const ug::Sphere& boundingSphere,
 	return false;
 }
 
-bool LGScene::clip_volume(Volume* v, const ug::Sphere& boundingSphere,
+bool LGScene::clip_volume(Volume* v, const ug::Sphere3& boundingSphere,
 						Grid::VertexAttachmentAccessor<APosition>& aaPos)
 {
 //	exact version
@@ -316,7 +316,7 @@ bool LGScene::clip_volume(Volume* v, const ug::Sphere& boundingSphere,
 	return false;
 }
 
-RelativePositionIndicator LGScene::clip_sphere(const Sphere& sphere)
+RelativePositionIndicator LGScene::clip_sphere(const Sphere3& sphere)
 {
 	RelativePositionIndicator retVal = RPI_INSIDE;
 	for(int i = 0; i < numClipPlanes(); ++i)
@@ -360,7 +360,7 @@ void LGScene::get_clip_distance_estimate(float& nearOut, float& farOut,
 	vector3 dir;
 	VecSubtract(dir, to, from);
 
-	Sphere bndSphere = get_bounding_sphere();
+	Sphere3 bndSphere = get_bounding_sphere();
 
 	float distToCenter = DistancePointToPlane(bndSphere.get_center(), from, dir);
 	farOut = distToCenter + bndSphere.get_radius() * 1.01;
@@ -1988,7 +1988,7 @@ get_clicked_face(LGObject* pObj, const ug::vector3& from,
 		}
 
 	//	check bounding sphere
-		Sphere& sphere = aaSphereFACE[f];
+		Sphere3& sphere = aaSphereFACE[f];
 		number t;
 		if(DistancePointToLine(t, sphere.get_center(), from, to)
 			<= sphere.get_radius())

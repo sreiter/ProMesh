@@ -8,6 +8,7 @@
 #include "standard_tools.h"
 #include "tools_util.h"
 #include "tools/selection_tools.h"
+#include "tooltips.h"
 
 using namespace ug;
 
@@ -20,7 +21,7 @@ class ToolSelectLinkedManifoldFaces : public ITool
 		}
 
 		const char* get_name()		{return "Linked Manifold Faces";}
-		const char* get_tooltip()	{return "Selects faces linked with the selection, not crossing non-manifold edges.";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_LINKED_MANIFOLD_FACES;}
 		const char* get_group()		{return "Selection | Faces";}
 };
 
@@ -33,7 +34,7 @@ class ToolSelectNonManifoldEdges : public ITool
 		}
 
 		const char* get_name()		{return "Non Manifold Edges";}
-		const char* get_tooltip()	{return "Selects edges with more than 2 associated faces.";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_NON_MANIFOLD_EDGES;}
 		const char* get_group()		{return "Selection | Edges";}
 };
 
@@ -46,7 +47,7 @@ class ToolClearSelection : public ITool
 		}
 
 		const char* get_name()		{return "Clear Selection";}
-		const char* get_tooltip()	{return "Clears the selection";}
+		const char* get_tooltip()	{return TOOLTIP_CLEAR_SELECTION;}
 		const char* get_group()		{return "Selection";}
 };
 
@@ -66,7 +67,7 @@ class ToolSelectSmoothEdgePath : public ITool
 		}
 
 		const char* get_name()		{return "Smooth Path";}
-		const char* get_tooltip()	{return "Selects a smooth edge path.";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_SMOOTH_EDGE_PATH;}
 		const char* get_group()		{return "Selection | Edges";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -87,7 +88,7 @@ class ToolSelectBoundaryVertices : public ITool
 		}
 
 		const char* get_name()		{return "Boundary Vertices";}
-		const char* get_tooltip()	{return "Selects vertices that lie on the boundary of the geometry";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_BOUNDARY_VERTICES;}
 		const char* get_group()		{return "Selection | Vertices";}
 };
 
@@ -100,7 +101,7 @@ class ToolSelectInnerVertices : public ITool
 		}
 
 		const char* get_name()		{return "Inner Vertices";}
-		const char* get_tooltip()	{return "Selects vertices that do not lie on the boundary of the geometry";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_INNER_VERTICES;}
 		const char* get_group()		{return "Selection | Vertices";}
 };
 
@@ -113,7 +114,7 @@ class ToolSelectBoundaryEdges : public ITool
 		}
 
 		const char* get_name()		{return "Boundary Edges";}
-		const char* get_tooltip()	{return "Selects edges that lie on the boundary of the geometry";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_BOUNDARY_EDGES;}
 		const char* get_group()		{return "Selection | Edges";}
 };
 
@@ -126,7 +127,7 @@ class ToolSelectInnerEdges : public ITool
 		}
 
 		const char* get_name()		{return "Inner Edges";}
-		const char* get_tooltip()	{return "Selects edges that do not lie on the boundary of the geometry";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_INNER_EDGES;}
 		const char* get_group()		{return "Selection | Edges";}
 };
 
@@ -139,7 +140,7 @@ class ToolSelectBoundaryFaces : public ITool
 		}
 
 		const char* get_name()		{return "Boundary Faces";}
-		const char* get_tooltip()	{return "Selects faces that lie on the boundary of the geometry";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_BOUNDARY_FACES;}
 		const char* get_group()		{return "Selection | Faces";}
 };
 
@@ -152,7 +153,7 @@ class ToolSelectInnerFaces : public ITool
 		}
 
 		const char* get_name()		{return "Inner Faces";}
-		const char* get_tooltip()	{return "Selects faces that do not lie on the boundary of the geometry";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_INNER_FACES;}
 		const char* get_group()		{return "Selection | Faces";}
 };
 
@@ -177,7 +178,7 @@ class ToolSelectShortEdges : public ITool
 		}
 
 		const char* get_name()		{return "Short Edges";}
-		const char* get_tooltip()	{return "Selects edges that are shorter than a given threshold.";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_SHORT_EDGES;}
 		const char* get_group()		{return "Selection | Edges";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -209,7 +210,7 @@ class ToolSelectLongEdges : public ITool
 		}
 
 		const char* get_name()		{return "Long Edges";}
-		const char* get_tooltip()	{return "Selects edges that are longer than a given threshold.";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_LONG_EDGES;}
 		const char* get_group()		{return "Selection | Edges";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -237,7 +238,7 @@ class ToolSelectCreaseEdges : public ITool
 		}
 
 		const char* get_name()		{return "Crease Edges";}
-		const char* get_tooltip()	{return "Selects edges that at which triangles meet in a given angle.";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_CREASE_EDGES;}
 		const char* get_group()		{return "Selection | Edges";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -268,7 +269,7 @@ class ToolSelectDegenerateFaces : public ITool
 		}
 
 		const char* get_name()		{return "Degenerate Faces";}
-		const char* get_tooltip()	{return "Selects faces that have a height shorter than a given threshold.";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_DEGENERATE_FACES;}
 		const char* get_group()		{return "Selection | Faces";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -304,7 +305,7 @@ class ToolSelectLinkedFlatFaces : public ITool
 		}
 
 		const char* get_name()		{return "Linked Flat Faces";}
-		const char* get_tooltip()	{return "Selects linked faces of selected faces that have a similar normal.";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_LINKED_FLAT_FACES;}
 		const char* get_group()		{return "Selection | Faces";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -337,7 +338,7 @@ class ToolSelectLinkedBoundaryEdges : public ITool
 		}
 
 		const char* get_name()		{return "Linked Boundary Edges";}
-		const char* get_tooltip()	{return "Selects linked boundary edges of selected edges.";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_LINKED_BOUNDARY_EDGES;}
 		const char* get_group()		{return "Selection | Edges";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -367,7 +368,7 @@ class ToolSelectLinkedBoundaryFaces : public ITool
 		}
 
 		const char* get_name()		{return "Linked Boundary Faces";}
-		const char* get_tooltip()	{return "Selects linked boundary faces of selected faces.";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_LINKED_BOUNDARY_FACES;}
 		const char* get_group()		{return "Selection | Faces";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -393,7 +394,7 @@ class ToolSelectIntersectingTriangles : public ITool
 		}
 
 		const char* get_name()		{return "Intersecting Triangles";}
-		const char* get_tooltip()	{return "Selects intersecting triangles. Neighbors are ignored.";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_INTERSECTING_TRIANGLES;}
 		const char* get_group()		{return "Selection | Faces";}
 };
 
@@ -406,7 +407,7 @@ class ToolSelectAssociatedVertices : public ITool
 		}
 
 		const char* get_name()		{return "Associated Vertices";}
-		const char* get_tooltip()	{return "Selects vertices that belong to selected edges, faces and volumes.";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_ASSOCIATED_VERTICES;}
 		const char* get_group()		{return "Selection | Vertices";}
 };
 
@@ -419,7 +420,7 @@ class ToolSelectAssociatedEdges : public ITool
 		}
 
 		const char* get_name()		{return "Associated Edges";}
-		const char* get_tooltip()	{return "Selects edges that belong to selected faces and volumes.";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_ASSOCIATED_EDGES;}
 		const char* get_group()		{return "Selection | Edges";}
 };
 
@@ -432,7 +433,7 @@ class ToolSelectAssociatedFaces : public ITool
 		}
 
 		const char* get_name()		{return "Associated Faces";}
-		const char* get_tooltip()	{return "Selects faces that belong to selected volumes.";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_ASSOCIATED_FACES;}
 		const char* get_group()		{return "Selection | Faces";}
 };
 
@@ -445,7 +446,7 @@ class ToolSelectAll : public ITool
 		}
 
 		const char* get_name()		{return "Select All";}
-		const char* get_tooltip()	{return "Selects all vertices, edges ,faces and volumes of the current grid";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_ALL;}
 		const char* get_group()		{return "Selection";}
 };
 
@@ -458,7 +459,7 @@ class ToolSelectAllVertices : public ITool
 		}
 
 		const char* get_name()		{return "All Vertices";}
-		const char* get_tooltip()	{return "Selects all vertices of the current grid";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_ALL_VERTICES;}
 		const char* get_group()		{return "Selection | Vertices";}
 };
 
@@ -471,7 +472,7 @@ class ToolDeselectAllVertices : public ITool
 		}
 
 		const char* get_name()		{return "Deselect All";}
-		const char* get_tooltip()	{return "Deselects all vertices of the current grid";}
+		const char* get_tooltip()	{return TOOLTIP_DESELECT_ALL_VERTICES;}
 		const char* get_group()		{return "Selection | Vertices";}
 };
 
@@ -484,7 +485,7 @@ class ToolSelectAllEdges : public ITool
 		}
 
 		const char* get_name()		{return "All Edges";}
-		const char* get_tooltip()	{return "Selects all edges of the current grid";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_ALL_EDGES;}
 		const char* get_group()		{return "Selection | Edges";}
 };
 
@@ -497,7 +498,7 @@ class ToolDeselectAllEdges : public ITool
 		}
 
 		const char* get_name()		{return "Deselect All";}
-		const char* get_tooltip()	{return "Deselects all edges of the current grid";}
+		const char* get_tooltip()	{return TOOLTIP_DESELECT_ALL_EDGES;}
 		const char* get_group()		{return "Selection | Edges";}
 };
 
@@ -510,7 +511,7 @@ class ToolSelectAllFaces : public ITool
 		}
 
 		const char* get_name()		{return "All Faces";}
-		const char* get_tooltip()	{return "Selects all faces of the current grid";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_ALL_FACES;}
 		const char* get_group()		{return "Selection | Faces";}
 };
 
@@ -523,7 +524,7 @@ class ToolDeselectAllFaces : public ITool
 		}
 
 		const char* get_name()		{return "Deselect All";}
-		const char* get_tooltip()	{return "Deselects all faces of the current grid";}
+		const char* get_tooltip()	{return TOOLTIP_DESELECT_ALL_FACES;}
 		const char* get_group()		{return "Selection | Faces";}
 };
 
@@ -536,7 +537,7 @@ class ToolSelectAllVolumes : public ITool
 		}
 
 		const char* get_name()		{return "All Volumes";}
-		const char* get_tooltip()	{return "Selects all volumes of the current grid";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_ALL_VOLUMES;}
 		const char* get_group()		{return "Selection | Volumes";}
 };
 
@@ -549,7 +550,7 @@ class ToolDeselectAllVolumes : public ITool
 		}
 
 		const char* get_name()		{return "Deselect All";}
-		const char* get_tooltip()	{return "Deselects all volumes of the current grid";}
+		const char* get_tooltip()	{return TOOLTIP_DESELECT_ALL_VOLUMES;}
 		const char* get_group()		{return "Selection | Volumes";}
 };
 
@@ -562,7 +563,7 @@ class ToolSelectMarkedVertices : public ITool
 		}
 
 		const char* get_name()		{return "Marked Vertices";}
-		const char* get_tooltip()	{return "Selects vertices which are marked.";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_MARKED_VERTICES;}
 		const char* get_group()		{return "Selection | Vertices";}
 };
 
@@ -575,7 +576,7 @@ class ToolSelectMarkedEdges : public ITool
 		}
 
 		const char* get_name()		{return "Marked Edges";}
-		const char* get_tooltip()	{return "Selects edges which are marked.";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_MARKED_EDGES;}
 		const char* get_group()		{return "Selection | Edges";}
 };
 
@@ -589,7 +590,7 @@ class ToolSelectUnorientableVolumes : public ITool
 		}
 
 		const char* get_name()		{return "Unorientable Volumes";}
-		const char* get_tooltip()	{return "Selects all volumes whose orientation can not be determined";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_UNORIENTABLE_VOLUMES;}
 		const char* get_group()		{return "Selection | Volumes";}
 };
 
@@ -610,7 +611,7 @@ class ToolExtendSelection : public ITool
 		}
 
 		const char* get_name()		{return "Extend Selection";}
-		const char* get_tooltip()	{return "Selects neighbors of selected elements.";}
+		const char* get_tooltip()	{return TOOLTIP_EXTEND_SELECTION;}
 		const char* get_group()		{return "Selection";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -636,7 +637,7 @@ class ToolSelectVertexByIndex : public ITool
 		}
 
 		const char* get_name()		{return "Vertex By Index";}
-		const char* get_tooltip()	{return "Selects a vertex given its index.";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_VERTEX_BY_INDEX;}
 		const char* get_group()		{return "Selection | Vertices";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -660,7 +661,7 @@ class ToolSelectEdgeByIndex : public ITool
 		}
 
 		const char* get_name()		{return "Edge By Index";}
-		const char* get_tooltip()	{return "Selects a edge given its index.";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_EDGE_BY_INDEX;}
 		const char* get_group()		{return "Selection | Edges";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -684,7 +685,7 @@ class ToolSelectFaceByIndex : public ITool
 		}
 
 		const char* get_name()		{return "Face By Index";}
-		const char* get_tooltip()	{return "Selects a face given its index.";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_FACE_BY_INDEX;}
 		const char* get_group()		{return "Selection | Faces";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -708,7 +709,7 @@ class ToolSelectVolumeByIndex : public ITool
 		}
 
 		const char* get_name()		{return "Volume By Index";}
-		const char* get_tooltip()	{return "Selects a volume given its index.";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_VOLUME_BY_INDEX;}
 		const char* get_group()		{return "Selection | Volumes";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -743,7 +744,7 @@ class ToolSelectVertexByCoordinate : public ITool
 		}
 
 		const char* get_name()		{return "Vertex By Coordinate";}
-		const char* get_tooltip()	{return "Selects a vertex given a coordinate.";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_VERTEX_BY_COORDINATE;}
 		const char* get_group()		{return "Selection | Vertices";}
 
 		QWidget* get_dialog(QWidget* parent){
@@ -775,7 +776,7 @@ class ToolSelectEdgeByCoordinate : public ITool
 		}
 
 		const char* get_name()		{return "Edge By Coordinate";}
-		const char* get_tooltip()	{return "Selects the edge whose center is closest to the specified coordinate.";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_EDGE_BY_COORDINATE;}
 		const char* get_group()		{return "Selection | Edges";}
 
 		QWidget* get_dialog(QWidget* parent){
@@ -807,7 +808,7 @@ class ToolSelectFaceByCoordinate : public ITool
 		}
 
 		const char* get_name()		{return "Face By Coordinate";}
-		const char* get_tooltip()	{return "Selects the face whose center is closest to the specified coordinate.";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_FACE_BY_COORDINATE;}
 		const char* get_group()		{return "Selection | Faces";}
 
 		QWidget* get_dialog(QWidget* parent){
@@ -839,7 +840,7 @@ class ToolSelectVolumeByCoordinate : public ITool
 		}
 
 		const char* get_name()		{return "Volume By Coordinate";}
-		const char* get_tooltip()	{return "Selects the volume whose center is closest to the specified coordinate.";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_VOLUME_BY_COORDINATE;}
 		const char* get_group()		{return "Selection | Volumes";}
 
 		QWidget* get_dialog(QWidget* parent){
@@ -869,7 +870,7 @@ class ToolSelectUnconnectedVertices : public ITool
 		}
 
 		const char* get_name()		{return "Unconnected Vertices";}
-		const char* get_tooltip()	{return "Selects vertices which are not connected to the given element type.";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_UNCONNECTED_VERTICES;}
 		const char* get_group()		{return "Selection | Vertices";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -911,7 +912,7 @@ class ToolSelectSubset : public ITool
 		}
 
 		const char* get_name()		{return "Subset";}
-		const char* get_tooltip()	{return "Selects all elements of a subset.";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_SUBSET;}
 		const char* get_group()		{return "Selection";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -949,7 +950,7 @@ class ToolSelectSubsetBoundary : public ITool
 		}
 
 		const char* get_name()		{return "Subset Boundary";}
-		const char* get_tooltip()	{return "Selects the boundary of a subset.";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_SUBSET_BOUNDARY;}
 		const char* get_group()		{return "Selection";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -989,7 +990,7 @@ class ToolSelectUnassignedElements : public ITool
 		}
 
 		const char* get_name()		{return "Unassigned Elements";}
-		const char* get_tooltip()	{return "Selects all elements not assigned to any subset.";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_UNASSIGNED_ELEMENTS;}
 		const char* get_group()		{return "Selection";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -1026,7 +1027,7 @@ class ToolInvertSelection : public ITool
 		}
 
 		const char* get_name()		{return "Invert Selection";}
-		const char* get_tooltip()	{return "Inverts current selection.";}
+		const char* get_tooltip()	{return TOOLTIP_INVERT_SELECTION;}
 		const char* get_group()		{return "Selection";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -1047,7 +1048,7 @@ class ToolEdgeSelectionFill : public ITool
 		}
 
 		const char* get_name()		{return "Edge Selection Fill";}
-		const char* get_tooltip()	{return "Selects neighbours of selected edges over non-selected vertices.";}
+		const char* get_tooltip()	{return TOOLTIP_EDGE_SELECTION_FILL;}
 		const char* get_group()		{return "Selection | Edges";}
 };
 
@@ -1061,7 +1062,7 @@ class ToolFaceSelectionFill : public ITool
 		}
 
 		const char* get_name()		{return "Face Selection Fill";}
-		const char* get_tooltip()	{return "Selects neighbours of selected faces over non-selected edges.";}
+		const char* get_tooltip()	{return TOOLTIP_FACE_SELECTION_FILL;}
 		const char* get_group()		{return "Selection | Faces";}
 };
 
@@ -1075,7 +1076,7 @@ class ToolVolumeSelectionFill : public ITool
 		}
 
 		const char* get_name()		{return "Volume Selection Fill";}
-		const char* get_tooltip()	{return "Selects neighbours of selected volumes over non-selected faces.";}
+		const char* get_tooltip()	{return TOOLTIP_VOLUME_SELECTION_FILL;}
 		const char* get_group()		{return "Selection | Volumes";}
 };
 
@@ -1089,7 +1090,7 @@ class ToolSelectSelectionBoundary : public ITool
 		}
 
 		const char* get_name()		{return "Selection Boundary";}
-		const char* get_tooltip()	{return "Selects the boundary of the current selection.";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_SELECTION_BOUNDARY;}
 		const char* get_group()		{return "Selection";}
 };
 
@@ -1113,7 +1114,7 @@ class ToolSelectBentQuadrilaterals: public ITool
 		}
 
 		const char* get_name()		{return "Bent Quadrilaterals";}
-		const char* get_tooltip()	{return "Selects quadrilaterals which do not lie in a plane.";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_BENT_QUADRILATERALS;}
 		const char* get_group()		{return "Selection | Faces";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -1134,7 +1135,7 @@ class ToolCloseSelection: public ITool
 		}
 
 		const char* get_name()		{return "Close Selection";}
-		const char* get_tooltip()	{return "Selects all associated elements of lower dimensions.";}
+		const char* get_tooltip()	{return TOOLTIP_CLOSE_SELECTION;}
 		const char* get_group()		{return "Selection";}
 };
 

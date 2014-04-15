@@ -6,6 +6,7 @@
 #include "app.h"
 #include "standard_tools.h"
 #include "tetgen.h"
+#include "tooltips.h"
 
 using namespace std;
 using namespace ug;
@@ -31,7 +32,7 @@ class ToolPrintSelectionCenter : public ITool
 		}
 
 		const char* get_name()		{return "Print Selection Center";}
-		const char* get_tooltip()	{return "Calculates and prints the position of the center of the current selection.";}
+		const char* get_tooltip()	{return TOOLTIP_PRINT_SELECTION_CENTER;}
 		const char* get_group()		{return "Info";}
 };
 
@@ -60,7 +61,7 @@ class ToolPrintGeometryInfo : public ITool
 		}
 
 		const char* get_name()		{return "Print Geometry Info";}
-		const char* get_tooltip()	{return "Prints info about the current geometry";}
+		const char* get_tooltip()	{return TOOLTIP_PRINT_GEOMETRY_INFO;}
 		const char* get_group()		{return "Info";}
 };
 
@@ -81,7 +82,7 @@ class ToolPrintFaceQuality : public ITool
 		}
 
 		const char* get_name()		{return "Print Face Quality";}
-		const char* get_tooltip()	{return "Prints the quality of selected faces";}
+		const char* get_tooltip()	{return TOOLTIP_PRINT_FACE_QUALITY;}
 		const char* get_group()		{return "Info";}
 };
 
@@ -108,7 +109,7 @@ class ToolPrintSelectionInfo : public ITool
 		}
 
 		const char* get_name()		{return "Print Selection Info";}
-		const char* get_tooltip()	{return "Prints the quantities of selected elements";}
+		const char* get_tooltip()	{return TOOLTIP_PRINT_SELECTION_INFO;}
 		const char* get_group()		{return "Info";}
 };
 
@@ -161,7 +162,7 @@ class ToolPrintSelectionContainingSubsets : public ITool
 		}
 
 		const char* get_name()		{return "Print Selection Containing Subsets";}
-		const char* get_tooltip()	{return "Prints subset indices of all subsets, which contain a selected element.";}
+		const char* get_tooltip()	{return TOOLTIP_PRINT_SELECTION_CONTAINING_SUBSETS;}
 		const char* get_group()		{return "Info";}
 };
 
@@ -209,7 +210,7 @@ class ToolPrintVertexDistance : public ITool
 		}
 
 		const char* get_name()		{return "Print Vertex Distance";}
-		const char* get_tooltip()	{return "Prints the min and max distance of vertices of selected elements.";}
+		const char* get_tooltip()	{return TOOLTIP_PRINT_VERTEX_DISTANCE;}
 		const char* get_group()		{return "Info";}
 };
 
@@ -251,7 +252,7 @@ class ToolPrintLeastSquaresPlane: public ITool
 		}
 
 		const char* get_name()		{return "Print Least Squares Plane";}
-		const char* get_tooltip()	{return "Prints the position and normal of the least squares fitting plane";}
+		const char* get_tooltip()	{return TOOLTIP_PRINT_LEAST_SQUARES_PLANE;}
 		const char* get_group()		{return "Info";}
 };
 

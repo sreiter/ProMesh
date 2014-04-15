@@ -95,6 +95,12 @@ void MainWindow::init()
 	m_actReload->setStatusTip(tr("Reloads the active geometry."));
 	connect(m_actReload, SIGNAL(triggered()), this, SLOT(reloadActiveGeometry()));
 
+	m_actReloadAll = new QAction(tr("Reload &All"), this);
+	//m_actReloadAll->setIcon(QIcon(":images/fileopen.png"));
+	m_actReloadAll->setShortcut(tr("Ctrl+F5"));
+	m_actReloadAll->setStatusTip(tr("Reloads all geometries."));
+	connect(m_actReloadAll, SIGNAL(triggered()), this, SLOT(reloadAllGeometries()));
+
 	m_actSave = new QAction(tr("&Save"), this);
 	m_actSave->setIcon(QIcon(":images/filesave.png"));
 	m_actSave->setShortcut(tr("Ctrl+S"));
@@ -134,6 +140,7 @@ void MainWindow::init()
 	filemenu->addAction(m_actNew);
 	filemenu->addAction(m_actOpen);
 	filemenu->addAction(m_actReload);
+	filemenu->addAction(m_actReloadAll);
 	filemenu->addAction(m_actSave);
 	filemenu->addAction(m_actErase);
 	filemenu->addSeparator();
@@ -508,7 +515,7 @@ bool MainWindow::load_grid_from_file(const char* filename)
 				if(bFirstLoad)
 				{
 					bFirstLoad = false;
-					ug::Sphere s = pObj->get_bounding_sphere();
+					ug::Sphere3 s = pObj->get_bounding_sphere();
 					m_pView->fly_to(cam::vector3(s.get_center().x(),
 													s.get_center().y(),
 													s.get_center().z()),
@@ -600,6 +607,19 @@ bool MainWindow::reloadActiveGeometry()
 	LGObject* obj = app::getActiveObject();
 	if(obj){
 		return ReloadLGObject(obj);
+	}
+	return false;
+}
+
+bool MainWindow::reloadAllGeometries()
+{
+	LGScene* scene = app::getActiveScene();
+	if(scene){
+		bool success = true;
+		for (int i = 0; i < scene->num_objects(); ++i){
+			success &= ReloadLGObject(scene->get_object(i));
+		}
+		return success;
 	}
 	return false;
 }

@@ -139,7 +139,7 @@ class LGObject : public ISceneObject, public ug::promesh::MeshObject
 
 	//	geometry info
 		void update_bounding_shapes();
-		inline ug::Sphere& get_bounding_sphere()	{return m_boundSphere;}
+		inline ug::Sphere3& get_bounding_sphere()	{return m_boundSphere;}
 		inline void get_bounding_box(ug::vector3& vMinOut, ug::vector3& vMaxOut)
 			{vMinOut = m_boundBoxMin; vMaxOut = m_boundBoxMax;}
 
@@ -195,7 +195,7 @@ class LGObject : public ISceneObject, public ug::promesh::MeshObject
 
 		ug::vector3			m_boundBoxMin;
 		ug::vector3			m_boundBoxMax;
-		ug::Sphere			m_boundSphere;
+		ug::Sphere3			m_boundSphere;
 
 		DisplayListVec		m_displayLists;
 		DisplayModeVec		m_displayModes;

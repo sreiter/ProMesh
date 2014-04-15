@@ -9,6 +9,7 @@
 #include "tools_util.h"
 #include "lib_grid/algorithms/remeshing/delaunay_triangulation.h"
 #include "tools/grid_generation_tools.h"
+#include "tooltips.h"
 
 //#include "lib_discretization/spatial_discretization/disc_util/finite_volume_output.h"
 
@@ -36,7 +37,7 @@ class ToolNewObject : public ITool
 		}
 
 		const char* get_name()		{return "New Object";}
-		const char* get_tooltip()	{return "Creates a new empty object.";}
+		const char* get_tooltip()	{return TOOLTIP_NEW_OBJECT;}
 		const char* get_group()		{return "Grid Generation | Objects";}
 		bool accepts_null_object_ptr()	{return true;}
 
@@ -179,7 +180,7 @@ class ToolMergeObjects : public ITool
 		}
 
 		const char* get_name()		{return "Merge Objects";}
-		const char* get_tooltip()	{return "Merges the selected objects into a new one.";}
+		const char* get_tooltip()	{return TOOLTIP_MERGE_OBJECTS;}
 		const char* get_group()		{return "Grid Generation | Objects";}
 
 		QWidget* get_dialog(QWidget* parent){
@@ -251,7 +252,7 @@ class ToolCreateVertex : public ITool
 		}
 
 		const char* get_name()		{return "Create Vertex";}
-		const char* get_tooltip()	{return "Creates a new vertex";}
+		const char* get_tooltip()	{return TOOLTIP_CREATE_VERTEX;}
 		const char* get_group()		{return "Grid Generation | Basic Elements";}
 		bool accepts_null_object_ptr()	{return true;}
 
@@ -279,7 +280,7 @@ class ToolCreateEdge : public ITool
 		}
 
 		const char* get_name()		{return "Create Edge";}
-		const char* get_tooltip()	{return "Creates an edge between two selected vertices.";}
+		const char* get_tooltip()	{return TOOLTIP_CREATE_EDGE;}
 		const char* get_group()		{return "Grid Generation | Basic Elements";}
 };
 
@@ -301,7 +302,7 @@ class ToolCreateFace : public ITool
 		}
 
 		const char* get_name()		{return "Create Face";}
-		const char* get_tooltip()	{return "Creates a face between selected vertices.";}
+		const char* get_tooltip()	{return TOOLTIP_CREATE_FACE;}
 		const char* get_group()		{return "Grid Generation | Basic Elements";}
 };
 
@@ -324,7 +325,7 @@ class ToolCreateVolume : public ITool
 		}
 
 		const char* get_name()		{return "Create Volume";}
-		const char* get_tooltip()	{return "Creates a volume between selected vertices.";}
+		const char* get_tooltip()	{return TOOLTIP_CREATE_VOLUME;}
 		const char* get_group()		{return "Grid Generation | Basic Elements";}
 };
 
@@ -397,7 +398,7 @@ public:
 	}
 
 	const char* get_name()		{return "Create Plane";}
-	const char* get_tooltip()	{return "Creates a plane.";}
+	const char* get_tooltip()	{return TOOLTIP_CREATE_PLANE;}
 	const char* get_group()		{return "Grid Generation | Geometries";}
 	bool accepts_null_object_ptr()	{return true;}
 
@@ -453,7 +454,7 @@ public:
 	}
 
 	const char* get_name()		{return "Create Circle";}
-	const char* get_tooltip()	{return "Creates a circle.";}
+	const char* get_tooltip()	{return TOOLTIP_CREATE_CIRCLE;}
 	const char* get_group()		{return "Grid Generation | Geometries";}
 	bool accepts_null_object_ptr()	{return true;}
 
@@ -502,7 +503,7 @@ public:
 	}
 
 	const char* get_name()		{return "Create Box";}
-	const char* get_tooltip()	{return "Creates a box.";}
+	const char* get_tooltip()	{return TOOLTIP_CREATE_BOX;}
 	const char* get_group()		{return "Grid Generation | Geometries";}
 	bool accepts_null_object_ptr()	{return true;}
 
@@ -552,7 +553,7 @@ public:
 	}
 
 	const char* get_name()		{return "Create Sphere";}
-	const char* get_tooltip()	{return "Creates a sphere.";}
+	const char* get_tooltip()	{return TOOLTIP_CREATE_SPHERE;}
 	const char* get_group()		{return "Grid Generation | Geometries";}
 	bool accepts_null_object_ptr()	{return true;}
 
@@ -593,7 +594,7 @@ public:
 	}
 
 	const char* get_name()		{return "Create Tetrahedron";}
-	const char* get_tooltip()	{return "Creates a tetrahedron.";}
+	const char* get_tooltip()	{return TOOLTIP_CREATE_TETRAHEDRON;}
 	const char* get_group()		{return "Grid Generation | Geometries";}
 	bool accepts_null_object_ptr()	{return true;}
 
@@ -630,7 +631,7 @@ public:
 	}
 
 	const char* get_name()		{return "Create Pyramid";}
-	const char* get_tooltip()	{return "Creates a pyramid.";}
+	const char* get_tooltip()	{return TOOLTIP_CREATE_PYRAMID;}
 	const char* get_group()		{return "Grid Generation | Geometries";}
 	bool accepts_null_object_ptr()	{return true;}
 
@@ -669,7 +670,7 @@ public:
 	}
 
 	const char* get_name()		{return "Create Prism";}
-	const char* get_tooltip()	{return "Creates a prism.";}
+	const char* get_tooltip()	{return TOOLTIP_CREATE_PRISM;}
 	const char* get_group()		{return "Grid Generation | Geometries";}
 	bool accepts_null_object_ptr()	{return true;}
 
@@ -936,8 +937,7 @@ public:
         }
 
         const char* get_name()		{return "Create Dual Grid";}
-        const char* get_tooltip()	{return "creates the dual grid consisting of"
-                                                " control volumes as used in the finite volume method";}
+        const char* get_tooltip()	{return TOOLTIP_CREATE_DUALGRID;}
         const char* get_group()		{return "Grid Generation";}
 
         ToolWidget* get_dialog(QWidget* parent){

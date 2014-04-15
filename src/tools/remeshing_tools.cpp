@@ -6,6 +6,7 @@
 #include "app.h"
 #include "standard_tools.h"
 #include "tools/remeshing_tools.h"
+#include "tooltips.h"
 
 using namespace ug;
 
@@ -18,7 +19,7 @@ class ToolConvertToTriangles : public ITool
 		}
 
 		const char* get_name()		{return "Convert To Triangles";}
-		const char* get_tooltip()	{return "Converts selected quadrilaterals to triangles.";}
+		const char* get_tooltip()	{return TOOLTIP_CONVERT_TO_TRIANGLES;}
 		const char* get_group()		{return "Remeshing | Triangulation";}
 };
 
@@ -43,7 +44,7 @@ class ToolTriangleFill : public ITool
 		}
 
 		const char* get_name()		{return "Triangle Fill";}
-		const char* get_tooltip()	{return "Performs triangle fill using the sweep-line algorithm.";}
+		const char* get_tooltip()	{return TOOLTIP_TRIANGLE_FILL;}
 		const char* get_group()		{return "Remeshing | Triangulation";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -75,7 +76,7 @@ class ToolRetriangulate : public ITool
 		}
 
 		const char* get_name()		{return "Retriangulate";}
-		const char* get_tooltip()	{return "Inserts vertices as required and performs Constrained Delaunay triangulation.";}
+		const char* get_tooltip()	{return TOOLTIP_RETRIANGULATE;}
 		const char* get_group()		{return "Remeshing | Triangulation";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -114,7 +115,7 @@ class ToolAdjustEdgeLength : public ITool
 		}
 
 		const char* get_name()		{return "Adjust Edge Length";}
-		const char* get_tooltip()	{return "Remeshes the active grid so that all edges approximatly have a certain length.";}
+		const char* get_tooltip()	{return TOOLTIP_ADJUST_EDGE_LENGTH;}
 		const char* get_group()		{return "Remeshing | Triangulation";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -150,7 +151,7 @@ class ToolAdaptSurfaceToCylinder : public ITool
 		}
 
 		const char* get_name()		{return "Adapt Surface to Cylinder";}
-		const char* get_tooltip()	{return "Introduces edges in a grid around a selected vertex which roughly correspond to the intersection of a cylinder with the surface.";}
+		const char* get_tooltip()	{return TOOLTIP_ADAPT_SURFACE_TO_CYLINDER;}
 		const char* get_group()		{return "Remeshing | Triangulation";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -191,7 +192,7 @@ public:
 	}
 
 	const char* get_name()		{return "Tetrahedralize";}
-	const char* get_tooltip()	{return "Fills a closed surface with tetrahedrons.";}
+	const char* get_tooltip()	{return TOOLTIP_TETRAHEDRALIZE;}
 	const char* get_group()		{return "Remeshing | Tetgen";}
 
 	ToolWidget* get_dialog(QWidget* parent){
@@ -227,7 +228,7 @@ public:
 	}
 
 	const char* get_name()		{return "Assign Volume Constraints";}
-	const char* get_tooltip()	{return "Assigns volume constraints to selected tetrahedrons.";}
+	const char* get_tooltip()	{return TOOLTIP_ASSIGN_VOLUME_CONSTRAINTS;}
 	const char* get_group()		{return "Remeshing | Tetgen";}
 
 	ToolWidget* get_dialog(QWidget* parent){
@@ -247,7 +248,7 @@ public:
 	}
 
 	const char* get_name()		{return "Clear Volume Constraints";}
-	const char* get_tooltip()	{return "Clears all assigned volume constraints.";}
+	const char* get_tooltip()	{return TOOLTIP_CLEAR_VOLUME_CONSTRAINTS;}
 	const char* get_group()		{return "Remeshing | Tetgen";}
 };
 
@@ -276,7 +277,7 @@ public:
 	}
 
 	const char* get_name()		{return "Retetrahedralize";}
-	const char* get_tooltip()	{return "Given a tetrahedralization and volume constraints, this method adapts the tetrahedrons.";}
+	const char* get_tooltip()	{return TOOLTIP_RETETRAHEDRALIZE;}
 	const char* get_group()		{return "Remeshing | Tetgen";}
 
 	ToolWidget* get_dialog(QWidget* parent){
@@ -316,7 +317,7 @@ public:
 	}
 
 	const char* get_name()		{return "Duplicate";}
-	const char* get_tooltip()	{return "Duplicates the selected geometry.";}
+	const char* get_tooltip()	{return TOOLTIP_DUPLICATE;}
 	const char* get_group()		{return "Remeshing";}
 
 	QWidget* get_dialog(QWidget* parent){
@@ -359,7 +360,7 @@ class ToolExtrude : public ITool
 		}
 
 		const char* get_name()		{return "Extrude";}
-		const char* get_tooltip()	{return "Extrudes selected geometry (vertices, edges, faces).";}
+		const char* get_tooltip()	{return TOOLTIP_EXTRUDE;}
 		const char* get_group()		{return "Remeshing | Extrusion";}
 
 		ToolWidget* get_dialog(QWidget* parent){
@@ -398,7 +399,7 @@ public:
 	}
 
 	const char* get_name()		{return "Extrude Cylinders";}
-	const char* get_tooltip()	{return "Extrudes cylinders around selected points of a 2d manifold.";}
+	const char* get_tooltip()	{return TOOLTIP_EXTRUDE_CYLINDERS;}
 	const char* get_group()		{return "Remeshing | Extrusion";}
 
 	ToolWidget* get_dialog(QWidget* parent){

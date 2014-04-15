@@ -4,7 +4,7 @@
 
 #include "app.h"
 #include "standard_tools.h"
-
+#include "tooltips.h"
 
 //class ToolSliderTest : public ITool
 //{
@@ -17,7 +17,7 @@
 //		}
 //
 //		const char* get_name()	{return "Slider Test";}
-//		const char* get_tooltip()	{return "Tests the DoubleSlider.";}
+//		const char* get_tooltip()	{return TOOLTIP_SLIDER_TEST;}
 //		const char* get_group()		{return "Camera";}
 //
 //		ToolWidget* get_dialog(QWidget* parent)
@@ -34,7 +34,7 @@ class ToolCenterObject : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget* widget){
-			ug::Sphere s = obj->get_bounding_sphere();
+			ug::Sphere3 s = obj->get_bounding_sphere();
 
 			app::getMainWindow()->getView3D()->fly_to(
 								cam::vector3(s.get_center().x(),
@@ -43,8 +43,8 @@ class ToolCenterObject : public ITool
 								s.get_radius() * 4.f + 0.001);
 		}
 
-		const char* get_name()	{return "Center Object";}
-		const char* get_tooltip()	{return "Centers the current object.";}
+		const char* get_name()		{return "Center Object";}
+		const char* get_tooltip()	{return TOOLTIP_CENTER_OBJECT;}
 		const char* get_group()		{return "Camera";}
 };
 
@@ -68,7 +68,7 @@ class ToolCenterSelection : public ITool
 		}
 
 		const char* get_name()		{return "Center Selection";}
-		const char* get_tooltip()	{return "Centers the current selection.";}
+		const char* get_tooltip()	{return TOOLTIP_CENTER_SELECTION;}
 		const char* get_group()		{return "Camera";}
 };
 
@@ -91,7 +91,7 @@ class ToolTopView : public ITool
 		}
 
 		const char* get_name()		{return "Top View";}
-		const char* get_tooltip()	{return "View the current scene from the top.";}
+		const char* get_tooltip()	{return TOOLTIP_TOP_VIEW;}
 		const char* get_group()		{return "Camera";}
 };
 /*
@@ -114,7 +114,7 @@ class ToolFrontView : public ITool
 		}
 
 		const char* get_name()		{return "Front View";}
-		const char* get_tooltip()	{return "View the current scene from the front.";}
+		const char* get_tooltip()	{return TOOLTIP_FRONT_VIEW;}
 		const char* get_group()		{return "Camera";}
 };
 
@@ -137,7 +137,7 @@ class ToolSideView : public ITool
 		}
 
 		const char* get_name()		{return "Side View";}
-		const char* get_tooltip()	{return "View the current scene from the side.";}
+		const char* get_tooltip()	{return TOOLTIP_SIDE_VIEW;}
 		const char* get_group()		{return "Camera";}
 };
 */
@@ -157,7 +157,7 @@ class ToolHideSelectedElements : public ITool
 		}
 
 		const char* get_name()		{return "Hide Selected Elements";}
-		const char* get_tooltip()	{return "Hides all currently selected elements.";}
+		const char* get_tooltip()	{return TOOLTIP_HIDE_SELECTED_ELEMENTS;}
 		const char* get_group()		{return "Camera";}
 };
 
@@ -172,7 +172,7 @@ class ToolUnhideElements : public ITool
 		}
 
 		const char* get_name()		{return "Unhide Elements";}
-		const char* get_tooltip()	{return "Unhides all hidden elements.";}
+		const char* get_tooltip()	{return TOOLTIP_UNHIDE_ELEMENTS;}
 		const char* get_group()		{return "Camera";}
 };
 
