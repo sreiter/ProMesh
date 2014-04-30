@@ -637,7 +637,7 @@ bool MainWindow::saveToFile()
 									this,
 									tr("Save Geometry"),
 									path,
-									tr("geometry files (*.ugx *.ncdf *.lgb *.obj *.txt *.ele *.stl)"));
+									tr("geometry files (*.ugx *.ncdf *.lgb *.obj *.txt *.ele *.stl *.tex *.tikz)"));
 
 		if(!fileName.isEmpty())
 		{

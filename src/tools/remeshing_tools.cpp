@@ -413,6 +413,34 @@ public:
 	}
 };
 
+class ToolCreateShrinkGeometry : public ITool
+{
+public:
+	void execute(LGObject* obj, QWidget* widget){
+		ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
+		number scale = 1.;
+
+		if(dlg){
+			scale = (number)dlg->to_double(0);
+		}
+
+		promesh::CreateShrinkGeometry(obj, scale);
+
+		obj->geometry_changed();
+	}
+
+	const char* get_name()		{return "Create Shrink Geometry";}
+	const char* get_tooltip()	{return TOOLTIP_CREATE_SHRINK_GEOMETRY;}
+	const char* get_group()		{return "Remeshing";}
+
+	ToolWidget* get_dialog(QWidget* parent){
+		ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
+										IDB_APPLY | IDB_OK | IDB_CANCEL);
+		dlg->addSpinBox("scale: ", -1.e+9, 1.e+9, 1, 1, 9);
+		return dlg;
+	}
+};
+
 void RegisterRemeshingTools(ToolManager* toolMgr)
 {
 	toolMgr->set_group_icon("Remeshing", ":images/tool_remeshing.png");
@@ -433,4 +461,5 @@ void RegisterRemeshingTools(ToolManager* toolMgr)
 	toolMgr->register_tool(new ToolExtrude);
 	toolMgr->register_tool(new ToolExtrudeCylinders);
 
+	toolMgr->register_tool(new ToolCreateShrinkGeometry);
 }

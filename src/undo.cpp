@@ -5,8 +5,12 @@
 #include <string>
 #include <sstream>
 #include "undo.h"
+#include "common/math/misc/math_util.h"
+#include "common/util/file_util.h"
+#include "common/util/string_util.h"
 
 using namespace std;
+using namespace ug;
 
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
@@ -142,8 +146,8 @@ UndoHistoryProvider::
 {
 	if(!m_path.empty()){
 	//	remove all files in .history
-		QDir history(m_dir);
-		if(history.cd(".history")){
+		QDir history(m_parentDir);
+		if(history.cd(m_historyDirName.c_str())){
 			QStringList fileNames = history.entryList();
 			for(QStringList::iterator iter = fileNames.begin();
 				iter != fileNames.end(); ++iter)
@@ -153,7 +157,7 @@ UndoHistoryProvider::
 		}
 
 	//	remove history itself
-		m_dir.rmdir(".history");
+		m_parentDir.rmdir(m_historyDirName.c_str());
 	}
 }
 
@@ -168,9 +172,27 @@ bool UndoHistoryProvider::
 init(const char* path)
 {
 	if(m_path.empty()){
-		m_path.append(path).append("/").append(".history");
-		m_dir.setPath(path);
-		return m_dir.mkdir(".history");
+		m_path.append(path).append("/");
+	//	append a unique number to the path so that each promesh instance
+	//	has its own history path
+		bool gotOne = false;
+		for(int i = 0; i < 1000; ++i){
+			m_historyDirName = ".history";
+			m_historyDirName.append(ToString(urand<int>(100000, 999999)));
+			string tpath = m_path;
+			tpath.append(m_historyDirName);
+			if(!DirectoryExists(tpath)){
+				gotOne = true;
+				break;
+			}
+		}
+
+		if(!gotOne)
+			return false;
+
+		m_path.append(m_historyDirName);
+		m_parentDir.setPath(path);
+		return m_parentDir.mkdir(m_historyDirName.c_str());
 	}
 
 	return false;

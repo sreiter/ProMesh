@@ -77,8 +77,9 @@ class UndoHistoryProvider
 
 	private:
 		int m_maxUndoSteps;
-		std::string	m_path;
-		QDir	m_dir;
+		std::string	m_path;				//the complete path
+		std::string	m_historyDirName;	//only the name of the history directory
+		QDir		m_parentDir;
 		int m_historyCounter;
 };
 

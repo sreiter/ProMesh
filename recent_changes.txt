@@ -2,6 +2,18 @@ Recent changes:
 
 
 -------------------------------------------------------------------------------
+v 4.1.4
+Changes and additions:
+- Added new tool "Remeshing-CreateShrinkGeometry".
+
+Fixes:
+- Undo now works even if multiple ProMesh instances are used simultaneously
+- Fixed crash which occurred if 'GridGeneration-BasicElements-CreateFace'
+  was called and a bad number of vertices was selected.
+
+
+
+-------------------------------------------------------------------------------
 v 4.1.3
 Changes and additions:
 - Reworked tools in Remeshing-ResolveIntersections. It now features a new tool
