@@ -136,9 +136,12 @@ void ToolManager::launchTool(int toolID)
 				try{
 					tool->execute(obj, NULL);
 				}
-				catch(UGError error){
-					UG_LOG("Execution of tool " << tool->get_name() << " failed with the following message:\n");
-					UG_LOG("  " << error.get_msg() << std::endl);
+				catch(UGError& err){
+					UG_LOG("Execution of tool " << tool->get_name()
+						   << " failed with the following message:\n");
+					for(size_t i = 0; i < err.num_msg(); ++i)
+						UG_LOG(" " << err.get_file(i) << ": " << err.get_line(i)
+							   << ": " << err.get_msg(i) << "\n");
 				}
 			}
 		}
