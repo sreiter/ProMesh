@@ -12,6 +12,27 @@
 namespace app
 {
 
+// class CameraDesc{
+// 	public:
+// 		static CameraDesc&
+// 		inst()	{static CameraDesc desc;
+// 			 	 return desc;}
+
+// 		ug::vector3	viewScale;
+
+// 	private:
+// 		CameraDesc() :
+// 			viewScale(1, 1, 1)
+// 			{}
+// };
+
+
+
+// inline CameraDesc& getCameraDesc()
+// {
+// 	return CameraDesc::inst();
+// }
+
 inline MainWindow* getMainWindow()
 {
 	static MainWindow* mainWindow = new MainWindow;

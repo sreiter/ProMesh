@@ -2,6 +2,14 @@ Recent changes:
 
 
 -------------------------------------------------------------------------------
+v 4.1.6
+Changes and additions:
+
+Fixes:
+- Coordinate values are now trunkated during tikz/tex export.
+
+
+-------------------------------------------------------------------------------
 v 4.1.5
 Changes and additions:
 - Added new tool "Remeshing-CreateShrinkGeometry".
