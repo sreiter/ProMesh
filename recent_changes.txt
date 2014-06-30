@@ -2,11 +2,19 @@ Recent changes:
 
 
 -------------------------------------------------------------------------------
+v 4.1.7
+Changes and additions:
+
+Fixes:
+- Fixed Subsets-AdjustSubsetsForUG3.
+
+-------------------------------------------------------------------------------
 v 4.1.6
 Changes and additions:
 
 Fixes:
 - Coordinate values are now trunkated during tikz/tex export.
+
 
 
 -------------------------------------------------------------------------------
