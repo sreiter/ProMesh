@@ -21,4 +21,9 @@ void RegisterSubsetTools(ToolManager* toolMgr);
 void RegisterFracToLayerTools(ToolManager* toolMgr);
 void RegisterRefinementTools(ToolManager* toolMgr);
 
+void RegsiterRegistryTools(ToolManager* toolMgr);
+
+void RegisterScriptTools(ToolManager* toolMgr);
+int RefreshScriptTools(ToolManager* toolMgr);
+
 #endif // STANDARD_TOOLS_H

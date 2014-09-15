@@ -1,5 +1,16 @@
 Recent changes:
 
+-------------------------------------------------------------------------------
+v 4.1.8
+Changes and additions:
+- Added methods for grid measurements (length, area, volume) in Info-Measurements
+- Added support for automated generation of tools from ug's registry
+- Added scripting support and automatic script-tool generation
+- Added Selection-Faces-FacesByNormal
+
+Fixes:
+
+
 
 -------------------------------------------------------------------------------
 v 4.1.7

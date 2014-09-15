@@ -5,6 +5,7 @@
 #include "app.h"
 #include "standard_tools.h"
 #include "tooltips.h"
+#include "tools/selection_tools.h"
 
 using namespace ug;
 
@@ -64,14 +65,7 @@ class ToolMarkSelection : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			obj->get_crease_handler().assign_subset(
-				obj->get_selector().begin<Vertex>(),
-				obj->get_selector().end<Vertex>(),
-				ug::REM_FIXED);
-			obj->get_crease_handler().assign_subset(
-				obj->get_selector().begin<Edge>(),
-				obj->get_selector().end<Edge>(),
-				ug::REM_CREASE);
+			ug::promesh::MarkSelection(obj);
 			obj->marks_changed();
 		}
 
@@ -85,15 +79,7 @@ class ToolUnmarkSelection : public ITool
 	public:
 		void execute(LGObject* obj, QWidget*)
 		{
-			obj->get_crease_handler().assign_subset(
-				obj->get_selector().begin<Vertex>(),
-				obj->get_selector().end<Vertex>(),
-				ug::REM_NONE);
-
-			obj->get_crease_handler().assign_subset(
-				obj->get_selector().begin<Edge>(),
-				obj->get_selector().end<Edge>(),
-				ug::REM_NONE);
+			ug::promesh::UnmarkSelection(obj);
 
 			obj->marks_changed();
 		}

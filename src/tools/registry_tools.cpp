@@ -1,0 +1,212 @@
+// created by Sebastian Reiter
+// s.b.reiter@gmail.com
+
+#include "common/util/stringify.h"
+#include "bridge/bridge.h"
+#include "standard_tools.h"
+
+using namespace std;
+using namespace ug;
+using namespace ug::promesh;
+using namespace ug::bridge;
+
+
+class RegistryTool : public ITool{
+	public:
+		RegistryTool(std::string name, ExportedFunction* func) :
+			m_name(name),
+			m_func(func)
+		{
+			string grp = func->group();
+			size_t pos = grp.find("ug4/");
+			if(pos != string::npos)
+				grp.erase(pos, 4);
+			pos = grp.find("promesh/");
+			if(pos != string::npos)
+				grp.erase(pos, 8);
+
+			m_group = ReplaceAll(grp, "/", "|");
+		}
+
+		virtual void execute(LGObject* obj,
+							 QWidget* widget)
+		{
+			ParameterStack paramsIn, paramsOut;
+			paramsIn.push(static_cast<MeshObject*>(obj));
+			
+			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
+			if(dlg){
+				const ParameterInfo& params = m_func->params_in();
+				for(int iparam = 1; iparam < params.size(); ++iparam){
+					int toolParam = iparam - 1;
+					switch(params.type(iparam)){
+						case Variant::VT_BOOL:
+							paramsIn.push(dlg->to_bool(toolParam));
+							break;
+						case Variant::VT_INT:
+							paramsIn.push(dlg->to_int(toolParam));
+							break;
+						case Variant::VT_SIZE_T:
+							paramsIn.push(static_cast<size_t>(dlg->to_int(toolParam)));
+							break;
+						case Variant::VT_FLOAT:
+							paramsIn.push(static_cast<float>(dlg->to_double(toolParam)));
+							break;
+						case Variant::VT_DOUBLE:
+							paramsIn.push(dlg->to_double(toolParam));
+							break;
+						case Variant::VT_CSTRING:
+							paramsIn.push(dlg->to_string(toolParam).toStdString().c_str());
+							break;
+						case Variant::VT_STDSTRING:
+							paramsIn.push(dlg->to_string(toolParam).toStdString());
+							break;
+						default:
+							UG_THROW("Unsupported Type in RegistryTool for parameter " << toolParam);
+							break;
+					}
+				}
+			}
+
+			m_func->execute(paramsIn, paramsOut);
+
+			if(paramsOut.size() > 0){
+				UG_LOG(m_name);
+				if(paramsIn.size() > 1){
+					UG_LOG(" (");
+					for(int i = 1; i < paramsIn.size(); ++i){
+						UG_LOG(paramsIn.get(i));
+						if(i + 1 < paramsIn.size()){
+							UG_LOG(", ");
+						}
+					}
+					UG_LOG(")");
+				}
+				UG_LOG(": ");
+
+				for(int i = 0; i < paramsOut.size(); ++i){
+					UG_LOG(paramsOut.get(i));
+					if(i + 1 < paramsOut.size()){
+						UG_LOG(", ");
+					}
+				}
+				UG_LOG(endl);
+			}
+
+			obj->geometry_changed();
+		}
+
+		virtual const char* get_name()	
+		{
+			return m_name.c_str();
+		}
+
+		virtual const char* get_tooltip()	{return m_func->tooltip().c_str();}
+		virtual const char* get_group()		{return m_group.c_str();}
+		virtual const char* get_shortcut()	{return "";}
+
+		virtual bool accepts_null_object_ptr()	{return false;}
+
+		virtual QWidget* get_dialog(QWidget* parent)
+		{
+			if(m_func->num_parameter() <= 1)
+				return NULL;
+
+			ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
+											IDB_APPLY | IDB_OK | IDB_CLOSE);
+
+			const ParameterInfo& params = m_func->params_in();
+			bool paramError = false;
+
+			for(int iparam = 1; iparam < params.size(); ++iparam){
+				string paramName = Stringify() << "param-" << iparam;
+				if(!m_func->parameter_name(iparam).empty())
+					paramName = m_func->parameter_name(iparam);
+
+				QString qParamName = QString::fromStdString(paramName);
+
+				switch(params.type(iparam)){
+					case Variant::VT_BOOL:
+						dlg->addCheckBox(qParamName, false);	//todo: use default value
+						break;
+					case Variant::VT_INT:
+						dlg->addSpinBox(qParamName, -1.e32, 1.e32, 0, 1, 0);	//todo: use default value
+						break;
+					case Variant::VT_SIZE_T:
+						dlg->addSpinBox(qParamName, 0, 1.e32, 0, 1, 0);	//todo: use default value
+						break;
+					case Variant::VT_FLOAT:
+						dlg->addSpinBox(qParamName, -1.e32, 1.e32, 0, 1, 9);	//todo: use default value
+						break;
+					case Variant::VT_DOUBLE:
+						dlg->addSpinBox(qParamName, -1.e32, 1.e32, 0, 1, 9);	//todo: use default value
+						break;
+					case Variant::VT_CSTRING:
+						dlg->addTextBox(qParamName, tr(""));
+					case Variant::VT_STDSTRING:
+						dlg->addTextBox(qParamName, tr(""));
+					default:
+						paramError = true;
+						break;
+				}
+
+				if(paramError){
+					UG_LOG("Unsupported parameter " << iparam << " in registry tool "
+						   << m_name << endl);
+				}
+			}
+
+			if(paramError){
+				delete dlg;
+				return NULL;
+			}
+			else
+				return dlg;
+		}
+
+	private:
+		std::string			m_name;
+		std::string			m_group;
+		ExportedFunction* 	m_func;
+};
+
+
+void RegisterTool(ToolManager* toolMgr,
+				  Registry& reg,
+				  std::string toolName,
+				  std::string funcName)
+{
+	for(size_t ifct = 0; ifct < reg.num_functions(); ++ifct){
+		ExportedFunction& f = reg.get_function(ifct);
+		if(f.name() == funcName){
+		//	find an overload whose first argument is PM_MeshObject
+			for(size_t iol = 0; iol < reg.num_overloads(ifct); ++iol){
+				ExportedFunction& o = reg.get_overload(ifct, iol);
+				if(o.num_parameter() == 0)
+					continue;
+
+				if(strcmp(o.parameter_class_name(0), "PM_MeshObject") != 0)
+					continue;
+
+			//	o has to be added
+				RegistryTool* tool = new RegistryTool(toolName, &o);
+				toolMgr->register_tool(tool);
+			}
+		}
+	}
+}
+
+
+void RegsiterRegistryTools(ToolManager* toolMgr)
+{
+	Registry& reg = GetUGRegistry();
+	RegisterTool(toolMgr, reg, "Measure Grid Length", "PM_MeasureGridLength");
+	RegisterTool(toolMgr, reg, "Measure Grid Area", "PM_MeasureGridArea");
+	RegisterTool(toolMgr, reg, "Measure Grid Volume", "PM_MeasureGridVolume");
+	RegisterTool(toolMgr, reg, "Measure Subset Length", "PM_MeasureSubsetLength");
+	RegisterTool(toolMgr, reg, "Measure Subset Area", "PM_MeasureSubsetArea");
+	RegisterTool(toolMgr, reg, "Measure Subset Volume", "PM_MeasureSubsetVolume");
+	RegisterTool(toolMgr, reg, "Measure Selection Length", "PM_MeasureSelectionLength");
+	RegisterTool(toolMgr, reg, "Measure Selection Area", "PM_MeasureSelectionArea");
+	RegisterTool(toolMgr, reg, "Measure Selection Volume", "PM_MeasureSelectionVolume");
+}

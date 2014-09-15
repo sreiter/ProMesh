@@ -174,19 +174,21 @@ public:
 		int preserveOpt = 0;
 		bool separateVolumes = true;
 		bool appendSubsetsAtEnd = true;
-		
+		int verbosity = 0;
+
 		if(dlg){
 			quality = (number)dlg->to_double(0);
 			preserveOpt = dlg->to_int(1);
 			separateVolumes = dlg->to_bool(2);
 			appendSubsetsAtEnd = dlg->to_bool(3);
+			verbosity = dlg->to_int(4);
 		}
 
 		bool preserveOuter = (preserveOpt >= 1);
 		bool preserveAll = (preserveOpt == 2);
 
 		promesh::Tetrahedralize(obj, quality, preserveOuter, preserveAll, separateVolumes,
-					   	   	    appendSubsetsAtEnd);
+					   	   	    appendSubsetsAtEnd, verbosity);
 
 		obj->geometry_changed();
 	}
@@ -206,6 +208,13 @@ public:
 		dlg->addComboBox("preserve:", entries, 0);
 		dlg->addCheckBox(tr("separate volume subsets"), true);
 		dlg->addCheckBox(tr("append subsets at end"), true);
+
+		QStringList verbEntries;
+		verbEntries.push_back(tr("none"));
+		verbEntries.push_back(tr("high"));
+		verbEntries.push_back(tr("higher"));
+		verbEntries.push_back(tr("highest"));
+		dlg->addComboBox("verbosity", verbEntries, 0);
 		return dlg;
 	}
 };
@@ -262,16 +271,20 @@ public:
 		number quality = 5;
 		int preserveOpt = 0;
 		bool applyVolumeConstraint = false;
+		int verbosity = 0;
+
 		if(dlg){
 			quality = (number)dlg->to_double(0);
 			preserveOpt = dlg->to_int(1);
 			applyVolumeConstraint = dlg->to_bool(2);
+			verbosity = dlg->to_int(3);
 		}
 
 		bool preserveOuter = (preserveOpt >= 1);
 		bool preserveAll = (preserveOpt == 2);
 
-		promesh::Retetrahedralize(obj, quality, preserveOuter, preserveAll, applyVolumeConstraint);
+		promesh::Retetrahedralize(obj, quality, preserveOuter, preserveAll,
+								  applyVolumeConstraint, verbosity);
 
 		obj->geometry_changed();
 	}
@@ -290,6 +303,14 @@ public:
 		entries.push_back(tr("all faces"));
 		dlg->addComboBox("preserve:", entries, 0);
 		dlg->addCheckBox(tr("apply volume constraint"), false);
+
+		QStringList verbEntries;
+		verbEntries.push_back(tr("none"));
+		verbEntries.push_back(tr("high"));
+		verbEntries.push_back(tr("higher"));
+		verbEntries.push_back(tr("highest"));
+		dlg->addComboBox("verbosity", verbEntries, 0);
+
 		return dlg;
 	}
 };

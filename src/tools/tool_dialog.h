@@ -91,6 +91,8 @@ class ToolWidget : public QFrame
 		bool setString(int paramIndex, const QString& param);
 		bool setStringList(int paramIndex, const QStringList& stringList);
 
+		void clear();
+		
 	protected:
 	///	convertes the value of the i-th input element to a number.
 	/**	inices start from 0. Elements are indexed in the order they
@@ -104,6 +106,8 @@ class ToolWidget : public QFrame
 	 /// returns the current form layout and creates a new if none is available.
 	 	 QFormLayout* current_form_layout();
 
+	 	 void clearLayout(QLayout* layout);
+	 	 
 	public slots:
 	///	when called, this method calls the associated tool to refresh the tool-widgets contents.
 	/**	Connect this slot with care, to avoid unforseen performance problems.*/

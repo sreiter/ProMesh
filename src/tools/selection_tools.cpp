@@ -696,6 +696,32 @@ class ToolSelectFaceByIndex : public ITool
 		}
 };
 
+class ToolSelectFacesByNormal : public ITool
+{
+	public:
+		void execute(LGObject* obj, QWidget* widget){
+			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
+			if(dlg){
+				vector3 n = dlg->to_vector3(0);
+				number devAngle = dlg->to_double(1);
+				promesh::SelectFacesByNormal(obj, n, devAngle);
+				obj->selection_changed();
+			}
+		}
+
+		const char* get_name()		{return "Faces By Normal";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_FACES_BY_NORMAL;}
+		const char* get_group()		{return "Selection | Faces";}
+
+		ToolWidget* get_dialog(QWidget* parent){
+			ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
+											IDB_APPLY | IDB_OK | IDB_CLOSE);
+			dlg->addVector(tr("normal:"), 3);
+			dlg->addSpinBox(tr("max deviation angle:"), 0, 180, 10, 1, 9);
+			return dlg;
+		}
+};
+
 class ToolSelectVolumeByIndex : public ITool
 {
 	public:
@@ -1195,6 +1221,7 @@ void RegisterSelectionTools(ToolManager* toolMgr)
 	toolMgr->register_tool(new ToolSelectDegenerateFaces);
 	toolMgr->register_tool(new ToolSelectFaceByIndex);
 	toolMgr->register_tool(new ToolSelectFaceByCoordinate);
+	toolMgr->register_tool(new ToolSelectFacesByNormal);
 	toolMgr->register_tool(new ToolSelectBentQuadrilaterals);
 
 //	VOLUMES

@@ -65,4 +65,10 @@ void RegisterStandardTools(ToolManager* toolMgr)
 
 //	info
 	RegisterInfoTools(toolMgr);
+
+//	registry
+	RegsiterRegistryTools(toolMgr);
+
+//	scripts
+	RegisterScriptTools(toolMgr);
 }

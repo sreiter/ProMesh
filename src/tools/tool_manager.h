@@ -80,6 +80,8 @@ class ToolManager : public QObject
 		void register_tool(ITool* tool, int key = 0,
 						   uint shortcutModifierKeys = SMK_NONE);
 
+		void remove_tool(ITool* tool);
+
 	///	specify the resource- or file-name for the groups icon
 	/**	Note that icons are currently only loaded for top-level groups.
 	 * Also note, that the icon has to be specified before a tool browser
@@ -122,8 +124,9 @@ class ToolManager : public QObject
 		
 		struct ToolEntry{
 			ToolEntry(ITool* tool, int key, uint modifiers) :
-				m_tool(tool), m_shortcutKey(key), m_shortcutModifiers(modifiers) {}
+				m_tool(tool), m_widget(NULL), m_shortcutKey(key), m_shortcutModifiers(modifiers) {}
 			ITool*	m_tool;
+			QWidget* m_widget;
 			int		m_shortcutKey;
 			uint	m_shortcutModifiers;
 		};

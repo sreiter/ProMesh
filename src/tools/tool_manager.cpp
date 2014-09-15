@@ -48,6 +48,16 @@ void ToolManager::register_tool(ITool* tool, int shortcutKey,
 	m_registeredTools.push_back(ToolEntry(tool, shortcutKey, shortcutModifierKeys));
 }
 
+void ToolManager::remove_tool(ITool* tool)
+{
+	for(size_t i = 0; i < m_registeredTools.size(); ++i){
+		if(m_registeredTools[i].m_tool == tool){
+			delete m_registeredTools[i].m_widget;
+			m_registeredTools.erase(m_registeredTools.begin() + i);
+		}
+	}
+}
+
 void ToolManager::set_group_icon(const char* grpName, const char* iconName)
 {
 	std::string groupName(grpName);
@@ -399,6 +409,8 @@ ToolBrowserWidget* ToolManager::createToolBrowser(QWidget* parentWidget)
 			parent->addWidget(w);
 		else
 			toolBrowser->addWidget(pageIndex, w);
+
+		m_registeredTools[i].m_widget = w;
 	}
 
 	return toolBrowser;

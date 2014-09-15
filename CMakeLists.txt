@@ -76,7 +76,7 @@ endif(TETGEN_LIBS-NOTFOUND)
 
 include_directories(${UG_ROOT_PATH}/ugbase)
 include_directories(${UG_ROOT_PATH}/plugins/experimental/promesh)
-include_directories(${UG_ROOT_PATH}/externals/boost_1_48_0)
+include_directories(${UG_ROOT_PATH}/externals/boost_1_56_0)
 link_directories(${UG_ROOT_PATH}/lib)
 
 # On some unix systems (e.g. ubuntu 12.04) glu.h is not automatically included.
@@ -121,7 +121,9 @@ set(ProMeshSRC	src/main.cpp
 				src/tools/camera_tools.cpp
 				src/tools/fracture_tools.cpp
 				src/tools/refinement_tools.cpp
+				src/tools/registry_tools.cpp
 				src/tools/remeshing_tools.cpp
+				src/tools/script_tools.cpp
 				src/tools/dialog_components/matrix_widget.cpp
 				src/tools/dialog_components/file_widget.cpp
 				src/widgets/extendible_widget.cpp

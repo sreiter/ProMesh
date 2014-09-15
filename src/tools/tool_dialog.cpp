@@ -212,6 +212,28 @@ void ToolWidget::buttonClicked(int buttonID)
 */
 }
 
+void ToolWidget::clearLayout(QLayout* layout)
+{
+    while(layout->count() > 0){
+    	QLayoutItem *item = layout->takeAt(0);
+        if (item->layout()) {
+            clearLayout(item->layout());
+            //delete item->layout();
+        }
+        if (item->widget()) {
+            delete item->widget();
+        }
+        delete item;
+    }
+}
+
+void ToolWidget::clear()
+{
+	clearLayout(m_mainLayout);
+	m_currentFormLayout = NULL;
+	m_widgets.clear();
+}
+
 template <class TNumber>
 TNumber ToolWidget::to_number(int paramIndex, bool* bOKOut)
 {

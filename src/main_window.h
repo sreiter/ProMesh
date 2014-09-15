@@ -73,6 +73,7 @@ class MainWindow : public QMainWindow
 
 	signals:
 		void activeObjectChanged();
+		void refreshToolDialogs();
 
 	public slots:
 		void setActiveObject(int index);
@@ -103,6 +104,7 @@ class MainWindow : public QMainWindow
 		void undo();
 		void redo();
 		void sceneInspectorClicked(QMouseEvent* event);
+		void refreshToolDialogsClicked();
 
 	protected:
 		void closeEvent(QCloseEvent *event);
@@ -157,6 +159,8 @@ class MainWindow : public QMainWindow
 		QDockWidget* m_pLog;
 		RClickMenu_SceneInspector*	m_rclickMenu_SI;
 		ToolManager* m_toolManager;
+		ToolBrowserWidget* m_toolBrowser;
+		QDockWidget* m_toolBrowserDock;
 	//	menus
 		//QMenu*		m_toolsMenu;
 
@@ -166,6 +170,7 @@ class MainWindow : public QMainWindow
 		QAction*	m_actSave;
 		QAction*	m_actExport;
 		QAction*	m_actErase;
+		QAction*	m_refreshToolDialogs;
 		QAction*	m_actExportUG3;
 		QAction*	m_actHelpControls;
 		QAction*	m_actRecentChanges;

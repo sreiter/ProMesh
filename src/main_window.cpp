@@ -18,6 +18,9 @@
 #include "widgets/tool_browser_widget.h"
 #include "tools/tool_coordinates.h"
 #include "common/util/file_util.h"
+#include "bridge/bridge.h"
+#include "common/util/path_provider.h"
+#include "common/util/plugin_util.h"
 
 using namespace std;
 using namespace ug;
@@ -76,6 +79,29 @@ void MainWindow::init()
 	Q_DebugStream* pDebugStream = new Q_DebugStream(GetLogAssistant().logger(), pLogText);
 	//GetLogAssistant().enable_file_output(true, "/Users/sreiter/promesh_log.txt");
 
+
+	UG_LOG("ProMesh4 - created by Sebastian Reiter (s.b.reiter@googlemail.com).\n");
+	UG_LOG("This version of ProMesh4 is for non-commercial use only. See \"Help->License\" for more information.\n");
+	UG_LOG("If you use ProMesh to create geometries for your publications, make sure to cite it!\n");
+	UG_LOG("ProMesh uses libGrid, which is part of the ug4 simulation framework.\n");
+	UG_LOG("This version of ProMesh4 uses 'tetgen' by Hang Si for tetrahedral mesh generation (in Remeshing/Tetgen).\n");
+	UG_LOG("--------------------------------------------------------------\n\n");
+
+	try{
+		ug::bridge::InitBridge();
+		if(!ug::LoadPlugins(ug::PathProvider::get_path(PLUGIN_PATH).c_str(), "ug4/", ug::bridge::GetUGRegistry()))
+		{
+			UG_LOG("ERROR during initialization of plugins: LoadPlugins failed!\n");
+		}
+	}
+	catch(ug::UGError& err){
+		UG_LOG("ERROR during initialization of ug::bridge:\n");
+		for(size_t i = 0; i < err.num_msg(); ++i){
+			UG_LOG("  " << err.get_msg(i) << std::endl);
+		}
+	}
+
+
 //	create actions
 	m_actNew = new QAction(tr("&New"), this);
 	m_actNew->setIcon(QIcon(":images/filenew.png"));
@@ -113,6 +139,11 @@ void MainWindow::init()
 	m_actErase->setStatusTip(tr("erases the selected geometry from the scene."));
 	connect(m_actErase, SIGNAL(triggered()), this, SLOT(eraseActiveSceneObject()));
 
+	m_refreshToolDialogs = new QAction(tr("Refresh tool dialogs"), this);
+	m_refreshToolDialogs->setShortcut(tr("Ctrl+T"));
+	m_refreshToolDialogs->setStatusTip("Refreshes contents of tht tool-dialogs.");
+	connect(m_refreshToolDialogs, SIGNAL(triggered()), this, SLOT(refreshToolDialogsClicked()));
+
 	m_actExportUG3 = new QAction(tr("Export to ug3"), this);
 	m_actExportUG3->setStatusTip(tr("Exports the geometry to ug3 lgm / ng format."));
 	connect(m_actExportUG3, SIGNAL(triggered()), this, SLOT(exportToUG3()));
@@ -144,10 +175,24 @@ void MainWindow::init()
 	filemenu->addAction(m_actSave);
 	filemenu->addAction(m_actErase);
 	filemenu->addSeparator();
+	filemenu->addAction(m_refreshToolDialogs);
+	filemenu->addSeparator();
 	filemenu->addAction(m_actExportUG3);
 
 	m_toolManager = new ToolManager(this);
-	RegisterStandardTools(m_toolManager);
+	try{
+		RegisterStandardTools(m_toolManager);
+	}
+	catch(UGError& err){
+		UG_LOG("ERROR: ")
+		for(size_t i = 0; i < err.num_msg(); ++i){
+			if(i > 0){
+				UG_LOG("       ");
+			}
+			UG_LOG(err.get_msg(i) << endl);
+		}
+		UG_LOG("------------------------------------------------------------------------------------------\n")
+	}
 //	m_toolsMenu = menuBar()->addMenu("Tools");
 //	m_toolManager->populateMenu(m_toolsMenu);
 
@@ -248,8 +293,8 @@ void MainWindow::init()
 
 
 //	temporary for testing the tool browser
-	QDockWidget* toolBrowserDock = new QDockWidget(tr("Tool Browser"), this);
-	toolBrowserDock->setObjectName(tr("tool_browser_dock"));
+	m_toolBrowserDock = new QDockWidget(tr("Tool Browser"), this);
+	m_toolBrowserDock->setObjectName(tr("tool_browser_dock"));
 /*
 	ToolBrowserWidget* toolBrowser = new ToolBrowserWidget(toolBrowserDock);
 	toolBrowser->setObjectName(tr("tool_browser"));
@@ -258,10 +303,10 @@ void MainWindow::init()
 	toolBrowser->addPage(QIcon(":images/editundo.png"), tr("undo"));
 	toolBrowser->addPage(QIcon(":images/editredo.png"), tr("redo"));
 */
-	ToolBrowserWidget* toolBrowser = m_toolManager->createToolBrowser(this);
-	toolBrowser->setObjectName(tr("tool_browser"));
-	toolBrowserDock->setWidget(toolBrowser);
-	addDockWidget(Qt::LeftDockWidgetArea, toolBrowserDock);
+	m_toolBrowser = m_toolManager->createToolBrowser(this);
+	m_toolBrowser->setObjectName(tr("tool_browser"));
+	m_toolBrowserDock->setWidget(m_toolBrowser);
+	addDockWidget(Qt::LeftDockWidgetArea, m_toolBrowserDock);
 
 	show();
 	//load_grid_from_file("d:/projects/ProMesh3/data/atom_in_sphere.obj");
@@ -1038,5 +1083,19 @@ void MainWindow::redo()
 		if(!obj->redo()){
 			UG_LOG("no more steps to redo.\n");
 		}
+	}
+}
+
+void MainWindow::refreshToolDialogsClicked()
+{
+	int refreshChangedTools = RefreshScriptTools(m_toolManager);
+	emit refreshToolDialogs();
+
+	if(refreshChangedTools){
+	//	todo: update tool browser instead of a complete reload!
+		delete m_toolBrowser;
+		m_toolBrowser = m_toolManager->createToolBrowser(this);
+		m_toolBrowser->setObjectName(tr("tool_browser"));
+		m_toolBrowserDock->setWidget(m_toolBrowser);
 	}
 }
