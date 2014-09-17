@@ -371,16 +371,8 @@ void ParseDirAndCreateTools(ToolManager* toolMgr, QDir dir, string group,
 
 void RegisterScriptTools(ToolManager* toolMgr)
 {
-	// QDir appScriptDir(QApplication::applicationDirPath());
-	// if(!appScriptDir.exists("scripts")){
-	// 	UG_THROW("no scripts path found")
-	// }
-	// appScriptDir.cd("scripts");
-
-	QDir appScriptDir(":/scripts");
-
 	SmartPtr<luashell::LuaShell> shell = make_sp(new luashell::LuaShell());
-	ParseDirAndCreateTools(toolMgr, appScriptDir, "Scripts", shell);
+	ParseDirAndCreateTools(toolMgr, QDir(":/scripts"), "Scripts", shell);
 	ParseDirAndCreateTools(toolMgr, app::UserScriptDir(), "Scripts", shell);
 	toolMgr->set_group_icon("Scripts", ":images/tool_scripts.png");
 }
@@ -393,7 +385,8 @@ int RefreshScriptTools(ToolManager* toolMgr)
 //	check for each tool, whether the according script still exists
 	for(size_t i = 0; i < g_scriptTools.size();){
 		ScriptTool* t = g_scriptTools[i];
-		if(!FileExists(t->path().c_str())){
+		QFile file(QString(t->path().c_str()));
+		if(!file.exists()){
 			toolMgr->remove_tool(t);
 			delete t;
 			g_scriptTools.erase(g_scriptTools.begin() + i);
@@ -414,13 +407,7 @@ int RefreshScriptTools(ToolManager* toolMgr)
 		luaShell = make_sp(new luashell::LuaShell());
 
 
-	QDir appDir(QApplication::applicationDirPath());
-	if(!appDir.exists("scripts")){
-		UG_THROW("no scripts path found")
-	}
-	appDir.cd("scripts");
-
-	ParseDirAndCreateTools(toolMgr, appDir, "Scripts", luaShell, true);
+	ParseDirAndCreateTools(toolMgr, QDir(":/scripts"), "Scripts", luaShell, true);
 	ParseDirAndCreateTools(toolMgr, app::UserScriptDir(), "Scripts", luaShell, true);
 
 	if(lastNumScriptTools != g_scriptTools.size())

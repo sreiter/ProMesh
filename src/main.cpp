@@ -43,19 +43,6 @@ class MyApplication : public QApplication
 		MainWindow* m_pMainWindow;
 };
 
-// static void InitializeStandardScripts()
-// {
-// // todo: do this recursively using QDir!
-// 	QDir scriptDir = UserScriptDir();
-// 	if(!scriptDir.exists("smoothing")){
-// 		scriptDir.mkdir("smoothing");
-// 		QDir smoothing = scriptDir;
-// 		smoothing.cd("smoothing");
-// 		QFile f(":/scripts/smoothing/crease-smoothing.lua");
-
-// 		f.copy(smoothing)
-// 	}
-// }
 
 int main(int argc, char *argv[])
 {
