@@ -32,9 +32,14 @@
         <file>images/tool_unknown.png</file>
         
     </qresource>
+    
     <qresource prefix="/text">
         <file>recent_changes.txt</file>
         <file>shortcuts.txt</file>
         <file>promesh_license.txt</file>
+    </qresource>
+
+    <qresource prefix="/">
+        <file>scripts/Smoothing/crease-smoothing.lua</file>
     </qresource>
 </RCC>

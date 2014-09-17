@@ -3,6 +3,9 @@ Recent changes:
 -------------------------------------------------------------------------------
 v 4.1.8
 Changes and additions:
+- Added a promesh user-data directory in $HOME/.promesh
+- Undo now goes to TEMP folder, also on Windows
+- Added new file menu entries: "Browse User Scripts" and "Refresh Tool Dialogs"
 - Added methods for grid measurements (length, area, volume) in Info-Measurements
 - Added support for automated generation of tools from ug's registry
 - Added scripting support and automatic script-tool generation

@@ -1,5 +1,6 @@
 #include <QDir>
 #include <QApplication>
+#include <QFile>
 #include <fstream>
 #include <string>
 #include <vector>
@@ -11,6 +12,7 @@
 #include "common/util/string_util.h"
 #include "../app.h"
 #include "../plugins/experimental/lua_shell/lua_shell.h"
+#include "common/error.h"
 
 using namespace ug;
 using namespace std;
@@ -41,12 +43,11 @@ static T ToNumber(const std::string& str){
 	return num;
 }
 
-ScriptDeclarations ParseScriptForDeclarations(string script)
+ScriptDeclarations ParseScriptForDeclarations(const QByteArray& scriptContent,
+											  const std::string& scriptName)
 {
 	ScriptDeclarations decls;
-	ifstream in(script.c_str());
-	if(!in)
-		return decls;
+	std::stringstream in(scriptContent.constData());
 
 	char buf[256];
 	string line;
@@ -69,7 +70,7 @@ ScriptDeclarations ParseScriptForDeclarations(string script)
 		tokens = TokenizeTrimString(line, ':');
 		if(tokens.size() != 2){
 			UG_LOG("unsupported pm-declare syntax in line " << curLineNumber
-				<< " of script " << script
+				<< " of script " << scriptName
 				<< " to many occurances of ':'"<< endl);
 			return decls;
 		}
@@ -111,16 +112,26 @@ class ScriptTool : public ITool
 			if(dlg){
 				for(size_t i = 0; i < m_scriptDecls.inputs.size(); ++i){
 					ScriptParamter& param = m_scriptDecls.inputs[i];
-					if(param.typeName == "double"){
+					if((param.typeName == "double") || (param.typeName == "float")){
 						m_luaShell->set(param.varName.c_str(), dlg->to_double(i));
+					}
+					else if((param.typeName == "int") || (param.typeName == "integer")){
+						m_luaShell->set(param.varName.c_str(), dlg->to_int(i));
+					}
+					else if((param.typeName == "bool") || (param.typeName == "boolean")){
+						m_luaShell->set(param.varName.c_str(), dlg->to_bool(i));
+					}
+					else if(param.typeName == "string"){
+						m_luaShell->set(param.varName.c_str(), dlg->to_string(i).toLocal8Bit().constData());
 					}
 					else{
 						UG_THROW("type " << param.typeName << " currently unsupported by script interpreter.");
 					}
 				}
 			}
-			m_luaShell->set("mesh", static_cast<ug::promesh::MeshObject*>(obj), "PM_MeshObject");
-			m_luaShell->parse_file(m_scriptPath.c_str());
+			m_luaShell->set("mesh", static_cast<ug::promesh::MeshObject*>(obj), "MeshObject");
+			m_luaShell->run(m_scriptContent.constData());
+
 			obj->geometry_changed();
 		}
 
@@ -178,7 +189,7 @@ class ScriptTool : public ITool
 				if(!param.options.empty()){
 					options = TokenizeTrimString(param.options, ';');
 				}
-				if(param.typeName == "double"){
+				if((param.typeName == "double") || (param.typeName == "float")){
 					double val = 0;
 					double min = -1.e32;
 					double max = 1.e32;
@@ -207,12 +218,89 @@ class ScriptTool : public ITool
 					}
 					dlg->addSpinBox(QString(param.argName.c_str()), min, max, val, step, digits);
 				}
+
+				else if((param.typeName == "int") || (param.typeName == "integer")){
+					double val = 0;
+					double min = -1.e32;
+					double max = 1.e32;
+					double step = 1;
+					if(!options.empty()){
+						for(size_t iopt = 0; iopt < options.size(); ++iopt){
+							tokens = TokenizeTrimString(options[iopt], '=');
+							if(tokens.size() == 2){
+								if(tokens[0] == "min")
+									min = ToNumber<double>(tokens[1]);
+								else if(tokens[0] == "max")
+									max = ToNumber<double>(tokens[1]);
+								else if(tokens[0] == "val")
+									val = ToNumber<double>(tokens[1]);
+								else if(tokens[0] == "step")
+									step = ToNumber<double>(tokens[1]);
+							}
+							else{
+								UG_LOG("Invalid option '" << options[iopt] << "' in paramter '"
+									   << param.argName << "' of script " << m_scriptPath << std::endl);
+							}
+						}
+					}
+					dlg->addSpinBox(QString(param.argName.c_str()), min, max, val, step, 0);
+				}
+
+				else if((param.typeName == "bool") || (param.typeName == "boolean")){
+					bool val = false;
+					if(!options.empty()){
+						for(size_t iopt = 0; iopt < options.size(); ++iopt){
+							tokens = TokenizeTrimString(options[iopt], '=');
+							if(tokens.size() == 2){
+								if(tokens[0] == "val"){
+									string tmp = ToLower(tokens[1]);
+									if((tmp == "true") || (tmp == "1"))
+										val = true;
+								}
+							}
+							else{
+								UG_LOG("Invalid option '" << options[iopt] << "' in paramter '"
+									   << param.argName << "' of script " << m_scriptPath << std::endl);
+							}
+						}
+					}
+					dlg->addCheckBox(QString(param.argName.c_str()), val);
+				}
+
+				else if(param.typeName == "string"){
+					std::string val;
+					if(!options.empty()){
+						for(size_t iopt = 0; iopt < options.size(); ++iopt){
+							tokens = TokenizeTrimString(options[iopt], '=');
+							if(tokens.size() == 2){
+								if(tokens[0] == "val"){
+									val = tokens[1];
+								}
+							}
+							else{
+								UG_LOG("Invalid option '" << options[iopt] << "' in paramter '"
+									   << param.argName << "' of script " << m_scriptPath << std::endl);
+							}
+						}
+					}
+					dlg->addTextBox(QString(param.argName.c_str()), QString(val.c_str()));
+				}
 			}
 		}
 
 		void parse_script_decls(bool force){
 			if(force || m_scriptDecls.name.empty()){
-				m_scriptDecls = ParseScriptForDeclarations(m_scriptPath);
+				QFile file(QString(m_scriptPath.c_str()));
+				if(!file.open(QIODevice::ReadOnly | QIODevice::Text)){
+					m_scriptContent = QByteArray();
+					m_scriptDecls = ScriptDeclarations();
+				}
+				else{
+					m_scriptContent = file.readAll();
+					file.close();
+					m_scriptDecls = ParseScriptForDeclarations(m_scriptContent,
+															   m_scriptName);
+				}
 				if(m_scriptDecls.name.empty())
 					m_scriptDecls.name = m_scriptName;
 			}
@@ -227,6 +315,7 @@ class ScriptTool : public ITool
 		string m_scriptName;
 		string m_scriptPath;
 		string m_group;
+		QByteArray	m_scriptContent;
 		SPLuaShell	m_luaShell;
 };
 
@@ -282,13 +371,17 @@ void ParseDirAndCreateTools(ToolManager* toolMgr, QDir dir, string group,
 
 void RegisterScriptTools(ToolManager* toolMgr)
 {
-	QDir appDir(QApplication::applicationDirPath());
-	if(!appDir.exists("scripts")){
-		UG_THROW("no scripts path found")
-	}
-	appDir.cd("scripts");
+	// QDir appScriptDir(QApplication::applicationDirPath());
+	// if(!appScriptDir.exists("scripts")){
+	// 	UG_THROW("no scripts path found")
+	// }
+	// appScriptDir.cd("scripts");
 
-	ParseDirAndCreateTools(toolMgr, appDir, "Scripts", make_sp(new luashell::LuaShell()));
+	QDir appScriptDir(":/scripts");
+
+	SmartPtr<luashell::LuaShell> shell = make_sp(new luashell::LuaShell());
+	ParseDirAndCreateTools(toolMgr, appScriptDir, "Scripts", shell);
+	ParseDirAndCreateTools(toolMgr, app::UserScriptDir(), "Scripts", shell);
 	toolMgr->set_group_icon("Scripts", ":images/tool_scripts.png");
 }
 
@@ -327,9 +420,8 @@ int RefreshScriptTools(ToolManager* toolMgr)
 	}
 	appDir.cd("scripts");
 
-	ParseDirAndCreateTools(toolMgr, appDir, "Scripts",
-							luaShell,
-							true);
+	ParseDirAndCreateTools(toolMgr, appDir, "Scripts", luaShell, true);
+	ParseDirAndCreateTools(toolMgr, app::UserScriptDir(), "Scripts", luaShell, true);
 
 	if(lastNumScriptTools != g_scriptTools.size())
 		retVal = 1;

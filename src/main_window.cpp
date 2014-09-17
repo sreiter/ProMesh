@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <QtGui>
+#include <QDesktopServices>
 #include "main_window.h"
 #include "view3d/view3d.h"
 #include "scene/lg_scene.h"
@@ -139,7 +140,11 @@ void MainWindow::init()
 	m_actErase->setStatusTip(tr("erases the selected geometry from the scene."));
 	connect(m_actErase, SIGNAL(triggered()), this, SLOT(eraseActiveSceneObject()));
 
-	m_refreshToolDialogs = new QAction(tr("Refresh tool dialogs"), this);
+	m_actBrowseUserScripts = new QAction(tr("Browse User Scripts"), this);
+	m_actBrowseUserScripts->setStatusTip("Opens the path at which user scripts are located.");
+	connect(m_actBrowseUserScripts, SIGNAL(triggered()), this, SLOT(browseUserScripts()));
+	
+	m_refreshToolDialogs = new QAction(tr("Refresh Tool Dialogs"), this);
 	m_refreshToolDialogs->setShortcut(tr("Ctrl+T"));
 	m_refreshToolDialogs->setStatusTip("Refreshes contents of tht tool-dialogs.");
 	connect(m_refreshToolDialogs, SIGNAL(triggered()), this, SLOT(refreshToolDialogsClicked()));
@@ -175,6 +180,7 @@ void MainWindow::init()
 	filemenu->addAction(m_actSave);
 	filemenu->addAction(m_actErase);
 	filemenu->addSeparator();
+	filemenu->addAction(m_actBrowseUserScripts);
 	filemenu->addAction(m_refreshToolDialogs);
 	filemenu->addSeparator();
 	filemenu->addAction(m_actExportUG3);
@@ -272,17 +278,13 @@ void MainWindow::init()
 			this, SLOT(sceneInspectorClicked(QMouseEvent*)));
 
 //	init undo
-	//QString appPath = QCoreApplication::applicationDirPath();
-	//if(!UndoHistoryProvider::inst().init(appPath.toStdString().c_str())){
-//	we'll write to a temporary path
-	std::string tmpPath = ug::GetTmpPath();
-	tmpPath.append("/ProMesh");
-//	make sure that the path exists. Otherwise, create it
-	if(!DirectoryExists(tmpPath.c_str()))
-		CreateDirectory(tmpPath.c_str());
-	if(!UndoHistoryProvider::inst().init(tmpPath.c_str())){
+	QDir tmpPath(QDir::tempPath());
+	if(!tmpPath.exists("ProMesh"))
+		tmpPath.mkdir("ProMesh");
+	tmpPath.cd("ProMesh");
+	if(!UndoHistoryProvider::inst().init(tmpPath.path().toLocal8Bit().constData())){
 		cout << "initialization of undo failed. couldn't create history path at "
-			 << tmpPath << "\n";
+			 << tmpPath.path().toLocal8Bit().constData() << "\n";
 	}
 
 //	init the status bar
@@ -1098,4 +1100,11 @@ void MainWindow::refreshToolDialogsClicked()
 		m_toolBrowser->setObjectName(tr("tool_browser"));
 		m_toolBrowserDock->setWidget(m_toolBrowser);
 	}
+}
+
+void MainWindow::browseUserScripts()
+{
+	QDir scriptDir = app::UserScriptDir();
+	QString path = QDir::toNativeSeparators(app::UserScriptDir().path());
+	QDesktopServices::openUrl(QUrl("file:///" + path));
 }

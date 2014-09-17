@@ -105,6 +105,7 @@ class MainWindow : public QMainWindow
 		void redo();
 		void sceneInspectorClicked(QMouseEvent* event);
 		void refreshToolDialogsClicked();
+		void browseUserScripts();
 
 	protected:
 		void closeEvent(QCloseEvent *event);
@@ -171,6 +172,7 @@ class MainWindow : public QMainWindow
 		QAction*	m_actExport;
 		QAction*	m_actErase;
 		QAction*	m_refreshToolDialogs;
+		QAction*	m_actBrowseUserScripts;
 		QAction*	m_actExportUG3;
 		QAction*	m_actHelpControls;
 		QAction*	m_actRecentChanges;

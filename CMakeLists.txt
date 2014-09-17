@@ -87,7 +87,8 @@ if(UNIX AND NOT APPLE)
 endif(UNIX AND NOT APPLE)
 
 # Now add the sources
-set(ProMeshSRC	src/main.cpp
+set(ProMeshSRC	src/app.cpp
+				src/main.cpp
 				src/main_window.cpp
 				src/main_window_input.cpp
 				src/scene_inspector.cpp
