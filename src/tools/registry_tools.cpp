@@ -2,6 +2,7 @@
 // s.b.reiter@gmail.com
 
 #include "common/util/stringify.h"
+#include "common/util/string_util.h"
 #include "bridge/bridge.h"
 #include "standard_tools.h"
 
@@ -9,6 +10,16 @@ using namespace std;
 using namespace ug;
 using namespace ug::promesh;
 using namespace ug::bridge;
+
+
+template <class T>
+static T ToNumber(const std::string& str){
+	std::istringstream istr(str.c_str());
+	istr.imbue(std::locale("C"));
+	T num = 0;
+	istr >> num;
+	return num;
+}
 
 
 class RegistryTool : public ITool{
@@ -117,34 +128,125 @@ class RegistryTool : public ITool{
 
 			const ParameterInfo& params = m_func->params_in();
 			bool paramError = false;
+			
+			vector<string> tokens;
+			vector<string> options;
 
 			for(int iparam = 1; iparam < params.size(); ++iparam){
 				string paramName = Stringify() << "param-" << iparam;
 				if(!m_func->parameter_name(iparam).empty())
 					paramName = m_func->parameter_name(iparam);
 
+				options.clear();
+				const std::vector<std::string>& paramInfos = m_func->parameter_info_vec(iparam);
+				if(paramInfos.size() >= 3){
+					options = TokenizeTrimString(paramInfos[2], ';');
+				}
+
 				QString qParamName = QString::fromStdString(paramName);
 
 				switch(params.type(iparam)){
 					case Variant::VT_BOOL:
-						dlg->addCheckBox(qParamName, false);	//todo: use default value
-						break;
+					{
+						bool val = false;
+						if(!options.empty()){
+							for(size_t iopt = 0; iopt < options.size(); ++iopt){
+								tokens = TokenizeTrimString(options[iopt], '=');
+								if(tokens.size() == 2){
+									if(tokens[0] == "value"){
+										string tmp = ToLower(tokens[1]);
+										if((tmp == "true") || (tmp == "1"))
+											val = true;
+									}
+								}
+							}
+						}
+						dlg->addCheckBox(qParamName, val);
+					}break;
+
 					case Variant::VT_INT:
-						dlg->addSpinBox(qParamName, -1.e32, 1.e32, 0, 1, 0);	//todo: use default value
-						break;
+					{
+						double val = 0;
+						double min = -1.e32;
+						double max = 1.e32;
+						double step = 1;
+						if(!options.empty()){
+							for(size_t iopt = 0; iopt < options.size(); ++iopt){
+								tokens = TokenizeTrimString(options[iopt], '=');
+								if(tokens.size() == 2){
+									if(tokens[0] == "min")
+										min = ToNumber<double>(tokens[1]);
+									else if(tokens[0] == "max")
+										max = ToNumber<double>(tokens[1]);
+									else if(tokens[0] == "value")
+										val = ToNumber<double>(tokens[1]);
+									else if(tokens[0] == "step")
+										step = ToNumber<double>(tokens[1]);
+								}
+							}
+						}
+						dlg->addSpinBox(qParamName, min, max, val, step, 0);
+					}break;
+
 					case Variant::VT_SIZE_T:
-						dlg->addSpinBox(qParamName, 0, 1.e32, 0, 1, 0);	//todo: use default value
-						break;
+					{
+						double val = 0;
+						double min = 0;
+						double max = 1.e32;
+						double step = 1;
+						if(!options.empty()){
+							for(size_t iopt = 0; iopt < options.size(); ++iopt){
+								tokens = TokenizeTrimString(options[iopt], '=');
+								if(tokens.size() == 2){
+									if(tokens[0] == "min")
+										min = ToNumber<double>(tokens[1]);
+									else if(tokens[0] == "max")
+										max = ToNumber<double>(tokens[1]);
+									else if(tokens[0] == "value")
+										val = ToNumber<double>(tokens[1]);
+									else if(tokens[0] == "step")
+										step = ToNumber<double>(tokens[1]);
+								}
+							}
+						}
+						dlg->addSpinBox(qParamName, min, max, val, step, 0);
+					}break;
+
 					case Variant::VT_FLOAT:
-						dlg->addSpinBox(qParamName, -1.e32, 1.e32, 0, 1, 9);	//todo: use default value
-						break;
 					case Variant::VT_DOUBLE:
-						dlg->addSpinBox(qParamName, -1.e32, 1.e32, 0, 1, 9);	//todo: use default value
-						break;
+					{
+						double val = 0;
+						double min = -1.e32;
+						double max = 1.e32;
+						double step = 1;
+						double digits = 9;
+						if(!options.empty()){
+							for(size_t iopt = 0; iopt < options.size(); ++iopt){
+								tokens = TokenizeTrimString(options[iopt], '=');
+								if(tokens.size() == 2){
+									tokens[1] = ReplaceAll(tokens[1], string("D"), string(""));
+									if(tokens[0] == "min")
+										min = ToNumber<double>(tokens[1]);
+									else if(tokens[0] == "max")
+										max = ToNumber<double>(tokens[1]);
+									else if(tokens[0] == "value")
+										val = ToNumber<double>(tokens[1]);
+									else if(tokens[0] == "step")
+										step = ToNumber<double>(tokens[1]);
+									else if(tokens[0] == "digits")
+										digits = ToNumber<double>(tokens[1]);
+								}
+							}
+						}
+						dlg->addSpinBox(qParamName, min, max, val, step, digits);
+					}break;
+
 					case Variant::VT_CSTRING:
-						dlg->addTextBox(qParamName, tr(""));
 					case Variant::VT_STDSTRING:
+					{
 						dlg->addTextBox(qParamName, tr(""));
+					}break;
+
 					default:
 						paramError = true;
 						break;
@@ -179,13 +281,13 @@ void RegisterTool(ToolManager* toolMgr,
 	for(size_t ifct = 0; ifct < reg.num_functions(); ++ifct){
 		ExportedFunction& f = reg.get_function(ifct);
 		if(f.name() == funcName){
-		//	find an overload whose first argument is PM_MeshObject
+		//	find an overload whose first argument is MeshObject
 			for(size_t iol = 0; iol < reg.num_overloads(ifct); ++iol){
 				ExportedFunction& o = reg.get_overload(ifct, iol);
 				if(o.num_parameter() == 0)
 					continue;
 
-				if(strcmp(o.parameter_class_name(0), "PM_MeshObject") != 0)
+				if(strcmp(o.parameter_class_name(0), "MeshObject") != 0)
 					continue;
 
 			//	o has to be added
@@ -200,13 +302,16 @@ void RegisterTool(ToolManager* toolMgr,
 void RegsiterRegistryTools(ToolManager* toolMgr)
 {
 	Registry& reg = GetUGRegistry();
-	RegisterTool(toolMgr, reg, "Measure Grid Length", "PM_MeasureGridLength");
-	RegisterTool(toolMgr, reg, "Measure Grid Area", "PM_MeasureGridArea");
-	RegisterTool(toolMgr, reg, "Measure Grid Volume", "PM_MeasureGridVolume");
-	RegisterTool(toolMgr, reg, "Measure Subset Length", "PM_MeasureSubsetLength");
-	RegisterTool(toolMgr, reg, "Measure Subset Area", "PM_MeasureSubsetArea");
-	RegisterTool(toolMgr, reg, "Measure Subset Volume", "PM_MeasureSubsetVolume");
-	RegisterTool(toolMgr, reg, "Measure Selection Length", "PM_MeasureSelectionLength");
-	RegisterTool(toolMgr, reg, "Measure Selection Area", "PM_MeasureSelectionArea");
-	RegisterTool(toolMgr, reg, "Measure Selection Volume", "PM_MeasureSelectionVolume");
+	RegisterTool(toolMgr, reg, "Measure Grid Length", "MeasureGridLength");
+	RegisterTool(toolMgr, reg, "Measure Grid Area", "MeasureGridArea");
+	RegisterTool(toolMgr, reg, "Measure Grid Volume", "MeasureGridVolume");
+	RegisterTool(toolMgr, reg, "Measure Subset Length", "MeasureSubsetLength");
+	RegisterTool(toolMgr, reg, "Measure Subset Area", "MeasureSubsetArea");
+	RegisterTool(toolMgr, reg, "Measure Subset Volume", "MeasureSubsetVolume");
+	RegisterTool(toolMgr, reg, "Measure Selection Length", "MeasureSelectionLength");
+	RegisterTool(toolMgr, reg, "Measure Selection Area", "MeasureSelectionArea");
+	RegisterTool(toolMgr, reg, "Measure Selection Volume", "MeasureSelectionVolume");
+
+	RegisterTool(toolMgr, reg, "Weighted Edge Smooth", "WeightedEdgeSmooth");
+	RegisterTool(toolMgr, reg, "Weighted Face Smooth", "WeightedFaceSmooth");
 }

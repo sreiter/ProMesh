@@ -3,6 +3,8 @@ Recent changes:
 -------------------------------------------------------------------------------
 v 4.1.8
 Changes and additions:
+- New smoothing tools: CoordinateTransform-WeightedEdgeSmooth and -WeightedFaceSmooth
+- New script tool: Smoothing-CreaseSmoothing
 - Added a promesh user-data directory in $HOME/.promesh
 - Undo now goes to TEMP folder, also on Windows
 - Added new file menu entries: "Browse User Scripts" and "Refresh Tool Dialogs"
@@ -27,7 +29,7 @@ v 4.1.6
 Changes and additions:
 
 Fixes:
-- Coordinate values are now trunkated during tikz/tex export.
+- Coordinate values are now truncated during tikz/tex export.
 
 
 
