@@ -30,9 +30,6 @@
         <file>images/tool_scripts.png</file>
         <file>images/tool_transform.png</file>
         <file>images/tool_unknown.png</file>
-        
-        <file>images/spinner_down.png</file>
-        <file>images/spinner_up.png</file>
     </qresource>
     
     <qresource prefix="/text">

@@ -1,5 +1,17 @@
 Recent changes:
 
+
+-------------------------------------------------------------------------------
+v 4.2.0
+Changes and additions:
+- GUI rework: New style and improved usability of number input fields
+
+Fixes:
+- Export to .smesh and import from .ele (TETGEN) now preserve face subsets.
+- Improved refinement rule for tetrahedrons if only 2 opposing edges are selected.
+
+
+
 -------------------------------------------------------------------------------
 v 4.1.9
 Changes and additions:

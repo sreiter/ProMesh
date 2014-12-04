@@ -57,3 +57,8 @@ QToolButton:open { /* when the button has its menu open */
     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                       stop: 0 #cacbce, stop: 1 #e6e7ea);
 }
+
+
+QCheckBox {
+}
+
