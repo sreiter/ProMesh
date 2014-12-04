@@ -43,7 +43,7 @@ class RegistryTool : public ITool{
 							 QWidget* widget)
 		{
 			ParameterStack paramsIn, paramsOut;
-			paramsIn.push(static_cast<MeshObject*>(obj));
+			paramsIn.push(static_cast<Mesh*>(obj));
 			
 			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 			if(dlg){
@@ -281,13 +281,13 @@ void RegisterTool(ToolManager* toolMgr,
 	for(size_t ifct = 0; ifct < reg.num_functions(); ++ifct){
 		ExportedFunction& f = reg.get_function(ifct);
 		if(f.name() == funcName){
-		//	find an overload whose first argument is MeshObject
+		//	find an overload whose first argument is Mesh
 			for(size_t iol = 0; iol < reg.num_overloads(ifct); ++iol){
 				ExportedFunction& o = reg.get_overload(ifct, iol);
 				if(o.num_parameter() == 0)
 					continue;
 
-				if(strcmp(o.parameter_class_name(0), "MeshObject") != 0)
+				if(strcmp(o.parameter_class_name(0), "Mesh") != 0)
 					continue;
 
 			//	o has to be added
@@ -314,4 +314,9 @@ void RegsiterRegistryTools(ToolManager* toolMgr)
 
 	RegisterTool(toolMgr, reg, "Weighted Edge Smooth", "WeightedEdgeSmooth");
 	RegisterTool(toolMgr, reg, "Weighted Face Smooth", "WeightedFaceSmooth");
+
+	RegisterTool(toolMgr, reg, "Mark Corners Of Marked Edges", "MarkCornersOfMarkedEdges");
+	RegisterTool(toolMgr, reg, "Replace Low Valence Vertices", "ReplaceLowValenceVertices");
+
+	RegisterTool(toolMgr, reg, "Slivers", "SelectSlivers");
 }

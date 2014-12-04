@@ -7,6 +7,7 @@
 #include <clocale>
 #include <QFileOpenEvent>
 #include "app.h"
+#include "util/file_util.h"
 
 using namespace std;
 
@@ -52,6 +53,10 @@ int main(int argc, char *argv[])
 	MyApplication myApp(argc, argv);
 	myApp.setQuitOnLastWindowClosed(true);
 
+
+	myApp.setStyleSheet(GetFileContent(":/styles/promesh_style.txt"));
+	//myApp.setStyleSheet(GetFileContent("/home/sreiter/projects/ProMesh/trunk/styles/promesh_style.txt"));
+
 /*
 	if(!QGLFormat::hasOpenGL())
 	{
@@ -67,7 +72,7 @@ int main(int argc, char *argv[])
 	pMainWindow->init();
 
 	myApp.setMainWindow(pMainWindow);
-	pMainWindow->setWindowTitle("ProMesh 4.1.8");
+	pMainWindow->setWindowTitle("ProMesh 4.1.9*");
 
 	//pMainWindow->resize(1024, 768);
 	pMainWindow->show();
@@ -78,5 +83,6 @@ int main(int argc, char *argv[])
 		pMainWindow->load_grid_from_file(argv[i]);
 	}
 
+	UG_LOG(GetFileContent("/home/sreiter/projects/ProMesh/trunk/styles/promesh_style.txt").toStdString());
 	return myApp.exec();
 }

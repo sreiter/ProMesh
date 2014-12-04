@@ -25,7 +25,6 @@ enum InputDialogButtons
 	IDB_CLOSE = 1 << 4
 };
 
-
 class ToolWidget : public QFrame
 {
 	Q_OBJECT

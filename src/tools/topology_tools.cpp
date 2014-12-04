@@ -248,7 +248,7 @@ class ToolRemoveDoubles : public ITool
 			if(dlg)
 				threshold = dlg->to_double(0);
 
-			if(obj->get_selector().num<Vertex>() == 0){
+			if(obj->selector().num<Vertex>() == 0){
 				UG_LOG("INFO in Remove Doubles: no vertices are selected. Aborting.\n");
 			}
 			else{
@@ -274,7 +274,7 @@ class ToolRemoveDoubleEdges : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			if(obj->get_selector().num<Edge>() == 0){
+			if(obj->selector().num<Edge>() == 0){
 				UG_LOG("INFO in Remove Double Edges: no edges are selected. Aborting.\n");
 			}
 			else{
@@ -294,7 +294,7 @@ class ToolMergeAtFirst : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			if(obj->get_selector().num<Vertex>() == 0){
+			if(obj->selector().num<Vertex>() == 0){
 				UG_LOG("INFO in 'Merge at First': no vertices are selected. Aborting.\n");
 			}
 			else{
@@ -312,7 +312,7 @@ class ToolMergeAtCenter : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			if(obj->get_selector().num<Vertex>() == 0){
+			if(obj->selector().num<Vertex>() == 0){
 				UG_LOG("INFO in 'Merge at Center': no vertices are selected. Aborting.\n");
 			}
 			else{
@@ -330,7 +330,7 @@ class ToolMergeAtLast : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			if(obj->get_selector().num<Vertex>() == 0){
+			if(obj->selector().num<Vertex>() == 0){
 				UG_LOG("INFO in 'Merge at Last': no vertices are selected. Aborting.\n");
 			}
 			else{

@@ -10,7 +10,7 @@
 WidgetContainer::WidgetContainer(QWidget* parent) : QFrame(parent)
 {
 	m_layout = new QVBoxLayout(this);
-	m_layout->setSpacing(3);
+	m_layout->setSpacing(0);
 	m_layout->setContentsMargins(0, 0, 0, 0);
 	this->setLayout(m_layout);
 	this->setLineWidth(1);

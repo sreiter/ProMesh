@@ -59,4 +59,20 @@ QDir UserScriptDir()
 	return userPath;
 }
 
+QDir UserTmpDir()
+{
+	QDir userPath = UserDataDir();
+	QString pathName("tmp");
+
+	if(!userPath.exists(pathName)){
+		userPath.mkdir(pathName);
+	}
+
+	CheckPathPermissions(userPath, pathName);
+
+	userPath.cd(pathName);
+
+	return userPath;
+}
+
 }// end of namespace

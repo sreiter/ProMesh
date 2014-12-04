@@ -169,9 +169,9 @@ class ToolSelectShortEdges : public ITool
 				maxLength = dlg->to_double(0);
 			}
 
-			size_t numSel = obj->get_selector().num<Edge>();
+			size_t numSel = obj->selector().num<Edge>();
 			promesh::SelectShortEdges(obj, maxLength);
-			UG_LOG(obj->get_selector().num<Edge>() - numSel
+			UG_LOG(obj->selector().num<Edge>() - numSel
 				   << " short edges selected.\n");
 
 			obj->selection_changed();
@@ -200,9 +200,9 @@ class ToolSelectLongEdges : public ITool
 				minLength = dlg->to_double(0);
 			}
 
-			size_t numSel = obj->get_selector().num<Edge>();
+			size_t numSel = obj->selector().num<Edge>();
 			promesh::SelectLongEdges(obj, minLength);
-			UG_LOG(obj->get_selector().num<Edge>() - numSel
+			UG_LOG(obj->selector().num<Edge>() - numSel
 				   << " long edges selected.\n");
 
 
@@ -260,9 +260,9 @@ class ToolSelectDegenerateFaces : public ITool
 				maxHeight = dlg->to_double(0);
 			}
 
-			size_t numSelFaces = obj->get_selector().num<Face>();
+			size_t numSelFaces = obj->selector().num<Face>();
 			promesh::SelectDegenerateFaces(obj, maxHeight);
-			UG_LOG(obj->get_selector().num<Face>() - numSelFaces
+			UG_LOG(obj->selector().num<Face>() - numSelFaces
 				   << " degenerated faces selected.\n");
 
 			obj->selection_changed();
@@ -385,9 +385,9 @@ class ToolSelectIntersectingTriangles : public ITool
 	public:
 		void execute(LGObject* obj, QWidget*){
 
-			size_t numSelFaces = obj->get_selector().num<Face>();
+			size_t numSelFaces = obj->selector().num<Face>();
 			promesh::SelectIntersectingTriangles(obj);
-			UG_LOG(obj->get_selector().num<Face>() - numSelFaces
+			UG_LOG(obj->selector().num<Face>() - numSelFaces
 				   << " intersecting faces selected.\n");
 
 			obj->selection_changed();

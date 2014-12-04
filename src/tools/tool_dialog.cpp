@@ -10,6 +10,7 @@
 #include "app.h"
 #include "dialog_components/matrix_widget.h"
 #include "../widgets/double_slider.h"
+#include "../widgets/truncated_double_spin_box.h"
 
 using namespace std;
 
@@ -25,12 +26,12 @@ ToolWidget::ToolWidget(const QString& name, QWidget* parent,
 	setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
 
 	QVBoxLayout* baseLayout = new QVBoxLayout(this);
-	//baseLayout->setSpacing(2);
-	baseLayout->setSpacing(10);
+	baseLayout->setSpacing(2);
+	//baseLayout->setSpacing(10);
 
 	QVBoxLayout* vBoxLayout = new QVBoxLayout();
-	//vBoxLayout->setSpacing(2);
-	vBoxLayout->setSpacing(10);
+	vBoxLayout->setSpacing(2);
+	//vBoxLayout->setSpacing(10);
 	m_mainLayout = vBoxLayout;
 	baseLayout->addLayout(vBoxLayout);
 	m_signalMapper = new QSignalMapper(this);
@@ -79,8 +80,10 @@ QFormLayout* ToolWidget::current_form_layout()
 {
 	if(!m_currentFormLayout){
 		m_currentFormLayout = new QFormLayout();
-		m_currentFormLayout->setSpacing(5);
-		m_currentFormLayout->setHorizontalSpacing(10);
+		//m_currentFormLayout->setSpacing(5);
+		m_currentFormLayout->setSpacing(2);
+		//m_currentFormLayout->setHorizontalSpacing(10);
+		m_currentFormLayout->setHorizontalSpacing(2);
 		m_currentFormLayout->setVerticalSpacing(8);
 		m_mainLayout->addLayout(m_currentFormLayout);
 		//m_mainLayout->addSpacing(15);
@@ -108,7 +111,7 @@ void ToolWidget::addSpinBox(const QString& caption,
 							double min, double max, double value,
 							double stepSize, int numDecimals)
 {
-	QDoubleSpinBox* spinner = new QDoubleSpinBox(this);
+	TruncatedDoubleSpinBox* spinner = new TruncatedDoubleSpinBox(this);
 	spinner->setLocale(QLocale(tr("C")));
 	spinner->setRange(min, max);
 	spinner->setValue(value);
@@ -255,7 +258,7 @@ TNumber ToolWidget::to_number(int paramIndex, bool* bOKOut)
 			return (TNumber)slider->value();
 		}break;
 	case WT_SPIN_BOX:{
-			QDoubleSpinBox* spinBox = qobject_cast<QDoubleSpinBox*>(we.m_widget);
+			TruncatedDoubleSpinBox* spinBox = qobject_cast<TruncatedDoubleSpinBox*>(we.m_widget);
 			return (TNumber)spinBox->value();
 		}break;
 	case WT_COMBO_BOX:{
@@ -478,7 +481,7 @@ bool ToolWidget::setNumber(int paramIndex, double val)
 			slider->setValue(val);
 		}break;
 	case WT_SPIN_BOX:{
-			QDoubleSpinBox* spinBox = qobject_cast<QDoubleSpinBox*>(we.m_widget);
+			TruncatedDoubleSpinBox* spinBox = qobject_cast<TruncatedDoubleSpinBox*>(we.m_widget);
 			spinBox->setValue(val);
 		}break;
 	default:

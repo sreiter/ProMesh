@@ -5,6 +5,22 @@
 #include <cstring>
 #include <string>
 #include "lg_object.h"
+#include "lib_grid/file_io/file_io.h"
+#include "lib_grid/file_io/file_io_art.h"
+#include "lib_grid/file_io/file_io_dump.h"
+#include "lib_grid/file_io/file_io_lgb.h"
+#include "lib_grid/file_io/file_io_lgm.h"
+#include "lib_grid/file_io/file_io_msh.h"
+#include "lib_grid/file_io/file_io_ncdf.h"
+#include "lib_grid/file_io/file_io_ng.h"
+#include "lib_grid/file_io/file_io_obj.h"
+#include "lib_grid/file_io/file_io_stl.h"
+#include "lib_grid/file_io/file_io_tetgen.h"
+#include "lib_grid/file_io/file_io_tikz.h"
+#include "lib_grid/file_io/file_io_txt.h"
+#include "lib_grid/file_io/file_io_ug.h"
+#include "lib_grid/file_io/file_io_ugx.h"
+#include "lib_grid/file_io/file_io_vtu.h"
 
 using namespace std;
 using namespace ug;
@@ -24,7 +40,7 @@ LGObject* CreateEmptyLGObject(const char* name)
 {
     LGObject* obj = new LGObject;
     obj->set_name(name);
-    Grid& grid = obj->get_grid();
+    Grid& grid = obj->grid();
     grid.enable_options(GRIDOPT_STANDARD_INTERCONNECTION | FACEOPT_STORE_ASSOCIATED_VOLUMES);
     return obj;
 }
@@ -33,8 +49,8 @@ bool LoadLGObjectFromFile(LGObject* pObjOut, const char* filename)
 {
 	LOG("loading " << filename << " ... ");
 
-	Grid& grid = pObjOut->get_grid();
-	SubsetHandler& sh = pObjOut->get_subset_handler();
+	Grid& grid = pObjOut->grid();
+	SubsetHandler& sh = pObjOut->subset_handler();
 	pObjOut->m_fileName = filename;
 
 	grid.enable_options(GRIDOPT_STANDARD_INTERCONNECTION | FACEOPT_STORE_ASSOCIATED_VOLUMES);
@@ -67,90 +83,26 @@ bool LoadLGObjectFromFile(LGObject* pObjOut, const char* filename)
 					ugxReader.subset_handler(sh, 0, 0);
 
 				if(ugxReader.num_subset_handlers(0) > 1)
-					ugxReader.subset_handler(pObjOut->get_crease_handler(), 1, 0);
+					ugxReader.subset_handler(pObjOut->crease_handler(), 1, 0);
 
 				if(ugxReader.num_selectors(0) > 0)
-					ugxReader.selector(pObjOut->get_selector(), 0, 0);
+					ugxReader.selector(pObjOut->selector(), 0, 0);
 
 				bLoadSuccessful = true;
 			}
 		}
 	}
-	else if(strcmp(pSuffix, ".txt") == 0)
-	{
-	//	load from txt
-		bLoadSuccessful = LoadGridFromTXT(grid, filename);
-
-	//	since there are no subsets in txt's we'll assign them manually
-		sh.assign_subset(grid.faces_begin(), grid.faces_end(), 0);
-		bSetDefaultSubsetColors = true;
-	}
-	else if(strcmp(pSuffix, ".obj") == 0)
-	{
-	//	load from obj
-		bLoadSuccessful = LoadGridFromOBJ(grid, filename, aPosition,
-											NULL, &sh);
-		bSetDefaultSubsetColors = true;
-	}
-	else if(strcmp(pSuffix, ".stl") == 0)
-	{
-	//	load from obj
-		bLoadSuccessful = LoadGridFromSTL(grid, filename, &sh, aPosition, aNormal);
-		bSetDefaultSubsetColors = true;
-	}
 	else if(strcmp(pSuffix, ".lgb") == 0)
 	{
 	//	load to lgb. We want to load the marks too.
 		ISubsetHandler* ppSH[2];
-		ppSH[0] = &pObjOut->get_subset_handler();
-		ppSH[1] = &pObjOut->get_crease_handler();
+		ppSH[0] = &pObjOut->subset_handler();
+		ppSH[1] = &pObjOut->crease_handler();
 		bLoadSuccessful = LoadGridFromLGB(grid, filename, ppSH, 2);
-	}
-	else if(strcmp(pSuffix, ".ele") == 0)
-	{
-		AInt aVolAttrib;
-		grid.attach_to_volumes(aVolAttrib);
-		Grid::VolumeAttachmentAccessor<AInt> aaVolAttribs(grid, aVolAttrib);
-
-	//	import from tetgen
-		string nodeFile = string(filename).substr(0, strlen(filename) - 4);
-		string faceFile = nodeFile;
-		nodeFile.append(".node");
-		faceFile.append(".face");
-		bLoadSuccessful = ImportGridFromTETGEN(grid, nodeFile.c_str(), faceFile.c_str(),
-											filename, aPosition,
-											NULL, NULL, NULL, &aVolAttrib);
-
-	//	we have to assign all volumes to subsets
-		for(VolumeIterator iter = grid.volumes_begin(); iter != grid.volumes_end(); ++iter)
-		{
-			if(aaVolAttribs[*iter] != -1)
-				sh.assign_subset(*iter, aaVolAttribs[*iter]);
-		}
-
-		if(sh.num_subsets() == 0)
-		{
-		//	assign all volumes to subset 1.
-			sh.assign_subset(grid.volumes_begin(), grid.volumes_end(), 0);
-		}
-
-		grid.detach_from_volumes(aVolAttrib);
-		bSetDefaultSubsetColors = true;
-	}
-	else if(strcmp(pSuffix, ".lgm") == 0)
-	{
-		bLoadSuccessful = ImportGridFromLGM(grid, filename,
-											aPosition, &sh);
-		bSetDefaultSubsetColors = true;
-	}
-	else if(strcmp(pSuffix, ".ng") == 0)
-	{
-		bLoadSuccessful = ImportGridFromNG(grid, filename,
-											aPosition, &sh);
-		bSetDefaultSubsetColors = true;
 	}
 	else{
 		bLoadSuccessful = LoadGridFromFile(grid, sh, filename, aPosition);
+		bSetDefaultSubsetColors = true;
 	}
 
 	if(bLoadSuccessful)
@@ -170,49 +122,11 @@ bool LoadLGObjectFromFile(LGObject* pObjOut, const char* filename)
 
 	//	initialize the subset-colors
 		if(bSetDefaultSubsetColors)
-			AssignSubsetColors(pObjOut->get_subset_handler());
+			AssignSubsetColors(pObjOut->subset_handler());
 
 		pObjOut->init_subsets();
 
 		pObjOut->geometry_changed();
-
-	//	assign all faces that are volume-boundaries to a subset.
-/*
-		if(grid.num_volumes() > 0)
-		{
-			int subsetIndex = sh.num_subsets();
-			for(FaceIterator iter = grid.faces_begin(); iter != grid.faces_end(); ++iter)
-			{
-				Face* f = *iter;
-				if(sh.get_subset_index(f) == -1)
-				{
-					if(IsVolumeBoundaryFace(grid, f))
-						sh.assign_subset(f, subsetIndex);
-				}
-			}
-			sh.subset_info(subsetIndex).name = "boundary";
-		}
-*/
-/*
-	//	initialise subsets
-		pObjOut->init_subsets();
-
-	//	initialize the subset-colors
-		if(bSetDefaultSubsetColors)
-		{
-			for(int i = 0; i < pObjOut->num_subsets(); ++i)
-				pObjOut->set_subset_color(i, QColor(255, 255, 255, 255));
-		}
-
-	//	check subset names
-		for(int i = 0; i < sh.num_subsets(); ++i)
-		{
-			if(sh.subset_info(i).name.size() == 0)
-			{
-				sh.subset_info(i).name = "subset";
-			}
-		}
-*/
 	}
 
 	if(bLoadSuccessful){
@@ -231,8 +145,8 @@ bool LoadLGObjectFromFile(LGObject* pObjOut, const char* filename)
 
 bool ReloadLGObject(LGObject* obj)
 {
-	obj->get_grid().clear_geometry();
-	obj->get_subset_handler().clear();
+	obj->grid().clear_geometry();
+	obj->subset_handler().clear();
 	if(!LoadLGObjectFromFile(obj, obj->m_fileName.c_str())){
 		UG_LOG("Reload Failed!" << std::endl);
 		return false;
@@ -250,22 +164,22 @@ bool SaveLGObjectToFile(LGObject* pObj, const char* filename)
 
 		if(strcmp(pSuffix, ".ugx") == 0){
 			GridWriterUGX ugxWriter;
-			ugxWriter.add_grid(pObj->get_grid(), "defGrid", aPosition);
-			ugxWriter.add_subset_handler(pObj->get_subset_handler(), "defSH", 0);
-			ugxWriter.add_subset_handler(pObj->get_crease_handler(), "markSH", 0);
-			ugxWriter.add_selector(pObj->get_selector(), "defSel", 0);
+			ugxWriter.add_grid(pObj->grid(), "defGrid", aPosition);
+			ugxWriter.add_subset_handler(pObj->subset_handler(), "defSH", 0);
+			ugxWriter.add_subset_handler(pObj->crease_handler(), "markSH", 0);
+			ugxWriter.add_selector(pObj->selector(), "defSel", 0);
 			return ugxWriter.write_to_file(filename);
 		}
 		else if(strcmp(pSuffix, ".lgb") == 0)
 		{
 		//	save to lgb. We want to save the marks too.
 			ISubsetHandler* ppSH[2];
-			ppSH[0] = &pObj->get_subset_handler();
-			ppSH[1] = &pObj->get_crease_handler();
-			return SaveGridToLGB(pObj->get_grid(), filename, ppSH, 2);
+			ppSH[0] = &pObj->subset_handler();
+			ppSH[1] = &pObj->crease_handler();
+			return SaveGridToLGB(pObj->grid(), filename, ppSH, 2);
 		}
 		else
-			return SaveGridToFile(pObj->get_grid(), pObj->get_subset_handler(), filename);
+			return SaveGridToFile(pObj->grid(), pObj->subset_handler(), filename);
 	}
 	return false;
 }
@@ -445,8 +359,8 @@ bool LGObject::undo()
 	const char* filename = m_undoHistory.undo();
 
 //	ISubsetHandler* ppSH[2];
-//	ppSH[0] = &get_subset_handler();
-//	ppSH[1] = &get_crease_handler();
+//	ppSH[0] = &subset_handler();
+//	ppSH[1] = &crease_handler();
 //	bool bLoadSuccessful = LoadGridFromLGB(m_grid, filename, ppSH, 2);
 	bool bLoadSuccessful = load_ugx(filename);
 
@@ -469,8 +383,8 @@ bool LGObject::redo()
 	const char* filename = m_undoHistory.redo();
 
 //	ISubsetHandler* ppSH[2];
-//	ppSH[0] = &get_subset_handler();
-//	ppSH[1] = &get_crease_handler();
+//	ppSH[0] = &subset_handler();
+//	ppSH[1] = &crease_handler();
 //	bool bLoadSuccessful = LoadGridFromLGB(m_grid, filename, ppSH, 2);
 	bool bLoadSuccessful = load_ugx(filename);
 

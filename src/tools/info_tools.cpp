@@ -16,8 +16,8 @@ class ToolPrintSelectionCenter : public ITool
 	public:
 		void execute(LGObject* obj, QWidget*){
 
-			ug::Grid& grid = obj->get_grid();
-			ug::Selector& sel = obj->get_selector();
+			ug::Grid& grid = obj->grid();
+			ug::Selector& sel = obj->selector();
 			Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
 
 			vector3 center;
@@ -41,7 +41,7 @@ class ToolPrintGeometryInfo : public ITool
 	public:
 		void execute(LGObject* obj, QWidget*){
 
-			ug::Grid& grid = obj->get_grid();
+			ug::Grid& grid = obj->grid();
 			vector3 vMin, vMax;
 			vector3 vDim;
 			obj->get_bounding_box(vMin, vMax);
@@ -70,8 +70,8 @@ class ToolPrintFaceQuality : public ITool
 	public:
 		void execute(LGObject* obj, QWidget*){
 			using namespace ug;
-			ug::Grid& grid = obj->get_grid();
-			ug::Selector& sel = obj->get_selector();
+			ug::Grid& grid = obj->grid();
+			ug::Selector& sel = obj->selector();
 			Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
 
 			UG_LOG("face qualities:\n");
@@ -91,8 +91,8 @@ class ToolPrintSelectionInfo : public ITool
 	public:
 		void execute(LGObject* obj, QWidget*){
 			using namespace ug;
-			ug::Grid& grid = obj->get_grid();
-			ug::Selector& sel = obj->get_selector();
+			ug::Grid& grid = obj->grid();
+			ug::Selector& sel = obj->selector();
 			UG_LOG("Selection Info:\n");
 			PrintElementNumbers(sel.get_grid_objects());
 
@@ -134,8 +134,8 @@ class ToolPrintSelectionContainingSubsets : public ITool
 	public:
 		void execute(LGObject* obj, QWidget*){
 			using namespace ug;
-			ug::Selector& sel = obj->get_selector();
-			ug::SubsetHandler& sh = obj->get_subset_handler();
+			ug::Selector& sel = obj->selector();
+			ug::SubsetHandler& sh = obj->subset_handler();
 
 			UG_LOG("Selection containing subsets:");
 
@@ -172,8 +172,8 @@ class ToolPrintVertexDistance : public ITool
 	public:
 		void execute(LGObject* obj, QWidget*){
 			using namespace ug;
-			ug::Grid& grid = obj->get_grid();
-			ug::Selector& sel = obj->get_selector();
+			ug::Grid& grid = obj->grid();
+			ug::Selector& sel = obj->selector();
 			Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
 			UG_LOG("Vertex Distance:");
 
@@ -220,8 +220,8 @@ class ToolPrintLeastSquaresPlane: public ITool
 	public:
 		void execute(LGObject* obj, QWidget*){
 			using namespace ug;
-			ug::Grid& grid = obj->get_grid();
-			ug::Selector& sel = obj->get_selector();
+			ug::Grid& grid = obj->grid();
+			ug::Selector& sel = obj->selector();
 			Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
 
 			std::vector<Vertex*> vrts;

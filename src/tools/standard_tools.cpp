@@ -14,12 +14,12 @@ using namespace ug;
 //TMP: test a lua-call
 	lua_State* L = script::GetLuaState();
 
-	luabind::call_function<void>(L, "mark_crease_elements", &pObj->get_grid(),
-							&pObj->get_crease_handler(), 50.f);
+	luabind::call_function<void>(L, "mark_crease_elements", &pObj->grid(),
+							&pObj->crease_handler(), 50.f);
 
 	lua_getglobal(L, "mark_crease_elements");
-	lua_pushlightuserdata(L, &pObj->get_grid());
-	lua_pushlightuserdata(L, &pObj->get_crease_handler());
+	lua_pushlightuserdata(L, &pObj->grid());
+	lua_pushlightuserdata(L, &pObj->crease_handler());
 	lua_pushnumber(L, 50);
 	if(lua_pcall(L, 3, 0, 0) != 0){
 		cout << "ERROR: calling of lua function failed: " << lua_tostring(L, -1) << endl;

@@ -25,8 +25,8 @@ public:
 			return;
 		}
 
-		Grid& grid = obj->get_grid();
-		SubsetHandler& sh = obj->get_subset_handler();
+		Grid& grid = obj->grid();
+		SubsetHandler& sh = obj->subset_handler();
 
 		ExpandFractures2d(grid, sh, dlg->entries(), dlg->degenerated_fractures(),
 						  dlg->expand_outer_boundaries());
@@ -57,12 +57,12 @@ public:
 			return;
 		}
 
-		Grid& grid = obj->get_grid();
-		SubsetHandler& sh = obj->get_subset_handler();
+		Grid& grid = obj->grid();
+		SubsetHandler& sh = obj->subset_handler();
 
-		//obj->get_selector().clear();
+		//obj->selector().clear();
 		ExpandFractures3d(grid, sh, dlg->entries(), dlg->degenerated_fractures(),
-						dlg->expand_outer_boundaries()/*, obj->get_selector()*/);
+						dlg->expand_outer_boundaries()/*, obj->selector()*/);
 
 	//	done
 		obj->geometry_changed();
@@ -92,9 +92,9 @@ public:
 			width = dlg->to_double(1);
 		}
 
-		Grid& grid = obj->get_grid();
-		SubsetHandler& sh = obj->get_subset_handler();
-		Selector& sel = obj->get_selector();
+		Grid& grid = obj->grid();
+		SubsetHandler& sh = obj->subset_handler();
+		Selector& sel = obj->selector();
 
 		Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
 
@@ -300,8 +300,8 @@ public:
 			return;
 		}
 
-		Grid& grid = obj->get_grid();
-		SubsetHandler& sh = obj->get_subset_handler();
+		Grid& grid = obj->grid();
+		SubsetHandler& sh = obj->subset_handler();
 
 	//	the application path
 		QString appPath = QCoreApplication::applicationDirPath();

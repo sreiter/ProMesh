@@ -129,7 +129,7 @@ class ScriptTool : public ITool
 					}
 				}
 			}
-			m_luaShell->set("mesh", static_cast<ug::promesh::MeshObject*>(obj), "MeshObject");
+			m_luaShell->set("mesh", static_cast<ug::promesh::Mesh*>(obj), "Mesh");
 			m_luaShell->run(m_scriptContent.constData());
 
 			obj->geometry_changed();

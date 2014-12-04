@@ -161,9 +161,9 @@ class ToolFracturedMediaRefine : public ITool
 				msg.exec();
 			}
 
-			Grid& grid = obj->get_grid();
-			Selector& sel = obj->get_selector();
-			SubsetHandler& sh = obj->get_subset_handler();
+			Grid& grid = obj->grid();
+			Selector& sel = obj->selector();
+			SubsetHandler& sh = obj->subset_handler();
 			bool siEnabled = sh.strict_inheritance_enabled();
 			number aspectRatioThreshold = SMALL;
 

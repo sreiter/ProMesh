@@ -52,8 +52,8 @@ class ToolCenterSelection : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget* widget){
-			ug::Selector& sel = obj->get_selector();
-			ug::Grid::VertexAttachmentAccessor<ug::APosition> aaPos(obj->get_grid(), ug::aPosition);
+			ug::Selector& sel = obj->selector();
+			ug::Grid::VertexAttachmentAccessor<ug::APosition> aaPos(obj->grid(), ug::aPosition);
 
 			View3D* view = app::getMainWindow()->getView3D();
 			cam::SCameraState oldCam = view->camera().get_camera_state();
@@ -148,7 +148,7 @@ class ToolHideSelectedElements : public ITool
 		void execute(LGObject* obj, QWidget*){
 			using namespace ug;
 			LGScene* scene = app::getActiveScene();
-			ug::Selector& sel = obj->get_selector();
+			ug::Selector& sel = obj->selector();
 			scene->hide_elements(obj, sel.begin<Vertex>(), sel.end<Vertex>());
 			scene->hide_elements(obj, sel.begin<Edge>(), sel.end<Edge>());
 			scene->hide_elements(obj, sel.begin<Face>(), sel.end<Face>());

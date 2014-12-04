@@ -31,6 +31,8 @@
         <file>images/tool_transform.png</file>
         <file>images/tool_unknown.png</file>
         
+        <file>images/spinner_down.png</file>
+        <file>images/spinner_up.png</file>
     </qresource>
     
     <qresource prefix="/text">
@@ -41,5 +43,9 @@
 
     <qresource prefix="/">
         <file>scripts/Smoothing/crease-smoothing.lua</file>
+    </qresource>
+
+    <qresource prefix="/">
+        <file>styles/promesh_style.txt</file>
     </qresource>
 </RCC>

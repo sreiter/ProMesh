@@ -13,6 +13,9 @@
 #include "clip_plane_widget.h"
 #include "QDebugStream.h"
 #include "lib_grid/lib_grid.h"
+#include "lib_grid/file_io/file_io_ug.h"
+#include "lib_grid/file_io/file_io_ugx.h"
+#include "lib_grid/file_io/file_io_lgb.h"
 #include "tools/standard_tools.h"
 #include "undo.h"
 #include "app.h"
@@ -77,8 +80,9 @@ void MainWindow::init()
 	addDockWidget(Qt::BottomDockWidgetArea, m_pLog);
 
 //	redirect cout
+	// QString logFile = app::UserDataDir().path() + QString("/log.txt");
 	Q_DebugStream* pDebugStream = new Q_DebugStream(GetLogAssistant().logger(), pLogText);
-	//GetLogAssistant().enable_file_output(true, "/Users/sreiter/promesh_log.txt");
+	// GetLogAssistant().enable_file_output(true, logFile.toLocal8Bit().constData());
 
 
 	UG_LOG("ProMesh4 - created by Sebastian Reiter (s.b.reiter@googlemail.com).\n");
@@ -627,7 +631,7 @@ int MainWindow::openFile()
 								this,
 								tr("Load Geometry"),
 								path,
-								tr("geometry files (*.ugx *.lgb *.obj *.txt *.art *.net *.dat *.lgm *.ng *.ele *.dump *.msh *.stl)"));
+								tr("geometry files (*.ugx *.vtu *.lgb *.obj *.txt *.art *.net *.dat *.lgm *.ng *.ele *.dump *.msh *.stl)"));
 
 	for(QStringList::iterator iter = fileNames.begin();
 		iter != fileNames.end(); ++iter)
@@ -684,7 +688,7 @@ bool MainWindow::saveToFile()
 									this,
 									tr("Save Geometry"),
 									path,
-									tr("geometry files (*.ugx *.ncdf *.lgb *.obj *.txt *.ele *.stl *.tex *.tikz)"));
+									tr("geometry files (*.ugx *.vtu *.ncdf *.lgb *.obj *.txt *.ele *.smesh *.stl *.tex *.tikz)"));
 
 		if(!fileName.isEmpty())
 		{
@@ -741,8 +745,8 @@ bool MainWindow::exportToUG3()
 				QFileInfo fileInfo(fileName);
 				QString prefix = fileInfo.absolutePath();
 				prefix.append("/").append(fileInfo.baseName());
-				Grid& g = obj->get_grid();
-				SubsetHandler& sh = obj->get_subset_handler();
+				Grid& g = obj->grid();
+				SubsetHandler& sh = obj->subset_handler();
 
 				if(g.num_volumes() > 0){
 				//	Create the subset-handlers

@@ -13,7 +13,7 @@ class ToolClearMarks : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget*){
-			obj->get_crease_handler().clear();
+			obj->crease_handler().clear();
 			obj->marks_changed();
 		}
 
@@ -35,15 +35,15 @@ class ToolMarkCreaseEdges : public ITool
 			}
 
 			if(clearMarks)
-				obj->get_crease_handler().clear();
+				obj->crease_handler().clear();
 
-			ug::MarkCreaseEdges(obj->get_grid(),
-							obj->get_crease_handler(),
-							obj->get_grid().begin<Edge>(),
-							obj->get_grid().end<Edge>(),
+			ug::MarkCreaseEdges(obj->grid(),
+							obj->crease_handler(),
+							obj->grid().begin<Edge>(),
+							obj->grid().end<Edge>(),
 							REM_CREASE, minAngle);
-			ug::MarkFixedCreaseVertices(obj->get_grid(),
-									obj->get_crease_handler(),
+			ug::MarkFixedCreaseVertices(obj->grid(),
+									obj->crease_handler(),
 									ug::REM_CREASE, ug::REM_FIXED);
 			obj->marks_changed();
 		}

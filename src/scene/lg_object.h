@@ -9,7 +9,7 @@
 #include <QObject>
 #include "scene_interface.h"
 #include "lg_include.h"
-#include "mesh_object.h"
+#include "mesh.h"
 #include "undo.h"
 
 ////////////////////////////////////////////////////////////////////////
@@ -63,7 +63,7 @@ bool ReloadLGObject(LGObject* obj);
 ////////////////////////////////////////////////////////////////////////
 //	LGObject
 ///	holds a grid, a subset-handler and the render-object.
-class LGObject : public ISceneObject, public ug::promesh::MeshObject
+class LGObject : public ISceneObject, public ug::promesh::Mesh
 {
 	public:
 		LGObject();

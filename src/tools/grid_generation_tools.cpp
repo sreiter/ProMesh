@@ -76,8 +76,8 @@ class ToolMergeObjects : public ITool
 
 		//	create a new empty object and merge the selected ones into it
 			LGObject* mergedObj = app::createEmptyLGObject(mergedObjName.toStdString().c_str());
-			Grid& mrgGrid = mergedObj->get_grid();
-			SubsetHandler& mrgSH = mergedObj->get_subset_handler();
+			Grid& mrgGrid = mergedObj->grid();
+			SubsetHandler& mrgSH = mergedObj->subset_handler();
 
 		//	The position attachment for mrgGrid
 			Grid::AttachmentAccessor<Vertex, APosition> aaPosMRG(mrgGrid, aPosition);
@@ -96,8 +96,8 @@ class ToolMergeObjects : public ITool
 				}
 
 				LGObject* obj = scene->get_object(objInd);
-				Grid& grid = obj->get_grid();
-				SubsetHandler& sh = obj->get_subset_handler();
+				Grid& grid = obj->grid();
+				SubsetHandler& sh = obj->subset_handler();
 
 			//	if we're joining subsets, the subsetBaseInd is always 0. If
 			//	we're not joining subsets, then subsetBaseInd has to be set
@@ -176,7 +176,7 @@ class ToolMergeObjects : public ITool
 			scene->object_changed(mergedObj);
 			mergedObj->geometry_changed();
 			UG_LOG("The merged grid contains:\n");
-			ug::PrintGridElementNumbers(mergedObj->get_grid());
+			ug::PrintGridElementNumbers(mergedObj->grid());
 		}
 
 		const char* get_name()		{return "Merge Objects";}
@@ -715,9 +715,9 @@ public:
             }
 
             // Original Grid and SubsetHandler
-            Grid& grid = obj->get_grid();
+            Grid& grid = obj->grid();
             grid.enable_options(GRIDOPT_FULL_INTERCONNECTION);
-            SubsetHandler& sh = obj->get_subset_handler();
+            SubsetHandler& sh = obj->subset_handler();
 
             ////////////////////////////////
             // SCVF
@@ -726,8 +726,8 @@ public:
             {
                 // Create empty dual grid
                 LGObject* dualObj = app::createEmptyLGObject("DualGrid-SCVF");
-                Grid& dualGrid = dualObj->get_grid();
-                SubsetHandler& dualSH = dualObj->get_subset_handler();
+                Grid& dualGrid = dualObj->grid();
+                SubsetHandler& dualSH = dualObj->subset_handler();
 
                 // Create Dual grid
                 if(grid.num<Volume>() > 0)
@@ -797,8 +797,8 @@ public:
             {
                 // Create empty dual grid
                 LGObject* dualObj = app::createEmptyLGObject("DualGrid-SCV");
-                Grid& dualGrid = dualObj->get_grid();
-                SubsetHandler& dualSH = dualObj->get_subset_handler();
+                Grid& dualGrid = dualObj->grid();
+                SubsetHandler& dualSH = dualObj->subset_handler();
 
                 // Create Dual grid
                 if(grid.num<Volume>() > 0)
@@ -868,8 +868,8 @@ public:
             {
                 // Create empty dual grid
                 LGObject* dualObj = app::createEmptyLGObject("DualGrid-CV");
-                Grid& dualGrid = dualObj->get_grid();
-                SubsetHandler& dualSH = dualObj->get_subset_handler();
+                Grid& dualGrid = dualObj->grid();
+                SubsetHandler& dualSH = dualObj->subset_handler();
 
                 // Create Dual grid
                 if(grid.num<Volume>() > 0)
@@ -958,8 +958,8 @@ public:
 
 bool CreateFractal(LGObject* obj, number scaleFac, size_t numIterations)
 {
-	ug::HangingNodeRefiner_Grid href(obj->get_grid());
-	return ug::CreateFractal_NormalScale(obj->get_grid(), href, scaleFac, numIterations);
+	ug::HangingNodeRefiner_Grid href(obj->grid());
+	return ug::CreateFractal_NormalScale(obj->grid(), href, scaleFac, numIterations);
 }
 
 void RegisterGridGenerationTools(ToolManager* toolMgr)

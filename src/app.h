@@ -66,6 +66,9 @@ QDir UserDataDir();
 ///	returns the path in which user-scripts are placed (e.g. $HOME/.promesh/scripts)
 QDir UserScriptDir();
 
+///	returns the path in which temporary data may be placed (e.g. $HOME/.promesh/tmp)
+QDir UserTmpDir();
+
 void PerformClickSelection(float x, float y, bool extendSelection = false);
 
 }//	end of namespace

@@ -62,8 +62,8 @@ public:
 		vector3 center(0, 0, 0);
 		if(obj){
 		//	calculate the center of the current selection
-			Grid::VertexAttachmentAccessor<APosition> aaPos(obj->get_grid(), aPosition);
-			CalculateCenter(center, obj->get_selector(), aaPos);
+			Grid::VertexAttachmentAccessor<APosition> aaPos(obj->grid(), aPosition);
+			CalculateCenter(center, obj->selector(), aaPos);
 		}
 
 		dlg->setNumber(0, center.x());
@@ -262,9 +262,9 @@ public:
 			mat = dlg->to_matrix44(2);
 		}
 
-		Grid& grid = obj->get_grid();
+		Grid& grid = obj->grid();
 		Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
-		Selector& sel = obj->get_selector();
+		Selector& sel = obj->selector();
 
 		GridObjectCollection goc;
 		vector3 center(0, 0, 0);
@@ -604,7 +604,7 @@ public:
 
 			UG_LOG("Applying heightfield: " << filename.toStdString() << "\n");
 
-			Grid& g = obj->get_grid();
+			Grid& g = obj->grid();
 			Grid::VertexAttachmentAccessor<APosition> aaPos(g, aPosition);
 			vector3 min, max;
 

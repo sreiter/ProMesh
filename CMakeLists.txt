@@ -128,11 +128,12 @@ set(ProMeshSRC	src/app.cpp
 				src/tools/dialog_components/matrix_widget.cpp
 				src/tools/dialog_components/file_widget.cpp
 				src/widgets/extendible_widget.cpp
+				src/widgets/double_slider.cpp
 				src/widgets/icon_tab_widget.cpp
 				src/widgets/tool_browser_widget.cpp
+				src/widgets/truncated_double_spin_box.cpp
 				src/widgets/widget_container.cpp
-				src/widgets/widget_list.cpp
-				src/widgets/double_slider.cpp)
+				src/widgets/widget_list.cpp)
 
 # Only header containing Q_OBJECTS have to be listed here
 set(ProMeshHEADERS	src/view3d/view3d.h
@@ -170,11 +171,12 @@ set(ProMeshHEADERS	src/view3d/view3d.h
 					src/tools/dialog_components/matrix_widget.h
 					src/tools/dialog_components/file_widget.h
 					src/widgets/extendible_widget.h
+					src/widgets/double_slider.h
 					src/widgets/icon_tab_widget.h
 					src/widgets/tool_browser_widget.h
+					src/widgets/truncated_double_spin_box.h
 					src/widgets/widget_container.h
-					src/widgets/widget_list.h
-					src/widgets/double_slider.h)
+					src/widgets/widget_list.h)
 
 # resources
 set(ProMeshRESOURCES	ProMesh.qrc)

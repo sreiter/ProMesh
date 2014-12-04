@@ -1,6 +1,17 @@
 Recent changes:
 
 -------------------------------------------------------------------------------
+v 4.1.9
+Changes and additions:
+- Added Selection-Volumes-SelectSlivers, which selects flat tetrahedrons.
+
+Fixes:
+- Export to .smesh and import from .ele (TETGEN) now preserve face subsets.
+- Improved refinement rule for tetrahedrons if only 2 opposing edges are selected.
+
+
+
+-------------------------------------------------------------------------------
 v 4.1.8
 Changes and additions:
 - New smoothing tools: CoordinateTransform-WeightedEdgeSmooth and -WeightedFaceSmooth

@@ -129,7 +129,7 @@ printSubsetContents()
 	LGObject* obj = dynamic_cast<LGObject*>(m_sceneInspector->getActiveObject());
 	int si = m_sceneInspector->getActiveSubsetIndex();
 	if(obj && (si != -1)){
-		PrintElementNumbers(obj->get_subset_handler().get_grid_objects_in_subset(si));
+		PrintElementNumbers(obj->subset_handler().get_grid_objects_in_subset(si));
 	}
 }
 

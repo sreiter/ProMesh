@@ -101,7 +101,7 @@ class HeightfieldDialog : public QDialog
 				if(!obj)
 					return;
 
-				Grid& g = obj->get_grid();
+				Grid& g = obj->grid();
 				Grid::VertexAttachmentAccessor<APosition> aaPos(g, aPosition);
 				vector3 min, max;
 
