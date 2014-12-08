@@ -8,7 +8,7 @@
 #include "tool_dialog.h"
 #include "tool_manager.h"
 #include "app.h"
-#include "dialog_components/matrix_widget.h"
+#include "widgets/matrix_widget.h"
 #include "../widgets/double_slider.h"
 #include "../widgets/truncated_double_spin_box.h"
 

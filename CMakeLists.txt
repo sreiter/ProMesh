@@ -125,11 +125,11 @@ set(ProMeshSRC	src/app.cpp
 				src/tools/registry_tools.cpp
 				src/tools/remeshing_tools.cpp
 				src/tools/script_tools.cpp
-				src/tools/dialog_components/matrix_widget.cpp
-				src/tools/dialog_components/file_widget.cpp
 				src/widgets/extendible_widget.cpp
 				src/widgets/double_slider.cpp
+				src/widgets/file_widget.cpp
 				src/widgets/icon_tab_widget.cpp
+				src/widgets/matrix_widget.cpp
 				src/widgets/tool_browser_widget.cpp
 				src/widgets/truncated_double_spin_box.cpp
 				src/widgets/widget_container.cpp
@@ -168,11 +168,11 @@ set(ProMeshHEADERS	src/view3d/view3d.h
 					src/undo.h
 					src/rclick_menu_scene_inspector.h
 					src/tools/tool_coordinates.h
-					src/tools/dialog_components/matrix_widget.h
-					src/tools/dialog_components/file_widget.h
 					src/widgets/extendible_widget.h
 					src/widgets/double_slider.h
+					src/widgets/file_widget.h
 					src/widgets/icon_tab_widget.h
+					src/widgets/matrix_widget.h
 					src/widgets/tool_browser_widget.h
 					src/widgets/truncated_double_spin_box.h
 					src/widgets/widget_container.h

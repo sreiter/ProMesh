@@ -8,7 +8,7 @@
 #include <QFrame>
 #include <vector>
 #include "common/math/ugmath.h"
-#include "dialog_components/file_widget.h"
+#include "widgets/file_widget.h"
 
 class QSignalMapper;
 class QFormLayout;
