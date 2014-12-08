@@ -5,10 +5,9 @@
 #ifndef MATRIXWIDGET_H_
 #define MATRIXWIDGET_H_
 
-#include <QWidget>
-#include <QDoubleSpinBox>
-
 #include <vector>
+#include <QWidget>
+#include "truncated_double_spin_box.h"
 
 class MatrixWidget : public QWidget
 {
@@ -22,13 +21,13 @@ class MatrixWidget : public QWidget
 		void set_value(int row, int col, double value);
 
 	protected:
-		QDoubleSpinBox* get_spin_box(int row, int col) const;
+		TruncatedDoubleSpinBox* get_spin_box(int row, int col) const;
 
 	private:
 		int	m_numRows;
 		int m_numCols;
 
-		std::vector<QDoubleSpinBox*>	m_spinBoxes;
+		std::vector<TruncatedDoubleSpinBox*>	m_spinBoxes;
 };
 
 #endif /* MATRIXWIDGET_H_ */

@@ -18,7 +18,7 @@ MatrixWidget::MatrixWidget(int numRows, int numCols, QWidget* parent) :
 //	create the spin boxes
 	for(int col = 0; col < numCols; ++col){
 		for(int row = 0; row < numRows; ++row){
-			QDoubleSpinBox* box = new QDoubleSpinBox(this);
+			TruncatedDoubleSpinBox* box = new TruncatedDoubleSpinBox(this);
 			box->setAlignment(Qt::AlignCenter);
 			box->setDecimals(9);
 			box->setRange(-1.e+12, 1.e+12);
@@ -42,7 +42,7 @@ MatrixWidget::~MatrixWidget()
 
 double MatrixWidget::value(int row, int col) const
 {
-	QDoubleSpinBox* box = get_spin_box(row, col);
+	TruncatedDoubleSpinBox* box = get_spin_box(row, col);
 	if(box)
 		return box->value();
 	return 0;
@@ -50,12 +50,12 @@ double MatrixWidget::value(int row, int col) const
 
 void MatrixWidget::set_value(int row, int col, double value)
 {
-	QDoubleSpinBox* box = get_spin_box(row, col);
+	TruncatedDoubleSpinBox* box = get_spin_box(row, col);
 	if(box)
 		box->setValue(value);
 }
 
-QDoubleSpinBox* MatrixWidget::get_spin_box(int row, int col) const
+TruncatedDoubleSpinBox* MatrixWidget::get_spin_box(int row, int col) const
 {
 	if(row >= 0 && row < m_numRows && col >= 0 && col < m_numCols){
 		return m_spinBoxes[col * m_numRows + row];
