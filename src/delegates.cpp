@@ -2,7 +2,7 @@
 //	s.b.reiter@googlemail.com
 //	y09 m10 d13
 
-#include <QtGui>
+#include <QtWidgets>
 #include "delegates.h"
 
 VisibilityDelegate::VisibilityDelegate(int myColumn,

@@ -219,10 +219,10 @@ bool SceneItemModel::setData ( const QModelIndex & index,
 				return false;
 
 			if(itemInfo->type == SIT_OBJECT)
-				itemInfo->obj->set_name(value.toString().toAscii());
+				itemInfo->obj->set_name(value.toString().toLatin1());
 			else if(itemInfo->type == SIT_SUBSET)
 				itemInfo->obj->set_subset_name(itemInfo->index,
-									value.toString().toAscii());
+									value.toString().toLatin1());
 			else
 				return false;
 

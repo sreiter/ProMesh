@@ -60,9 +60,10 @@ class ToolSelectSmoothEdgePath : public ITool
 			if(dlg)
 				promesh::SelectSmoothEdgePath(obj,
 											  dlg->to_double(0),
-											  dlg->to_bool(1));
+											  dlg->to_double(1),
+											  dlg->to_bool(2));
 			else
-				promesh::SelectSmoothEdgePath(obj, 15., true);
+				promesh::SelectSmoothEdgePath(obj, 20., 0.9, true);
 			obj->selection_changed();
 		}
 
@@ -74,6 +75,7 @@ class ToolSelectSmoothEdgePath : public ITool
 			ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
 											IDB_APPLY | IDB_OK | IDB_CLOSE);
 			dlg->addSpinBox(tr("max deviation:"), 0, 180, 20, 1, 0);
+			dlg->addSpinBox(tr("normal weight:"), 0, 1, 0.9, 0.1, 9);
 			dlg->addCheckBox(tr("stop at selected vertices:"), true);
 			return dlg;
 		}

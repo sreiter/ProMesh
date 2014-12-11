@@ -10,14 +10,19 @@ project(P_PROMESH4)
 option(DEBUG "If enabled a debug build is performed - this slows down performance." OFF)
 option(UG_ROOT_PATH "The path to ug4. Has to contain the ugbase and lib directories.")
 option(TETGEN_PATH "The path to tetgen. Has to contain the static tet library.")
-
+option(QT_PATH "Path to the 'qmake' executable of the qt version that shall be used.")
 # Qt4 with OpenGL support is required.
-# in order to use a custom installation of QT4, execute
-# "export PATH=path_to_your_qmake:$PATH"
-# before calling cmake for the first time for your build
-FIND_PACKAGE(Qt4 REQUIRED)
-
+# in order to use a custom installation of QT, specify QT_PATH when running
+# cmake for the first time for your build
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 SET(QT_USE_QTOPENGL TRUE)
+if(NOT QT_PATH)
+	FIND_PACKAGE(Qt5Widgets REQUIRED)
+else(NOT QT_PATH)
+	FIND_PACKAGE(Qt5Widgets REQUIRED PATHS ${QT_PATH})
+endif(NOT QT_PATH)
+
 
 FIND_PACKAGE(OpenGL REQUIRED)
 
@@ -109,6 +114,8 @@ set(ProMeshSRC	src/app.cpp
 				src/scene/lg_tmp_methods.cpp
 				src/scene/plane_sphere.cpp
 				src/scene/scene_interface.cpp
+				src/tools/tool_coordinates.cpp
+				src/tools/tool_frac_to_layer.cpp
 				src/tools/tool_manager.cpp
 				src/tools/standard_tools.cpp
 				src/tools/tool_dialog.cpp
@@ -185,10 +192,10 @@ set(ProMeshRESOURCES	ProMesh.qrc)
 #set(UG_LIBRARIES ugscript ugbridge grid node_tree registry common)
 set(UG_LIBRARIES grid_s)
 
-QT4_WRAP_CPP(ProMeshHEADERS_MOC ${ProMeshHEADERS})
-QT4_ADD_RESOURCES(ProMeshRESOURCES_RCC ${ProMeshRESOURCES})
+#QT5_WRAP_CPP(ProMeshHEADERS_MOC ${ProMeshHEADERS})
+QT5_ADD_RESOURCES(ProMeshRESOURCES_RCC ${ProMeshRESOURCES})
 
-INCLUDE(${QT_USE_FILE})
+#INCLUDE(${QT_USE_FILE})
 ADD_DEFINITIONS(${QT_DEFINITIONS})
 
 SET(allSources ${ProMeshSRC} ${ProMeshHEADERS_MOC} ${ProMeshRESOURCES_RCC})
@@ -213,4 +220,5 @@ else(UNIX)
 	endif(MINGW)
 endif(UNIX)
 
-TARGET_LINK_LIBRARIES(ProMesh4 ${OPENGL_LIBRARIES} ${QT_LIBRARIES} ${UG_LIBRARIES} tet)
+TARGET_LINK_LIBRARIES(ProMesh4 ${OPENGL_LIBRARIES} Qt5::Widgets ${UG_LIBRARIES} tet)
+qt5_use_modules(ProMesh4 OpenGL Gui Widgets)

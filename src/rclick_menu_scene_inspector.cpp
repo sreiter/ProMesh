@@ -2,6 +2,7 @@
 // all rights reserved
 // s.b.reiter@googlemail.com
 
+#include <QtWidgets>
 #include "rclick_menu_scene_inspector.h"
 #include "app.h"
 #include "tools/tool_dialog.h"

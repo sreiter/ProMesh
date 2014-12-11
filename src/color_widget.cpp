@@ -2,7 +2,7 @@
 //	s.b.reiter@googlemail.com
 //	y09 m11 d04
 
-#include <QtGui>
+#include <QtWidgets>
 #include "color_widget.h"
 
 ColorWidget::ColorWidget(QWidget* parent) : QWidget(parent)

@@ -2,7 +2,7 @@
 //	s.b.reiter@googlemail.com
 //	y10 m05 d04
 
-#include <QtGui>
+#include <QtWidgets>
 #include <vector>
 #include "app.h"
 #include "standard_tools.h"

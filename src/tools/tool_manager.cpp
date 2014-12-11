@@ -2,6 +2,7 @@
 //	s.b.reiter@googlemail.com
 //	y10 m02 d08
 
+#include <QtWidgets>
 #include <vector>
 #include <string>
 #include "app.h"

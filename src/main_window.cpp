@@ -3,7 +3,7 @@
 //	y09 m10 d01
 
 #include <iostream>
-#include <QtGui>
+#include <QtWidgets>
 #include <QDesktopServices>
 #include "main_window.h"
 #include "view3d/view3d.h"
@@ -1048,7 +1048,7 @@ void MainWindow::dropEvent(QDropEvent* event)
 		iter != urls.end(); ++iter)
 	{
 		settings().setValue("file-path", QFileInfo((*iter).toLocalFile()).absolutePath());
-		if(!load_grid_from_file((*iter).toLocalFile().toAscii().constData()))
+		if(!load_grid_from_file((*iter).toLocalFile().toLatin1().constData()))
 		{
 			QMessageBox msg(this);
 			QString str = tr("Load failed: ");

@@ -5,7 +5,7 @@
 #ifndef __H__LG_OBJECT__
 #define __H__LG_OBJECT__
 
-#include <QtOpenGL>
+#include <QGL>
 #include <QObject>
 #include "scene_interface.h"
 #include "lg_include.h"

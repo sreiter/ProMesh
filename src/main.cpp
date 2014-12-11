@@ -83,6 +83,5 @@ int main(int argc, char *argv[])
 		pMainWindow->load_grid_from_file(argv[i]);
 	}
 
-	UG_LOG(GetFileContent("/home/sreiter/projects/ProMesh/trunk/styles/promesh_style.txt").toStdString());
 	return myApp.exec();
 }

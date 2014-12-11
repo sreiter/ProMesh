@@ -1,6 +1,6 @@
 
 #include <iostream>
-#include <QtGui>
+#include <QtWidgets>
 #include "scene/scene_interface.h"
 #include "scene_inspector.h"
 #include "scene_item_model.h"
@@ -26,9 +26,9 @@ SceneInspector::SceneInspector(QWidget* parent) : QTreeView(parent)
 
 	QHeaderView* header = this->header();
 	header->setStretchLastSection(false);
-	header->setResizeMode(0, QHeaderView::Stretch);
-	header->setResizeMode(1, QHeaderView::Fixed);
-	header->setResizeMode(2, QHeaderView::Fixed);
+	header->setSectionResizeMode(0, QHeaderView::Stretch);
+	header->setSectionResizeMode(1, QHeaderView::Fixed);
+	header->setSectionResizeMode(2, QHeaderView::Fixed);
 	this->resizeColumnToContents(1);
 	this->resizeColumnToContents(2);
 

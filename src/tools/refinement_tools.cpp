@@ -2,6 +2,7 @@
 //	s.b.reiter@googlemail.com
 //	y11 m01 d04
 
+#include <QMessageBox>
 #include "app.h"
 #include "standard_tools.h"
 #include "tools/refinement_tools.h"

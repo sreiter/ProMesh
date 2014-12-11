@@ -2,7 +2,7 @@
 //	s.b.reiter@googlemail.com
 //	y09 m09 d28
 
-#include <QtGui>
+#include <QtWidgets>
 #include <iostream>
 #include "gl_includes.h"
 #include "view3d.h"

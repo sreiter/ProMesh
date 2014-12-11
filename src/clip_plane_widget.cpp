@@ -2,7 +2,7 @@
 //	s.b.reiter@googlemail.com
 //	y09 m10 d15
 
-#include <QtGui>
+#include <QtWidgets>
 #include "clip_plane_widget.h"
 #include "scene/lg_scene.h"
 

@@ -5,7 +5,7 @@
 #ifndef __H__UG__heightfield_dialog__
 #define __H__UG__heightfield_dialog__
 
-#include <QtGui>
+#include <QtWidgets>
 #include "interpolated_heightfield.h"
 #include "app.h"
 

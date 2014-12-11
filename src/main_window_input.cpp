@@ -2,6 +2,8 @@
 // s.b.reiter@googlemail.com
 // 20.10.2011 (m,d,y)
  
+#include <QtWidgets>
+#include <QApplication>
 #include "main_window.h"
 #include "app.h"
 #include "lib_grid/algorithms/selection_util.h"

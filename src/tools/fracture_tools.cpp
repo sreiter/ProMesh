@@ -2,7 +2,7 @@
 // s.b.reiter@googlemail.com
 // y10 m11 d2
 
-#include <QtGui>
+#include <QtWidgets>
 #include <queue>
 #include "app.h"
 #include "standard_tools.h"
@@ -309,10 +309,10 @@ public:
 	//	write the .f2l file
 		QString f2lFilename = appPath;
 		f2lFilename.append("/.__PROMESH_TMP_F2L.f2l");
-		ofstream out(f2lFilename.toAscii());
+		ofstream out(f2lFilename.toLatin1());
 		if(!out){
 			UG_LOG("ERROR in ToolFracToLayer: couldn't open temporary file ");
-			UG_LOG((const char*)f2lFilename.toAscii() << endl);
+			UG_LOG((const char*)f2lFilename.toLatin1() << endl);
 			return;
 		}
 
@@ -452,14 +452,14 @@ public:
 	//	save the current grid as .net
 		QString srcGridname = appPath;
 		srcGridname.append("/.__PROMESH_TMP_SRCGRID.art");
-		SaveGridToFile(grid, srcGridname.toAscii(), sh);
+		SaveGridToFile(grid, srcGridname.toLatin1(), sh);
 
 	//	the dest-grid has to be removed
 		QString destGridname = appPath;
 		destGridname.append("/.__PROMESH_TMP_DESTGRID.art");
 		QString rmCall = "rm ";
 		rmCall.append(destGridname);
-		system(rmCall.toAscii());
+		system(rmCall.toLatin1());
 
 	//	call frac2layer with the scriptfile
 		QString sysCall = appPath;
@@ -470,11 +470,11 @@ public:
 				.append(" -o ")
 				.append(destGridname);
 
-		int ret = system(sysCall.toAscii());
+		int ret = system(sysCall.toLatin1());
 
 		if(ret == 0){
 			grid.clear_geometry();
-			if(LoadGridFromFile(grid, destGridname.toAscii(), sh)){
+			if(LoadGridFromFile(grid, destGridname.toLatin1(), sh)){
 				UG_LOG("frac2layer succeeded.\n");
 			}
 			else{
