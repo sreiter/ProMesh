@@ -4,7 +4,9 @@ Recent changes:
 -------------------------------------------------------------------------------
 v 4.2.0
 Changes and additions:
+- Now using Qt5
 - GUI rework: New style and improved usability of number input fields
+- Enhanced Selection-Edges-SmoothPath with an adjustable normal-weight
 
 Fixes:
 - Export to .smesh and import from .ele (TETGEN) now preserve face subsets.

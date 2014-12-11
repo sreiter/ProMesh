@@ -1,3 +1,8 @@
+
+Qt5 for Linux:
+http://download.qt-project.org/official_releases/online_installers/qt-opensource-linux-x64-online.run
+
+
 to build ProMesh4 for MacOSX, use the following vars in the CMakeCache.txt
 file of the associated lib_grid build:
 //Build architectures for OSX
