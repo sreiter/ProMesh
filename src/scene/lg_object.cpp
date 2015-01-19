@@ -47,7 +47,7 @@ LGObject* CreateEmptyLGObject(const char* name)
 
 bool LoadLGObjectFromFile(LGObject* pObjOut, const char* filename)
 {
-	LOG("loading " << filename << " ... ");
+	LOG("loading " << filename << " ...\n");
 
 	Grid& grid = pObjOut->grid();
 	SubsetHandler& sh = pObjOut->subset_handler();
@@ -130,7 +130,7 @@ bool LoadLGObjectFromFile(LGObject* pObjOut, const char* filename)
 	}
 
 	if(bLoadSuccessful){
-		LOG("done\n");
+		LOG("loading done\n");
 		LOG("  num vertices:\t" << grid.num_vertices() << endl);
 		LOG("  num edges: \t" << grid.num_edges() << endl);
 		LOG("  num faces: \t" << grid.num_faces() << endl);
@@ -138,7 +138,7 @@ bool LoadLGObjectFromFile(LGObject* pObjOut, const char* filename)
 		LOG(endl);
 	}
 	else{
-		LOG("failed\n");
+		LOG("loading failed\n");
 	}
 	return bLoadSuccessful;
 }
