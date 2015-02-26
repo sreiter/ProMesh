@@ -489,10 +489,10 @@ void LGScene::draw()
 								glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
 
 								QColor sCol = obj->get_subset_color(si);
-								GLfloat faceColor[4] = {objCol.redF() * sCol.redF(),
-														objCol.greenF() * sCol.greenF(),
-														objCol.blueF() * sCol.blueF(),
-														1.};
+								GLfloat faceColor[4] = {GLfloat(objCol.redF() * sCol.redF()),
+														GLfloat(objCol.greenF() * sCol.greenF()),
+														GLfloat(objCol.blueF() * sCol.blueF()),
+														GLfloat(1)};
 
 								glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, faceColor);
 								glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, faceColor);
@@ -605,10 +605,10 @@ void LGScene::draw()
 						glColor3f(objCol.redF() * sCol.redF(),
 												objCol.greenF() * sCol.greenF(),
 												objCol.blueF() * sCol.blueF());
-						GLfloat glCol[4] = {objCol.redF() * sCol.redF(),
-												objCol.greenF() * sCol.greenF(),
-												objCol.blueF() * sCol.blueF(),
-												1.};
+						GLfloat glCol[4] = {GLfloat(objCol.redF() * sCol.redF()),
+											GLfloat(objCol.greenF() * sCol.greenF()),
+											GLfloat(objCol.blueF() * sCol.blueF()),
+											GLfloat(1)};
 
 						glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, glCol);
 						glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT, glCol);

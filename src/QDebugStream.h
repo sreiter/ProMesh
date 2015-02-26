@@ -25,11 +25,17 @@ public:
 		m_stream.rdbuf(m_old_buf);
 	}
 
+	void enable_file_output(const QString& filename){
+		m_file.open(filename.toLocal8Bit().constData());
+	}
+
 protected:
 	virtual int_type overflow(int_type v)
 	{
 		if (v == '\n')
 		{
+			if(m_file)
+				m_file << m_string << std::endl;
 			log_window->append(m_string.c_str());
 			log_window->repaint();
 			m_string.erase(m_string.begin(), m_string.end());
@@ -51,6 +57,8 @@ protected:
 			if (pos != std::string::npos)
 			{
 				std::string tmp(m_string.begin(), m_string.begin() + pos);
+				if(m_file)
+					m_file << tmp << std::endl;
 				log_window->append(QString::fromUtf8(tmp.c_str()));
 				log_window->repaint();
 				m_string.erase(m_string.begin(), m_string.begin() + pos + 1);
@@ -64,6 +72,7 @@ private:
 	std::ostream &m_stream;
 	std::streambuf *m_old_buf;
 	std::string m_string;
+	std::ofstream m_file;
 	QTextEdit* log_window;
 };
 

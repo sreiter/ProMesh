@@ -314,9 +314,27 @@ void RegsiterRegistryTools(ToolManager* toolMgr)
 
 	RegisterTool(toolMgr, reg, "Weighted Edge Smooth", "WeightedEdgeSmooth");
 	RegisterTool(toolMgr, reg, "Weighted Face Smooth", "WeightedFaceSmooth");
+	RegisterTool(toolMgr, reg, "Weighted Normal Smooth", "WeightedNormalSmooth");
+	RegisterTool(toolMgr, reg, "Slope Smooth", "SlopeSmooth");
 
 	RegisterTool(toolMgr, reg, "Mark Corners Of Marked Edges", "MarkCornersOfMarkedEdges");
+
 	RegisterTool(toolMgr, reg, "Replace Low Valence Vertices", "ReplaceLowValenceVertices");
+	RegisterTool(toolMgr, reg, "Adjust Edge Length Extended", "AdjustEdgeLengthExtended");
 
 	RegisterTool(toolMgr, reg, "Slivers", "SelectSlivers");
+
+	RegisterTool(toolMgr, reg, "Selection Kinks", "SelectSelectionKinkVertices");
+	RegisterTool(toolMgr, reg, "Subset Kinks", "SelectSubsetKinkVertices");
+
+	RegisterTool(toolMgr, reg, "Linked Edges", "SelectLinkedEdges");
+	RegisterTool(toolMgr, reg, "Linked Face", "SelectLinkedFaces");
+	RegisterTool(toolMgr, reg, "Linked Volumes", "SelectLinkedVolumes");
+
+	RegisterTool(toolMgr, reg, "Select Short Polychains", "SelectShortPolychains");
+
+	RegisterTool(toolMgr, reg, "Remove Double Faces", "RemoveDoubleFaces");
+	
+	RegisterTool(toolMgr, reg, "Simplify Polylines", "SimplifyPolylines");
+	RegisterTool(toolMgr, reg, "Simplify Smoothed Polylines", "SimplifySmoothedPolylines");
 }

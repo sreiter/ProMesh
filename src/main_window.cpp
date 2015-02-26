@@ -80,8 +80,8 @@ void MainWindow::init()
 	addDockWidget(Qt::BottomDockWidgetArea, m_pLog);
 
 //	redirect cout
-	// QString logFile = app::UserDataDir().path() + QString("/log.txt");
 	Q_DebugStream* pDebugStream = new Q_DebugStream(GetLogAssistant().logger(), pLogText);
+	pDebugStream->enable_file_output(app::UserDataDir().path() + QString("/log.txt"));
 	// GetLogAssistant().enable_file_output(true, logFile.toLocal8Bit().constData());
 
 
@@ -631,7 +631,7 @@ int MainWindow::openFile()
 								this,
 								tr("Load Geometry"),
 								path,
-								tr("geometry files (*.ugx *.vtu *.lgb *.obj *.txt *.art *.net *.dat *.lgm *.ng *.ele *.dump *.msh *.stl)"));
+								tr("geometry files (*.ugx *.vtu *.lgb *.obj *.txt *.art *.net *.dat *.lgm *.ng *.ele *.dump *.msh *.stl *.asc *.ASC)"));
 
 	for(QStringList::iterator iter = fileNames.begin();
 		iter != fileNames.end(); ++iter)

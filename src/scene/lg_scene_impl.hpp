@@ -12,7 +12,7 @@ void LGScene::
 hide_elements(LGObject* obj, TIterator elemsBegin, TIterator elemsEnd)
 {
 	using namespace ug;
-	typedef typename PtrTypeToGeomObjBaseType<typename TIterator::value_type>::base_type TElem;
+	typedef typename PtrToValueType<typename TIterator::value_type>::base_type TElem;
 	Grid::AttachmentAccessor<TElem, ABool> aaHidden(obj->grid(), m_aHidden);
 
 	for(TIterator iter = elemsBegin; iter != elemsEnd; ++iter){

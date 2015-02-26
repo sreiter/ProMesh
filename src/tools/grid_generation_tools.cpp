@@ -50,6 +50,41 @@ class ToolNewObject : public ITool
 		}
 };
 
+class ToolNewObjectFromSelection : public ITool
+{
+	public:
+		void execute(LGObject* obj, QWidget* widget){
+			using namespace std;
+			using namespace ug;
+
+			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
+
+		//	get parameters
+			QString objName = "new object";
+
+			if(dlg){
+				objName = dlg->to_string(0);
+			}
+
+			LGObject* newObj = app::createEmptyLGObject(objName.toLocal8Bit().constData());
+			CopySelection(obj, newObj);
+			newObj->geometry_changed();
+		}
+
+		const char* get_name()		{return "New Object From Selection";}
+		const char* get_tooltip()	{return "Creates a new object from the selected elements of the active object";}
+		const char* get_group()		{return "Grid Generation | Objects";}
+		bool accepts_null_object_ptr()	{return false;}
+
+		QWidget* get_dialog(QWidget* parent){
+			ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
+											IDB_APPLY | IDB_OK | IDB_CLOSE);
+		//	The name of the new object
+			dlg->addTextBox(tr("new object name:"), "new object");
+			return dlg;
+		}
+};
+
 /**	registers a callback to automatically update internal scene-object list.*/
 class ToolMergeObjects : public ITool
 {
@@ -967,6 +1002,7 @@ void RegisterGridGenerationTools(ToolManager* toolMgr)
 	toolMgr->set_group_icon("Grid Generation", ":images/tool_geometry_generation.png");
 
 	toolMgr->register_tool(new ToolNewObject);
+	toolMgr->register_tool(new ToolNewObjectFromSelection);
 	toolMgr->register_tool(new ToolMergeObjects);
 
 	toolMgr->register_tool(new ToolCreateVertex);
