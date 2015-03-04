@@ -85,11 +85,11 @@ void MainWindow::init()
 	// GetLogAssistant().enable_file_output(true, logFile.toLocal8Bit().constData());
 
 
-	UG_LOG("ProMesh4 - created by Sebastian Reiter (s.b.reiter@googlemail.com).\n");
-	UG_LOG("This version of ProMesh4 is for non-commercial use only. See \"Help->License\" for more information.\n");
+	UG_LOG("ProMesh (www.promesh3d.com) - created by Sebastian Reiter (s.b.reiter@gmail.com).\n");
+	UG_LOG("This version of ProMesh is for non-commercial use only. See \"Help->License\" for more information.\n");
 	UG_LOG("If you use ProMesh to create geometries for your publications, make sure to cite it!\n");
-	UG_LOG("ProMesh uses libGrid, which is part of the ug4 simulation framework.\n");
-	UG_LOG("This version of ProMesh4 uses 'tetgen' by Hang Si for tetrahedral mesh generation (in Remeshing/Tetgen).\n");
+	UG_LOG("ProMesh uses parts of the UG4 simulation framework.\n");
+	UG_LOG("This version of ProMesh uses 'tetgen 1.4.3' for tetrahedral mesh generation (in Remeshing/Tetgen).\n");
 	UG_LOG("--------------------------------------------------------------\n\n");
 
 	try{
@@ -107,7 +107,7 @@ void MainWindow::init()
 	}
 
 
-//	create actions
+//	file-menu
 	m_actNew = new QAction(tr("&New"), this);
 	m_actNew->setIcon(QIcon(":images/filenew.png"));
 	m_actNew->setShortcut(tr("Ctrl+N"));
@@ -144,20 +144,48 @@ void MainWindow::init()
 	m_actErase->setStatusTip(tr("erases the selected geometry from the scene."));
 	connect(m_actErase, SIGNAL(triggered()), this, SLOT(eraseActiveSceneObject()));
 
-	m_actBrowseUserScripts = new QAction(tr("Browse User Scripts"), this);
-	m_actBrowseUserScripts->setStatusTip("Opens the path at which user scripts are located.");
-	connect(m_actBrowseUserScripts, SIGNAL(triggered()), this, SLOT(browseUserScripts()));
-	
-	m_refreshToolDialogs = new QAction(tr("Refresh Tool Dialogs"), this);
-	m_refreshToolDialogs->setShortcut(tr("Ctrl+T"));
-	m_refreshToolDialogs->setStatusTip("Refreshes contents of tht tool-dialogs.");
-	connect(m_refreshToolDialogs, SIGNAL(triggered()), this, SLOT(refreshToolDialogsClicked()));
-
 	m_actExportUG3 = new QAction(tr("Export to ug3"), this);
 	m_actExportUG3->setStatusTip(tr("Exports the geometry to ug3 lgm / ng format."));
 	connect(m_actExportUG3, SIGNAL(triggered()), this, SLOT(exportToUG3()));
 
-//	help
+	QMenu* filemenu = menuBar()->addMenu("&File");
+	filemenu->addAction(m_actNew);
+	filemenu->addAction(m_actOpen);
+	filemenu->addAction(m_actReload);
+	filemenu->addAction(m_actReloadAll);
+	filemenu->addAction(m_actSave);
+	filemenu->addAction(m_actErase);
+	filemenu->addSeparator();
+	filemenu->addAction(m_actExportUG3);
+
+
+//	script menu
+	m_actNewScript = new QAction(tr("New Script"), this);
+	m_actNewScript->setStatusTip("Creates a new script and opens it for editing");
+	connect(m_actNewScript, SIGNAL(triggered()), this, SLOT(newScript()));
+
+	m_actEditScript = new QAction(tr("Edit Script"), this);
+	m_actEditScript->setStatusTip("Opens a script for editing");
+	connect(m_actEditScript, SIGNAL(triggered()), this, SLOT(editScript()));
+
+	m_actBrowseUserScripts = new QAction(tr("Browse User Scripts"), this);
+	m_actBrowseUserScripts->setStatusTip("Opens the path at which user scripts are located.");
+	connect(m_actBrowseUserScripts, SIGNAL(triggered()), this, SLOT(browseUserScripts()));
+	
+	m_actRefreshToolDialogs = new QAction(tr("Refresh Tool Dialogs"), this);
+	m_actRefreshToolDialogs->setShortcut(tr("Ctrl+T"));
+	m_actRefreshToolDialogs->setStatusTip("Refreshes contents of tht tool-dialogs.");
+	connect(m_actRefreshToolDialogs, SIGNAL(triggered()), this, SLOT(refreshToolDialogsClicked()));
+
+	QMenu* scriptmenu = menuBar()->addMenu("&Scripts");
+	scriptmenu->addAction(m_actNewScript);
+	scriptmenu->addAction(m_actEditScript);
+	scriptmenu->addSeparator();
+	scriptmenu->addAction(m_actBrowseUserScripts);
+	scriptmenu->addSeparator();
+	scriptmenu->addAction(m_actRefreshToolDialogs);
+
+//	help menu
 	m_actHelpControls = new QAction(tr("&Controls"), this);
 	m_actHelpControls->setShortcut(tr("Ctrl+H"));
 	m_actHelpControls->setStatusTip(tr("displays help."));
@@ -175,19 +203,12 @@ void MainWindow::init()
 	m_actLicense->setStatusTip(tr("displays the ProMesh-License."));
 	connect(m_actLicense, SIGNAL(triggered()), this, SLOT(showLicense()));
 
-//	create the main menu
-	QMenu* filemenu = menuBar()->addMenu("&File");
-	filemenu->addAction(m_actNew);
-	filemenu->addAction(m_actOpen);
-	filemenu->addAction(m_actReload);
-	filemenu->addAction(m_actReloadAll);
-	filemenu->addAction(m_actSave);
-	filemenu->addAction(m_actErase);
-	filemenu->addSeparator();
-	filemenu->addAction(m_actBrowseUserScripts);
-	filemenu->addAction(m_refreshToolDialogs);
-	filemenu->addSeparator();
-	filemenu->addAction(m_actExportUG3);
+	QMenu* helpmenu = menuBar()->addMenu("&Help");
+	helpmenu->addAction(m_actLicense);
+	helpmenu->addAction(m_actShortcuts);
+	helpmenu->addAction(m_actHelpControls);
+	helpmenu->addAction(m_actRecentChanges);
+
 
 	m_toolManager = new ToolManager(this);
 	try{
@@ -206,11 +227,6 @@ void MainWindow::init()
 //	m_toolsMenu = menuBar()->addMenu("Tools");
 //	m_toolManager->populateMenu(m_toolsMenu);
 
-	QMenu* helpmenu = menuBar()->addMenu("&Help");
-	helpmenu->addAction(m_actLicense);
-	helpmenu->addAction(m_actShortcuts);
-	helpmenu->addAction(m_actHelpControls);
-	helpmenu->addAction(m_actRecentChanges);
 
 //	create a tool bar for file handling
 	QToolBar* fileToolBar = addToolBar(tr("&File"));
@@ -1111,4 +1127,39 @@ void MainWindow::browseUserScripts()
 	QDir scriptDir = app::UserScriptDir();
 	QString path = QDir::toNativeSeparators(app::UserScriptDir().path());
 	QDesktopServices::openUrl(QUrl("file:///" + path));
+}
+
+void MainWindow::newScript()
+{
+	QString fileName = QFileDialog::getSaveFileName(
+									this,
+									tr("Script Name"),
+									QDir::toNativeSeparators(app::UserScriptDir().path()),
+									tr("script files (*.lua)"));
+	if(!fileName.endsWith(".lua"))
+		fileName.append(".lua");
+
+	if(!fileName.isEmpty()){
+		if(QFile::exists(fileName))
+			QFile::remove(fileName);
+		QFile::copy(":/resources/default-script.lua", fileName);
+		QFile::setPermissions(fileName, QFileDevice::ReadOwner | QFileDevice::WriteOwner |
+										QFileDevice::ReadUser | QFileDevice::WriteUser |
+										QFileDevice::ReadGroup);
+
+		QDesktopServices::openUrl(QUrl("file:///" + fileName));
+	}
+}
+
+void MainWindow::editScript()
+{
+	QString fileName = QFileDialog::getOpenFileName(
+									this,
+									tr("Script Name"),
+									QDir::toNativeSeparators(app::UserScriptDir().path()),
+									tr("script files (*.lua)"));
+
+	if(!fileName.isEmpty()){
+		QDesktopServices::openUrl(QUrl("file:///" + fileName));
+	}
 }

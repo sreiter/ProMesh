@@ -7,10 +7,22 @@ Changes and additions:
 - Now using Qt5
 - GUI rework: New style and improved usability of number input fields
 - Enhanced Selection-Edges-SmoothPath with an adjustable normal-weight
+- New tool CoordinateTransform-SlopeSmooth
+- New tool GridGeneration-Objects-NewObjectFromSelection
+- New tool GridGeneration-Objects-CloneObject
+- New tool Remeshing-RemoveDoubles-RemoveDoubleFaces
+- New tools Remeshing-Polylines-SimplifyPolylines and -SimplifySmoothedPolylines
+- New tools Remeshing-Triangulation-ReplaceLowValenceVertices and -AdjustEdgeLengthExtended
+- New tool Selection-SelectShortPolychains
+- New tools Selection-Edges/Faces/Volumes-LinkedEdges/Faces/Volumes
+- New tools Selection-Vertices-SelectionKinks and -SubsetKinks
+- Added read support for binary .stl files
+- Added read/write support for ascii .vtu files
+- Added file-log in $HOME/.promesh/log.txt
+- Added verbosity flag to Remeshing/Tetgen/Tetrahedralize
+- Added Scripts-Menu, which features entries to create and edit scripts.
 
 Fixes:
-- Export to .smesh and import from .ele (TETGEN) now preserve face subsets.
-- Improved refinement rule for tetrahedrons if only 2 opposing edges are selected.
 
 
 

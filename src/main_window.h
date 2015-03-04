@@ -88,6 +88,8 @@ class MainWindow : public QMainWindow
 		void showRecentChanges();
 		void showShortcuts();
 		void showLicense();
+		void newScript();
+		void editScript();
 
 	protected slots:
 		void frontDrawModeChanged(int newMode);
@@ -169,17 +171,21 @@ class MainWindow : public QMainWindow
 		QAction*	m_actNew;
 		QAction*	m_actOpen;
 		QAction*	m_actSave;
+		QAction*	m_actReload;
+		QAction*	m_actReloadAll;
 		QAction*	m_actExport;
 		QAction*	m_actErase;
-		QAction*	m_refreshToolDialogs;
-		QAction*	m_actBrowseUserScripts;
 		QAction*	m_actExportUG3;
+
+		QAction*	m_actNewScript;
+		QAction*	m_actEditScript;
+		QAction*	m_actBrowseUserScripts;
+		QAction*	m_actRefreshToolDialogs;
+
 		QAction*	m_actHelpControls;
 		QAction*	m_actRecentChanges;
 		QAction*	m_actShortcuts;
 		QAction*	m_actLicense;
-		QAction*	m_actReload;
-		QAction*	m_actReloadAll;
 
 		QToolButton*	m_tbSelVrts;
 		QToolButton*	m_tbSelEdges;

@@ -69,16 +69,15 @@ ScriptDeclarations ParseScriptForDeclarations(const QByteArray& scriptContent,
 
 		tokens = TokenizeTrimString(line, ':');
 		if(tokens.size() != 2){
-			UG_LOG("unsupported pm-declare syntax in line " << curLineNumber
-				<< " of script " << scriptName
-				<< " to many occurances of ':'"<< endl);
-			return decls;
+			continue;
 		}
 
-		if(tokens[0].find("pm-declare-name") != string::npos){
+		RemoveWhitespaceFromString(tokens[0]);
+		
+		if(tokens[0].compare("--pm-declare-name") == 0){
 			decls.name = tokens[1];
 		}
-		else if(tokens[0].find("pm-declare-input") != string::npos){
+		else if(tokens[0].compare("--pm-declare-input") == 0){
 			tokens = TokenizeTrimString(tokens[1], '|');
 			ScriptParamter param;
 			if(tokens.size() >= 3){

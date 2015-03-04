@@ -1,0 +1,49 @@
+ProMesh rework:
+
+Buzzwords:
+- C++ 11
+- Multithreading
+- New Qt version
+- Qt Styles
+
+
+Main-Editor-Area:
+Tabbed View. Each Tab can represent a different Document-Set.
+
+
+A Document can be a SceneView or a Text-Document etc...
+
+"Join Meshes":	RemoveDoubles on the fly (optionally)
+
+Scene:
+- Holds several Meshes.
+- Two modes: "Overview" and "Meshing", triggered by TAB.
+	* "Overview":
+		- Create, select, transform, join meshes.
+		- All tools behave as if all elements of selected meshes were selected.
+		- Tools: Camera, GridGeneration
+	* "Meshing":
+		- Allow selection of sub-elements
+		- Elements of all selected meshes can be selected
+		- Tools are applied to individual elements of all selected meshes
+
+
+
+
+split-edge + swap of adjacent edges
+if swap is not possible: perform bisection refinement (see below)
+bisection refinement: refine connected hypotenuses until a corner is reached...
+
+adjust edge length - higher smoothen ratio
+coarsen 3-vrts
+coarsen 4-vrts
+
+swap if largest angle gets smaller and surface is kept (check distance of swapped and original line segment)
+
+consider crease- and fixed vertices
+
+
+
+
+Camera:
+Fix-View, Align-View, Ortho-View

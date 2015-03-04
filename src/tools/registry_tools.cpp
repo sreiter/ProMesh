@@ -95,8 +95,24 @@ class RegistryTool : public ITool{
 				}
 				UG_LOG(": ");
 
+				const ParameterInfo& retInfo = m_func->params_out();
 				for(int i = 0; i < paramsOut.size(); ++i){
-					UG_LOG(paramsOut.get(i));
+					const Variant& v = paramsOut.get(i);
+					if(v.type() == Variant::VT_POINTER
+						|| v.type() == Variant::VT_CONST_POINTER
+						|| v.type() == Variant::VT_SMART_POINTER
+						|| v.type() == Variant::VT_CONST_SMART_POINTER)
+					{
+						UG_LOG(retInfo.class_name(i));
+						if((strcmp(retInfo.class_name(i), "Mesh") == 0)
+							&& (v.type() == Variant::VT_SMART_POINTER))
+						{
+						//todo: add the mesh to the current scene. Use the smart-ptr!
+						}
+					}
+					else{
+						UG_LOG(paramsOut.get(i));
+					}
 					if(i + 1 < paramsOut.size()){
 						UG_LOG(", ");
 					}
@@ -312,9 +328,9 @@ void RegsiterRegistryTools(ToolManager* toolMgr)
 	RegisterTool(toolMgr, reg, "Measure Selection Area", "MeasureSelectionArea");
 	RegisterTool(toolMgr, reg, "Measure Selection Volume", "MeasureSelectionVolume");
 
-	RegisterTool(toolMgr, reg, "Weighted Edge Smooth", "WeightedEdgeSmooth");
-	RegisterTool(toolMgr, reg, "Weighted Face Smooth", "WeightedFaceSmooth");
-	RegisterTool(toolMgr, reg, "Weighted Normal Smooth", "WeightedNormalSmooth");
+	// RegisterTool(toolMgr, reg, "Weighted Edge Smooth", "WeightedEdgeSmooth");
+	// RegisterTool(toolMgr, reg, "Weighted Face Smooth", "WeightedFaceSmooth");
+	// RegisterTool(toolMgr, reg, "Weighted Normal Smooth", "WeightedNormalSmooth");
 	RegisterTool(toolMgr, reg, "Slope Smooth", "SlopeSmooth");
 
 	RegisterTool(toolMgr, reg, "Mark Corners Of Marked Edges", "MarkCornersOfMarkedEdges");

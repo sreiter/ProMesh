@@ -43,6 +43,10 @@
     </qresource>
 
     <qresource prefix="/">
+        <file>resources/default-script.lua</file>
+    </qresource>
+
+    <qresource prefix="/">
         <file>styles/promesh_style.txt</file>
     </qresource>
 </RCC>
