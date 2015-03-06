@@ -5,6 +5,7 @@
 #include <iostream>
 #include <QtWidgets>
 #include <QDesktopServices>
+#include <QWebView>
 #include "main_window.h"
 #include "view3d/view3d.h"
 #include "scene/lg_scene.h"
@@ -25,6 +26,7 @@
 #include "bridge/bridge.h"
 #include "common/util/path_provider.h"
 #include "common/util/plugin_util.h"
+#include "widgets/help_browser.h"
 
 using namespace std;
 using namespace ug;
@@ -42,7 +44,8 @@ MainWindow::MainWindow() :
 	m_elementModeListIndex(3),
 	m_mouseMoveAction(MMA_DEFAULT),
 	m_activeAxis(X_AXIS | Y_AXIS | Z_AXIS),
-	m_activeObject(NULL)
+	m_activeObject(NULL),
+	m_helpBrowser(NULL)
 {
 }
 
@@ -84,10 +87,8 @@ void MainWindow::init()
 	pDebugStream->enable_file_output(app::UserDataDir().path() + QString("/log.txt"));
 	// GetLogAssistant().enable_file_output(true, logFile.toLocal8Bit().constData());
 
-
 	UG_LOG("ProMesh (www.promesh3d.com) - created by Sebastian Reiter (s.b.reiter@gmail.com).\n");
 	UG_LOG("This version of ProMesh is for non-commercial use only. See \"Help->License\" for more information.\n");
-	UG_LOG("If you use ProMesh to create geometries for your publications, make sure to cite it!\n");
 	UG_LOG("ProMesh uses parts of the UG4 simulation framework.\n");
 	UG_LOG("This version of ProMesh uses 'tetgen 1.4.3' for tetrahedral mesh generation (in Remeshing/Tetgen).\n");
 	UG_LOG("--------------------------------------------------------------\n\n");
@@ -186,28 +187,35 @@ void MainWindow::init()
 	scriptmenu->addAction(m_actRefreshToolDialogs);
 
 //	help menu
-	m_actHelpControls = new QAction(tr("&Controls"), this);
-	m_actHelpControls->setShortcut(tr("Ctrl+H"));
-	m_actHelpControls->setStatusTip(tr("displays help."));
-	connect(m_actHelpControls, SIGNAL(triggered()), this, SLOT(showHelp()));
+	m_actHelp = new QAction(tr("&User Manual"), this);
+	m_actHelp->setShortcut(tr("Ctrl+H"));
+	m_actHelp->setStatusTip(tr("displays help."));
+	connect(m_actHelp, SIGNAL(triggered()), this, SLOT(showHelp()));
 
-	m_actRecentChanges = new QAction(tr("Recent Changes"), this);
-	m_actRecentChanges->setStatusTip(tr("displays recent changes."));
-	connect(m_actRecentChanges, SIGNAL(triggered()), this, SLOT(showRecentChanges()));
+	m_actJumpToScriptReference = new QAction(tr("Script and Tools Reference"), this);
+	m_actJumpToScriptReference->setStatusTip(tr("Jump to: Script and Tools Reference."));
+	connect(m_actJumpToScriptReference, SIGNAL(triggered()), this, SLOT(showScriptReference()));
+
+	m_actLicense = new QAction(tr("License"), this);
+	m_actLicense->setStatusTip(tr("Jump to: ProMesh-License."));
+	connect(m_actLicense, SIGNAL(triggered()), this, SLOT(showLicense()));
 
 	m_actShortcuts = new QAction(tr("Shortcuts"), this);
 	m_actShortcuts->setStatusTip(tr("displays shortcuts."));
 	connect(m_actShortcuts, SIGNAL(triggered()), this, SLOT(showShortcuts()));
 
-	m_actLicense = new QAction(tr("License"), this);
-	m_actLicense->setStatusTip(tr("displays the ProMesh-License."));
-	connect(m_actLicense, SIGNAL(triggered()), this, SLOT(showLicense()));
+	m_actRecentChanges = new QAction(tr("Recent Changes"), this);
+	m_actRecentChanges->setStatusTip(tr("displays recent changes."));
+	connect(m_actRecentChanges, SIGNAL(triggered()), this, SLOT(showRecentChanges()));
+
 
 	QMenu* helpmenu = menuBar()->addMenu("&Help");
-	helpmenu->addAction(m_actLicense);
+	helpmenu->addAction(m_actHelp);
+	helpmenu->addSeparator();
+	helpmenu->addAction(m_actJumpToScriptReference);
 	helpmenu->addAction(m_actShortcuts);
-	helpmenu->addAction(m_actHelpControls);
 	helpmenu->addAction(m_actRecentChanges);
+	helpmenu->addAction(m_actLicense);
 
 
 	m_toolManager = new ToolManager(this);
@@ -330,7 +338,17 @@ void MainWindow::init()
 	m_toolBrowserDock->setWidget(m_toolBrowser);
 	addDockWidget(Qt::LeftDockWidgetArea, m_toolBrowserDock);
 
+	
 	show();
+	//QHelpDialog* helpDlg = new QHelpDialog(":docs/promesh-script-reference.qch", this);
+	// QHelpDialog* helpDlg = new QHelpDialog(QString("/home/sreiter/projects/ProMesh/trunk/docs/promesh-script-reference.qhc"), this);
+	// helpDlg->show();
+
+	// QWebView* webView = new QWebView(this);
+	// webView->setGeometry(QRect(50, 50, 800, 600));
+	// webView->setUrl(QUrl("file:///home/sreiter/projects/ProMesh/builds/docugen/html/index.html"));
+	// webView->show();
+	
 	//load_grid_from_file("d:/projects/ProMesh3/data/atom_in_sphere.obj");
 	//load_grid_from_file("/Users/sreiter/grids/NB_35k_loose.ng");
 }
@@ -853,131 +871,76 @@ void MainWindow::setActiveObject(int index)
 
 void MainWindow::showHelp()
 {
-	QDialog* dlg = new QDialog(this);
-	dlg->setWindowTitle(tr("ProMesh - Controls"));
-	QString strMsg;
-	strMsg.append(tr("CAMERA CONTROLS:\n"));
-	strMsg.append(tr("- Use Left-Mouse-Button (LMB) to steer the camera.\n"));
-	strMsg.append(tr("\n"));
-	strMsg.append(tr("- Move the mouse while holding LMB to rotate the camera\n"));
-	strMsg.append(tr("   around its pivot.\n"));
-	strMsg.append(tr("\n"));
-	strMsg.append(tr("- Perform LMB-doubleclick on the geometry to reset the pivot.\n"));
-	strMsg.append(tr("\n"));
-	strMsg.append(tr("- CTRL + LMB: Move the camera left-right / top-down.\n"));
-	strMsg.append(tr("\n"));
-	strMsg.append(tr("- SHIFT + LMB: Zoom in and out.\n"));
-	strMsg.append(tr("\n"));
-	strMsg.append(tr("- ALT + LMB: same as LMB-doubleclick\n"));
-	strMsg.append(tr("\n"));
-	strMsg.append(tr("- SHIFT + CTRL + LMB: Move the camera into the scene.\n"));
-	strMsg.append(tr("\n"));
-	strMsg.append(tr("- Mouse-Wheel: Zoom in and out (same as SHIFT + LMB).\n"));
-	strMsg.append(tr("\n"));
-	strMsg.append(tr("- CTRL + Mouse-Wheel: Move the camera into the scene.\n"));
-	strMsg.append(tr("\n"));
-	strMsg.append(tr("- CTRL + RMB: Select all elements in subset of clicked element.\n"));
-	strMsg.append(tr("\n"));
-	strMsg.append(tr("\n"));
-	strMsg.append(tr("SHORT-KEYS:\n"));
-	strMsg.append(tr("- G: Grab (move selection)\n"));
-	strMsg.append(tr("- A: (De)Select All\n"));
+	if(!m_helpBrowser){
+		m_helpBrowser = new QHelpBrowser(QUrl("qrc:///docs/html/index.html"), this);
+	}
+	QRect geom = this->geometry();
+	geom.adjust(50, 50, -50, -50);
+	m_helpBrowser->setGeometry(geom);
+	m_helpBrowser->show();
 
-	QLabel* lbl = new QLabel(strMsg, dlg);
+	// QDialog* dlg = new QDialog(this);
+	// dlg->setWindowTitle(tr("ProMesh - Controls"));
+	// QString strMsg;
+	// strMsg.append(tr("CAMERA CONTROLS:\n"));
+	// strMsg.append(tr("- Use Left-Mouse-Button (LMB) to steer the camera.\n"));
+	// strMsg.append(tr("\n"));
+	// strMsg.append(tr("- Move the mouse while holding LMB to rotate the camera\n"));
+	// strMsg.append(tr("   around its pivot.\n"));
+	// strMsg.append(tr("\n"));
+	// strMsg.append(tr("- Perform LMB-doubleclick on the geometry to reset the pivot.\n"));
+	// strMsg.append(tr("\n"));
+	// strMsg.append(tr("- CTRL + LMB: Move the camera left-right / top-down.\n"));
+	// strMsg.append(tr("\n"));
+	// strMsg.append(tr("- SHIFT + LMB: Zoom in and out.\n"));
+	// strMsg.append(tr("\n"));
+	// strMsg.append(tr("- ALT + LMB: same as LMB-doubleclick\n"));
+	// strMsg.append(tr("\n"));
+	// strMsg.append(tr("- SHIFT + CTRL + LMB: Move the camera into the scene.\n"));
+	// strMsg.append(tr("\n"));
+	// strMsg.append(tr("- Mouse-Wheel: Zoom in and out (same as SHIFT + LMB).\n"));
+	// strMsg.append(tr("\n"));
+	// strMsg.append(tr("- CTRL + Mouse-Wheel: Move the camera into the scene.\n"));
+	// strMsg.append(tr("\n"));
+	// strMsg.append(tr("- CTRL + RMB: Select all elements in subset of clicked element.\n"));
+	// strMsg.append(tr("\n"));
+	// strMsg.append(tr("\n"));
+	// strMsg.append(tr("SHORT-KEYS:\n"));
+	// strMsg.append(tr("- G: Grab (move selection)\n"));
+	// strMsg.append(tr("- A: (De)Select All\n"));
 
-	lbl->adjustSize();
-	dlg->adjustSize();
-	//dlg->exec();
-	dlg->show();
+	// QLabel* lbl = new QLabel(strMsg, dlg);
 
-	//delete dlg;
+	// lbl->adjustSize();
+	// dlg->adjustSize();
+	// //dlg->exec();
+	// dlg->show();
+
+	// //delete dlg;
 }
 
 void MainWindow::showRecentChanges()
 {
-	QDialog* dlg = new QDialog(this);
-	dlg->setWindowTitle(tr("ProMesh - Recent Changes"));
-	QTextEdit* textEdit = new QTextEdit(dlg);
-
-	QFile inputFile(":/text/recent_changes.txt");
-	inputFile.open(QIODevice::ReadOnly);
-	QTextStream in(&inputFile);
-
-	while(!in.atEnd()){
-		QString line = in.readLine();
-		textEdit->append(line);
-	}
-
-	inputFile.close();
-
-	textEdit->setReadOnly(true);
-	textEdit->moveCursor(QTextCursor::Start);
-	QBoxLayout* layout = new QVBoxLayout(dlg);
-	layout->addWidget(textEdit);
-
-	dlg->setGeometry(QRect(50, 50, 700, 500));
-
-	dlg->show();
-
-	//delete dlg;
+	showHelp();
+	m_helpBrowser->browse(QUrl("qrc:///docs/html/pageRecentChanges.html"));
 }
 
 void MainWindow::showShortcuts()
 {
-	QDialog* dlg = new QDialog(this);
-	dlg->setWindowTitle(tr("ProMesh - Shortcuts"));
-	QTextEdit* textEdit = new QTextEdit(dlg);
-
-	QFile inputFile(":/text/shortcuts.txt");
-	inputFile.open(QIODevice::ReadOnly);
-	QTextStream in(&inputFile);
-
-	while(!in.atEnd()){
-		QString line = in.readLine();
-		textEdit->append(line);
-	}
-
-	inputFile.close();
-
-	textEdit->setReadOnly(true);
-	textEdit->moveCursor(QTextCursor::Start);
-	QBoxLayout* layout = new QVBoxLayout(dlg);
-	layout->addWidget(textEdit);
-
-	dlg->setGeometry(QRect(50, 50, 700, 500));
-
-	dlg->show();
-
-	//delete dlg;
+	showHelp();
+	m_helpBrowser->browse(QUrl("qrc:///docs/html/pageShortcuts.html"));
 }
 
 void MainWindow::showLicense()
 {
-	QDialog* dlg = new QDialog(this);
-	dlg->setWindowTitle(tr("ProMesh - License"));
-	QTextEdit* textEdit = new QTextEdit(dlg);
+	showHelp();
+	m_helpBrowser->browse(QUrl("qrc:///docs/html/pageProMeshLicense.html"));
+}
 
-	QFile inputFile(":/text/promesh_license.txt");
-	inputFile.open(QIODevice::ReadOnly);
-	QTextStream in(&inputFile);
-
-	while(!in.atEnd()){
-		QString line = in.readLine();
-		textEdit->append(line);
-	}
-
-	inputFile.close();
-
-	textEdit->setReadOnly(true);
-	textEdit->moveCursor(QTextCursor::Start);
-	QBoxLayout* layout = new QVBoxLayout(dlg);
-	layout->addWidget(textEdit);
-
-	dlg->setGeometry(QRect(50, 50, 700, 500));
-
-	dlg->show();
-
-	//delete dlg;
+void MainWindow::showScriptReference()
+{
+	showHelp();
+	m_helpBrowser->browse(QUrl("qrc:///docs/html/modules.html"));
 }
 
 void MainWindow::frontDrawModeChanged(int newMode)

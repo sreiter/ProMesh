@@ -1,27 +1,78 @@
-cmake_minimum_required(VERSION 2.6)
-
-####
-# ProMesh4
-####
-
+cmake_minimum_required(VERSION 2.8.11)
 project(P_PROMESH4)
+
+set(ProMeshSRC	src/app.cpp
+				src/main.cpp
+				src/main_window.cpp
+				src/main_window_input.cpp
+				src/scene_inspector.cpp
+				src/scene_item_model.cpp
+				src/delegates.cpp
+				src/clip_plane_widget.cpp
+				src/color_widget.cpp
+				src/undo.cpp
+				src/rclick_menu_scene_inspector.cpp
+				src/view3d/view3d.cpp
+				src/view3d/camera/quaternion.cpp
+				src/view3d/camera/model_viewer_camera.cpp
+				src/view3d/camera/matrix44.cpp
+				src/view3d/camera/basic_camera.cpp
+				src/view3d/camera/arc_ball.cpp
+				src/scene/lg_object.cpp
+				src/scene/lg_scene.cpp
+				src/scene/lg_tmp_methods.cpp
+				src/scene/plane_sphere.cpp
+				src/scene/scene_interface.cpp
+				src/tools/tool_coordinates.cpp
+				src/tools/tool_frac_to_layer.cpp
+				src/tools/tool_manager.cpp
+				src/tools/standard_tools.cpp
+				src/tools/tool_dialog.cpp
+				src/tools/selection_tools.cpp
+				src/tools/mark_tools.cpp
+				src/tools/grid_generation_tools.cpp
+				src/tools/coordinate_transform_tools.cpp
+				src/tools/topology_tools.cpp
+				src/tools/info_tools.cpp
+				src/tools/subset_tools.cpp
+				src/tools/camera_tools.cpp
+				src/tools/fracture_tools.cpp
+				src/tools/refinement_tools.cpp
+				src/tools/registry_tools.cpp
+				src/tools/remeshing_tools.cpp
+				src/tools/script_tools.cpp
+				src/widgets/double_slider.cpp
+				src/widgets/extendible_widget.cpp
+				src/widgets/file_widget.cpp
+				src/widgets/help_browser.cpp
+				src/widgets/icon_tab_widget.cpp
+				src/widgets/matrix_widget.cpp
+				src/widgets/tool_browser_widget.cpp
+				src/widgets/truncated_double_spin_box.cpp
+				src/widgets/widget_container.cpp
+				src/widgets/widget_list.cpp)
+
 
 # Some options which allow to control makefile generation
 option(DEBUG "If enabled a debug build is performed - this slows down performance." OFF)
 option(UG_ROOT_PATH "The path to ug4. Has to contain the ugbase and lib directories.")
 option(TETGEN_PATH "The path to tetgen. Has to contain the static tet library.")
-option(QT_PATH "Path to the 'qmake' executable of the qt version that shall be used.")
-# Qt4 with OpenGL support is required.
-# in order to use a custom installation of QT, specify QT_PATH when running
-# cmake for the first time for your build
+option(QT_CMAKE_PATH "Folder containing cmake-modules for the chosen architecture.")
+
+# Qt5 with OpenGL support is required.
+# in order to use a custom installation of QT, specify QT_CMAKE_PATH when running
+# cmake for the first time for your build (e.g. "...pathToQt/5.4/gcc_64/lib/cmake/")
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-SET(QT_USE_QTOPENGL TRUE)
-if(NOT QT_PATH)
+if(QT_CMAKE_PATH)
+	FIND_PACKAGE(Qt5Widgets REQUIRED PATHS ${QT_CMAKE_PATH}/Qt5Widgets)
+	FIND_PACKAGE(Qt5OpenGL REQUIRED PATHS ${QT_CMAKE_PATH}/Qt5OpenGL)
+	FIND_PACKAGE(Qt5WebKitWidgets REQUIRED PATHS ${QT_CMAKE_PATH}/Qt5WebKitWidgets)
+else(QT_CMAKE_PATH)
 	FIND_PACKAGE(Qt5Widgets REQUIRED)
-else(NOT QT_PATH)
-	FIND_PACKAGE(Qt5Widgets REQUIRED PATHS ${QT_PATH})
-endif(NOT QT_PATH)
+	FIND_PACKAGE(Qt5OpenGL REQUIRED)
+	FIND_PACKAGE(Qt5WebKitWidgets REQUIRED)
+endif(QT_CMAKE_PATH)
 
 
 FIND_PACKAGE(OpenGL REQUIRED)
@@ -31,12 +82,6 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib)
 # set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
 
 include_directories(${CMAKE_SOURCE_DIR}/src)
-
-#We'll use ugs internal boost version
-#BOOST is required (at least version 1.40)
-#FIND_PACKAGE(Boost 1.40.0 REQUIRED)
-#include_directories(${Boost_INCLUDE_DIRS})
-
 
 if(DEBUG)
 	message(STATUS "INFO: Debug mode. (Enable release-mode by defining -DDEBUG=OFF)")
@@ -91,114 +136,15 @@ if(UNIX AND NOT APPLE)
 	add_definitions(-DPROMESH_INCLUDE_GLU)
 endif(UNIX AND NOT APPLE)
 
-# Now add the sources
-set(ProMeshSRC	src/app.cpp
-				src/main.cpp
-				src/main_window.cpp
-				src/main_window_input.cpp
-				src/scene_inspector.cpp
-				src/scene_item_model.cpp
-				src/delegates.cpp
-				src/clip_plane_widget.cpp
-				src/color_widget.cpp
-				src/undo.cpp
-				src/rclick_menu_scene_inspector.cpp
-				src/view3d/view3d.cpp
-				src/view3d/camera/quaternion.cpp
-				src/view3d/camera/model_viewer_camera.cpp
-				src/view3d/camera/matrix44.cpp
-				src/view3d/camera/basic_camera.cpp
-				src/view3d/camera/arc_ball.cpp
-				src/scene/lg_object.cpp
-				src/scene/lg_scene.cpp
-				src/scene/lg_tmp_methods.cpp
-				src/scene/plane_sphere.cpp
-				src/scene/scene_interface.cpp
-				src/tools/tool_coordinates.cpp
-				src/tools/tool_frac_to_layer.cpp
-				src/tools/tool_manager.cpp
-				src/tools/standard_tools.cpp
-				src/tools/tool_dialog.cpp
-				src/tools/selection_tools.cpp
-				src/tools/mark_tools.cpp
-				src/tools/grid_generation_tools.cpp
-				src/tools/coordinate_transform_tools.cpp
-				src/tools/topology_tools.cpp
-				src/tools/info_tools.cpp
-				src/tools/subset_tools.cpp
-				src/tools/camera_tools.cpp
-				src/tools/fracture_tools.cpp
-				src/tools/refinement_tools.cpp
-				src/tools/registry_tools.cpp
-				src/tools/remeshing_tools.cpp
-				src/tools/script_tools.cpp
-				src/widgets/extendible_widget.cpp
-				src/widgets/double_slider.cpp
-				src/widgets/file_widget.cpp
-				src/widgets/icon_tab_widget.cpp
-				src/widgets/matrix_widget.cpp
-				src/widgets/tool_browser_widget.cpp
-				src/widgets/truncated_double_spin_box.cpp
-				src/widgets/widget_container.cpp
-				src/widgets/widget_list.cpp)
-
-# Only header containing Q_OBJECTS have to be listed here
-set(ProMeshHEADERS	src/view3d/view3d.h
-					src/view3d/camera/camera.h
-					src/view3d/renderer3d_interface.h
-					src/scene/scene_interface.h
-					src/view3d/renderer3d_interface.h
-					src/scene/scene_template.h
-					src/scene/scene_template_impl.hpp
-					src/scene/lg_object.h
-					src/scene/lg_scene.h
-					src/main_window.h
-					src/scene/lg_include.h
-					src/scene/plane_sphere.h
-					src/scene_inspector.h
-					src/scene_item_model.h
-					src/delegates.h
-					src/clip_plane_widget.h
-					src/color_widget.h
-					src/QDebugStream.h
-					src/app.h
-					src/tools/tool_manager.h
-					src/QDebugStream.h
-					src/tools/standard_tools.h
-					src/tools/tool_dialog.h
-					src/view3d/camera/vec_math.h
-					src/view3d/camera/quaternion.h
-					src/view3d/camera/matrix44.h
-					src/view3d/camera/arc_ball.h
-					src/tools/tool_frac_to_layer.h
-					src/tools/tools_util.h
-					src/undo.h
-					src/rclick_menu_scene_inspector.h
-					src/tools/tool_coordinates.h
-					src/widgets/extendible_widget.h
-					src/widgets/double_slider.h
-					src/widgets/file_widget.h
-					src/widgets/icon_tab_widget.h
-					src/widgets/matrix_widget.h
-					src/widgets/tool_browser_widget.h
-					src/widgets/truncated_double_spin_box.h
-					src/widgets/widget_container.h
-					src/widgets/widget_list.h)
 
 # resources
-set(ProMeshRESOURCES	ProMesh.qrc)
-
-# The ug4 libraries
-#set(UG_LIBRARIES ugscript ugbridge grid node_tree registry common)
-set(UG_LIBRARIES grid_s)
-
-#QT5_WRAP_CPP(ProMeshHEADERS_MOC ${ProMeshHEADERS})
+set(ProMeshRESOURCES	ProMesh.qrc
+						docs/html-resources.qrc)
 QT5_ADD_RESOURCES(ProMeshRESOURCES_RCC ${ProMeshRESOURCES})
 
-#INCLUDE(${QT_USE_FILE})
-ADD_DEFINITIONS(${QT_DEFINITIONS})
+SET(allSources ${ProMeshSRC} ${ProMeshRESOURCES_RCC})
 
-SET(allSources ${ProMeshSRC} ${ProMeshHEADERS_MOC} ${ProMeshRESOURCES_RCC})
+
 
 if(UNIX)
 	if(APPLE)
@@ -220,5 +166,4 @@ else(UNIX)
 	endif(MINGW)
 endif(UNIX)
 
-TARGET_LINK_LIBRARIES(ProMesh4 ${OPENGL_LIBRARIES} Qt5::Widgets ${UG_LIBRARIES} tet)
-qt5_use_modules(ProMesh4 OpenGL Gui Widgets)
+TARGET_LINK_LIBRARIES(ProMesh4 ${OPENGL_LIBRARIES} Qt5::OpenGL Qt5::Widgets Qt5::WebKitWidgets grid_s tet)

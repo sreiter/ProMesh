@@ -29,6 +29,7 @@ class QPushButton;
 class QPoint;
 class SceneInspector;
 class QToolButton;
+class QHelpBrowser;
 
 ////////////////////////////////////////////////////////////////////////
 ///	the main window.
@@ -85,6 +86,7 @@ class MainWindow : public QMainWindow
 		bool exportToUG3();
 		void eraseActiveSceneObject();///< erases the active scene object.
 		void showHelp();
+		void showScriptReference();
 		void showRecentChanges();
 		void showShortcuts();
 		void showLicense();
@@ -157,13 +159,14 @@ class MainWindow : public QMainWindow
 		LGObject*	m_activeObject;
 
 	//	dialogs
-		QFileDialog* m_dlgGeometryFiles;
-		SceneInspector* m_sceneInspector;
-		QDockWidget* m_pLog;
+		QFileDialog*				m_dlgGeometryFiles;
+		SceneInspector*				m_sceneInspector;
+		QDockWidget*				m_pLog;
 		RClickMenu_SceneInspector*	m_rclickMenu_SI;
-		ToolManager* m_toolManager;
-		ToolBrowserWidget* m_toolBrowser;
-		QDockWidget* m_toolBrowserDock;
+		ToolManager*				m_toolManager;
+		ToolBrowserWidget*			m_toolBrowser;
+		QDockWidget*				m_toolBrowserDock;
+		QHelpBrowser*				m_helpBrowser;
 	//	menus
 		//QMenu*		m_toolsMenu;
 
@@ -182,10 +185,11 @@ class MainWindow : public QMainWindow
 		QAction*	m_actBrowseUserScripts;
 		QAction*	m_actRefreshToolDialogs;
 
-		QAction*	m_actHelpControls;
+		QAction*	m_actHelp;
 		QAction*	m_actRecentChanges;
 		QAction*	m_actShortcuts;
 		QAction*	m_actLicense;
+		QAction*	m_actJumpToScriptReference;
 
 		QToolButton*	m_tbSelVrts;
 		QToolButton*	m_tbSelEdges;

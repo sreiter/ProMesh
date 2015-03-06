@@ -1,0 +1,26 @@
+/** \mainpage Home
+
+\promesh (c) 2006-2015 Sebastian Reiter
+
+\promesh is a cross platform meshing software for unstructured grids in 1, 2 and
+3 dimensions. It is under active development at the group <em>Simulation and Modeling</em>
+at the <em>Goethe-Center for Scientific Computing</em> of the
+<em>Goethe-University Frankfurt am Main, Germany</em>.
+
+
+<hr>
+\section secOutline Outline
+- Introduction
+	- Graphical User Interface
+	- Grids and Grid Elements
+	- Camera Movement
+	- Visualization
+	- Basic Workflow
+- \ref pageShortcuts
+- Scripting
+- <a href="modules.html"><b>Script and Tools Reference</b></a>
+- \ref pageProMeshLicense
+- \ref pageExternalLibraries
+- \ref pageRecentChanges
+- Contact
+*/

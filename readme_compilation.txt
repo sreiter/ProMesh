@@ -1,3 +1,11 @@
+Before you can compile promesh, you have to compile and execute docugen.
+to do this create a folder in which you execute cmake on the docugen path
+(e.g. mkdir docubuild && cd docubuild && cmake ../docugen).
+After you specified the required paths, start compilation with 'make' and
+execute docugen afterwards. This will create and populate the docs path in
+ProMesh's root path and create a resource-file containing all the help-files.
+
+You may then proceed with the compilation of ProMesh.
 
 Qt5 for Linux:
 http://download.qt-project.org/official_releases/online_installers/qt-opensource-linux-x64-online.run

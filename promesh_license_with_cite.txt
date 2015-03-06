@@ -19,7 +19,12 @@ License To Use
 licensee is hereby granted a non-exclusive, non-transferable, 
 limited license to use ProMesh4 complete and unmodified for
 non-commercial purposes only.
-2. Redistribution of ProMesh4 is not permitted by this Agreement. 
+2. Usage and/or publication of results obtained with the aid 
+of ProMesh4 is only permitted if the following citation is included: 
+"S. Reiter, G. Wittum: ProMesh - a Flexible Interactive Meshing
+Software for Unstructured Hybrid Grids in 1, 2 and 3 Dimensions,
+in preparation."
+3. Redistribution of ProMesh4 is not permitted by this Agreement. 
 Additional licenses for developers and/or publishers are not 
 covered by this Agreement.
 

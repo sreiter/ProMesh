@@ -2,6 +2,16 @@ cmake_minimum_required(VERSION 2.6)
 
 project(ProMeshDocuGen)
 
+add_definitions(-DPROMESH_ROOT_PATH="${CMAKE_SOURCE_DIR}/../")
+if(UNIX AND NOT CYGWIN)
+	add_definitions(-DUNIX)
+elseif(WIN32 OR CYGWIN)
+	add_definitions(-DWINDOWS)
+else(UNIX AND NOT CYGWIN)
+	message(STATUS "YOUR OS MAY NOT BE FULLY SUPPORTED (NOT UNIX???). File functions may be not working.")
+	add_definitions(-DUNIX)
+endif(UNIX AND NOT CYGWIN)
+
 set(LIBS grid_s)
 
 # LIBGRID LIBRARY

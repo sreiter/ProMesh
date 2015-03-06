@@ -1,4 +1,6 @@
-ProMesh4 Binary Code License
+/** \page pageProMeshLicense ProMesh License
+
+<b>ProMesh4 Binary Code License</b>
 
 The ProMesh4 application ("ProMesh4") is licensed to the licensee
 only upon  the condition that the licensee accepts all of the terms 
@@ -7,14 +9,16 @@ By downloading, installing and/or using ProMesh4, the licensee
 accepts the full terms of this Agreement.
 
 
-Definitions
+<b>Definitions</b>
+
 1. Licensee means the individual that uses ProMesh4 under the 
 terms of this License Agreement.
 2. The licensors are the Goethe Center for Scientific Computing (G-CSC),
 Goethe University Frankfurt am Main, Germany and the Steinbeis 
-Zentrum "Simulation in Technology", Ölbronn, Germany.
+Zentrum "Simulation in Technology", Ã–lbronn, Germany.
 
-License To Use
+<b>License To Use</b>
+
 1. Subject to the terms and conditions of this Agreement, the 
 licensee is hereby granted a non-exclusive, non-transferable, 
 limited license to use ProMesh4 complete and unmodified for
@@ -23,7 +27,8 @@ non-commercial purposes only.
 Additional licenses for developers and/or publishers are not 
 covered by this Agreement.
 
-Warranty
+<b>Warranty</b>
+
 The program is licensed free of charge and there is no warranty 
 for the program, to the extent permitted by applicable law. The 
 program is provided "as is" without warranty of any kind, 
@@ -41,3 +46,4 @@ use or inability to use the program (including but not limited
 to loss of data or data being rendered inaccurate or losses 
 sustained by the licensee or a failure of the program to operate 
 with any other programs).
+*/

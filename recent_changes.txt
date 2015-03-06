@@ -5,6 +5,7 @@ Recent changes:
 v 4.2.0
 Changes and additions:
 - Now using Qt5
+- Added a doxygen based help-framework with full scripting reference
 - GUI rework: New style and improved usability of number input fields
 - Enhanced Selection-Edges-SmoothPath with an adjustable normal-weight
 - New tool CoordinateTransform-SlopeSmooth

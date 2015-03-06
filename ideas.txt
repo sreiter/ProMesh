@@ -1,5 +1,61 @@
-ProMesh rework:
+Planned features:
 
+4.2.0
+  - Compilation
+  	* Compile and execute docugen from within promesh's cmake file
+  	
+  - Help:
+	* Improved grouping of script-tools
+	* Descriptors for group names
+	* Derive from base-classes in WriteClass and enable 'include base-methods'
+	  in doxygen.
+	* Add pages:
+ok	  - welcome
+ok	  - license
+ok	  - libraries
+	  - controls
+ok	  - shortcuts
+	  - about
+	* Other Help menu entries simply open the help browser with the associated page:
+ok	  - User Manual
+	  -------------------
+ok	  - Script Reference
+ok	  - Shortcuts
+	  - Controls
+ok	  - License
+	  - About
+
+  - Log:
+	* Read log message from resource-file "greetings-log.txt"
+	* Simplify log-message (e.g. Promesh (c) 2006-2015 Sebastian Reiter, non commercial...)
+
+  - File-Menu:
+	* Add 'Quit' button
+
+  - Script-Menu:
+	* Always refresh the whole tool-browser
+
+  - Delete Button:
+	* Add question and tell: 'No undo possible'
+
+4.2.1
+  - Camera:
+	* Fix-View, Align-View, Ortho-View
+
+4.2.X
+  - Script-Menu:
+    * Perform a more sensible update of the tool-browser. Problem: Buttons
+      and dialogs are currently handled in different ways and can not be
+      replaced by each other!?!
+    * New script tools enforce a complete recreation of the tool browser.
+      Idea: Store open/close states for each browser entry and the currently
+      visible tool and restore those states after reload.
+
+
+
+
+
+ProMesh rework:
 Buzzwords:
 - C++ 11
 - Multithreading
@@ -42,8 +98,3 @@ swap if largest angle gets smaller and surface is kept (check distance of swappe
 
 consider crease- and fixed vertices
 
-
-
-
-Camera:
-Fix-View, Align-View, Ortho-View
