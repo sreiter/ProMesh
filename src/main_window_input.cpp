@@ -7,6 +7,7 @@
 #include "main_window.h"
 #include "app.h"
 #include "lib_grid/algorithms/selection_util.h"
+#include "tools/tool_manager.h"
 
 using namespace std;
 using namespace ug;

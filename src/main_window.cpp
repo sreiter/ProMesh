@@ -5,7 +5,6 @@
 #include <iostream>
 #include <QtWidgets>
 #include <QDesktopServices>
-#include <QWebView>
 #include "main_window.h"
 #include "view3d/view3d.h"
 #include "scene/lg_scene.h"
@@ -20,13 +19,15 @@
 #include "tools/standard_tools.h"
 #include "undo.h"
 #include "app.h"
-#include "widgets/tool_browser_widget.h"
 #include "tools/tool_coordinates.h"
 #include "common/util/file_util.h"
 #include "bridge/bridge.h"
 #include "common/util/path_provider.h"
 #include "common/util/plugin_util.h"
 #include "widgets/help_browser.h"
+#include "util/file_util.h"
+#include "tools/tool_manager.h"
+#include "widgets/tool_browser_widget.h"
 
 using namespace std;
 using namespace ug;
@@ -45,7 +46,8 @@ MainWindow::MainWindow() :
 	m_mouseMoveAction(MMA_DEFAULT),
 	m_activeAxis(X_AXIS | Y_AXIS | Z_AXIS),
 	m_activeObject(NULL),
-	m_helpBrowser(NULL)
+	m_helpBrowser(NULL),
+	m_dlgAbout(NULL)
 {
 }
 
@@ -77,8 +79,13 @@ void MainWindow::init()
 	m_pLog = new QDockWidget(tr("log"), this);
 	m_pLog->setObjectName(tr("log"));
 
+	QFont logFont("unknown");
+	logFont.setStyleHint(QFont::Monospace);
+	logFont.setPointSize(10);
 	QTextEdit* pLogText = new QTextEdit(m_pLog);
 	pLogText->setReadOnly(true);
+	pLogText->setAcceptRichText(false);
+	pLogText->setCurrentFont(logFont);
 	m_pLog->setWidget(pLogText);
 	addDockWidget(Qt::BottomDockWidgetArea, m_pLog);
 
@@ -87,11 +94,14 @@ void MainWindow::init()
 	pDebugStream->enable_file_output(app::UserDataDir().path() + QString("/log.txt"));
 	// GetLogAssistant().enable_file_output(true, logFile.toLocal8Bit().constData());
 
-	UG_LOG("ProMesh (www.promesh3d.com) - created by Sebastian Reiter (s.b.reiter@gmail.com).\n");
-	UG_LOG("This version of ProMesh is for non-commercial use only. See \"Help->License\" for more information.\n");
-	UG_LOG("ProMesh uses parts of the UG4 simulation framework.\n");
-	UG_LOG("This version of ProMesh uses 'tetgen 1.4.3' for tetrahedral mesh generation (in Remeshing/Tetgen).\n");
-	UG_LOG("--------------------------------------------------------------\n\n");
+	// UG_LOG("ProMesh (www.promesh3d.com) - created by Sebastian Reiter (s.b.reiter@gmail.com).\n");
+	// UG_LOG("This version of ProMesh is for non-commercial use only. See \"Help->License\" for more information.\n");
+	// UG_LOG("ProMesh uses parts of the UG4 simulation framework.\n");
+	// UG_LOG("This version of ProMesh uses 'tetgen 1.4.3' for tetrahedral mesh generation (in Remeshing/Tetgen).\n");
+	// UG_LOG("--------------------------------------------------------------\n\n");
+
+	UG_LOG(GetFileContent(":/resources/greetings.txt").toStdString() << endl);
+
 
 	try{
 		ug::bridge::InitBridge();
@@ -149,6 +159,9 @@ void MainWindow::init()
 	m_actExportUG3->setStatusTip(tr("Exports the geometry to ug3 lgm / ng format."));
 	connect(m_actExportUG3, SIGNAL(triggered()), this, SLOT(exportToUG3()));
 
+	m_actQuit = new QAction(tr("Quit"), this);
+	connect(m_actQuit, SIGNAL(triggered()), this, SLOT(quit()));
+
 	QMenu* filemenu = menuBar()->addMenu("&File");
 	filemenu->addAction(m_actNew);
 	filemenu->addAction(m_actOpen);
@@ -158,6 +171,8 @@ void MainWindow::init()
 	filemenu->addAction(m_actErase);
 	filemenu->addSeparator();
 	filemenu->addAction(m_actExportUG3);
+	filemenu->addSeparator();
+	filemenu->addAction(m_actQuit);
 
 
 //	script menu
@@ -188,25 +203,23 @@ void MainWindow::init()
 
 //	help menu
 	m_actHelp = new QAction(tr("&User Manual"), this);
-	m_actHelp->setShortcut(tr("Ctrl+H"));
-	m_actHelp->setStatusTip(tr("displays help."));
+	m_actHelp->setShortcut(tr("Ctrl+U"));
 	connect(m_actHelp, SIGNAL(triggered()), this, SLOT(showHelp()));
 
 	m_actJumpToScriptReference = new QAction(tr("Script and Tools Reference"), this);
-	m_actJumpToScriptReference->setStatusTip(tr("Jump to: Script and Tools Reference."));
 	connect(m_actJumpToScriptReference, SIGNAL(triggered()), this, SLOT(showScriptReference()));
 
 	m_actLicense = new QAction(tr("License"), this);
-	m_actLicense->setStatusTip(tr("Jump to: ProMesh-License."));
 	connect(m_actLicense, SIGNAL(triggered()), this, SLOT(showLicense()));
 
 	m_actShortcuts = new QAction(tr("Shortcuts"), this);
-	m_actShortcuts->setStatusTip(tr("displays shortcuts."));
 	connect(m_actShortcuts, SIGNAL(triggered()), this, SLOT(showShortcuts()));
 
 	m_actRecentChanges = new QAction(tr("Recent Changes"), this);
-	m_actRecentChanges->setStatusTip(tr("displays recent changes."));
 	connect(m_actRecentChanges, SIGNAL(triggered()), this, SLOT(showRecentChanges()));
+
+	m_actShowAbout = new QAction(tr("About"), this);
+	connect(m_actShowAbout, SIGNAL(triggered()), this, SLOT(showAbout()));
 
 
 	QMenu* helpmenu = menuBar()->addMenu("&Help");
@@ -216,6 +229,7 @@ void MainWindow::init()
 	helpmenu->addAction(m_actShortcuts);
 	helpmenu->addAction(m_actRecentChanges);
 	helpmenu->addAction(m_actLicense);
+	helpmenu->addAction(m_actShowAbout);
 
 
 	m_toolManager = new ToolManager(this);
@@ -333,7 +347,9 @@ void MainWindow::init()
 	toolBrowser->addPage(QIcon(":images/editundo.png"), tr("undo"));
 	toolBrowser->addPage(QIcon(":images/editredo.png"), tr("redo"));
 */
-	m_toolBrowser = m_toolManager->createToolBrowser(this);
+	// m_toolBrowser = m_toolManager->createToolBrowser(this);
+	m_toolBrowser = new ToolBrowser(this);
+	m_toolBrowser->refresh(m_toolManager);
 	m_toolBrowser->setObjectName(tr("tool_browser"));
 	m_toolBrowserDock->setWidget(m_toolBrowser);
 	addDockWidget(Qt::LeftDockWidgetArea, m_toolBrowserDock);
@@ -844,13 +860,20 @@ void MainWindow::eraseActiveSceneObject()
 		int index = m_scene->get_object_index(obj);
 		if(index >= 0)
 		{
-		//	perform erase
-			m_scene->erase_object(index);
-		//	select the next object
-			if(index < m_scene->num_objects())
-				setActiveObject(index);
-			else if(index > 0)
-				setActiveObject(index - 1);
+			QString msg = QString("Erase '").append(obj->name()).append("'?\n").
+											append("No undo will be possible!");
+			QMessageBox::StandardButton reply;
+			reply = QMessageBox::question(this, "Erase?", msg,
+										  QMessageBox::Yes | QMessageBox::No);
+			if (reply == QMessageBox::Yes){
+			//	perform erase
+				m_scene->erase_object(index);
+			//	select the next object
+				if(index < m_scene->num_objects())
+					setActiveObject(index);
+				else if(index > 0)
+					setActiveObject(index - 1);
+			}
 		}
 	}
 }
@@ -872,51 +895,13 @@ void MainWindow::setActiveObject(int index)
 void MainWindow::showHelp()
 {
 	if(!m_helpBrowser){
-		m_helpBrowser = new QHelpBrowser(QUrl("qrc:///docs/html/index.html"), this);
+		m_helpBrowser = new QHelpBrowser(this);
+		m_helpBrowser->browse(QUrl("qrc:///docs/html/index.html"));
 	}
 	QRect geom = this->geometry();
 	geom.adjust(50, 50, -50, -50);
 	m_helpBrowser->setGeometry(geom);
 	m_helpBrowser->show();
-
-	// QDialog* dlg = new QDialog(this);
-	// dlg->setWindowTitle(tr("ProMesh - Controls"));
-	// QString strMsg;
-	// strMsg.append(tr("CAMERA CONTROLS:\n"));
-	// strMsg.append(tr("- Use Left-Mouse-Button (LMB) to steer the camera.\n"));
-	// strMsg.append(tr("\n"));
-	// strMsg.append(tr("- Move the mouse while holding LMB to rotate the camera\n"));
-	// strMsg.append(tr("   around its pivot.\n"));
-	// strMsg.append(tr("\n"));
-	// strMsg.append(tr("- Perform LMB-doubleclick on the geometry to reset the pivot.\n"));
-	// strMsg.append(tr("\n"));
-	// strMsg.append(tr("- CTRL + LMB: Move the camera left-right / top-down.\n"));
-	// strMsg.append(tr("\n"));
-	// strMsg.append(tr("- SHIFT + LMB: Zoom in and out.\n"));
-	// strMsg.append(tr("\n"));
-	// strMsg.append(tr("- ALT + LMB: same as LMB-doubleclick\n"));
-	// strMsg.append(tr("\n"));
-	// strMsg.append(tr("- SHIFT + CTRL + LMB: Move the camera into the scene.\n"));
-	// strMsg.append(tr("\n"));
-	// strMsg.append(tr("- Mouse-Wheel: Zoom in and out (same as SHIFT + LMB).\n"));
-	// strMsg.append(tr("\n"));
-	// strMsg.append(tr("- CTRL + Mouse-Wheel: Move the camera into the scene.\n"));
-	// strMsg.append(tr("\n"));
-	// strMsg.append(tr("- CTRL + RMB: Select all elements in subset of clicked element.\n"));
-	// strMsg.append(tr("\n"));
-	// strMsg.append(tr("\n"));
-	// strMsg.append(tr("SHORT-KEYS:\n"));
-	// strMsg.append(tr("- G: Grab (move selection)\n"));
-	// strMsg.append(tr("- A: (De)Select All\n"));
-
-	// QLabel* lbl = new QLabel(strMsg, dlg);
-
-	// lbl->adjustSize();
-	// dlg->adjustSize();
-	// //dlg->exec();
-	// dlg->show();
-
-	// //delete dlg;
 }
 
 void MainWindow::showRecentChanges()
@@ -941,6 +926,12 @@ void MainWindow::showScriptReference()
 {
 	showHelp();
 	m_helpBrowser->browse(QUrl("qrc:///docs/html/modules.html"));
+}
+
+void MainWindow::showAbout()
+{
+	showHelp();
+	m_helpBrowser->browse(QUrl("qrc:///docs/html/pageAbout.html"));
 }
 
 void MainWindow::frontDrawModeChanged(int newMode)
@@ -1004,12 +995,22 @@ void MainWindow::elementDrawModeChanged()
 //	events
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-//TODO: ask for save or abort.
-	settings().setValue("mainWindow/geometry", saveGeometry());
-	settings().setValue("mainWindow/windowState", saveState());
-	QMainWindow::closeEvent(event);
-	event->accept();
-	//QCoreApplication::exit(0);
+	if(m_scene->num_objects() == 0)
+		event->accept();
+	else{
+		QMessageBox::StandardButton reply;
+		reply = QMessageBox::question(this, "Quit?", "Quit? Unsaved progress will be lost!",
+									  QMessageBox::Yes | QMessageBox::No);
+		if (reply == QMessageBox::Yes){
+			settings().setValue("mainWindow/geometry", saveGeometry());
+			settings().setValue("mainWindow/windowState", saveState());
+			QMainWindow::closeEvent(event);
+			event->accept();
+		}
+		else{
+			event->ignore();
+		}
+	}
 }
 
 void MainWindow::dragEnterEvent(QDragEnterEvent* event)
@@ -1073,16 +1074,8 @@ void MainWindow::redo()
 
 void MainWindow::refreshToolDialogsClicked()
 {
-	int refreshChangedTools = RefreshScriptTools(m_toolManager);
-	emit refreshToolDialogs();
-
-	if(refreshChangedTools){
-	//	todo: update tool browser instead of a complete reload!
-		delete m_toolBrowser;
-		m_toolBrowser = m_toolManager->createToolBrowser(this);
-		m_toolBrowser->setObjectName(tr("tool_browser"));
-		m_toolBrowserDock->setWidget(m_toolBrowser);
-	}
+	RefreshScriptTools(m_toolManager);
+	m_toolBrowser->refresh(m_toolManager);
 }
 
 void MainWindow::browseUserScripts()
@@ -1125,4 +1118,9 @@ void MainWindow::editScript()
 	if(!fileName.isEmpty()){
 		QDesktopServices::openUrl(QUrl("file:///" + fileName));
 	}
+}
+
+void MainWindow::quit()
+{
+	this->close();
 }

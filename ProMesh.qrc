@@ -38,6 +38,7 @@
 
     <qresource prefix="/">
         <file>resources/default-script.lua</file>
+        <file>resources/greetings.txt</file>
     </qresource>
 
     <qresource prefix="/">

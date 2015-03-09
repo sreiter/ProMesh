@@ -20,7 +20,11 @@ class WidgetList : public QWidget
 		WidgetList(QWidget* parent);
 		virtual ~WidgetList();
 
+	///	adds a widget to the internal widget container
 		void addWidget(QWidget* widget, Qt::Alignment alignment = Qt::AlignLeft);
+
+	///	returns the internal widget container
+		WidgetContainer* widgetContainer()	{return m_widgetContainer;}
 
 	private:
 		QScrollArea*		m_scrollArea;

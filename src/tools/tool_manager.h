@@ -6,14 +6,11 @@
 #include <map>
 #include <QString>
 #include <QObject>
-#include <QMenu>
 #include <QAction>
 #include <QSignalMapper>
-#include <QTreeWidget>
+#include <QIcon>
 #include "../scene/lg_object.h"
-//#include "bridge/bridge.h"
 #include "tool_dialog.h"
-#include "widgets/tool_browser_widget.h"
 
 #ifndef TOOL_MANAGER_H
 #define TOOL_MANAGER_H
@@ -47,6 +44,9 @@ class ITool : public QObject
 		virtual bool accepts_null_object_ptr()	{return false;}
 
 		virtual QWidget* get_dialog(QWidget* parent)	{return NULL;}
+	/**	Only dialogs which were created with the tools get_dialog method should
+	 * be passed into this method.*/
+		virtual bool dialog_changed(QWidget* dlg)		{return false;}
 	///	refresh the given dialog.
 	/**	Only dialogs which were created with the tools get_dialog method should
 	 * be passed into this method.*/
@@ -62,6 +62,8 @@ class ToolManager : public QObject
 	Q_OBJECT
 
 	public:
+		typedef std::map<std::string, QIcon> GroupIconMap;
+
 		ToolManager(QWidget* parent);
 	///	calls delete on all registered tools.
 		~ToolManager();
@@ -82,60 +84,44 @@ class ToolManager : public QObject
 
 		void remove_tool(ITool* tool);
 
-	///	specify the resource- or file-name for the groups icon
+		size_t num_tools() const			{return m_registeredTools.size();}
+		
+		ITool* tool(size_t index) const		{return m_registeredTools[index].m_tool;}
+
+
+	///	specify the resource- or file-name for the group's icon
 	/**	Note that icons are currently only loaded for top-level groups.
 	 * Also note, that the icon has to be specified before a tool browser
 	 * is created.*/
-		void set_group_icon(const char* groupName, const char* iconName);
-
-	///	gives access to the tools ugbridge-registry.
-	/**	The registry is an alternative to register_tool.
-	 *	Please note only functions are considered and that
-	 *	the first parameter of each function has to be an LGObject.*/
-		//ug::bridge::Registry& get_registry()	{return m_registry;}
-
-	///	adds an entry in the specified menu for each registered tool.
-		//void populateMenu(QMenu* menu);
-
-	///	creates a tree-list that contains the tools
-		QTreeWidget* createTreeWidget();
-
-	///	creates a tool-browser widget
-		ToolBrowserWidget* createToolBrowser(QWidget* parent);
+		void set_group_icon(const std::string& grpName, const char* iconName);
+		QIcon group_icon(const std::string& grpName) const;
 
 	///	executes the specified shortcut
 	/**	The key contains a lowercase character. Pass an or combination of
 	 * constants enumerated in ShortcutModifierKeys as modifiers.*/
 		void execute_shortcut(int key, uint modifiers);
 
+
+
 	public slots:
 		void launchTool(int toolID);
 
-	protected slots:
-		void itemDoubleClicked ( QTreeWidgetItem * item, int column );
-
-	protected:
-		typedef std::map<std::string, QMenu*> MenuMap;
-		typedef std::map<std::string, QString> GroupIconMap;
-
-	protected:
+	private:
 		QWidget*	m_parentWidget;
-		QSignalMapper* m_signalMapper;
 		
 		struct ToolEntry{
 			ToolEntry(ITool* tool, int key, uint modifiers) :
-				m_tool(tool), m_widget(NULL), m_shortcutKey(key), m_shortcutModifiers(modifiers) {}
+				m_tool(tool), m_shortcutKey(key),
+				m_shortcutModifiers(modifiers) {}
 			ITool*	m_tool;
-			QWidget* m_widget;
 			int		m_shortcutKey;
 			uint	m_shortcutModifiers;
 		};
 
 		std::vector<ToolEntry>	m_registeredTools;
-		MenuMap m_menuMap;
 
 		GroupIconMap	m_groupIconMap;
-		//ug::bridge::Registry	m_registry;
+		QIcon			m_defaultIcon;
 };
 
 #endif // TOOL_MANAGER_H

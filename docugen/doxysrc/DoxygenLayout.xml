@@ -10,6 +10,8 @@
 		<tab type="user" visible="yes" url="@ref pageProMeshLicense" title="ProMesh License"/>
 		<tab type="user" visible="yes" url="@ref pageExternalLibraries" title="External Libraries"/>
 		<tab type="user" visible="yes" url="@ref pageRecentChanges" title="Recent Changes"/>
+		<tab type="user" visible="yes" url="@ref pageAbout" title="About"/>
+		<tab type="user" visible="yes" url="@ref pageContact" title="Contact"/>
     </tab>
 
     <tab type="usergroup" visible="yes" title="Script and Tools Reference" url="[none]">

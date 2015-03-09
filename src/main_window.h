@@ -13,7 +13,6 @@
 #include "view3d/view3d.h"
 #include "rclick_menu_scene_inspector.h"
 #include "scene/lg_scene.h"
-#include "tools/tool_manager.h"
 
 ////////////////////////////////////////////////////////////////////////
 //	predeclarations
@@ -30,6 +29,8 @@ class QPoint;
 class SceneInspector;
 class QToolButton;
 class QHelpBrowser;
+class ToolManager;
+class ToolBrowser;
 
 ////////////////////////////////////////////////////////////////////////
 ///	the main window.
@@ -90,8 +91,10 @@ class MainWindow : public QMainWindow
 		void showRecentChanges();
 		void showShortcuts();
 		void showLicense();
+		void showAbout();
 		void newScript();
 		void editScript();
+		void quit();
 
 	protected slots:
 		void frontDrawModeChanged(int newMode);
@@ -164,9 +167,10 @@ class MainWindow : public QMainWindow
 		QDockWidget*				m_pLog;
 		RClickMenu_SceneInspector*	m_rclickMenu_SI;
 		ToolManager*				m_toolManager;
-		ToolBrowserWidget*			m_toolBrowser;
+		ToolBrowser*				m_toolBrowser;
 		QDockWidget*				m_toolBrowserDock;
 		QHelpBrowser*				m_helpBrowser;
+		QDialog*					m_dlgAbout;
 	//	menus
 		//QMenu*		m_toolsMenu;
 
@@ -179,6 +183,7 @@ class MainWindow : public QMainWindow
 		QAction*	m_actExport;
 		QAction*	m_actErase;
 		QAction*	m_actExportUG3;
+		QAction*	m_actQuit;
 
 		QAction*	m_actNewScript;
 		QAction*	m_actEditScript;
@@ -190,6 +195,7 @@ class MainWindow : public QMainWindow
 		QAction*	m_actShortcuts;
 		QAction*	m_actLicense;
 		QAction*	m_actJumpToScriptReference;
+		QAction*	m_actShowAbout;
 
 		QToolButton*	m_tbSelVrts;
 		QToolButton*	m_tbSelEdges;

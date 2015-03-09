@@ -12,9 +12,12 @@ class QHelpBrowser : public QDialog{
 	Q_OBJECT
 
 	public:
-		QHelpBrowser(const QUrl& url, QWidget* parent = 0);
+		QHelpBrowser(QWidget* parent = 0);
 
 		void browse(const QUrl& url);
+
+	private slots:
+		void onLinkClicked(const QUrl& url);
 
 	private:
 		QWebView* m_webView;

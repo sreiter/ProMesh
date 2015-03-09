@@ -25,6 +25,8 @@ class ExtendibleWidget : public QWidget
 		void setWidget(QWidget* widget);
 		void setInfoText(const QString& text);
 
+		QWidget* widget()	{return m_widget;}
+		
 	public slots:
 		void setChecked(bool checked);
 		void toggle();

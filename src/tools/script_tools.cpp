@@ -148,7 +148,7 @@ class ScriptTool : public ITool
 
 		virtual QWidget* get_dialog(QWidget* parent)
 		{
-			parse_script_decls(false);
+			parse_script_decls(true);
 			
 			vector<ScriptParamter>& inputs = m_scriptDecls.inputs;
 
@@ -160,11 +160,15 @@ class ScriptTool : public ITool
 
 			refresh_dialog(dlg);
 
-			MainWindow* mw = app::getMainWindow();
-			connect(mw, SIGNAL(refreshToolDialogs()), dlg, SLOT(refreshContents()));
+			// MainWindow* mw = app::getMainWindow();
+			// connect(mw, SIGNAL(refreshToolDialogs()), dlg, SLOT(refreshContents()));
 
 			return dlg;
 		}
+
+	/** \todo: this method should check whether there were indeed any changes
+	*		   to the parameters of the script.*/
+		virtual bool dialog_changed(QWidget* dlg)		{return true;}
 
 		virtual void refresh_dialog(QWidget* dialog)
 		{
@@ -390,8 +394,9 @@ int RefreshScriptTools(ToolManager* toolMgr)
 			delete t;
 			g_scriptTools.erase(g_scriptTools.begin() + i);
 		}
-		else
+		else{
 			++i;
+		}
 	}
 
 	if(lastNumScriptTools != g_scriptTools.size())
