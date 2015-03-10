@@ -16,6 +16,7 @@ using namespace ug::bridge;
 
 void DefineGroup(ostream& out, const char* id, const char* name, const char* desc,
 				 const char* parentGroup = NULL);
+void DefineType(ostream& out, const char* type, const char* desc, const char* group);
 void WriteClass(ostream& out, Registry& reg, const char* name, const char* forceGroup = NULL);
 void WriteClass(ostream& out, Registry& reg, const IExportedClass* cls, const char* forceGroup = NULL);
 void WriteFunction(ostream& out, Registry& reg, const char* name, const char* forceGroup = NULL);
@@ -85,6 +86,7 @@ int main(){
 
 		Registry& reg = GetUGRegistry();
 		ofstream out("script_reference.cpp");
+		DefineGroup(out, "nativeTypes", "native types", "Native types defined by the underlying programming language.");
 		DefineGroup(out, "ugbase", "ug-base", "Classes and functions from ug4 which are provided in ProMesh scripts.");
 		DefineGroup(out, "promesh", "ProMesh Tools", "All classes and tools defined by ProMesh.");
 		DefineGroup(out, "promesh_Selection", "Selection", "Tools to perform and to manipulate the current selection.", "promesh");
@@ -92,20 +94,58 @@ int main(){
 		DefineGroup(out, "promesh_Selection_Edges", "Edges", "Selection tools for edges.", "promesh_Selection");
 		DefineGroup(out, "promesh_Selection_Faces", "Faces", "Selection tools for faces.", "promesh_Selection");
 		DefineGroup(out, "promesh_Selection_Volumes", "Volumes", "Selection tools for volumes.", "promesh_Selection");
-
 		DefineGroup(out, "promesh_Coordinate_Transform", "Coordinate Transform", "Tools to transform the mesh or individual vertices.", "promesh");
+		DefineGroup(out, "promesh_File_IO", "File IO", "Functions to read and write meshes from/to files.", "promesh");
+		DefineGroup(out, "promesh_Grid_Generation", "Grid Generation", "Tools to create new grids from scratch.", "promesh");
+		DefineGroup(out, "promesh_Grid_Generation_Basic_Elements", "Basic Elements", "Creation of basic grid elements from the current selection.", "promesh_Grid_Generation");
+		DefineGroup(out, "promesh_Grid_Generation_Geometries", "Geometries", "Creation of basic geometries like cubes and spheres.", "promesh_Grid_Generation");
+		DefineGroup(out, "promesh_Info", "Info", "Tools that provide various information on a mesh.", "promesh");
+		DefineGroup(out, "promesh_Info_Measure_length__area__volume", "Measure length, area, volume", "Tools to measure some geometric properties of a mesh.", "promesh_Info");
+		DefineGroup(out, "promesh_Remeshing", "Remeshing", "Tools to alter the topology of the underlying grid.", "promesh");
+		DefineGroup(out, "promesh_Raster_Layers", "Raster Layers", "Tools to generate meshes for stacks of raster data.", "promesh_Remeshing");
+		DefineGroup(out, "promesh_Remeshing_Edge_Operations", "Edge Operations", "Various operations on selected edges (split, swap, collapse)", "promesh_Remeshing");
+		DefineGroup(out, "promesh_Remeshing_Extrusion", "Extrusion", "Generation of new elements through extrusion of selected lower dimensional elements into a new dimension.", "promesh_Remeshing");
+		DefineGroup(out, "promesh_Remeshing_Merge_Vertices", "Merge Vertices", "Tools to merge selected elements into a single vertex.", "promesh_Remeshing");
+		DefineGroup(out, "promesh_Remeshing_Orientation", "Orientation", "Tools to adjust or invert the orientation of selected elements.", "promesh_Remeshing");
+		DefineGroup(out, "promesh_Remeshing_Polylines", "Polylines", "Simplification of polygonal lines.", "promesh_Remeshing");
+		DefineGroup(out, "promesh_Remeshing_Refinement", "Refinement", "Generation of new elements through refinement of selected existing elements", "promesh_Remeshing");
+		DefineGroup(out, "promesh_Remeshing_Remove_Doubles", "Remove Doubles", "Removal of duplicate geometry.", "promesh_Remeshing");
+		DefineGroup(out, "promesh_Remeshing_Resolve_Intersections", "Resolve Intersections", "Tools to resolve geometric intersections of different elements with the goal to construct consistent meshes.", "promesh_Remeshing");
+		DefineGroup(out, "promesh_Remeshing_Resolve_Intersections_Advanced", "Advanced", "Tools to resolve special geomegric intersections separately from each other.", "promesh_Remeshing_Resolve_Intersections");
+		DefineGroup(out, "promesh_Remeshing_Tetgen", "Tetgen", "Tetrahedral mesh generation and remeshing of tetrahedral meshes through the library TetGen.", "promesh_Remeshing");
+		DefineGroup(out, "promesh_Remeshing_Triangulation", "Triangulation", "Several algorithms to generate and to remesh triangular grids.", "promesh_Remeshing");
+		DefineGroup(out, "promesh_Selection_Marks", "Marks", "Tools to set and remove marks on a mesh.", "promesh_Selection");
+		DefineGroup(out, "promesh_Subsets", "Subsets", "Tools to group elements in subsets and to manage those subsets", "promesh");
+		DefineGroup(out, "promesh_Subsets_Separate", "Separate", "Tools to generate new subsets by separating elements in given subsets by topological or geometrical properties.", "promesh");
+		DefineGroup(out, "promesh_Util", "Util", "Utility classes and functions for scripting.", "promesh");
 
+		DefineType(out, "const", "A qualifier that indicates that the declared value will not be changed by a function.", "nativeTypes");
+		DefineType(out, "bool", "Boolean variable that can hold the values 'true' or 'false'", "nativeTypes");
+		DefineType(out, "char", "Variable that stores characters (abcde...01234...)", "nativeTypes");
+		DefineType(out, "int", "Integer variable that can hold whole numbers (-inf,+inf)", "nativeTypes");
+		DefineType(out, "size_t", "Integer variable that can hold positive whole numbers [0,+inf)", "nativeTypes");
+		DefineType(out, "float", "Floating point variable that can hold real numbers (-inf,+inf) at lower precision", "nativeTypes");
+		DefineType(out, "double", "Floating point variable that can hold real numbers (-inf,+inf) at higher precision", "nativeTypes");
+		DefineType(out, "number", "Floating point variable that can hold real numbers (-inf,+inf) at higher precision", "nativeTypes");
+		DefineType(out, "string", "Holds words or longer texts. Essentially an array of char's", "nativeTypes");
+		DefineType(out, "vector", "An array of values (the concrete value type depends on the template paramter)", "nativeTypes");
+
+		WriteClass(out, reg, "Vec1d", "ugbase");
 		WriteClass(out, reg, "Vec2d", "ugbase");
 		WriteClass(out, reg, "Vec3d", "ugbase");
 		WriteClass(out, reg, "Vec4d", "ugbase");
 		WriteClass(out, reg, "Grid", "ugbase");
+		WriteClass(out, reg, "ISelector", "ugbase");
 		WriteClass(out, reg, "Selector", "ugbase");
 		WriteClass(out, reg, "ISubsetHandler", "ugbase");
 		WriteClass(out, reg, "SubsetHandler", "ugbase");
+		WriteClass(out, reg, "GridObject", "ugbase");
 		WriteClass(out, reg, "Vertex", "ugbase");
 		WriteClass(out, reg, "Edge", "ugbase");
 		WriteClass(out, reg, "Face", "ugbase");
 		WriteClass(out, reg, "Volume", "ugbase");
+		// WriteClass(out, reg, "Heightfield", "ugbase");
+		WriteClass(out, reg, "RasterLayers", "promesh_Raster_Layers");
 		WriteGroupMembers(out, reg, "promesh");
 
 	//	iterate over all groups and log undefined ones. Add a dummy definition for
@@ -192,6 +232,7 @@ int main(){
 		for(size_t i = 0; i < err.num_msg(); ++i){
 			UG_LOG("  " << err.get_msg(i) << std::endl);
 		}
+		return 1;
 	}
 	return 0;
 }
@@ -208,6 +249,14 @@ void DefineGroup(ostream& out, const char* id, const char* name, const char* des
 	out << "*/" << endl;
 }
 
+void DefineType(ostream& out, const char* type, const char* desc, const char* group)
+{
+	if(desc)
+		out << "/// " << desc << endl;
+	if(group)
+		out << "/**  \\ingroup " << group << "*/" << endl;
+	out << "class " << type << "{};" << endl;
+}
 
 void WriteClass(ostream& out, Registry& reg, const char* name, const char* forceGroup)
 {
@@ -225,7 +274,19 @@ void WriteClass(ostream& out, Registry& reg, const IExportedClass* cls, const ch
 
 	if(!cls->tooltip().empty())
 		out << "/// " << cls->tooltip() << endl;
-	out << "class " << cls->name() << "{" << endl;
+	
+	out << "class " << cls->name();
+	const ClassNameNode& clsNameNode = cls->class_name_node();
+	for(size_t i = 0; i < clsNameNode.num_base_classes(); ++i){
+		if(i == 0)
+			out << " : ";
+		else
+			out << ", ";
+		out << "public " << clsNameNode.base_class(i).name();
+	}
+	out << "{" << endl;
+	
+
 	out << "public:" << endl;
 	for(size_t ictor = 0; ictor < cls->num_constructors(); ++ictor){
 		const ExportedConstructor& c = cls->get_constructor(ictor);
@@ -246,13 +307,15 @@ void WriteClass(ostream& out, Registry& reg, const IExportedClass* cls, const ch
 	}
 
 	for(size_t imethod = 0; imethod < cls->num_methods(); ++imethod){
-		const ExportedMethod& m = cls->get_method(imethod);
-		WriteFunctionSignature(out, &m, "\t", false);
+		for(size_t io = 0; io < cls->num_overloads(imethod); ++io){
+			WriteFunctionSignature(out, &cls->get_overload(imethod, io), "\t", false);
+		}
 	}
 
 	for(size_t imethod = 0; imethod < cls->num_const_methods(); ++imethod){
-		const ExportedMethod& m = cls->get_const_method(imethod);
-		WriteFunctionSignature(out, &m, "\t", true);
+		for(size_t io = 0; io < cls->num_const_overloads(imethod); ++io){
+			WriteFunctionSignature(out, &cls->get_const_overload(imethod, io), "\t", false);
+		}
 	}
 	out << "};" << endl;
 }
@@ -261,16 +324,21 @@ void WriteClass(ostream& out, Registry& reg, const IExportedClass* cls, const ch
 void WriteFunction(ostream& out, Registry& reg, const char* name, const char* forceGroup)
 {
 	const ExportedFunction* func = NULL;
+	size_t funcInd = 0;
 	for(size_t i = 0; i < reg.num_functions(); ++i){
 		const ExportedFunction& tfunc = reg.get_function(i);
 		if(tfunc.name().compare(name) == 0){
 			func = &tfunc;
+			funcInd = i;
 			break;
 		}
 	}
 
 	UG_COND_THROW(!func, "Fatal error in WriteFunction: a function with name " << name << " was not registered.");
-	WriteFunction(out, reg, func, forceGroup);
+	
+	for(size_t i = 0; i < reg.num_overloads(funcInd); ++i){
+		WriteFunction(out, reg, &reg.get_overload(funcInd, i), forceGroup);
+	}
 }
 
 void WriteFunction(ostream& out, Registry& reg, const ExportedFunction* func, const char* forceGroup)
@@ -286,10 +354,11 @@ void WriteFunction(ostream& out, Registry& reg, const ExportedFunction* func, co
 
 void WriteGroupMembers(ostream& out, Registry& reg, const char* id)
 {
-	for(size_t i = 0; i < reg.num_functions(); ++i){
-		const ExportedFunction& func = reg.get_function(i);
-		if(func.group().find(id) == 0){
-			WriteFunction(out, reg, &func);
+	for(size_t funcInd = 0; funcInd < reg.num_functions(); ++funcInd){
+		if(reg.get_function(funcInd).group().find(id) == 0){
+			for(size_t i = 0; i < reg.num_overloads(funcInd); ++i){
+				WriteFunction(out, reg, &reg.get_overload(funcInd, i));
+			}
 		}
 	}
 
@@ -376,7 +445,7 @@ string ParamToString(const ParameterInfo& info, size_t i)
 	string res = string("");
 	bool isVector = info.is_vector(i);
 	
-	if(isVector) res.append("std::vector< ");
+	if(isVector) res.append("vector< ");
 	
 	switch(info.type(i)){
 		default:
@@ -402,7 +471,7 @@ string ParamToString(const ParameterInfo& info, size_t i)
 			res.append("const char*");
 			break;
 		case Variant::VT_STDSTRING:
-			res.append("std::string");
+			res.append("string");
 			break;
 		case Variant::VT_POINTER:
 		case Variant::VT_SMART_POINTER:

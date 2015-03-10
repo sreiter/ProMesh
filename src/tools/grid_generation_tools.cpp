@@ -16,7 +16,7 @@
 using namespace std;
 using namespace ug;
 
-class ToolNewObject : public ITool
+class ToolNewMesh : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget* widget){
@@ -26,7 +26,7 @@ class ToolNewObject : public ITool
 			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 
 		//	get parameters
-			QString objName = "new object";
+			QString objName = "new mesh";
 
 			if(dlg){
 				objName = dlg->to_string(0);
@@ -36,21 +36,21 @@ class ToolNewObject : public ITool
 			app::createEmptyLGObject(objName.toLocal8Bit().constData());
 		}
 
-		const char* get_name()		{return "New Object";}
+		const char* get_name()		{return "New Mesh";}
 		const char* get_tooltip()	{return TOOLTIP_NEW_OBJECT;}
-		const char* get_group()		{return "Grid Generation | Objects";}
+		const char* get_group()		{return "Grid Generation";}
 		bool accepts_null_object_ptr()	{return true;}
 
 		QWidget* get_dialog(QWidget* parent){
 			ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
 											IDB_APPLY | IDB_OK | IDB_CLOSE);
-		//	The name of the new object
-			dlg->addTextBox(tr("new object name:"), "new object");
+		//	The name of the new mesh
+			dlg->addTextBox(tr("name:"), "new mesh");
 			return dlg;
 		}
 };
 
-class ToolNewObjectFromSelection : public ITool
+class ToolNewMeshFromSelection : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget* widget){
@@ -60,7 +60,7 @@ class ToolNewObjectFromSelection : public ITool
 			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 
 		//	get parameters
-			QString objName = "new object";
+			QString objName = "new mesh";
 
 			if(dlg){
 				objName = dlg->to_string(0);
@@ -71,22 +71,22 @@ class ToolNewObjectFromSelection : public ITool
 			newObj->geometry_changed();
 		}
 
-		const char* get_name()		{return "New Object From Selection";}
-		const char* get_tooltip()	{return "Creates a new object from the selected elements of the active object";}
-		const char* get_group()		{return "Grid Generation | Objects";}
+		const char* get_name()		{return "New Mesh From Selection";}
+		const char* get_tooltip()	{return "Creates a new mesh from the selected elements of the active object";}
+		const char* get_group()		{return "Grid Generation";}
 		bool accepts_null_object_ptr()	{return false;}
 
 		QWidget* get_dialog(QWidget* parent){
 			ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
 											IDB_APPLY | IDB_OK | IDB_CLOSE);
-		//	The name of the new object
-			dlg->addTextBox(tr("new object name:"), "new object");
+		//	The name of the new mesh
+			dlg->addTextBox(tr("name:"), "new mesh");
 			return dlg;
 		}
 };
 
 /**	registers a callback to automatically update internal scene-object list.*/
-class ToolMergeObjects : public ITool
+class ToolMergeMeshes : public ITool
 {
 	public:
 		void execute(LGObject* obj, QWidget* widget){
@@ -95,11 +95,11 @@ class ToolMergeObjects : public ITool
 
 			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 
-		//todo: This method makes problems, if new objects are added while
+		//todo: This method makes problems, if new meshes are added while
 		//		the tool-dialog is opened.
 
 		//	get parameters
-			QString mergedObjName = "mergedObj";
+			QString mergedObjName = "mergedMesh";
 			vector<int> selObjInds;
 			bool joinSubsets = false;
 
@@ -126,7 +126,7 @@ class ToolMergeObjects : public ITool
 			for(size_t i_obj = 0; i_obj < selObjInds.size(); ++i_obj){
 				int objInd = selObjInds[i_obj];
 				if(objInd >= scene->num_objects()){
-					UG_LOG("Bad selection during MergeObjects. Aborting\n");
+					UG_LOG("Bad selection during MergeMeshes. Aborting\n");
 					return;
 				}
 
@@ -210,20 +210,20 @@ class ToolMergeObjects : public ITool
 
 			scene->object_changed(mergedObj);
 			mergedObj->geometry_changed();
-			UG_LOG("The merged grid contains:\n");
+			UG_LOG("The merged mesh contains:\n");
 			ug::PrintGridElementNumbers(mergedObj->grid());
 		}
 
-		const char* get_name()		{return "Merge Objects";}
+		const char* get_name()		{return "Merge Meshes";}
 		const char* get_tooltip()	{return TOOLTIP_MERGE_OBJECTS;}
-		const char* get_group()		{return "Grid Generation | Objects";}
+		const char* get_group()		{return "Grid Generation";}
 
 		QWidget* get_dialog(QWidget* parent){
 			ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
 											IDB_APPLY | IDB_OK | IDB_CLOSE);
 
-		//	The name of the new object
-			dlg->addTextBox(tr("new object name:"), "mergedObj");
+		//	The name of the new mesh
+			dlg->addTextBox(tr("name:"), "merged mesh");
 
 		//	push all names of current objects
 			QStringList entries;
@@ -232,7 +232,7 @@ class ToolMergeObjects : public ITool
 			for(int i = 0; i < scene->num_objects(); ++i){
 				entries.push_back(scene->get_scene_object(i)->name());
 			}
-			dlg->addListBox(tr("objects:"), entries);
+			dlg->addListBox(tr("meshes:"), entries);
 
 		//	select whether subsets should be joined
 			dlg->addCheckBox(tr("join subsets:"), false);
@@ -269,7 +269,7 @@ class ToolCreateVertex : public ITool
 		//	since we're accepting NULL-Ptr Objects, we have to create a new one
 		//	if none was supplied.
 			if(!obj)
-				obj = app::createEmptyLGObject("new object");
+				obj = app::createEmptyLGObject("new mesh");
 
 			int newSubsetIndex = 0;
 			if(obj == app::getActiveObject())
@@ -374,7 +374,7 @@ public:
 	//	since we're accepting NULL-Ptr Objects, we have to create a new one
 	//	if none was supplied.
 		if(!obj)
-			obj = app::createEmptyLGObject("new object");
+			obj = app::createEmptyLGObject("new mesh");
 
 		int orientation = 0;
 		number width = 1.;
@@ -465,7 +465,7 @@ public:
 	//	since we're accepting NULL-Ptr Objects, we have to create a new one
 	//	if none was supplied.
 		if(!obj)
-			obj = app::createEmptyLGObject("new object");
+			obj = app::createEmptyLGObject("new mesh");
 
 	//todo: add a 'regular' flag. This requires that the optimizer can
 	//		be applied to a selected subset of the grid.
@@ -514,7 +514,7 @@ public:
 	//	since we're accepting NULL-Ptr Objects, we have to create a new one
 	//	if none was supplied.
 		if(!obj)
-			obj = app::createEmptyLGObject("new object");
+			obj = app::createEmptyLGObject("new mesh");
 
 		vector3 boxMin(-1, -1, -1);
 		vector3 boxMax(1, 1, 1);
@@ -566,7 +566,7 @@ public:
 	//	since we're accepting NULL-Ptr Objects, we have to create a new one
 	//	if none was supplied.
 		if(!obj)
-			obj = app::createEmptyLGObject("new object");
+			obj = app::createEmptyLGObject("new mesh");
 
 	//todo: add a 'regular' flag. This requires that the optimizer can
 	//		be applied to a selected subset of the grid.
@@ -613,7 +613,7 @@ public:
 	//	since we're accepting NULL-Ptr Objects, we have to create a new one
 	//	if none was supplied.
 		if(!obj)
-			obj = app::createEmptyLGObject("new object");
+			obj = app::createEmptyLGObject("new mesh");
 
 		int newSI = 0;
 		bool createVolume = false;
@@ -650,7 +650,7 @@ public:
 	//	since we're accepting NULL-Ptr Objects, we have to create a new one
 	//	if none was supplied.
 		if(!obj)
-			obj = app::createEmptyLGObject("new object");
+			obj = app::createEmptyLGObject("new mesh");
 
 		int newSI = 0;
 		bool createVolume = false;
@@ -689,7 +689,7 @@ public:
 	//	since we're accepting NULL-Ptr Objects, we have to create a new one
 	//	if none was supplied.
 		if(!obj)
-			obj = app::createEmptyLGObject("new object");
+			obj = app::createEmptyLGObject("new mesh");
 
 		int newSI = 0;
 		bool createVolume = false;
@@ -1001,9 +1001,9 @@ void RegisterGridGenerationTools(ToolManager* toolMgr)
 {
 	toolMgr->set_group_icon("Grid Generation", ":images/tool_geometry_generation.png");
 
-	toolMgr->register_tool(new ToolNewObject);
-	toolMgr->register_tool(new ToolNewObjectFromSelection);
-	toolMgr->register_tool(new ToolMergeObjects);
+	toolMgr->register_tool(new ToolNewMesh);
+	toolMgr->register_tool(new ToolNewMeshFromSelection);
+	toolMgr->register_tool(new ToolMergeMeshes);
 
 	toolMgr->register_tool(new ToolCreateVertex);
 	toolMgr->register_tool(new ToolCreateEdge);

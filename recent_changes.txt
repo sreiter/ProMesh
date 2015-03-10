@@ -6,8 +6,9 @@ v 4.2.0
 Changes and additions:
 - Now using Qt5
 - Added a doxygen based help-framework with full scripting reference
-- GUI rework: New style and improved usability of number input fields
+- GUI rework: New style and improved usability of number input fields and log messages
 - Enhanced Selection-Edges-SmoothPath with an adjustable normal-weight
+- ProMesh now asks before deleting a mesh and also before closing the application.
 - New tool CoordinateTransform-SlopeSmooth
 - New tool GridGeneration-Objects-NewObjectFromSelection
 - New tool GridGeneration-Objects-CloneObject
@@ -24,7 +25,7 @@ Changes and additions:
 - Added Scripts-Menu, which features entries to create and edit scripts.
 
 Fixes:
-
+- ToolBrowser now adapts to new/changed/erased scripts nicely.
 
 
 -------------------------------------------------------------------------------

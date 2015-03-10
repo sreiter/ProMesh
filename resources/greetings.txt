@@ -1,0 +1,2 @@
+ProMesh (c) 2006-2015 Sebastian Reiter.
+Licensed for non-commercial use only (see "Help->License").

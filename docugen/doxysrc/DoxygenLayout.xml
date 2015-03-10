@@ -19,8 +19,8 @@
 	    <tab type="classes" visible="no" title="">
 	      <tab type="classlist" visible="yes" title="Script-Classes" intro="A list of all classes available in ProMesh scripts."/>
 	      <tab type="classindex" visible="$ALPHABETICAL_INDEX" title=""/> 
-	      <tab type="hierarchy" visible="yes" title="" intro=""/>
-	      <tab type="classmembers" visible="yes" title="" intro=""/>
+	      <tab type="hierarchy" visible="yes" title="" intro="Available classes and their hierarchical relation."/>
+	      <tab type="classmembers" visible="no" title="" intro=""/>
 	    </tab>
 	</tab>
     <tab type="namespaces" visible="yes" title="">

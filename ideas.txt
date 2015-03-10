@@ -4,18 +4,21 @@ Planned features:
 
 4.2.0
   - Help:
-	* Improved grouping of script-tools
-	* Descriptors for group names
-	* Derive from base-classes in WriteClass and enable 'include base-methods'
+ok	* Improved grouping of script-tools
+ok	* Nice parameter names
+ok	* Function overloads
+ok	* Descriptors for group names
+ok	* Derive from base-classes in WriteClass and enable 'include base-methods'
 	  in doxygen.
 	* Add pages:
+ok	  - ADD QT TO LIST OF USED LIBRARIES!!!
 ok	  - welcome
 ok	  - license
 ok	  - libraries
 	  - controls
 ok	  - shortcuts
 ok	  - about
-	* Other Help menu entries simply open the help browser with the associated page:
+ok	* Other Help menu entries simply open the help browser with the associated page:
 ok	  - User Manual
 	  -------------------
 ok	  - Script Reference
@@ -32,12 +35,23 @@ ok	* Simplify log-message (e.g. Promesh (c) 2006-2015 Sebastian Reiter, non comm
 ok	* Add 'Quit' button
 
   - Script-Menu:
-	* Always refresh the whole tool-browser
+ok    * Perform a more sensible update of the tool-browser. Problem: Buttons
+      and dialogs are currently handled in different ways and can not be
+      replaced by each other!?!
 
   - Delete Button:
 ok	* Add question and tell: 'No undo possible'
 
+  - Nawak-Meshing complete
+    * create a script and all necessary tools that ease meshing for Nawak
 
+  - Improve Homepage:
+	* Online-Help
+ok	* Screenshots
+	* Newsletter
+	* Executables
+ok	* add (c) Sebastian Reiter to About Page
+	* Gabriels ok
 
 4.2.1
   - Camera:
@@ -48,13 +62,6 @@ ok	* Add question and tell: 'No undo possible'
 4.2.X
   - Compilation
   	* Compile and execute docugen from within promesh's cmake file
-  - Script-Menu:
-    * Perform a more sensible update of the tool-browser. Problem: Buttons
-      and dialogs are currently handled in different ways and can not be
-      replaced by each other!?!
-    * New script tools enforce a complete recreation of the tool browser.
-      Idea: Store open/close states for each browser entry and the currently
-      visible tool and restore those states after reload.
 
 
 
