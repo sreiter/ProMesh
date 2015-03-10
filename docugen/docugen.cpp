@@ -41,7 +41,7 @@ map<string, string>	originalGroupNames;
 
 void DeleteDirectory(string path){
 	#ifdef UNIX
-		system(mkstr("rm -r " << path).c_str());
+		system(mkstr("rm -rf " << path).c_str());
 	#elif WINDOWS
 		UG_THROW("Please implement directory-remove for windows")
 	#endif
