@@ -12,6 +12,7 @@
 #include "common/util/string_util.h"
 #include "../app.h"
 #include "../plugins/experimental/lua_shell/lua_shell.h"
+#include "bindings/lua/lua_util.h"
 #include "common/error.h"
 
 using namespace ug;
@@ -128,8 +129,21 @@ class ScriptTool : public ITool
 					}
 				}
 			}
-			m_luaShell->set("mesh", static_cast<ug::promesh::Mesh*>(obj), "Mesh");
-			m_luaShell->run(m_scriptContent.constData());
+
+			try{
+				m_luaShell->set("mesh", static_cast<ug::promesh::Mesh*>(obj), "Mesh");
+				m_luaShell->run(m_scriptContent.constData());
+			}
+			catch(ug::script::LuaError& err) {
+				ug::PathProvider::clear_current_path_stack();
+				if(err.show_msg()){
+					if(!err.get_msg().empty()){
+						UG_LOG("error in script " << m_scriptName << "(file: " << m_scriptPath << "):\n");
+						for(size_t i=0;i<err.num_msg();++i)
+							UG_LOG(err.get_msg(i)<<endl);
+					}
+				}
+			}
 
 			obj->geometry_changed();
 		}

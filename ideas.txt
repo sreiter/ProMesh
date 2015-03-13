@@ -3,6 +3,9 @@ Planned features:
 --------------------------------------------------------------------------------
 
 4.2.0
+  - Layer Meshing:
+  	* initial vertex creation ignores some vertices: separated triangles are not built.
+  	  (compare boundary-from-full and boundary-only)
   - Help:
 ok	* Improved grouping of script-tools
 ok	* Nice parameter names
@@ -39,6 +42,9 @@ ok    * Perform a more sensible update of the tool-browser. Problem: Buttons
       and dialogs are currently handled in different ways and can not be
       replaced by each other!?!
 
+  - Scripting:
+  	* Make output readable by registering print and write!
+
   - Delete Button:
 ok	* Add question and tell: 'No undo possible'
 
@@ -46,9 +52,9 @@ ok	* Add question and tell: 'No undo possible'
     * create a script and all necessary tools that ease meshing for Nawak
 
   - Improve Homepage:
-	* Online-Help
+	* (Online-Help)
 ok	* Screenshots
-	* Newsletter
+	* (Newsletter)
 	* Executables
 ok	* add (c) Sebastian Reiter to About Page
 	* Gabriels ok
@@ -56,12 +62,16 @@ ok	* add (c) Sebastian Reiter to About Page
 4.2.1
   - Camera:
 	* Fix-View, Align-View, Ortho-View
-
-
+	* Camera tools should be available in scripts
+	* When zooming, move 'to' towards the projected mouse-cursor
+  - VecMath:
+  	add, subtract, copy-construct, assign, ...
+  -	Check out why exit() causes a crash when a tool is executed again.
 
 4.2.X
   - Compilation
   	* Compile and execute docugen from within promesh's cmake file
+  - Script-Tools: Autocheck for changes in scripts and update those tools accordingly
 
 
 

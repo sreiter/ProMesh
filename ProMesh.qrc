@@ -44,4 +44,8 @@
     <qresource prefix="/">
         <file>styles/promesh_style.txt</file>
     </qresource>
+
+    <qresource prefix="/">
+        <file>version.txt</file>
+    </qresource>
 </RCC>

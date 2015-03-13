@@ -1102,17 +1102,19 @@ void LGScene::rerender_volumes(LGObject* pObj,
 //	collect all triangles and quadrilaterals that have to be rendered
 	vector<Face*> tris;
 	vector<Face*> quads;
-
+	Grid::face_traits::secure_container	assFaces;
 	for(VolumeIterator iter = volsBegin; iter != volsEnd; ++iter)
 	{
 		Volume* vol = *iter;
 		if(aaRenderedVOL[vol]){
 		//	iterate through the volumes faces
-			Grid::AssociatedFaceIterator fEnd = grid.associated_faces_end(vol);
-			for(Grid::AssociatedFaceIterator fIter = grid.associated_faces_begin(vol);
-				fIter != fEnd; ++fIter)
-			{
-				Face* f = *fIter;
+			grid.associated_elements(assFaces, vol);
+			// Grid::AssociatedFaceIterator fEnd = grid.associated_faces_end(vol);
+			// for(Grid::AssociatedFaceIterator fIter = grid.associated_faces_begin(vol);
+			// 	fIter != fEnd; ++fIter)
+			for(size_t iface = 0; iface < assFaces.size(); ++iface){
+				// Face* f = *fIter;
+				Face* f = assFaces[iface];
 				if(aaRenderedFACE[f]){
 					if(f->num_vertices() == 3)
 						tris.push_back(f);
@@ -1179,6 +1181,7 @@ void LGScene::render_faces(LGObject* pObj, Grid& grid,
 
 //	iterate through all subsets
 //	each subset has its own display list
+	Grid::edge_traits::secure_container	assEdges;
 
 	for(int i = 0; i < sh.num_subsets(); ++i)
 	{
@@ -1215,9 +1218,11 @@ void LGScene::render_faces(LGObject* pObj, Grid& grid,
 				glVertex3f(v.x(), v.y(), v.z());
 			}
 
-			for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(tri);
-				eiter != grid.associated_edges_end(tri); ++eiter)
-					aaRenderedEDGE[*eiter] = true;
+			// for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(tri);
+			// 	eiter != grid.associated_edges_end(tri); ++eiter)
+			grid.associated_elements(assEdges, tri);
+			for(size_t iedge = 0; iedge < assEdges.size(); ++iedge)
+				aaRenderedEDGE[assEdges[iedge]] = true;
 		}
 
 		for(FaceIterator iter = sh.begin<ConstrainingTriangle>(i);
@@ -1239,9 +1244,12 @@ void LGScene::render_faces(LGObject* pObj, Grid& grid,
 				glVertex3f(v.x(), v.y(), v.z());
 			}
 
-			for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(tri);
-				eiter != grid.associated_edges_end(tri); ++eiter)
-				aaRenderedEDGE[*eiter] = true;
+			// for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(tri);
+			// 	eiter != grid.associated_edges_end(tri); ++eiter)
+			// 	aaRenderedEDGE[*eiter] = true;
+			grid.associated_elements(assEdges, tri);
+			for(size_t iedge = 0; iedge < assEdges.size(); ++iedge)
+				aaRenderedEDGE[assEdges[iedge]] = true;
 		}
 
 		for(FaceIterator iter = sh.begin<ConstrainedTriangle>(i);
@@ -1263,9 +1271,12 @@ void LGScene::render_faces(LGObject* pObj, Grid& grid,
 				glVertex3f(v.x(), v.y(), v.z());
 			}
 
-			for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(tri);
-				eiter != grid.associated_edges_end(tri); ++eiter)
-				aaRenderedEDGE[*eiter] = true;
+			// for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(tri);
+			// 	eiter != grid.associated_edges_end(tri); ++eiter)
+			// 	aaRenderedEDGE[*eiter] = true;
+			grid.associated_elements(assEdges, tri);
+			for(size_t iedge = 0; iedge < assEdges.size(); ++iedge)
+				aaRenderedEDGE[assEdges[iedge]] = true;
 		}
 
 		glEnd();
@@ -1292,9 +1303,12 @@ void LGScene::render_faces(LGObject* pObj, Grid& grid,
 				glVertex3f(v.x(), v.y(), v.z());
 			}
 
-			for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(q);
-				eiter != grid.associated_edges_end(q); ++eiter)
-				aaRenderedEDGE[*eiter] = true;
+			// for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(q);
+			// 	eiter != grid.associated_edges_end(q); ++eiter)
+			// 	aaRenderedEDGE[*eiter] = true;
+			grid.associated_elements(assEdges, q);
+			for(size_t iedge = 0; iedge < assEdges.size(); ++iedge)
+				aaRenderedEDGE[assEdges[iedge]] = true;
 		}
 
 		for(ConstrainingQuadrilateralIterator iter = sh.begin<ConstrainingQuadrilateral>(i);
@@ -1316,9 +1330,12 @@ void LGScene::render_faces(LGObject* pObj, Grid& grid,
 				glVertex3f(v.x(), v.y(), v.z());
 			}
 
-			for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(q);
-				eiter != grid.associated_edges_end(q); ++eiter)
-				aaRenderedEDGE[*eiter] = true;
+			// for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(q);
+			// 	eiter != grid.associated_edges_end(q); ++eiter)
+			// 	aaRenderedEDGE[*eiter] = true;
+			grid.associated_elements(assEdges, q);
+			for(size_t iedge = 0; iedge < assEdges.size(); ++iedge)
+				aaRenderedEDGE[assEdges[iedge]] = true;
 		}
 
 		for(ConstrainedQuadrilateralIterator iter = sh.begin<ConstrainedQuadrilateral>(i);
@@ -1340,9 +1357,12 @@ void LGScene::render_faces(LGObject* pObj, Grid& grid,
 				glVertex3f(v.x(), v.y(), v.z());
 			}
 
-			for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(q);
-				eiter != grid.associated_edges_end(q); ++eiter)
-				aaRenderedEDGE[*eiter] = true;
+			// for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(q);
+			// 	eiter != grid.associated_edges_end(q); ++eiter)
+			// 	aaRenderedEDGE[*eiter] = true;
+			grid.associated_elements(assEdges, q);
+			for(size_t iedge = 0; iedge < assEdges.size(); ++iedge)
+				aaRenderedEDGE[assEdges[iedge]] = true;
 		}
 
 		glEnd();
@@ -1378,6 +1398,8 @@ void LGScene::render_volumes(LGObject* pObj)
 	SubsetHandler& shFace = pObj->m_shFacesForVolRendering;
 	shFace.clear();
 
+	Grid::volume_traits::secure_container assVols;
+
 //	too slow too!
 //	iterate through all faces
 	for(FaceIterator iter = grid.faces_begin();
@@ -1392,13 +1414,14 @@ void LGScene::render_volumes(LGObject* pObj)
 		//	then it has to be displayed
 			Volume* visVol = NULL;
 			int newSubInd = -1;
-			Grid::AssociatedVolumeIterator volEnd = grid.associated_volumes_end(f);
-			Grid::AssociatedVolumeIterator volBegin = grid.associated_volumes_begin(f);
 
 			int fSubInd = sh.get_subset_index(f);
 			bool faceIsVisible = (fSubInd != -1) && m_drawFaces && pObj->subset_is_visible(fSubInd);
 			
-			if((volBegin == volEnd)){
+			// Grid::AssociatedVolumeIterator volEnd = grid.associated_volumes_end(f);
+			// Grid::AssociatedVolumeIterator volBegin = grid.associated_volumes_begin(f);
+			grid.associated_elements(assVols, f);
+			if(assVols.empty()){
 			//	the face has to be rendered, since it is not adjacent to any volume
 				if(faceIsVisible)
 					shFace.assign_subset(f, fSubInd);
@@ -1406,13 +1429,14 @@ void LGScene::render_volumes(LGObject* pObj)
 			else{
 				int numVisVols = 0;
 				
-				for(Grid::AssociatedVolumeIterator vIter = volBegin;
-					vIter != volEnd; ++vIter)
-				{
-					if(aaHiddenVOL[*vIter])
+				// for(Grid::AssociatedVolumeIterator vIter = volBegin;
+				// 	vIter != volEnd; ++vIter)
+				for(size_t ivol = 0; ivol < assVols.size(); ++ivol){
+					Volume* assVol = assVols[ivol];
+					if(aaHiddenVOL[assVol])
 						continue;
 
-					int vSubInd = sh.get_subset_index(*vIter);
+					int vSubInd = sh.get_subset_index(assVol);
 				
 					if(vSubInd == -1)
 						continue;
@@ -1422,7 +1446,7 @@ void LGScene::render_volumes(LGObject* pObj)
 					{
 					//	make sure the volume is not clipped.
 					//	uncomment the following line for exact clipping tests.
-						if(!clip_volume(*vIter, aaSphereVOL[*vIter], aaPos))
+						if(!clip_volume(assVol, aaSphereVOL[assVol], aaPos))
 						{
 							++numVisVols;
 						//	if newSubInd has already been assigned, we'll reset it to 0
@@ -1432,7 +1456,7 @@ void LGScene::render_volumes(LGObject* pObj)
 							}
 							else{
 								newSubInd = vSubInd;
-								visVol = *vIter;
+								visVol = assVol;
 							}
 						}
 					}
@@ -1543,6 +1567,7 @@ void LGScene::render_faces_with_clip_plane(LGObject* pObj)
 
 //	iterate through all subsets
 //	each subset has its own display list
+	Grid::edge_traits::secure_container	assEdges;
 
 	for(int i = 0; i < sh.num_subsets(); ++i)
 	{
@@ -1583,9 +1608,12 @@ void LGScene::render_faces_with_clip_plane(LGObject* pObj)
 						vector3& v = aaPos[tri->vertex(j)];
 						glVertex3f(v.x(), v.y(), v.z());
 					}
-					for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(tri);
-						eiter != grid.associated_edges_end(tri); ++eiter)
-							aaRenderedEDGE[*eiter] = true;
+					// for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(tri);
+					// 	eiter != grid.associated_edges_end(tri); ++eiter)
+					// 		aaRenderedEDGE[*eiter] = true;
+					grid.associated_elements(assEdges, tri);
+					for(size_t iedge = 0; iedge < assEdges.size(); ++iedge)
+						aaRenderedEDGE[assEdges[iedge]] = true;
 				}
 			}
 			for(FaceIterator iter = sh.begin<ConstrainingTriangle>(i);
@@ -1609,9 +1637,12 @@ void LGScene::render_faces_with_clip_plane(LGObject* pObj)
 						glVertex3f(v.x(), v.y(), v.z());
 					}
 
-					for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(tri);
-						eiter != grid.associated_edges_end(tri); ++eiter)
-							aaRenderedEDGE[*eiter] = true;
+					// for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(tri);
+					// 	eiter != grid.associated_edges_end(tri); ++eiter)
+					// 		aaRenderedEDGE[*eiter] = true;
+					grid.associated_elements(assEdges, tri);
+					for(size_t iedge = 0; iedge < assEdges.size(); ++iedge)
+						aaRenderedEDGE[assEdges[iedge]] = true;
 				}
 			}
 
@@ -1636,9 +1667,12 @@ void LGScene::render_faces_with_clip_plane(LGObject* pObj)
 						glVertex3f(v.x(), v.y(), v.z());
 					}
 
-					for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(tri);
-						eiter != grid.associated_edges_end(tri); ++eiter)
-							aaRenderedEDGE[*eiter] = true;
+					// for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(tri);
+					// 	eiter != grid.associated_edges_end(tri); ++eiter)
+					// 		aaRenderedEDGE[*eiter] = true;
+					grid.associated_elements(assEdges, tri);
+					for(size_t iedge = 0; iedge < assEdges.size(); ++iedge)
+						aaRenderedEDGE[assEdges[iedge]] = true;
 				}
 			}
 
@@ -1669,9 +1703,12 @@ void LGScene::render_faces_with_clip_plane(LGObject* pObj)
 						vector3& v = aaPos[q->vertex(j)];
 						glVertex3f(v.x(), v.y(), v.z());
 					}
-					for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(q);
-						eiter != grid.associated_edges_end(q); ++eiter)
-							aaRenderedEDGE[*eiter] = true;
+					// for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(q);
+					// 	eiter != grid.associated_edges_end(q); ++eiter)
+					// 		aaRenderedEDGE[*eiter] = true;
+					grid.associated_elements(assEdges, q);
+					for(size_t iedge = 0; iedge < assEdges.size(); ++iedge)
+						aaRenderedEDGE[assEdges[iedge]] = true;
 				}
 			}
 
@@ -1695,9 +1732,12 @@ void LGScene::render_faces_with_clip_plane(LGObject* pObj)
 						glVertex3f(v.x(), v.y(), v.z());
 					}
 
-					for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(q);
-						eiter != grid.associated_edges_end(q); ++eiter)
-							aaRenderedEDGE[*eiter] = true;
+					// for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(q);
+					// 	eiter != grid.associated_edges_end(q); ++eiter)
+					// 		aaRenderedEDGE[*eiter] = true;
+					grid.associated_elements(assEdges, q);
+					for(size_t iedge = 0; iedge < assEdges.size(); ++iedge)
+						aaRenderedEDGE[assEdges[iedge]] = true;
 				}
 			}
 
@@ -1721,9 +1761,12 @@ void LGScene::render_faces_with_clip_plane(LGObject* pObj)
 						glVertex3f(v.x(), v.y(), v.z());
 					}
 
-					for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(q);
-						eiter != grid.associated_edges_end(q); ++eiter)
-							aaRenderedEDGE[*eiter] = true;
+					// for(Grid::AssociatedEdgeIterator eiter = grid.associated_edges_begin(q);
+					// 	eiter != grid.associated_edges_end(q); ++eiter)
+					// 		aaRenderedEDGE[*eiter] = true;
+					grid.associated_elements(assEdges, q);
+					for(size_t iedge = 0; iedge < assEdges.size(); ++iedge)
+						aaRenderedEDGE[assEdges[iedge]] = true;
 				}
 			}
 			glEnd();

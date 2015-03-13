@@ -3,6 +3,7 @@
 
 #include <QFileInfo>
 #include "app.h"
+#include "util/file_util.h"
 
 namespace app{
 
@@ -73,6 +74,27 @@ QDir UserTmpDir()
 	userPath.cd(pathName);
 
 	return userPath;
+}
+
+QDir UserHelpDir()
+{
+	QDir userPath = UserDataDir();
+	QString pathName("help");
+
+	if(!userPath.exists(pathName)){
+		userPath.mkdir(pathName);
+	}
+
+	CheckPathPermissions(userPath, pathName);
+
+	userPath.cd(pathName);
+
+	return userPath;
+}
+
+QString GetVersionString()
+{
+	return GetFileContent(QString(":/version.txt"));
 }
 
 }// end of namespace

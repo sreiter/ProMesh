@@ -40,8 +40,8 @@ LGObject* CreateEmptyLGObject(const char* name)
 {
     LGObject* obj = new LGObject;
     obj->set_name(name);
-    Grid& grid = obj->grid();
-    grid.enable_options(GRIDOPT_STANDARD_INTERCONNECTION | FACEOPT_STORE_ASSOCIATED_VOLUMES);
+    // Grid& grid = obj->grid();
+    // grid.enable_options(GRIDOPT_STANDARD_INTERCONNECTION | FACEOPT_STORE_ASSOCIATED_VOLUMES);
     return obj;
 }
 
@@ -53,7 +53,7 @@ bool LoadLGObjectFromFile(LGObject* pObjOut, const char* filename)
 	SubsetHandler& sh = pObjOut->subset_handler();
 	pObjOut->m_fileName = filename;
 
-	grid.enable_options(GRIDOPT_STANDARD_INTERCONNECTION | FACEOPT_STORE_ASSOCIATED_VOLUMES);
+	// grid.enable_options(GRIDOPT_STANDARD_INTERCONNECTION | FACEOPT_STORE_ASSOCIATED_VOLUMES);
 
 //	extract the suffix
 	const char* pSuffix = strrchr(filename, '.');

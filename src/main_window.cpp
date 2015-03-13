@@ -24,10 +24,18 @@
 #include "bridge/bridge.h"
 #include "common/util/path_provider.h"
 #include "common/util/plugin_util.h"
-#include "widgets/help_browser.h"
 #include "util/file_util.h"
 #include "tools/tool_manager.h"
 #include "widgets/tool_browser_widget.h"
+
+#ifdef PROMESH_USE_WEBKIT
+	#include "widgets/help_browser.h"
+#endif
+
+//tmp
+#include <QDir>
+#include <QFile>
+#include <QFileInfo>
 
 using namespace std;
 using namespace ug;
@@ -39,14 +47,16 @@ using namespace ug;
 ////////////////////////////////////////////////////////////////////////
 //	constructor
 MainWindow::MainWindow() :
-	m_settings("G-CSC", "ProMesh3"),
+	m_settings("G-CSC", "ProMesh4"),
 	m_selectionElement(0),
 	m_selectionMode(0),
 	m_elementModeListIndex(3),
 	m_mouseMoveAction(MMA_DEFAULT),
 	m_activeAxis(X_AXIS | Y_AXIS | Z_AXIS),
 	m_activeObject(NULL),
-	m_helpBrowser(NULL),
+	#ifdef PROMESH_USE_WEBKIT
+		m_helpBrowser(NULL),
+	#endif
 	m_dlgAbout(NULL)
 {
 }
@@ -55,7 +65,7 @@ void MainWindow::init()
 { 
 	setObjectName(tr("main_window"));
 	setAcceptDrops(true);
-
+	setGeometry(0, 0, 1024, 600);
 
 //	create view and scene
 	m_pView = new View3D;
@@ -77,6 +87,7 @@ void MainWindow::init()
 
 //	create the log widget
 	m_pLog = new QDockWidget(tr("log"), this);
+	m_pLog->setFeatures(QDockWidget::NoDockWidgetFeatures);
 	m_pLog->setObjectName(tr("log"));
 
 	QFont logFont("unknown");
@@ -85,20 +96,16 @@ void MainWindow::init()
 	QTextEdit* pLogText = new QTextEdit(m_pLog);
 	pLogText->setReadOnly(true);
 	pLogText->setAcceptRichText(false);
+	pLogText->setUndoRedoEnabled(false);
+	pLogText->setWordWrapMode(QTextOption::NoWrap);
 	pLogText->setCurrentFont(logFont);
 	m_pLog->setWidget(pLogText);
+
 	addDockWidget(Qt::BottomDockWidgetArea, m_pLog);
 
 //	redirect cout
 	Q_DebugStream* pDebugStream = new Q_DebugStream(GetLogAssistant().logger(), pLogText);
 	pDebugStream->enable_file_output(app::UserDataDir().path() + QString("/log.txt"));
-	// GetLogAssistant().enable_file_output(true, logFile.toLocal8Bit().constData());
-
-	// UG_LOG("ProMesh (www.promesh3d.com) - created by Sebastian Reiter (s.b.reiter@gmail.com).\n");
-	// UG_LOG("This version of ProMesh is for non-commercial use only. See \"Help->License\" for more information.\n");
-	// UG_LOG("ProMesh uses parts of the UG4 simulation framework.\n");
-	// UG_LOG("This version of ProMesh uses 'tetgen 1.4.3' for tetrahedral mesh generation (in Remeshing/Tetgen).\n");
-	// UG_LOG("--------------------------------------------------------------\n\n");
 
 	UG_LOG(GetFileContent(":/resources/greetings.txt").toStdString() << endl);
 
@@ -246,9 +253,6 @@ void MainWindow::init()
 		}
 		UG_LOG("------------------------------------------------------------------------------------------\n")
 	}
-//	m_toolsMenu = menuBar()->addMenu("Tools");
-//	m_toolManager->populateMenu(m_toolsMenu);
-
 
 //	create a tool bar for file handling
 	QToolBar* fileToolBar = addToolBar(tr("&File"));
@@ -287,6 +291,7 @@ void MainWindow::init()
 
 //	create the scene inspector
 	QDockWidget* pSceneInspectorDock = new QDockWidget(tr("Scene Inspector"), this);
+	pSceneInspectorDock->setFeatures(QDockWidget::NoDockWidgetFeatures);
 	pSceneInspectorDock->setObjectName(tr("scene_inspector_dock"));
 	m_sceneInspector = new SceneInspector(pSceneInspectorDock);
 	m_sceneInspector->setObjectName(tr("scene_inspector"));
@@ -297,6 +302,7 @@ void MainWindow::init()
 
 //	create the clip-plane widget
 	QDockWidget* pClipPlaneDock= new QDockWidget(tr("Clip Planes"), this);
+	pClipPlaneDock->setFeatures(QDockWidget::NoDockWidgetFeatures);
 	pClipPlaneDock->setObjectName(tr("clip_plane_widget_dock"));
 	ClipPlaneWidget* clipPlaneWidget = new ClipPlaneWidget(pClipPlaneDock);
 	clipPlaneWidget->setObjectName(tr("clip_plane_widget"));
@@ -304,20 +310,30 @@ void MainWindow::init()
 	pClipPlaneDock->setWidget(clipPlaneWidget);
 	addDockWidget(Qt::RightDockWidgetArea, pClipPlaneDock);
 
-//	create the tool-list widget
-/*
-	QDockWidget* pToolListDock= new QDockWidget(tr("Tools"), this);
-	pToolListDock->setObjectName(tr("tool_list_widget_dock"));
-	QTreeWidget* toolList = m_toolManager->createTreeWidget();
-	toolList->setObjectName(tr("tool_list_widget"));
-	pToolListDock->setWidget(toolList);
-	addDockWidget(Qt::LeftDockWidgetArea, pToolListDock);
-*/
 //	create the rclick menu for the scene-inspector
 	m_rclickMenu_SI = new RClickMenu_SceneInspector(m_sceneInspector);
 	m_rclickMenu_SI->setVisible(false);
 	connect(m_sceneInspector, SIGNAL(mouseClicked(QMouseEvent*)),
 			this, SLOT(sceneInspectorClicked(QMouseEvent*)));
+
+
+//	create the tool browser
+	m_toolBrowserDock = new QDockWidget(tr("Tool Browser"), this);
+	m_toolBrowserDock->setFeatures(QDockWidget::NoDockWidgetFeatures);
+	m_toolBrowserDock->setObjectName(tr("tool_browser_dock"));
+
+	m_toolBrowser = new ToolBrowser(this);
+	m_toolBrowser->refresh(m_toolManager);
+	m_toolBrowser->setObjectName(tr("tool_browser"));
+	m_toolBrowserDock->setWidget(m_toolBrowser);
+	addDockWidget(Qt::LeftDockWidgetArea, m_toolBrowserDock);
+
+
+	restoreGeometry(settings().value("mainWindow/geometry").toByteArray());
+	restoreState(settings().value("mainWindow/windowState").toByteArray());
+
+//	init the status bar
+	statusBar()->show();
 
 //	init undo
 	QDir tmpPath(QDir::tempPath());
@@ -329,44 +345,7 @@ void MainWindow::init()
 			 << tmpPath.path().toLocal8Bit().constData() << "\n";
 	}
 
-//	init the status bar
-	statusBar()->show();
-
-	restoreGeometry(settings().value("mainWindow/geometry").toByteArray());
-	restoreState(settings().value("mainWindow/windowState").toByteArray());
-
-
-//	temporary for testing the tool browser
-	m_toolBrowserDock = new QDockWidget(tr("Tool Browser"), this);
-	m_toolBrowserDock->setObjectName(tr("tool_browser_dock"));
-/*
-	ToolBrowserWidget* toolBrowser = new ToolBrowserWidget(toolBrowserDock);
-	toolBrowser->setObjectName(tr("tool_browser"));
-	toolBrowserDock->setWidget(toolBrowser);
-	addDockWidget(Qt::LeftDockWidgetArea, toolBrowserDock);
-	toolBrowser->addPage(QIcon(":images/editundo.png"), tr("undo"));
-	toolBrowser->addPage(QIcon(":images/editredo.png"), tr("redo"));
-*/
-	// m_toolBrowser = m_toolManager->createToolBrowser(this);
-	m_toolBrowser = new ToolBrowser(this);
-	m_toolBrowser->refresh(m_toolManager);
-	m_toolBrowser->setObjectName(tr("tool_browser"));
-	m_toolBrowserDock->setWidget(m_toolBrowser);
-	addDockWidget(Qt::LeftDockWidgetArea, m_toolBrowserDock);
-
-	
 	show();
-	//QHelpDialog* helpDlg = new QHelpDialog(":docs/promesh-script-reference.qch", this);
-	// QHelpDialog* helpDlg = new QHelpDialog(QString("/home/sreiter/projects/ProMesh/trunk/docs/promesh-script-reference.qhc"), this);
-	// helpDlg->show();
-
-	// QWebView* webView = new QWebView(this);
-	// webView->setGeometry(QRect(50, 50, 800, 600));
-	// webView->setUrl(QUrl("file:///home/sreiter/projects/ProMesh/builds/docugen/html/index.html"));
-	// webView->show();
-	
-	//load_grid_from_file("d:/projects/ProMesh3/data/atom_in_sphere.obj");
-	//load_grid_from_file("/Users/sreiter/grids/NB_35k_loose.ng");
 }
 
 MainWindow::~MainWindow()
@@ -892,46 +871,64 @@ void MainWindow::setActiveObject(int index)
 	}
 }
 
+void MainWindow::launchHelpBrowser(const QString& pageName)
+{
+	#ifdef PROMESH_USE_WEBKIT
+		if(!m_helpBrowser)
+			m_helpBrowser = new QHelpBrowser(this);
+		m_helpBrowser->browse(QUrl(QString("qrc:///docs/html/").append(pageName)));
+		QRect geom = this->geometry();
+		geom.adjust(50, 50, -50, -50);
+		m_helpBrowser->setGeometry(geom);
+		m_helpBrowser->show();
+	#else
+		try{
+		//todo:	on could compare the version.txt files in the resource and the target
+		//		folder and only copy if they do not match.
+			QString helpHtmlPath = app::UserHelpDir().path().append("/html");
+			static bool firstRun = true;
+			if(firstRun){
+				firstRun = false;
+				if(FileExists(helpHtmlPath))
+					EraseDirectory(helpHtmlPath);
+				CopyDirectory(":/docs/html", app::UserHelpDir().path());
+			}
+			QDesktopServices::openUrl(helpHtmlPath + "/index.html");
+		}
+		catch(UGError& err){
+			UG_LOG("ERROR: " << err.get_msg() << endl);
+		}
+	#endif
+}
+
 void MainWindow::showHelp()
 {
-	if(!m_helpBrowser){
-		m_helpBrowser = new QHelpBrowser(this);
-		m_helpBrowser->browse(QUrl("qrc:///docs/html/index.html"));
-	}
-	QRect geom = this->geometry();
-	geom.adjust(50, 50, -50, -50);
-	m_helpBrowser->setGeometry(geom);
-	m_helpBrowser->show();
+	launchHelpBrowser("index.html");
 }
 
 void MainWindow::showRecentChanges()
 {
-	showHelp();
-	m_helpBrowser->browse(QUrl("qrc:///docs/html/pageRecentChanges.html"));
+	launchHelpBrowser("pageRecentChanges.html");
 }
 
 void MainWindow::showShortcuts()
 {
-	showHelp();
-	m_helpBrowser->browse(QUrl("qrc:///docs/html/pageShortcuts.html"));
+	launchHelpBrowser("pageShortcuts.html");
 }
 
 void MainWindow::showLicense()
 {
-	showHelp();
-	m_helpBrowser->browse(QUrl("qrc:///docs/html/pageProMeshLicense.html"));
+	launchHelpBrowser("pageProMeshLicense.html");
 }
 
 void MainWindow::showScriptReference()
 {
-	showHelp();
-	m_helpBrowser->browse(QUrl("qrc:///docs/html/modules.html"));
+	launchHelpBrowser("modules.html");
 }
 
 void MainWindow::showAbout()
 {
-	showHelp();
-	m_helpBrowser->browse(QUrl("qrc:///docs/html/pageAbout.html"));
+	launchHelpBrowser("pageAbout.html");
 }
 
 void MainWindow::frontDrawModeChanged(int newMode)
@@ -1002,14 +999,17 @@ void MainWindow::closeEvent(QCloseEvent *event)
 		reply = QMessageBox::question(this, "Quit?", "Quit? Unsaved progress will be lost!",
 									  QMessageBox::Yes | QMessageBox::No);
 		if (reply == QMessageBox::Yes){
-			settings().setValue("mainWindow/geometry", saveGeometry());
-			settings().setValue("mainWindow/windowState", saveState());
 			QMainWindow::closeEvent(event);
 			event->accept();
 		}
 		else{
 			event->ignore();
 		}
+	}
+
+	if(event->isAccepted()){
+		settings().setValue("mainWindow/geometry", saveGeometry());
+		settings().setValue("mainWindow/windowState", saveState());
 	}
 }
 

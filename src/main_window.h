@@ -73,6 +73,8 @@ class MainWindow : public QMainWindow
 		View3D*	getView3D()					{return m_pView;}
 		SceneInspector* getSceneInspector()	{return m_sceneInspector;}
 
+		void launchHelpBrowser(const QString& pageName);
+		
 	signals:
 		void activeObjectChanged();
 		void refreshToolDialogs();
@@ -169,8 +171,12 @@ class MainWindow : public QMainWindow
 		ToolManager*				m_toolManager;
 		ToolBrowser*				m_toolBrowser;
 		QDockWidget*				m_toolBrowserDock;
-		QHelpBrowser*				m_helpBrowser;
 		QDialog*					m_dlgAbout;
+		
+		#ifdef PROMESH_USE_WEBKIT
+			QHelpBrowser*			m_helpBrowser;
+		#endif
+
 	//	menus
 		//QMenu*		m_toolsMenu;
 

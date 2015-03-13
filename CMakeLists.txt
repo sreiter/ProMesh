@@ -1,6 +1,15 @@
 cmake_minimum_required(VERSION 2.8.11)
 project(P_PROMESH4)
 
+
+# Some options which allow to control makefile generation
+option(DEBUG "If enabled a debug build is performed - this slows down performance." OFF)
+option(UG_ROOT_PATH "The path to ug4. Has to contain the ugbase and lib directories.")
+option(TETGEN_PATH "The path to tetgen. Has to contain the static tet library.")
+option(QT_CMAKE_PATH "Folder containing cmake-modules for the chosen architecture.")
+option(USE_WEBKIT "Enable or disable QtWebKit support. If enabled, ProMesh's help will be displayed in an internal window." OFF)
+
+
 set(ProMeshSRC	src/app.cpp
 				src/main.cpp
 				src/main_window.cpp
@@ -41,10 +50,10 @@ set(ProMeshSRC	src/app.cpp
 				src/tools/registry_tools.cpp
 				src/tools/remeshing_tools.cpp
 				src/tools/script_tools.cpp
+				src/util/file_util.cpp
 				src/widgets/double_slider.cpp
 				src/widgets/extendible_widget.cpp
 				src/widgets/file_widget.cpp
-				src/widgets/help_browser.cpp
 				src/widgets/icon_tab_widget.cpp
 				src/widgets/matrix_widget.cpp
 				src/widgets/tool_browser_widget.cpp
@@ -53,11 +62,12 @@ set(ProMeshSRC	src/app.cpp
 				src/widgets/widget_list.cpp)
 
 
-# Some options which allow to control makefile generation
-option(DEBUG "If enabled a debug build is performed - this slows down performance." OFF)
-option(UG_ROOT_PATH "The path to ug4. Has to contain the ugbase and lib directories.")
-option(TETGEN_PATH "The path to tetgen. Has to contain the static tet library.")
-option(QT_CMAKE_PATH "Folder containing cmake-modules for the chosen architecture.")
+if(USE_WEBKIT)
+	add_definitions(-DPROMESH_USE_WEBKIT)
+	set(ProMeshSRC ${ProMeshSRC} src/widgets/help_browser.cpp)
+endif(USE_WEBKIT)
+
+
 
 # Qt5 with OpenGL support is required.
 # in order to use a custom installation of QT, specify QT_CMAKE_PATH when running
@@ -67,11 +77,15 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 if(QT_CMAKE_PATH)
 	FIND_PACKAGE(Qt5Widgets REQUIRED PATHS ${QT_CMAKE_PATH}/Qt5Widgets)
 	FIND_PACKAGE(Qt5OpenGL REQUIRED PATHS ${QT_CMAKE_PATH}/Qt5OpenGL)
-	FIND_PACKAGE(Qt5WebKitWidgets REQUIRED PATHS ${QT_CMAKE_PATH}/Qt5WebKitWidgets)
+	if(USE_WEBKIT)
+		FIND_PACKAGE(Qt5WebKitWidgets REQUIRED PATHS ${QT_CMAKE_PATH}/Qt5WebKitWidgets)
+	endif(USE_WEBKIT)
 else(QT_CMAKE_PATH)
 	FIND_PACKAGE(Qt5Widgets REQUIRED)
 	FIND_PACKAGE(Qt5OpenGL REQUIRED)
-	FIND_PACKAGE(Qt5WebKitWidgets REQUIRED)
+	if(USE_WEBKIT)
+		FIND_PACKAGE(Qt5WebKitWidgets REQUIRED)
+	endif(USE_WEBKIT)
 endif(QT_CMAKE_PATH)
 
 
@@ -109,6 +123,9 @@ if(NOT TETGEN_PATH)
 endif(NOT TETGEN_PATH)
 
 message(STATUS "INFO: TETGEN_PATH was set to: " ${TETGEN_PATH})
+
+message(STATUS "INFO: USE_WEBKIT: " ${USE_WEBKIT})
+
 
 find_library(TETGEN_LIBS NAMES tet PATHS ${TETGEN_PATH})
 if(TETGEN_LIBS-NOTFOUND)
@@ -148,10 +165,8 @@ SET(allSources ${ProMeshSRC} ${ProMeshRESOURCES_RCC})
 
 if(UNIX)
 	if(APPLE)
-		#SET( CMAKE_OSX_ARCHITECTURES ppc;i386 )
-		SET( CMAKE_OSX_ARCHITECTURES i386 )
-		SET( CMAKE_OSX_SYSROOT /Developer/SDKs/MacOSX10.5.sdk )
-		SET( CMAKE_OSX_DEPLOYMENT_TARGET 10.5 )
+		#SET(CMAKE_OSX_SYSROOT /Developer/SDKs/MacOSX10.5.sdk)
+		#SET(CMAKE_OSX_DEPLOYMENT_TARGET 10.5)
 		ADD_EXECUTABLE(ProMesh4 MACOSX_BUNDLE ${allSources})
 	else(APPLE)
 		ADD_EXECUTABLE(ProMesh4 ${allSources})
@@ -166,4 +181,10 @@ else(UNIX)
 	endif(MINGW)
 endif(UNIX)
 
-TARGET_LINK_LIBRARIES(ProMesh4 ${OPENGL_LIBRARIES} Qt5::OpenGL Qt5::Widgets Qt5::WebKitWidgets grid_s tet)
+set(PM_LIBS ${OPENGL_LIBRARIES} Qt5::OpenGL Qt5::Widgets grid_s tet)
+
+if(USE_WEBKIT)
+	set(PM_LIBS ${PM_LIBS} Qt5::WebKitWidgets)
+endif(USE_WEBKIT)
+
+TARGET_LINK_LIBRARIES(ProMesh4 ${PM_LIBS})

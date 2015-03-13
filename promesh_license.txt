@@ -1,3 +1,5 @@
+ProMesh (c) 2006-2015 Sebastian Reiter
+
 ProMesh4 Binary Code License
 
 The ProMesh4 application ("ProMesh4") is licensed to the licensee
@@ -12,7 +14,7 @@ Definitions
 terms of this License Agreement.
 2. The licensors are the Goethe Center for Scientific Computing (G-CSC),
 Goethe University Frankfurt am Main, Germany and the Steinbeis 
-Zentrum "Simulation in Technology", Ölbronn, Germany.
+Zentrum "Simulation in Technology", Ã–lbronn, Germany.
 
 License To Use
 1. Subject to the terms and conditions of this Agreement, the 

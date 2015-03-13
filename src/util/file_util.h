@@ -5,20 +5,19 @@
 #define __H__PROMESH_file_util
 
 #include <QString>
-#include <QFile>
-#include <QTextStream>
 
 ///	returns the content of a file as a string.
 /**	To read from a resource-file, use the following syntax:
  * \code
  * GetFileContent(":/some-file.txt")
  *\endcode*/
-inline QString GetFileContent(QString filename)
-{
-	QFile inputFile(filename);
-	inputFile.open(QIODevice::ReadOnly);
-	QTextStream in(&inputFile);
-	return in.readAll();
-}
+QString GetFileContent(QString filename);
+
+bool FileExists(const QString& dirname);
+
+void EraseDirectory(QString dirName);
+
+///	recursively copies a directory
+void CopyDirectory(QString dirName, QString destDirName);
 
 #endif	//__H__PROMESH_file_util

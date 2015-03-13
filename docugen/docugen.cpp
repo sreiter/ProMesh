@@ -47,6 +47,14 @@ void DeleteDirectory(string path){
 	#endif
 }
 
+void CopyFile(string from, string to){
+	#ifdef UNIX
+		system(mkstr("cp -f " << from << " " << to).c_str());
+	#elif WINDOWS
+		UG_THROW("Please implement recursive directory copy for windows")
+	#endif
+}
+
 void CopyDirectory(string from, string to){
 	#ifdef UNIX
 		system(mkstr("cp -r " << from << " " << to).c_str());
@@ -220,6 +228,9 @@ int main(){
 		if(DirectoryExists(mkstr(pmPath << "docs/html")))
 			DeleteDirectory(mkstr(pmPath << "docs/html"));
 		CopyDirectory("./html", mkstr(pmPath << "docs/"));
+
+	//	copy the version information into the html folder
+		CopyFile(mkstr(pmPath << "version.txt"), mkstr(pmPath << "docs/html/version.txt"));
 
 	//	now we'll create the qt-resource file containing all the help files
 		UG_LOG("Generating qt resource file...\n");
