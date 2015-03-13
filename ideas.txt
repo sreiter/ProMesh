@@ -4,7 +4,7 @@ Planned features:
 
 4.2.0
   - Layer Meshing:
-  	* initial vertex creation ignores some vertices: separated triangles are not built.
+ok 	* initial vertex creation ignores some vertices: separated triangles are not built.
   	  (compare boundary-from-full and boundary-only)
   - Help:
 ok	* Improved grouping of script-tools
@@ -43,7 +43,7 @@ ok    * Perform a more sensible update of the tool-browser. Problem: Buttons
       replaced by each other!?!
 
   - Scripting:
-  	* Make output readable by registering print and write!
+ok	* Make output readable by registering print and write!
 
   - Delete Button:
 ok	* Add question and tell: 'No undo possible'
