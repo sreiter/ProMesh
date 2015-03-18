@@ -208,9 +208,13 @@ int main(){
 		}
 
 	//	copy the docu-sources to this folder so that doxygen can find them
-		if(DirectoryExists("doxysrc"))
+		if(DirectoryExists("./doxysrc"))
 			DeleteDirectory("./doxysrc");		
 		CopyDirectory(mkstr(pmPath << "docugen/doxysrc"), "./");
+
+	//	'clear' old documentation
+		if(DirectoryExists("./html"))
+			DeleteDirectory("./html");	
 
 	//	call doxygen to generate the source tree
 		UG_LOG("Executing doxygen...\n");
