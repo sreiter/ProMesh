@@ -24,5 +24,6 @@ var searchData=
   ['createvertex',['CreateVertex',['../group__promesh__Grid__Generation__Basic__Elements.html#ga4f8ec958e2dff755f76eeedc6cbd6e85',1,'script_reference.cpp']]],
   ['createvolume',['CreateVolume',['../group__promesh__Grid__Generation__Basic__Elements.html#gad9a56acf909cf01e73b742b57c4e5503',1,'script_reference.cpp']]],
   ['contact',['Contact',['../pageContact.html',1,'']]],
+  ['controls',['Controls',['../pageControls.html',1,'']]],
   ['coordinate_20transform',['Coordinate Transform',['../group__promesh__Coordinate__Transform.html',1,'']]]
 ];

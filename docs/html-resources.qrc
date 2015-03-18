@@ -9,6 +9,7 @@
 <file>html/annotated.js</file>
 <file>html/sync_off.png</file>
 <file>html/group__promesh__Util.js</file>
+<file>html/toolbar-box-cuts-selection.png</file>
 <file>html/group__promesh__Remeshing__Extrusion.html</file>
 <file>html/group__promesh__Refinement.js</file>
 <file>html/group__promesh__Selection__Volumes.js</file>
@@ -24,6 +25,7 @@
 <file>html/group__promesh__Selection__Faces.js</file>
 <file>html/group__promesh__Selection.js</file>
 <file>html/group__promesh__Subsets.html</file>
+<file>html/toolbar-click-selection.png</file>
 <file>html/classes.html</file>
 <file>html/group__promesh__Grid__Generation__Basic__Elements.html</file>
 <file>html/ftv2folderclosed.png</file>
@@ -47,6 +49,7 @@
 <file>html/functions_func.html</file>
 <file>html/modules.js</file>
 <file>html/group__promesh__Remeshing__Orientation.html</file>
+<file>html/toolbar-box-contains-selection.png</file>
 <file>html/classstd_1_1string.html</file>
 <file>html/group__promesh__Selection__Faces.html</file>
 <file>html/ftv2doc.png</file>
@@ -68,8 +71,10 @@
 <file>html/group__ugbase_classVec3d.js</file>
 <file>html/ftv2node.png</file>
 <file>html/group__promesh__Coordinate__Transform.html</file>
+<file>html/DoxygenStyle.css</file>
 <file>html/open.png</file>
 <file>html/index.js</file>
+<file>html/pageControls.html</file>
 <file>html/group__ugbase_classSelector.js</file>
 <file>html/group__promesh_classVertexIterator.js</file>
 <file>html/pageProMeshLicense.html</file>
@@ -108,6 +113,7 @@
 <file>html/group__promesh__Selection__Edges.html</file>
 <file>html/group__promeshRemeshing__Refinement.js</file>
 <file>html/navtreeindex0.js</file>
+<file>html/doxyStyle.css</file>
 <file>html/group__promesh__Util.html</file>
 <file>html/group__ugbase.png</file>
 <file>html/modules.html</file>
@@ -129,6 +135,7 @@
 <file>html/group__promesh__Remeshing__Merge__Vertices.js</file>
 <file>html/functions.html</file>
 <file>html/group__promesh__Info.js</file>
+<file>html/toolbar-selection-element-type.png</file>
 <file>html/group__promesh__Raster__Layers.html</file>
 <file>html/group__promesh__Selection__Vertices.js</file>
 <file>html/group__nativeTypes.js</file>

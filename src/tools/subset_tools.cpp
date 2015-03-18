@@ -459,7 +459,7 @@ void RegisterSubsetTools(ToolManager* toolMgr)
 	toolMgr->register_tool(new ToolJoinSubsets);
 	toolMgr->register_tool(new ToolEraseSubset);
 	toolMgr->register_tool(new ToolAdjustSubsetsForUG3);
-	toolMgr->register_tool(new ToolAdjustSubsetsForUG4);
+	// toolMgr->register_tool(new ToolAdjustSubsetsForUG4);
 	toolMgr->register_tool(new ToolAssignSubsetsByQuality);
 	toolMgr->register_tool(new ToolSeparateFacesByEdgeSubsets);
 	toolMgr->register_tool(new ToolSeparateFacesBySelectedEdges);

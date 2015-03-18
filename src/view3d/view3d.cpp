@@ -241,6 +241,12 @@ void View3D::fly_to(const cam::vector3& destTo, float distance)
 	m_csNew.vTo = destTo;
 	m_csNew.fDistance = distance;
 
+	// cam::vector3 v;
+	// VecSubtract(v, m_csOld.vFrom, m_csOld.vTo);
+	// VecNormalize(v, v);
+	// VecScale(v, v, distance);
+	// VecAdd(m_csNew.vFrom, m_csNew.vTo, v);
+
 	start_interpolation();
 }
 

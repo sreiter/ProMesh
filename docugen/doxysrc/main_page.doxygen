@@ -10,6 +10,19 @@ at the <em>Goethe-Center for Scientific Computing</em> of the
 
 <hr>
 \section secOutline Outline
+- \ref pageControls
+- \ref pageShortcuts
+- <a href="modules.html"><b>Script and Tools Reference</b></a>
+- \ref pageProMeshLicense
+- \ref pageExternalLibraries
+- \ref pageRecentChanges
+- \ref pageAbout
+- \ref pageContact
+*/
+
+
+
+/* todo:
 - Introduction
 	- Graphical User Interface
 	- Grids and Grid Elements
@@ -17,12 +30,6 @@ at the <em>Goethe-Center for Scientific Computing</em> of the
 	- Visualization
 	- Basic Workflow
 	- File-IO
-- \ref pageShortcuts
+
 - Scripting
-- <a href="modules.html"><b>Script and Tools Reference</b></a>
-- \ref pageProMeshLicense
-- \ref pageExternalLibraries
-- \ref pageRecentChanges
-- \ref pageAbout
-- \ref pageContact
 */

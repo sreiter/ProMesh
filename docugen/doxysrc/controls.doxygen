@@ -1,0 +1,88 @@
+/** \page pageControls Controls
+
+This page gives a short overview on how to move the camera, perform selections,
+or to transform parts of a mesh.
+
+
+<br>
+<hr>
+\section secCamera Camera controls
+The camera is moved by pressing a mouse-button and moving the mouse:
+\subsection subsecRotate Rotate
+	- <b>Left-Mouse-Button Drag:</b> Rotate the camera around its current focus point.
+
+\subsection subsecMove Move
+	- <b>Middle-Mouse-Button Drag:</b> Move the camera in its current plane.
+	- <b>Ctrl (Cmd) + Left-Mouse-Button Drag:</b> Move the camera in its current plane.
+	- <b>Shift + Left-Mouse-Button Drag:</b> Move the camera and the focus-point into/out of the screen.
+
+\subsection subsecZoom Zoom
+	- <b>Mouse-Wheel Up/Down:</b> Zoom in/out
+
+\subsection subsecFocus Focus
+	- <b>Left-Mouse-Button Double-Click:</b> Set the camera focus to the clicked position.
+
+One should have a look at the Camera-Tools in the tool browser, too.
+They e.g. allow one to center the active mesh or the currently selected elements.
+
+<br>
+<hr>
+\section secSelection	Selection Controls
+Selections are performed using the Right-Mouse-Button. The Toolbar features
+several buttons which allow to customize the action that is performed when
+the right mouse-button is pressed.
+
+The element type (vertex/edge/face/volume) on which selections are performed is
+determined through a click on 'select-vertices', 'select-edges', 'select-faces',
+or 'select-volumes' in the tool bar:
+\image html toolbar-selection-element-type.png
+
+\subsection subsecClickSelection	Click Selection
+\image html toolbar-click-selection.png
+	- <b>Right-Mouse-Button Click:</b> Only the clicked element is selected.
+	- <b>Shift + Right-Mouse-Button Click:</b> The selection-state of the clicked element is toggled (allows for multi-selection).
+	- <b>Ctrl (Cmd) + Right-Mouse-Button Click:</b>	All elements of the same type and subset as the clicked element are selected exclusively.
+	- <b>Shift + Ctrl (Cmd) + Right-Mouse-Button Click:</b>	All elements of the same type and subset as the clicked element are selected in addition to the current selection.
+
+\subsection subsecBoxCutsSelection	Box Cuts Selection
+\image html toolbar-box-cuts-selection.png
+	- <b>Right-Mouse-Button Drag:</b> All elements which cut the selection rectangle or lie inside the rectangle are selected exclusively.
+	- <b>Shift + Right-Mouse-Button Drag:</b> All elements which cut the selection rectangle or lie inside the rectangle are selected in addition to the current selection.
+
+\subsection subsecBoxContainsSelection	Box Contains Selection
+\image html toolbar-box-contains-selection.png
+	- <b>Right-Mouse-Button Drag:</b> All elements which lie completely inside the selection rectangle are selected exclusively.
+	- <b>Shift + Right-Mouse-Button Drag:</b> All elements which lie completely inside the selection rectangle are selected in addition to the current selection.
+
+\subsection subsecSelectionShortcuts Important Shortcuts
+The following keyboard shortcuts are often useful when performing selections:
+	- <b>'a':</b>	Selects/deselects all elements. If no elements are selected,
+				pressing 'a' will select all elements. If at least one element is selected,
+				pressing 'a' will deselect all elements.
+	- <b>'c':</b>	Closes the current selection, i.e., recursively selects all
+				sides of selected elements.
+
+<br>
+<hr>
+\section secGeometryTransform	Geometry Transformation Controls
+The currently selected elements can be moved or scaled through mouse-input. All
+transformations are triggered through a keyboard shortcut. After pressing such
+a key, moving the mouse will transform the geometry. Pressing the <em>Left-Mouse-Button</em>
+will finish the transformation. By pressing the <em>Right-Mouse-Button</em>
+(or <em>'ESC'</em>) instead, one cancels the transformation, thus moving everything
+back at where it was when the transform key was pressed.
+
+After pressing a transform-key, one can choose the axis along which
+the transform shall take place by pressing <b>'x'</b>, <b>'y'</b>, or <b>'z'</b>.
+
+\subsection subsecMove	Move Geometry
+	- <b>'g':</b>	Grabs the current selection. Moving the mouse will move the
+				selected geometry. By default it is moved in the camera-plane.
+				Pressing <b>'x'</b>, <b>'y'</b>, and <b>'z'</b> will restrict
+				movement to the corresponding axis.
+
+	- <b>'s':</b>	Scales the current selection. Moving the mouse will scale the
+				selected geometry. By default it is scaled along all axis.
+				Pressing <b>'x'</b>, <b>'y'</b>, and <b>'z'</b> will restrict
+				scaling to the corresponding axis.
+*/

@@ -23,9 +23,15 @@ Changes and additions:
 - Added file-log in $HOME/.promesh/log.txt
 - Added verbosity flag to Remeshing/Tetgen/Tetrahedralize
 - Added Scripts-Menu, which features entries to create and edit scripts.
+- Removed 'Subsets-AdjustSubsetsForUG4' since it created too many subsets.
+- Improved Delaunay-Refinement by adding support for circular-shells and off-centers.
 
 Fixes:
 - ToolBrowser now adapts to new/changed/erased scripts nicely.
+- Zoom-in can now be performed until rounding-errors are visible.
+  (distance to focus point is now considered too to compute near-clipping plane)
+- Fixed special cases in delaunay-triangulation and delaunay-refinement used in
+  Triangulate and Retriangulate
 
 
 -------------------------------------------------------------------------------

@@ -3,6 +3,7 @@ var NAVTREE =
   [ "ProMesh User Manual", "index.html", [
     [ "Pages", null, [
       [ "Home", "index.html", null ],
+      [ "Controls", "pageControls.html", null ],
       [ "Shortcuts", "pageShortcuts.html", null ],
       [ "ProMesh License", "pageProMeshLicense.html", null ],
       [ "External Libraries", "pageExternalLibraries.html", null ],

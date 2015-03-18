@@ -6,6 +6,7 @@
     
     <tab type="usergroup" visible="yes" title="Pages" url="[none]">
     	<tab type="mainpage" visible="yes" title=""/>
+		<tab type="user" visible="yes" url="@ref pageControls" title="Controls"/>
 		<tab type="user" visible="yes" url="@ref pageShortcuts" title="Shortcuts"/>
 		<tab type="user" visible="yes" url="@ref pageProMeshLicense" title="ProMesh License"/>
 		<tab type="user" visible="yes" url="@ref pageExternalLibraries" title="External Libraries"/>

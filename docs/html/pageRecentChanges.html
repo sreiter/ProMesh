@@ -20,7 +20,7 @@
 <script type="text/javascript">
   $(document).ready(function() { searchBox.OnSelectItem(0); });
 </script>
-<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxyStyle.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -116,9 +116,15 @@ Changes and additions:
 - Added file-log in $HOME/.promesh/log.txt
 - Added verbosity flag to Remeshing/Tetgen/Tetrahedralize
 - Added Scripts-Menu, which features entries to create and edit scripts.
+- Removed 'Subsets-AdjustSubsetsForUG4' since it created too many subsets.
+- Improved Delaunay-Refinement by adding support for circular-shells and off-centers.
 
 Fixes:
 - ToolBrowser now adapts to new/changed/erased scripts nicely.
+- Zoom-in can now be performed until rounding-errors are visible.
+  (distance to focus point is now considered too to compute near-clipping plane)
+- Fixed special cases in delaunay-triangulation and delaunay-refinement used in
+  Triangulate and Retriangulate
 
 
 -------------------------------------------------------------------------------
@@ -906,10 +912,11 @@ Changes and additions:
 Fixes:
 - Fixed bug with jumping list in SceneInspector when visibility was changed.</pre> </div></div><!-- contents -->
 </div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Mar 12 2015 13:39:58 for ProMesh User Manual by
+    <li class="footer">(c) Sebastian Reiter. Generated on Wed Mar 18 2015 13:11:29 for ProMesh User Manual by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 </li>
   </ul>

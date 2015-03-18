@@ -399,6 +399,8 @@ void LGScene::get_clip_distance_estimate(float& nearOut, float& farOut,
 		if(nearOut < minBorder)
 			nearOut = minBorder;
 	}
+
+	nearOut = min(nearOut, (float)VecLength(dir) / 100.f);
 }
 
 void LGScene::draw()

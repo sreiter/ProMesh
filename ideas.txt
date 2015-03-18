@@ -64,6 +64,9 @@ ok	* add (c) Sebastian Reiter to About Page
 	* Fix-View, Align-View, Ortho-View
 	* Camera tools should be available in scripts
 	* When zooming, move 'to' towards the projected mouse-cursor
+	* Refocus does a smooth-interpolation so that the view-dir stays constant...
+	  to this end calculate src and target orienation etc...
+	  
   - VecMath:
   	add, subtract, copy-construct, assign, ...
   -	Check out why exit() causes a crash when a tool is executed again.
@@ -72,7 +75,13 @@ ok	* add (c) Sebastian Reiter to About Page
   - Compilation
   	* Compile and execute docugen from within promesh's cmake file
   - Script-Tools: Autocheck for changes in scripts and update those tools accordingly
-
+  - Delaunay-Triangulation:
+  		After point insertion: Make Delaunay, Maximize small angles, Make Delaunay
+  							   If new point is NEW_INNER and only conencted to
+  							   3 triangles: remove new point.
+  							   (This makes off-centers obsolete)
+  		This requires 'start_new_face_recording() and stop_new_face_recording'
+  		around MakeDelaunay.
 
 
 --------------------------------------------------------------------------------
