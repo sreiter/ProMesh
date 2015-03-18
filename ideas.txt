@@ -18,7 +18,7 @@ ok	  - ADD QT TO LIST OF USED LIBRARIES!!!
 ok	  - welcome
 ok	  - license
 ok	  - libraries
-	  - controls
+ok	  - controls
 ok	  - shortcuts
 ok	  - about
 ok	* Other Help menu entries simply open the help browser with the associated page:
@@ -26,7 +26,7 @@ ok	  - User Manual
 	  -------------------
 ok	  - Script Reference
 ok	  - Shortcuts
-	  - Controls
+ok	  - Controls
 ok	  - License
 ok	  - About
 
@@ -66,7 +66,7 @@ ok	* add (c) Sebastian Reiter to About Page
 	* When zooming, move 'to' towards the projected mouse-cursor
 	* Refocus does a smooth-interpolation so that the view-dir stays constant...
 	  to this end calculate src and target orienation etc...
-	  
+
   - VecMath:
   	add, subtract, copy-construct, assign, ...
   -	Check out why exit() causes a crash when a tool is executed again.

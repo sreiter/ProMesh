@@ -6,7 +6,7 @@ or to transform parts of a mesh.
 
 <br>
 <hr>
-\section secCamera Camera controls
+\section secCamera Camera Controls
 The camera is moved by pressing a mouse-button and moving the mouse:
 \subsection subsecRotate Rotate
 	- <b>Left-Mouse-Button Drag:</b> Rotate the camera around its current focus point.
