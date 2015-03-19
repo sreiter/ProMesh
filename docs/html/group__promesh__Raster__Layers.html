@@ -141,6 +141,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="grou
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Raster__Layers.html#aeb80425b98a5fa65f0df96e196d84603">invalidate_flat_cells</a> (<a class="el" href="group__nativeTypes.html#classdouble">double</a> min_height)</td></tr>
 <tr class="memdesc:aeb80425b98a5fa65f0df96e196d84603"><td class="mdescLeft">&#160;</td><td class="mdescRight">Marks all cells as invalid which are closer to the next higher valid cell than the given min height. <br/></td></tr>
 <tr class="separator:aeb80425b98a5fa65f0df96e196d84603"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a150c198be839f6d670e7bb6edd67f2e4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a150c198be839f6d670e7bb6edd67f2e4"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Raster__Layers.html#a150c198be839f6d670e7bb6edd67f2e4">snap_cells_to_higher_layers</a> (<a class="el" href="group__nativeTypes.html#classdouble">double</a> min_height)</td></tr>
+<tr class="memdesc:a150c198be839f6d670e7bb6edd67f2e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">sets invalid or flat cells to the value of the corresponding cell in the level above. <br/></td></tr>
+<tr class="separator:a150c198be839f6d670e7bb6edd67f2e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac08c45ff87061169e77fa1f4a9b4b0b1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac08c45ff87061169e77fa1f4a9b4b0b1"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>eliminate_invalid_cells</b> ()</td></tr>
+<tr class="separator:ac08c45ff87061169e77fa1f4a9b4b0b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a22346065068bcdfa92e0f8767a523130"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a22346065068bcdfa92e0f8767a523130"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Raster__Layers.html#a22346065068bcdfa92e0f8767a523130">blur_layers</a> (<a class="el" href="group__nativeTypes.html#classdouble">double</a> alpha, <a class="el" href="group__nativeTypes.html#classsize__t">size_t</a> num_iterations)</td></tr>
 <tr class="memdesc:a22346065068bcdfa92e0f8767a523130"><td class="mdescLeft">&#160;</td><td class="mdescRight">Blurs the values in each layer by averaging between neighbored cells on the same layer. <br/></td></tr>
@@ -155,7 +162,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="grou
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">(c) Sebastian Reiter. Generated on Wed Mar 18 2015 14:18:35 for ProMesh User Manual by
+    <li class="footer">(c) Sebastian Reiter. Generated on Thu Mar 19 2015 11:36:35 for ProMesh User Manual by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 </li>
   </ul>

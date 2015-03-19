@@ -84,6 +84,7 @@ var searchData=
   ['simplifysmoothedpolylines',['SimplifySmoothedPolylines',['../group__promesh__Remeshing__Polylines.html#gafb17a9c11ca9c31fb6072554250a2c21',1,'script_reference.cpp']]],
   ['size_5ft',['size_t',['../group__nativeTypes.html#classsize__t',1,'']]],
   ['slopesmooth',['SlopeSmooth',['../group__promesh__Coordinate__Transform.html#ga27f87efe2198d6b5e2787fc4f0e321d7',1,'script_reference.cpp']]],
+  ['snap_5fcells_5fto_5fhigher_5flayers',['snap_cells_to_higher_layers',['../group__promesh__Raster__Layers.html#a150c198be839f6d670e7bb6edd67f2e4',1,'RasterLayers']]],
   ['snapverticestovertices',['SnapVerticesToVertices',['../group__promesh__Coordinate__Transform.html#ga93926f94781ad70c09d18dec660efd91',1,'script_reference.cpp']]],
   ['splitedge',['SplitEdge',['../group__promesh__Remeshing__Edge__Operations.html#gaa93935618a41c01382eb1ad0c225e078',1,'script_reference.cpp']]],
   ['string',['string',['../group__nativeTypes.html#classstring',1,'']]],

@@ -9,6 +9,7 @@ var searchData=
   ['conetransform',['ConeTransform',['../group__promesh__Coordinate__Transform.html#gaf27f8a8b07b93be0411e7710883816e9',1,'script_reference.cpp']]],
   ['converttotriangles',['ConvertToTriangles',['../group__promesh__Remeshing__Triangulation.html#ga1d468a8ae09a7fb8057420519d3c593c',1,'script_reference.cpp']]],
   ['copyselection',['CopySelection',['../group__promesh__Grid__Generation.html#ga6f8a1f59b45f61060d96b4e9400e1fa6',1,'script_reference.cpp']]],
+  ['copysubsetindicestosides',['CopySubsetIndicesToSides',['../group__promesh__Subsets.html#ga6c3a8ad17b29180ab677241a9b55c4b0',1,'script_reference.cpp']]],
   ['createbox',['CreateBox',['../group__promesh__Grid__Generation__Geometries.html#ga6262b0697ab5f6da4f57a0d94d7c41da',1,'script_reference.cpp']]],
   ['createcircle',['CreateCircle',['../group__promesh__Grid__Generation__Geometries.html#ga5d6c7304a7adbce45b809d1be28514bb',1,'script_reference.cpp']]],
   ['createedge',['CreateEdge',['../group__promesh__Grid__Generation__Basic__Elements.html#ga574d73737fbbf96db520919de04a80ba',1,'script_reference.cpp']]],
