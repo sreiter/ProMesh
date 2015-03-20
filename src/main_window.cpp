@@ -893,7 +893,9 @@ void MainWindow::launchHelpBrowser(const QString& pageName)
 					EraseDirectory(helpHtmlPath);
 				CopyDirectory(":/docs/html", app::UserHelpDir().path());
 			}
-			QDesktopServices::openUrl(helpHtmlPath + "/" + pageName);
+			QUrl url(QString("file://") + helpHtmlPath + "/" + pageName);
+			UG_LOG("opening url: " << url.toString().toStdString() << std::endl);
+			QDesktopServices::openUrl(url);
 		}
 		catch(UGError& err){
 			UG_LOG("ERROR: " << err.get_msg() << endl);
