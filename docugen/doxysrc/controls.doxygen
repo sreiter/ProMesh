@@ -11,7 +11,7 @@ The camera is moved by pressing a mouse-button and moving the mouse:
 \subsection subsecRotate Rotate
 	- <b>Left-Mouse-Button Drag:</b> Rotate the camera around its current focus point.
 
-\subsection subsecMove Move
+\subsection subsecMoveCamera Move
 	- <b>Middle-Mouse-Button Drag:</b> Move the camera in its current plane.
 	- <b>Ctrl (Cmd) + Left-Mouse-Button Drag:</b> Move the camera in its current plane.
 	- <b>Shift + Left-Mouse-Button Drag:</b> Move the camera and the focus-point into/out of the screen.
@@ -75,7 +75,7 @@ back at where it was when the transform key was pressed.
 After pressing a transform-key, one can choose the axis along which
 the transform shall take place by pressing <b>'x'</b>, <b>'y'</b>, or <b>'z'</b>.
 
-\subsection subsecMove	Move Geometry
+\subsection subsecMoveGeometry	Move Geometry
 	- <b>'g':</b>	Grabs the current selection. Moving the mouse will move the
 				selected geometry. By default it is moved in the camera-plane.
 				Pressing <b>'x'</b>, <b>'y'</b>, and <b>'z'</b> will restrict

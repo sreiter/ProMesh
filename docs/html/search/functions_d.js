@@ -3,6 +3,7 @@ var searchData=
   ['refine',['Refine',['../group__promesh__Remeshing__Refinement.html#gac5853541397d49a13d1e68fc736e70bd',1,'script_reference.cpp']]],
   ['refinesmooth',['RefineSmooth',['../group__promesh__Remeshing__Refinement.html#gad3449d705a9ce2959ea8a2e54525ae6c',1,'script_reference.cpp']]],
   ['refinesmoothboundary2d',['RefineSmoothBoundary2D',['../group__promesh__Remeshing__Refinement.html#ga3b54422361a16a3ee56be309783dcd7a',1,'script_reference.cpp']]],
+  ['remove_5fsmall_5fholes',['remove_small_holes',['../group__promesh__Raster__Layers.html#a5fa4f040eb708bb6327321e301827283',1,'RasterLayers']]],
   ['removedoubleedges',['RemoveDoubleEdges',['../group__promesh__Remeshing__Remove__Doubles.html#ga946cb7a4b145e8d83b78a64fed4b1d55',1,'script_reference.cpp']]],
   ['removedoublefaces',['RemoveDoubleFaces',['../group__promesh__Remeshing__Remove__Doubles.html#ga82c10289608d6a881019604c59bc9875',1,'script_reference.cpp']]],
   ['removedoubles',['RemoveDoubles',['../group__promesh__Remeshing__Remove__Doubles.html#ga41fd43216491328a3e426a6d080a1b1c',1,'script_reference.cpp']]],

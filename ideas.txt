@@ -3,6 +3,8 @@ Planned features:
 --------------------------------------------------------------------------------
 
 4.2.0
+  - Tool-Browser:
+  	* Sort tools: No-groups first, Groups afterwards.
   - Layer Meshing:
 ok 	* initial vertex creation ignores some vertices: separated triangles are not built.
   	  (compare boundary-from-full and boundary-only)
@@ -49,7 +51,7 @@ ok	* Make output readable by registering print and write!
 ok	* Add question and tell: 'No undo possible'
 
   - Nawak-Meshing complete
-    * create a script and all necessary tools that ease meshing for Nawak
+ok    * create a script and all necessary tools that ease meshing for Nawak
 
   - Improve Homepage:
 	* (Online-Help)
@@ -76,13 +78,19 @@ ok	* add (c) Sebastian Reiter to About Page
   	* Compile and execute docugen from within promesh's cmake file
   - Script-Tools: Autocheck for changes in scripts and update those tools accordingly
   - Delaunay-Triangulation:
-  		After point insertion: Make Delaunay, Maximize small angles, Make Delaunay
+  	* After point insertion: Make Delaunay, Maximize small angles, Make Delaunay
   							   If new point is NEW_INNER and only conencted to
   							   3 triangles: remove new point.
   							   (This makes off-centers obsolete)
   		This requires 'start_new_face_recording() and stop_new_face_recording'
   		around MakeDelaunay.
+  	* Allow specification of a density-function or edge-length function.
+  	  This could be used in nawak to add detail to regions with high layer-curvature.
 
+  - RemoveLowValenceVertices: Allow to remove valence 3 vertices only.
+  							  When removing valence 4 vertices, check
+  							  for best inner edge by resulting triangle
+  							  qualities!
 
 --------------------------------------------------------------------------------
 IDEAS
