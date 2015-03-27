@@ -9,6 +9,8 @@
 #include "common/error.h"
 #include "common/log.h"
 
+using namespace std;
+
 QString GetFileContent(QString filename)
 {
 	QFile inputFile(filename);
@@ -23,10 +25,36 @@ bool FileExists(const QString& dirname)
 	return dir.exists();
 }
 
-void EraseDirectory(QString dirName)
+bool EraseDirectory(QString dirName)
 {
-	QDir dir(dirName);
-	dir.removeRecursively();
+	bool result = true;
+    QDir dir(dirName);
+
+    if (dir.exists(dirName)) {
+        Q_FOREACH(QFileInfo info, dir.entryInfoList(QDir::NoDotAndDotDot | QDir::System | QDir::Hidden  | QDir::AllDirs | QDir::Files, QDir::DirsFirst)) {
+            if (info.isDir()) {
+                result = EraseDirectory(info.absoluteFilePath());
+            }
+            else {
+            	QFile file(info.absoluteFilePath());
+            	file.setPermissions(QFile::ReadOther | QFile::WriteOther);
+				result = file.remove();
+                // result = QFile::remove(info.absoluteFilePath());
+                if(!result){
+                	UG_LOG("Failed to remove file: " << info.absoluteFilePath().toStdString() << endl);
+                }
+            }
+
+            if (!result) {
+                return result;
+            }
+        }
+        result = dir.rmdir(dirName);
+        if(!result){
+        	UG_LOG("Failed to remove directory: " << dirName.toStdString() << endl);
+        }
+    }
+    return result;
 }
 
 void CopyDirectory(QString dirName, QString destDirName)

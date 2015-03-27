@@ -883,17 +883,28 @@ void MainWindow::launchHelpBrowser(const QString& pageName)
 		m_helpBrowser->show();
 	#else
 		try{
-		//todo:	on could compare the version.txt files in the resource and the target
+		//todo:	one could compare the version.txt files in the resource and the target
 		//		folder and only copy if they do not match.
 			QString helpHtmlPath = app::UserHelpDir().path().append("/html");
 			static bool firstRun = true;
 			if(firstRun){
 				firstRun = false;
-				if(FileExists(helpHtmlPath))
-					EraseDirectory(helpHtmlPath);
-				CopyDirectory(":/docs/html", app::UserHelpDir().path());
+				// try{
+					if(FileExists(helpHtmlPath))
+						EraseDirectory(helpHtmlPath);
+					CopyDirectory(":/docs/html", app::UserHelpDir().path());
+				// }
+				// catch(const UGError& err){
+				// 	UG_LOG("ERROR: " << err.get_msg() << endl);
+				// 	UG_LOG("WARNING: Help may be outdated." << endl);
+				// }
 			}
-			QUrl url(QString("file://") + helpHtmlPath + "/" + pageName);
+
+			QUrl url;
+			if(helpHtmlPath.at(0) == '/')
+				url = QUrl(QString("file://") + helpHtmlPath + "/" + pageName);
+			else
+				url = QUrl(QString("file:///") + helpHtmlPath + "/" + pageName);
 			QDesktopServices::openUrl(url);
 		}
 		catch(UGError& err){

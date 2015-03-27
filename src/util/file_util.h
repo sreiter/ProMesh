@@ -15,7 +15,7 @@ QString GetFileContent(QString filename);
 
 bool FileExists(const QString& dirname);
 
-void EraseDirectory(QString dirName);
+bool EraseDirectory(QString dirName);
 
 ///	recursively copies a directory
 void CopyDirectory(QString dirName, QString destDirName);

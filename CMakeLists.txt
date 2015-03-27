@@ -106,7 +106,7 @@ else(DEBUG)
 	# Enable these flags for a fast ublas algebra
 	
 	#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DNDEBUG -DBOOST_UBLAS_NDEBUG -O3 -Wall -funroll-loops -ftree-vectorize -msse3 -mssse3")
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DNDEBUG -DBOOST_UBLAS_NDEBUG -O3 -Wall -funroll-loops -ftree-vectorize")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DNDEBUG -DBOOST_UBLAS_NDEBUG")
 	if(GENERATE_DEBUG_SYMBOLS)
 		message(STATUS "INFO: Generating debug symbols (-g) (Disable by defining -DGENERATE_DEBUG_SYMBOLS=OFF)")
 		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
@@ -155,6 +155,8 @@ if(UNIX)
 	else(APPLE)
 		add_definitions(-DPROMESH_INCLUDE_GL_GLU)
 	endif(APPLE)
+elseif(WIN32)
+	add_definitions(-DPROMESH_INCLUDE_GL_GLU)
 endif(UNIX)
 
 
@@ -177,11 +179,13 @@ if(UNIX)
 	endif(APPLE)
 else(UNIX)
 	if(MINGW)
-		# resource compilation for MinGW
+		# resource compilation for MINGW
 		ADD_CUSTOM_COMMAND( OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/ProMeshIcon.o
 							COMMAND windres.exe -I${CMAKE_SOURCE_DIR}/deploy_data -i${CMAKE_SOURCE_DIR}/deploy_data/ProMeshIcon.rc 
                              -o ${CMAKE_CURRENT_BINARY_DIR}/ProMeshIcon.o )
 		ADD_EXECUTABLE(ProMesh4 WIN32 ${allSources} ProMeshIcon.o)
+	else(MINGW)
+		ADD_EXECUTABLE(ProMesh4 WIN32 ${allSources} ${CMAKE_SOURCE_DIR}/deploy_data/ProMeshIcon.rc)
 	endif(MINGW)
 endif(UNIX)
 

@@ -119,7 +119,7 @@ get_object_index(ISceneObject* pObj)
 	for(size_t i = 0; i < m_vObjects.size(); ++i)
 	{
 		if(m_vObjects[i] == pObj)
-			return i;
+			return (int)i;
 	}
 	return -1;
 }
