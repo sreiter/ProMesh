@@ -33,17 +33,25 @@ string GroupNameToID(const string& str);
 void GenerateResourceFile(const string& filename, const string& contentPath);
 
 #define mkstr(s)	(Stringify() << s).str()
-
+#define mkpath(s)	(AdjustPathSeparators(mkstr(s)))
 
 map<string, bool>	groups;
 map<string, string>	originalGroupNames;
 
 
+std::string AdjustPathSeparators(std::string str){
+	#ifdef UNIX
+		return ReplaceAll(str, "\\", "/");
+	#elif WINDOWS
+		return ReplaceAll(str, "/", "\\");
+	#endif
+}
+
 void DeleteDirectory(string path){
 	#ifdef UNIX
 		system(mkstr("rm -rf " << path).c_str());
 	#elif WINDOWS
-		UG_THROW("Please implement directory-remove for windows")
+		system(mkstr("RD /S /Q " << path).c_str());
 	#endif
 }
 
@@ -51,7 +59,7 @@ void CopyFile(string from, string to){
 	#ifdef UNIX
 		system(mkstr("cp -f " << from << " " << to).c_str());
 	#elif WINDOWS
-		UG_THROW("Please implement recursive directory copy for windows")
+		system(mkstr("copy " << from << " " << to << "/y").c_str());
 	#endif
 }
 
@@ -59,7 +67,7 @@ void CopyDirectory(string from, string to){
 	#ifdef UNIX
 		system(mkstr("cp -r " << from << " " << to).c_str());
 	#elif WINDOWS
-		UG_THROW("Please implement recursive directory copy for windows")
+		system(mkstr("xcopy " << from << " " << to << "/s /e /y").c_str());
 	#endif
 }
 
@@ -80,8 +88,8 @@ string ReadFile(string filename){
 
 int main(){
 	cout << "docugen - script documentation generator for promesh" << endl;
-	cout << "promesh-root-path: " << PROMESH_ROOT_PATH << endl;
-	const string pmPath = PROMESH_ROOT_PATH;
+	const string pmPath = AdjustPathSeparators(PROMESH_ROOT_PATH);
+	cout << "promesh-root-path: " << pmPath << endl;
 
 	try{
 		InitBridge();
@@ -208,17 +216,17 @@ int main(){
 		}
 
 	//	copy the docu-sources to this folder so that doxygen can find them
-		if(DirectoryExists("./doxysrc"))
-			DeleteDirectory("./doxysrc");		
-		CopyDirectory(mkstr(pmPath << "docugen/doxysrc"), "./");
+		if(DirectoryExists(mkpath("./doxysrc")))
+			DeleteDirectory(mkpath("./doxysrc"));
+		CopyDirectory(mkpath(pmPath << "docugen/doxysrc"), mkpath("./doxysrc/"));
 
 	//	'clear' old documentation
-		if(DirectoryExists("./html"))
-			DeleteDirectory("./html");	
+		if(DirectoryExists(mkpath("./html")))
+			DeleteDirectory(mkpath("./html"));
 
 	//	call doxygen to generate the source tree
 		UG_LOG("Executing doxygen...\n");
-		string doxyDesc = "doxysrc/DoxygenConfig.txt";
+		string doxyDesc = mkpath("doxysrc/DoxygenConfig.txt");
 		if(system(mkstr("doxygen " << doxyDesc).c_str()) != 0){
 			UG_THROW("Execution of 'doxygen' failed for doxy-file " << doxyDesc);
 		}
@@ -227,18 +235,18 @@ int main(){
 	//	set up the docs/html folder in PROMESH_ROOT_PATH.
 	//	If the html path already exists we'll delete it. We'll use some os-specific
 	//	functions here...
-		if(!DirectoryExists(mkstr(pmPath << "docs")))
-			CreateDirectory(mkstr(pmPath << "docs"));
-		if(DirectoryExists(mkstr(pmPath << "docs/html")))
-			DeleteDirectory(mkstr(pmPath << "docs/html"));
-		CopyDirectory("./html", mkstr(pmPath << "docs/"));
+		if(!DirectoryExists(mkpath(pmPath << "docs")))
+			CreateDirectoryTMP(mkpath(pmPath << "docs").c_str());
+		if(DirectoryExists(mkpath(pmPath << "docs/html")))
+			DeleteDirectory(mkpath(pmPath << "docs/html"));
+		CopyDirectory(mkpath("./html"), mkpath(pmPath << "docs/html/"));
 
 	//	copy the version information into the html folder
-		CopyFile(mkstr(pmPath << "version.txt"), mkstr(pmPath << "docs/html/version.txt"));
+		CopyFile(mkpath(pmPath << "version.txt"), mkpath(pmPath << "docs/html/version.txt"));
 
 	//	now we'll create the qt-resource file containing all the help files
 		UG_LOG("Generating qt resource file...\n");
-		GenerateResourceFile(mkstr(pmPath << "docs/html-resources.qrc"), "html");
+		GenerateResourceFile(mkpath(pmPath << "docs/html-resources.qrc"), "html");
 
 		UG_LOG("done\n");
 	}

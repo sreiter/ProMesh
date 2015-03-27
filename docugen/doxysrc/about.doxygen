@@ -2,12 +2,15 @@
 \promesh<br>
 (c) 2006-2015 Sebastian Reiter<br>
 (c) 2006-2008 Steinbeis Zentrum “Simulation in Technology”, Ölbronn, Germany<br>
-(c) 2008-2015 G-CSC, Goethe-University Frankfurt am Main, Germany<br>
+(c) 2008-2015 G-CSC, Goethe-Universität Frankfurt am Main, Germany<br>
 
 <hr>
 
-\promesh is under active development at the Goethe Center for Scientific Computing (G-CSC),
-Goethe University Frankfurt am Main
+\promesh has been created by Sebastian Reiter during his work at the <em>Goethe-Center for Scientific Computing</em> at the
+<em>Goethe-University Frankfurt am Main</em> and at the <em>Steinbeis Zentrum
+"Simulation in Technology"</em> as a stand-alone part of the <em>UG4</em> simulation framework
+(see \ref pageExternalLibraries).
+\promesh continues to be under active development at the <em>Goethe-Center for Scientific Computing</em>
 (<a title="Simulation and Modeling at the Goethe Center for Scientific Computations"
 href="http://gcsc.uni-frankfurt.de/simulation-and-modelling">
 http://gcsc.uni-frankfurt.de/simulation-and-modelling
