@@ -32,6 +32,8 @@ Fixes:
   (distance to focus point is now considered too to compute near-clipping plane)
 - Fixed special cases in delaunay-triangulation and delaunay-refinement used in
   Triangulate and Retriangulate
+- Subsets-CopySubsetIndicesToSides: Subsets of lower dimension are now treated
+  with a higher priority than subsets with higher dimension.
 
 
 -------------------------------------------------------------------------------
