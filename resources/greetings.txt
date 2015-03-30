@@ -1,4 +1,4 @@
 ProMesh (c) 2006-2015 Sebastian Reiter
             2006-2008 Steinbeis Zentrum "Simulation in Technology", Oelbronn, Germany
-            2008-2015 G-CSC, Goethe-University Frankfurt am Main, Germany
+            2008-2015 G-CSC, Goethe-Universitaet Frankfurt am Main, Germany
 Licensed for non-commercial use only (see "Help->License").
