@@ -79,7 +79,10 @@ int main(int argc, char *argv[])
 	setlocale(LC_NUMERIC, "C");
 
 	for(int i = 1; i < argc; ++i){
-		pMainWindow->load_grid_from_file(argv[i]);
+		if(pMainWindow->load_grid_from_file(argv[i])){
+			pMainWindow->settings().setValue("file-path",
+											 QFileInfo(argv[i]).absolutePath());
+		}
 	}
 
 	return myApp.exec();
