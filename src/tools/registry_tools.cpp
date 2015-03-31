@@ -335,6 +335,7 @@ void RegsiterRegistryTools(ToolManager* toolMgr)
 
 	RegisterTool(toolMgr, reg, "Mark Corners Of Marked Edges", "MarkCornersOfMarkedEdges");
 
+	RegisterTool(toolMgr, reg, "Replace Valence 3 Vertices", "ReplaceValence3Vertices");
 	RegisterTool(toolMgr, reg, "Replace Low Valence Vertices", "ReplaceLowValenceVertices");
 	RegisterTool(toolMgr, reg, "Adjust Edge Length Extended", "AdjustEdgeLengthExtended");
 
