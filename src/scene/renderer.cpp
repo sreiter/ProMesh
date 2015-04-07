@@ -43,6 +43,7 @@ void Renderer::standard_render(GLuint displayList, libGrid::Grid& grid,
 	Grid::FaceAttachmentAccessor<ANormal> aaNorm(grid, aNormal);
 	Grid::FaceAttachmentAccessor<ASphere> aaSphereFACE(grid, aBoundingSphere);
 	Grid::VolumeAttachmentAccessor<ASphere> aaSphereVOL(grid, aBoundingSphere);
+	Grid::face_traits::secure_container faces;
 
 //	create a display list
 	glNewList(displayList, GL_COMPILE);
@@ -258,10 +259,9 @@ void Renderer::standard_render(GLuint displayList, libGrid::Grid& grid,
 				if(bDraw)
 				{
 				//	iterate through associated faces.
-					FaceIterator iterEnd = grid.associated_faces_end(v);
-					for(FaceIterator iter = grid.associated_faces_begin(v); iter != iterEnd; ++iter)
-					{
-						Face* f = *iter;
+					grid.associated_elements(faces, v);
+					for(size_t iface = 0; iface < faces.size(); ++iface){
+						Face* f = faces[iface];
 						if(sh.get_subset_index(f) == -1)
 						{
 							if(!ClipFace(f, aaSphereFACE[f], m_clipPlane, aaPos))

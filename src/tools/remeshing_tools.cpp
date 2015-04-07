@@ -195,7 +195,7 @@ public:
 
 	const char* get_name()		{return "Tetrahedralize";}
 	const char* get_tooltip()	{return TOOLTIP_TETRAHEDRALIZE;}
-	const char* get_group()		{return "Remeshing | Tetgen";}
+	const char* get_group()		{return "Remeshing | Tetrahedra";}
 
 	ToolWidget* get_dialog(QWidget* parent){
 		ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
@@ -238,7 +238,7 @@ public:
 
 	const char* get_name()		{return "Assign Volume Constraints";}
 	const char* get_tooltip()	{return TOOLTIP_ASSIGN_VOLUME_CONSTRAINTS;}
-	const char* get_group()		{return "Remeshing | Tetgen";}
+	const char* get_group()		{return "Remeshing | Tetrahedra";}
 
 	ToolWidget* get_dialog(QWidget* parent){
 		ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
@@ -258,7 +258,7 @@ public:
 
 	const char* get_name()		{return "Clear Volume Constraints";}
 	const char* get_tooltip()	{return TOOLTIP_CLEAR_VOLUME_CONSTRAINTS;}
-	const char* get_group()		{return "Remeshing | Tetgen";}
+	const char* get_group()		{return "Remeshing | Tetrahedra";}
 };
 
 class ToolRetetrahedralize : public ITool
@@ -291,7 +291,7 @@ public:
 
 	const char* get_name()		{return "Retetrahedralize";}
 	const char* get_tooltip()	{return TOOLTIP_RETETRAHEDRALIZE;}
-	const char* get_group()		{return "Remeshing | Tetgen";}
+	const char* get_group()		{return "Remeshing | Tetrahedra";}
 
 	ToolWidget* get_dialog(QWidget* parent){
 		ToolWidget *dlg = new ToolWidget(get_name(), parent, this,

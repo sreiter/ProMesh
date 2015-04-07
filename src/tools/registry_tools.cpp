@@ -345,13 +345,19 @@ void RegsiterRegistryTools(ToolManager* toolMgr)
 	RegisterTool(toolMgr, reg, "Subset Kinks", "SelectSubsetKinkVertices");
 
 	RegisterTool(toolMgr, reg, "Linked Edges", "SelectLinkedEdges");
-	RegisterTool(toolMgr, reg, "Linked Face", "SelectLinkedFaces");
+	RegisterTool(toolMgr, reg, "Linked Faces", "SelectLinkedFaces");
 	RegisterTool(toolMgr, reg, "Linked Volumes", "SelectLinkedVolumes");
 
 	RegisterTool(toolMgr, reg, "Select Short Polychains", "SelectShortPolychains");
+
+	RegisterTool(toolMgr, reg, "Interface Vertices", "SelectInterfaceVertices");
+	RegisterTool(toolMgr, reg, "Interface Edges", "SelectInterfaceEdges");
+	RegisterTool(toolMgr, reg, "Interface Faces", "SelectInterfaceFaces");
 
 	RegisterTool(toolMgr, reg, "Remove Double Faces", "RemoveDoubleFaces");
 	
 	RegisterTool(toolMgr, reg, "Simplify Polylines", "SimplifyPolylines");
 	RegisterTool(toolMgr, reg, "Simplify Smoothed Polylines", "SimplifySmoothedPolylines");
+
+	RegisterTool(toolMgr, reg, "Convert To Tetrahedra", "ConvertToTetrahedra");
 }

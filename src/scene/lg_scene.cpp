@@ -2569,6 +2569,8 @@ get_volumes_in_rect_cut(std::vector<Volume*>& volsOut,
 		
 		grid.begin_marking();
 
+		Grid::volume_traits::secure_container vols;
+
 		for(FaceIterator iter = grid.begin<Face>();
 			iter != grid.end<Face>(); ++iter)
 		{
@@ -2613,13 +2615,13 @@ get_volumes_in_rect_cut(std::vector<Volume*>& volsOut,
 
 			if(intersecting){
 			//	since the face is intersecting, associated volumes do so too.
-				for(Grid::AssociatedVolumeIterator vIter = grid.associated_volumes_begin(f);
-					vIter != grid.associated_volumes_end(f); ++vIter)
-				{
-					if(!grid.is_marked(*vIter)){
-						grid.mark(*vIter);
-						if(obj->subset_is_visible(sh.get_subset_index(*vIter)))
-							volsOut.push_back(*vIter);
+				grid.associated_elements(vols, f);
+				for(size_t ivol = 0; ivol < vols.size(); ++ivol){
+					Volume* vol = vols[ivol];
+					if(!grid.is_marked(vol)){
+						grid.mark(vol);
+						if(obj->subset_is_visible(sh.get_subset_index(vol)))
+							volsOut.push_back(vol);
 					}
 				}
 			}

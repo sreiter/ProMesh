@@ -71,7 +71,10 @@ ok	* add (c) Sebastian Reiter to About Page
 
   - VecMath:
   	add, subtract, copy-construct, assign, ...
-  -	Check out why exit() causes a crash when a tool is executed again.
+  - Save:
+  	* take directory from object and not from settings
+  - Delete-Object / Exit:
+	* introduce 'revision' to check whether a warning has to be shown.
 
 4.2.X
   - Compilation
