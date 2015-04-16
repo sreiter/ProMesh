@@ -12,6 +12,7 @@ var group__promesh__Selection__Edges =
     [ "SelectEdgesInBox", "group__promesh__Selection__Edges.html#ga94a0c6019477a029c32a4435eb71a78c", null ],
     [ "SelectEdgesInCylinder", "group__promesh__Selection__Edges.html#ga6b888026b5258813227c9c4eb2692791", null ],
     [ "SelectInnerEdges", "group__promesh__Selection__Edges.html#ga6971ee68293a198a7cc9a69ffcee920f", null ],
+    [ "SelectInterfaceEdges", "group__promesh__Selection__Edges.html#ga2cadc6ec309f2181fe59b01cab14014c", null ],
     [ "SelectLinkedBoundaryEdges", "group__promesh__Selection__Edges.html#ga0d55a88118da224ed3fa3ba94fed7764", null ],
     [ "SelectLinkedEdges", "group__promesh__Selection__Edges.html#ga4ec279e35c7c59f83037564e8fea6a5c", null ],
     [ "SelectLongEdges", "group__promesh__Selection__Edges.html#ga4171ac5ea9095c70339657024d7ff756", null ],

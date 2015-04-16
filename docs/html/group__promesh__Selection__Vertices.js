@@ -5,6 +5,7 @@ var group__promesh__Selection__Vertices =
     [ "SelectAssociatedVertices", "group__promesh__Selection__Vertices.html#gae6cc162cd40b79a31a9b5cc4e222fc82", null ],
     [ "SelectBoundaryVertices", "group__promesh__Selection__Vertices.html#ga4df4b70810742b306399e5ba5b516a86", null ],
     [ "SelectInnerVertices", "group__promesh__Selection__Vertices.html#ga431d3228d4bc0350cc0080c015ff990a", null ],
+    [ "SelectInterfaceVertices", "group__promesh__Selection__Vertices.html#gaf00764a13cd21c0ef47af02c32c94010", null ],
     [ "SelectMarkedVertices", "group__promesh__Selection__Vertices.html#gac81edebf88c90e4c836823f7329a58df", null ],
     [ "SelectSelectionKinkVertices", "group__promesh__Selection__Vertices.html#ga5c6edbe965b52f0239ae989b1c057cea", null ],
     [ "SelectSubsetKinkVertices", "group__promesh__Selection__Vertices.html#ga5947a4030792195ca064a790d69440f8", null ],

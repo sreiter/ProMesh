@@ -108,8 +108,10 @@ Changes and additions:
 - New tool Remeshing-RemoveDoubles-RemoveDoubleFaces
 - New tools Remeshing-Polylines-SimplifyPolylines and -SimplifySmoothedPolylines
 - New tools Remeshing-Triangulation-ReplaceLowValenceVertices and -AdjustEdgeLengthExtended
+- New tool Remeshing-Tetrahedra-ConvertToTetrahedra
 - New tool Selection-SelectShortPolychains
 - New tools Selection-Edges/Faces/Volumes-LinkedEdges/Faces/Volumes
+- New tool Selection-Faces-InterfaceFaces
 - New tools Selection-Vertices-SelectionKinks and -SubsetKinks
 - Added read support for binary .stl files
 - Added read/write support for ascii .vtu files
@@ -127,6 +129,14 @@ Fixes:
   Triangulate and Retriangulate
 - Subsets-CopySubsetIndicesToSides: Subsets of lower dimension are now treated
   with a higher priority than subsets with higher dimension.
+- Disabled strict subset inheritance. Edges created through splits or refinement
+  will now be assigned to the subset of the orignial face.
+- Fixed crash in Retretrahedralize
+- CollapseEdge now also supports Pyramids and Prisms (note that new volume elements
+  can only be created for some of the possible collapse-constellations)
+- MergeVertices now handles quadrilaterals, prisms, and pyramids more gracefully.
+  As also seen in CollapseEdge, there are collapse-constellations for which it is not
+  possible to create new volume elements from affected prisms and/or pyramids.
 
 
 -------------------------------------------------------------------------------
@@ -918,7 +928,7 @@ Fixes:
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">(c) Sebastian Reiter. Generated on Tue Mar 31 2015 13:30:51 for ProMesh User Manual by
+    <li class="footer">(c) Sebastian Reiter. Generated on Thu Apr 16 2015 15:14:07 for ProMesh User Manual by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 </li>
   </ul>

@@ -361,6 +361,8 @@ void LGScene::get_clip_distance_estimate(float& nearOut, float& farOut,
 	VecSubtract(dir, to, from);
 
 	Sphere3 bndSphere = get_bounding_sphere();
+	if(bndSphere.get_radius() < SMALL)
+		bndSphere.set_radius(1);
 
 	float distToCenter = DistancePointToPlane(bndSphere.get_center(), from, dir);
 	farOut = distToCenter + bndSphere.get_radius() * 1.01;

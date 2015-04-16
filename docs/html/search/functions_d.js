@@ -12,6 +12,6 @@ var searchData=
   ['resolveedgeintersection',['ResolveEdgeIntersection',['../group__promesh__Remeshing__Resolve__Intersections__Advanced.html#gadeb49d723cf03e9aff2e630c76891723',1,'script_reference.cpp']]],
   ['resolveselfintersections',['ResolveSelfIntersections',['../group__promesh__Remeshing__Resolve__Intersections.html#gab478cb8a07b9b2c01328a15130530bf2',1,'script_reference.cpp']]],
   ['resolvetriangleintersections',['ResolveTriangleIntersections',['../group__promesh__Remeshing__Resolve__Intersections__Advanced.html#ga07bb54d9c2131ee0947dc9d6167d9b8c',1,'script_reference.cpp']]],
-  ['retetrahedralize',['Retetrahedralize',['../group__promesh__Remeshing__Tetgen.html#gac08492910c32fca0ba9320797963ed04',1,'script_reference.cpp']]],
+  ['retetrahedralize',['Retetrahedralize',['../group__promesh__Remeshing__Tetrahedra.html#gac08492910c32fca0ba9320797963ed04',1,'script_reference.cpp']]],
   ['retriangulate',['Retriangulate',['../group__promesh__Remeshing__Triangulation.html#gafb5980d29bf477b771ad6a6e5112779a',1,'script_reference.cpp']]]
 ];

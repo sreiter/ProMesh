@@ -45,6 +45,7 @@
 <file>html/toolbar-box-contains-selection.png</file>
 <file>html/group__promesh__Selection__Faces.html</file>
 <file>html/ftv2doc.png</file>
+<file>html/group__promesh__Remeshing__Tetrahedra.html</file>
 <file>html/group__promesh__Remeshing__Edge__Operations.js</file>
 <file>html/resize.js</file>
 <file>html/group__ugbase_classISubsetHandler.js</file>
@@ -73,6 +74,7 @@
 <file>html/group__ugbase.js</file>
 <file>html/group__promesh__Util_classBox.js</file>
 <file>html/pageAbout.html</file>
+<file>html/group__promesh__Remeshing__Tetrahedra.js</file>
 <file>html/pages.html</file>
 <file>html/ftv2plastnode.png</file>
 <file>html/navtreeindex1.js</file>
@@ -130,12 +132,10 @@
 <file>html/tab_b.png</file>
 <file>html/group__promesh__Remeshing__Resolve__Intersections__Advanced.html</file>
 <file>html/doxygen.png</file>
-<file>html/group__promesh__Remeshing__Tetgen.js</file>
 <file>html/group__promesh__Selection.html</file>
 <file>html/pageContact.html</file>
 <file>html/group__promesh__Remeshing__Triangulation.html</file>
 <file>html/group__promesh__Remeshing__Resolve__Intersections.js</file>
-<file>html/group__promesh__Remeshing__Tetgen.html</file>
 <file>html/group__promesh__Remeshing.js</file>
 <file>html/group__promesh__File__IO.js</file>
 <file>html/group__promesh__Remeshing__Refinement.html</file>

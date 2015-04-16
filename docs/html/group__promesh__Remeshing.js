@@ -9,7 +9,7 @@ var group__promesh__Remeshing =
     [ "Refinement", "group__promesh__Remeshing__Refinement.html", "group__promesh__Remeshing__Refinement" ],
     [ "Remove Doubles", "group__promesh__Remeshing__Remove__Doubles.html", "group__promesh__Remeshing__Remove__Doubles" ],
     [ "Resolve Intersections", "group__promesh__Remeshing__Resolve__Intersections.html", "group__promesh__Remeshing__Resolve__Intersections" ],
-    [ "Tetgen", "group__promesh__Remeshing__Tetgen.html", "group__promesh__Remeshing__Tetgen" ],
+    [ "Tetrahedra", "group__promesh__Remeshing__Tetrahedra.html", "group__promesh__Remeshing__Tetrahedra" ],
     [ "Triangulation", "group__promesh__Remeshing__Triangulation.html", "group__promesh__Remeshing__Triangulation" ],
     [ "CreateShrinkGeometry", "group__promesh__Remeshing.html#gaf4b1204aac9c0aeaf046742da90e5708", null ],
     [ "Duplicate", "group__promesh__Remeshing.html#ga65e0ca6f97c044d0a43a5e1b36f9561c", null ],

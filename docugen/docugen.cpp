@@ -128,7 +128,7 @@ int main(){
 		DefineGroup(out, "promesh_Remeshing_Remove_Doubles", "Remove Doubles", "Removal of duplicate geometry.", "promesh_Remeshing");
 		DefineGroup(out, "promesh_Remeshing_Resolve_Intersections", "Resolve Intersections", "Tools to resolve geometric intersections of different elements with the goal to construct consistent meshes.", "promesh_Remeshing");
 		DefineGroup(out, "promesh_Remeshing_Resolve_Intersections_Advanced", "Advanced", "Tools to resolve special geomegric intersections separately from each other.", "promesh_Remeshing_Resolve_Intersections");
-		DefineGroup(out, "promesh_Remeshing_Tetgen", "Tetgen", "Tetrahedral mesh generation and remeshing of tetrahedral meshes through the library TetGen.", "promesh_Remeshing");
+		DefineGroup(out, "promesh_Remeshing_Tetrahedra", "Tetrahedra", "Tetrahedral mesh generation and remeshing of tetrahedral meshes through the library TetGen.", "promesh_Remeshing");
 		DefineGroup(out, "promesh_Remeshing_Triangulation", "Triangulation", "Several algorithms to generate and to remesh triangular grids.", "promesh_Remeshing");
 		DefineGroup(out, "promesh_Selection_Marks", "Marks", "Tools to set and remove marks on a mesh.", "promesh_Selection");
 		DefineGroup(out, "promesh_Subsets", "Subsets", "Tools to group elements in subsets and to manage those subsets", "promesh");

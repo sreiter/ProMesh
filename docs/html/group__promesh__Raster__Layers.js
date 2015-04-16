@@ -10,7 +10,7 @@ var group__promesh__Raster__Layers =
       [ "remove_small_holes", "group__promesh__Raster__Layers.html#a5fa4f040eb708bb6327321e301827283", null ],
       [ "snap_cells_to_higher_layers", "group__promesh__Raster__Layers.html#a150c198be839f6d670e7bb6edd67f2e4", null ]
     ] ],
-    [ "ExtrudeLayers", "group__promesh__Raster__Layers.html#ga8ae0f02b12b3fa48eaafe34c91f7528c", null ],
+    [ "ExtrudeLayers", "group__promesh__Raster__Layers.html#gace52f38f64173084fd79c5b3615f688c", null ],
     [ "MeshLayerBoundaries", "group__promesh__Raster__Layers.html#gadec45fe7d6a84a31e81d170e77536e92", null ],
     [ "MeshLayers", "group__promesh__Raster__Layers.html#ga4eb2046a240360a310b532862197e90c", null ]
 ];

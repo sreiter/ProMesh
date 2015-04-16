@@ -348,6 +348,9 @@ void RegsiterRegistryTools(ToolManager* toolMgr)
 	RegisterTool(toolMgr, reg, "Linked Faces", "SelectLinkedFaces");
 	RegisterTool(toolMgr, reg, "Linked Volumes", "SelectLinkedVolumes");
 
+	RegisterTool(toolMgr, reg, "Select Anisotropic Faces", "SelectAnisotropicFaces");
+	RegisterTool(toolMgr, reg, "Select Anisotropic Volumes", "SelectAnisotropicVolumes");
+	
 	RegisterTool(toolMgr, reg, "Select Short Polychains", "SelectShortPolychains");
 
 	RegisterTool(toolMgr, reg, "Interface Vertices", "SelectInterfaceVertices");

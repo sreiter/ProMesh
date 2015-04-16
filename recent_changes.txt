@@ -39,6 +39,11 @@ Fixes:
 - Disabled strict subset inheritance. Edges created through splits or refinement
   will now be assigned to the subset of the orignial face.
 - Fixed crash in Retretrahedralize
+- CollapseEdge now also supports Pyramids and Prisms (note that new volume elements
+  can only be created for some of the possible collapse-constellations)
+- MergeVertices now handles quadrilaterals, prisms, and pyramids more gracefully.
+  As also seen in CollapseEdge, there are collapse-constellations for which it is not
+  possible to create new volume elements from affected prisms and/or pyramids.
 
 
 -------------------------------------------------------------------------------
