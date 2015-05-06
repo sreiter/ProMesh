@@ -2,6 +2,21 @@ Recent changes:
 
 
 -------------------------------------------------------------------------------
+v 4.2.1
+Changes and additions:
+- After extrusion only the newly created rim elements (vertices, edges, faces)
+  are now selected. In order to select newly created volumes, use Selection-ExtendSelection.
+- Added Info-Tool: PrintSelectionDirection
+- Tool Subset-AssignSubset now allows to assign selected vertices/edges/faces/volumes only
+- RasterLayers now support a separate min-height for each layer
+
+Fixes:
+- FileIO_ASC now reads rows in reverse order, now matching the format specifications
+- Fixed false offset of imported geometry from FileIO_ASC
+
+
+
+-------------------------------------------------------------------------------
 v 4.2.0
 Changes and additions:
 - Now using Qt5

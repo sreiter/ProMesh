@@ -36,6 +36,40 @@ class ToolPrintSelectionCenter : public ITool
 		const char* get_group()		{return "Info";}
 };
 
+class ToolPrintSelectionDirection : public ITool
+{
+	public:
+		void execute(LGObject* obj, QWidget*){
+
+			ug::Selector& sel = obj->selector();
+			LGObject::position_accessor_t aaPos = obj->position_accessor();
+
+			VertexIterator i0 = sel.begin<Vertex>();
+			if(i0 == sel.end<Vertex>()){
+				UG_LOG("At least 2 vertices have to be selected");
+			}
+
+			VertexIterator i1 = sel.begin<Vertex>();
+			++i1;
+			if(i1 == sel.end<Vertex>()){
+				UG_LOG("At least 2 vertices have to be selected");
+			}
+
+			while(i1 != sel.end<Vertex>()){
+				vector3 d;
+				VecSubtract(d, aaPos[*i1], aaPos[*i0]);
+				UG_LOG("direction between vertices " << aaPos[*i0] << " and "
+						<< aaPos[*i1] << ": " << d << endl);
+				++i0;
+				++i1;
+			}
+		}
+
+		const char* get_name()		{return "Print Selection Direction";}
+		const char* get_tooltip()	{return "Prints the direction of subsequently selected vertices.";}
+		const char* get_group()		{return "Info";}
+};
+
 class ToolPrintGeometryInfo : public ITool
 {
 	public:
@@ -262,6 +296,7 @@ void RegisterInfoTools(ToolManager* toolMgr)
 	toolMgr->set_group_icon("Info", ":images/tool_info.png");
 
 	toolMgr->register_tool(new ToolPrintSelectionCenter, Qt::Key_I, SMK_ALT);
+	toolMgr->register_tool(new ToolPrintSelectionDirection);
 	toolMgr->register_tool(new ToolPrintGeometryInfo, Qt::Key_I);
 	toolMgr->register_tool(new ToolPrintFaceQuality);
 	toolMgr->register_tool(new ToolPrintSelectionInfo);

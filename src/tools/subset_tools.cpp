@@ -18,13 +18,21 @@ class ToolAssignSubset : public ITool
 
 			QString subsetName = "";
 			int newIndex = 0;
+			bool vertices = true;
+			bool edges = true;
+			bool faces = true;
+			bool volumes = true;
 
 			if(dlg){
 				subsetName = dlg->to_string(0);
 				newIndex = dlg->to_int(1);
+				vertices = dlg->to_bool(2);
+				edges = dlg->to_bool(3);
+				faces = dlg->to_bool(4);
+				volumes = dlg->to_bool(5);
 			}
 
-			promesh::AssignSubset(obj, newIndex);
+			promesh::AssignSubset(obj, newIndex, vertices, edges, faces, volumes);
 			if((newIndex >= 0) && (!subsetName.isEmpty()))
 				promesh::SetSubsetName(obj, newIndex, subsetName.toLocal8Bit().constData());
 
@@ -42,6 +50,10 @@ class ToolAssignSubset : public ITool
 											IDB_APPLY | IDB_OK | IDB_CLOSE);
 			dlg->addTextBox(tr("new subset name:"), "");
 			dlg->addSpinBox(tr("new subset index:"), -1, 1e+9, 0., 1., 0);
+			dlg->addCheckBox(tr("assign vertices"), true);
+			dlg->addCheckBox(tr("assign edges"), true);
+			dlg->addCheckBox(tr("assign faces"), true);
+			dlg->addCheckBox(tr("assign volumes"), true);
 			return dlg;
 		}
 };

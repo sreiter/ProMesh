@@ -71,6 +71,17 @@ void CopyDirectory(string from, string to){
 	#endif
 }
 
+void ReplaceLineInFile(string filename, string searchStr, string newStr){
+	#ifdef UNIX
+		string cmdline = mkstr("sed -i '/" << searchStr << "/c\\" << newStr
+							   << "' " << filename);
+		// cout << "calling: " << cmdline << endl;
+		system(cmdline.c_str());
+	#elif WINDOWS
+		UG_THROW("ReplaceLineInFile not yet implemented for WINDOWS");
+	#endif	
+}
+
 string ReadFile(string filename){
 	ifstream t(filename.c_str());
 	string str;
@@ -162,6 +173,8 @@ int main(){
 		WriteClass(out, reg, "Volume", "ugbase");
 		// WriteClass(out, reg, "Heightfield", "ugbase");
 		WriteClass(out, reg, "RasterLayers", "promesh_Raster_Layers");
+		WriteClass(out, reg, "RasterLayerDesc", "promesh_Raster_Layers");
+		
 		WriteGroupMembers(out, reg, "promesh");
 
 	//	iterate over all groups and log undefined ones. Add a dummy definition for
@@ -219,6 +232,12 @@ int main(){
 		if(DirectoryExists(mkpath("./doxysrc")))
 			DeleteDirectory(mkpath("./doxysrc"));
 		CopyDirectory(mkpath(pmPath << "docugen/doxysrc"), mkpath("./doxysrc/"));
+
+	//	adjust the doxygen script by adding the current version number
+		string version = ReadFile(mkpath(pmPath << "version.txt"));
+		ReplaceLineInFile(mkpath(mkpath("./doxysrc/DoxygenConfig.txt")),
+							"PROJECT_NUMBER\\s*=",
+							mkstr("PROJECT_NUMBER         = \"v" << version << "\""));
 
 	//	'clear' old documentation
 		if(DirectoryExists(mkpath("./html")))

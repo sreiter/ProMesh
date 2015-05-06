@@ -14,10 +14,11 @@ The camera is moved by pressing a mouse-button and moving the mouse:
 \subsection subsecMoveCamera Move
 	- <b>Middle-Mouse-Button Drag:</b> Move the camera in its current plane.
 	- <b>Ctrl (Cmd) + Left-Mouse-Button Drag:</b> Move the camera in its current plane.
-	- <b>Shift + Left-Mouse-Button Drag:</b> Move the camera and the focus-point into/out of the screen.
+	- <b>Ctrl (Cmd) + Shift + Left-Mouse-Button Drag:</b> Move the camera and the focus-point into/out of the screen.
 
 \subsection subsecZoom Zoom
 	- <b>Mouse-Wheel Up/Down:</b> Zoom in/out
+	- <b>Shift + Left-Mouse-Button Drag:</b> Zoom in/out
 
 \subsection subsecFocus Focus
 	- <b>Left-Mouse-Button Double-Click:</b> Set the camera focus to the clicked position.

@@ -83,7 +83,7 @@ var searchData=
   ['simplifypolylines',['SimplifyPolylines',['../group__promesh__Remeshing__Polylines.html#ga2fe7e5ecbf344dcb44b5933ad4817d6b',1,'script_reference.cpp']]],
   ['simplifysmoothedpolylines',['SimplifySmoothedPolylines',['../group__promesh__Remeshing__Polylines.html#gafb17a9c11ca9c31fb6072554250a2c21',1,'script_reference.cpp']]],
   ['slopesmooth',['SlopeSmooth',['../group__promesh__Coordinate__Transform.html#ga27f87efe2198d6b5e2787fc4f0e321d7',1,'script_reference.cpp']]],
-  ['snap_5fcells_5fto_5fhigher_5flayers',['snap_cells_to_higher_layers',['../group__promesh__Raster__Layers.html#a150c198be839f6d670e7bb6edd67f2e4',1,'RasterLayers']]],
+  ['snap_5fcells_5fto_5fhigher_5flayers',['snap_cells_to_higher_layers',['../group__promesh__Raster__Layers.html#a8485f4f3a1b9183058d246372a656dca',1,'RasterLayers']]],
   ['snapverticestovertices',['SnapVerticesToVertices',['../group__promesh__Coordinate__Transform.html#ga93926f94781ad70c09d18dec660efd91',1,'script_reference.cpp']]],
   ['splitedge',['SplitEdge',['../group__promesh__Remeshing__Edge__Operations.html#gaa93935618a41c01382eb1ad0c225e078',1,'script_reference.cpp']]],
   ['swapedge',['SwapEdge',['../group__promesh__Remeshing__Edge__Operations.html#gac0a7128c11a2b334854bbad0c79fd9a3',1,'script_reference.cpp']]],

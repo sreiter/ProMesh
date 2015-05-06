@@ -24,6 +24,7 @@ var hierarchy =
     ] ],
     [ "Mesh", "group__promesh.html#classMesh", null ],
     [ "number", "group__nativeTypes.html#classnumber", null ],
+    [ "RasterLayerDesc", "group__promesh__Raster__Layers.html#classRasterLayerDesc", null ],
     [ "RasterLayers", "group__promesh__Raster__Layers.html#classRasterLayers", null ],
     [ "size_t", "group__nativeTypes.html#classsize__t", null ],
     [ "string", "group__nativeTypes.html#classstring", null ],
