@@ -203,5 +203,6 @@ create_undo_history()
 {
 	stringstream ss;
 	ss << m_path << "/entry_" << m_historyCounter << "_";
+	++m_historyCounter;
 	return UndoHistory(ss.str().c_str(), m_maxUndoSteps);
 }

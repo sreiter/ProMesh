@@ -2,6 +2,15 @@ Recent changes:
 
 
 -------------------------------------------------------------------------------
+v 4.2.2
+Changes and additions:
+
+Fixes:
+- Undo was broken if multiple meshes were edited simultaneously. Now fixed.
+
+
+
+-------------------------------------------------------------------------------
 v 4.2.1
 Changes and additions:
 - After extrusion only the newly created rim elements (vertices, edges, faces)
