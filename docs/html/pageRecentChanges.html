@@ -97,9 +97,12 @@ $(document).ready(function(){initNavTree('pageRecentChanges.html','');});
 -------------------------------------------------------------------------------
 v 4.2.2
 Changes and additions:
+- CTRL+RightMouseClick now selects the whole subset independent of the current
+  selection mode.
 
 Fixes:
 - Undo was broken if multiple meshes were edited simultaneously. Now fixed.
+- Fixed a bug which occurred in RasterLayers::remove_small_holes (win-crash)
 
 
 
@@ -952,7 +955,7 @@ Fixes:
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">(c) Sebastian Reiter. Generated on Thu May 7 2015 07:37:57 for ProMesh User Manual by
+    <li class="footer">(c) Sebastian Reiter. Generated on Wed May 13 2015 11:44:17 for ProMesh User Manual by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 </li>
   </ul>
