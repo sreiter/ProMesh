@@ -264,9 +264,13 @@ void MainWindow::view3dMousePressed(QMouseEvent *event)
 
 	bool pointOnGeom = m_pView->get_ray_to_geometry(from, to, event->x(), event->y());
 
-
 	if(event->button() == Qt::RightButton){
-		switch(m_selectionMode){
+		if(selectSubset)
+			m_curSelectionMode = 0;
+		else
+			m_curSelectionMode = m_selectionMode;
+
+		switch(m_curSelectionMode){
 		case 0:{// click select
 			if(!obj)
 				return;
@@ -370,7 +374,7 @@ void MainWindow::view3dMouseMoved(QMouseEvent *event)
 {
 	switch(m_mouseMoveAction){
 		case MMA_DEFAULT:
-			if(m_selectionMode >= 1 && (event->buttons() & Qt::RightButton))
+			if(m_curSelectionMode >= 1 && (event->buttons() & Qt::RightButton))
 			{
 			//	draw the selection rect.
 				m_pView->drawSelectionRect(true, m_mouseDownPos.x(), m_mouseDownPos.y(),
@@ -385,7 +389,7 @@ void MainWindow::view3dMouseReleased(QMouseEvent *event)
 {
 //	if box select is active and the right button was released,
 //	then we have to select all elements in the box.
-	if(m_selectionMode >= 1 && event->button() == Qt::RightButton)
+	if(m_curSelectionMode >= 1 && event->button() == Qt::RightButton)
 	{
 		m_pView->drawSelectionRect(false);
 
@@ -424,7 +428,7 @@ void MainWindow::view3dMouseReleased(QMouseEvent *event)
 			case 1://edges
 			{
 				vector<Edge*> edges;
-				if(m_selectionMode == 1)
+				if(m_curSelectionMode == 1)
 					m_scene->get_edges_in_rect_cut(edges, obj, xMin, yMin, xMax, yMax);
 				else
 					m_scene->get_edges_in_rect(edges, obj, xMin, yMin, xMax, yMax);
@@ -436,7 +440,7 @@ void MainWindow::view3dMouseReleased(QMouseEvent *event)
 			case 2://faces
 			{
 				vector<Face*> faces;
-				if(m_selectionMode == 1)
+				if(m_curSelectionMode == 1)
 					m_scene->get_faces_in_rect_cut(faces, obj, xMin, yMin, xMax, yMax);
 				else
 					m_scene->get_faces_in_rect(faces, obj, xMin, yMin, xMax, yMax);
@@ -448,7 +452,7 @@ void MainWindow::view3dMouseReleased(QMouseEvent *event)
 			case 3://volumes
 			{
 				vector<Volume*> vols;
-				if(m_selectionMode == 1)
+				if(m_curSelectionMode == 1)
 					m_scene->get_volumes_in_rect_cut(vols, obj, xMin, yMin, xMax, yMax);
 				else
 					m_scene->get_volumes_in_rect(vols, obj, xMin, yMin, xMax, yMax);

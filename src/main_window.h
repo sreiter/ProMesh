@@ -151,6 +151,7 @@ class MainWindow : public QMainWindow
 	//	state-variables
 		int m_selectionElement;
 		int	m_selectionMode;
+		int m_curSelectionMode; ///< stores the selection mode of the current click. Does not necessarily equal m_selectionMode.
 		int m_elementModeListIndex;
 		int m_mouseMoveAction;
 

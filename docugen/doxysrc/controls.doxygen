@@ -42,8 +42,6 @@ or 'select-volumes' in the tool bar:
 \image html toolbar-click-selection.png
 	- <b>Right-Mouse-Button Click:</b> Only the clicked element is selected.
 	- <b>Shift + Right-Mouse-Button Click:</b> The selection-state of the clicked element is toggled (allows for multi-selection).
-	- <b>Ctrl (Cmd) + Right-Mouse-Button Click:</b>	All elements of the same type and subset as the clicked element are selected exclusively.
-	- <b>Shift + Ctrl (Cmd) + Right-Mouse-Button Click:</b>	All elements of the same type and subset as the clicked element are selected in addition to the current selection.
 
 \subsection subsecBoxCutsSelection	Box Cuts Selection
 \image html toolbar-box-cuts-selection.png
@@ -54,6 +52,11 @@ or 'select-volumes' in the tool bar:
 \image html toolbar-box-contains-selection.png
 	- <b>Right-Mouse-Button Drag:</b> All elements which lie completely inside the selection rectangle are selected exclusively.
 	- <b>Shift + Right-Mouse-Button Drag:</b> All elements which lie completely inside the selection rectangle are selected in addition to the current selection.
+
+\subsection subsecGeneral General Mouse Selection Tools
+Those shortcuts work for all selection modes (Click-, Box Cuts-, and Box-Contains-Selection)
+	- <b>Ctrl (Cmd) + Right-Mouse-Button Click:</b>	All elements of the same type and subset as the clicked element are selected exclusively.
+	- <b>Shift + Ctrl (Cmd) + Right-Mouse-Button Click:</b>	All elements of the same type and subset as the clicked element are selected in addition to the current selection.
 
 \subsection subsecSelectionShortcuts Important Shortcuts
 The following keyboard shortcuts are often useful when performing selections:

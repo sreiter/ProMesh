@@ -50,6 +50,7 @@ MainWindow::MainWindow() :
 	m_settings("G-CSC", "ProMesh4"),
 	m_selectionElement(0),
 	m_selectionMode(0),
+	m_curSelectionMode(-1),
 	m_elementModeListIndex(3),
 	m_mouseMoveAction(MMA_DEFAULT),
 	m_activeAxis(X_AXIS | Y_AXIS | Z_AXIS),

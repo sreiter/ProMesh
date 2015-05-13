@@ -4,9 +4,12 @@ Recent changes:
 -------------------------------------------------------------------------------
 v 4.2.2
 Changes and additions:
+- CTRL+RightMouseClick now selects the whole subset independent of the current
+  selection mode.
 
 Fixes:
 - Undo was broken if multiple meshes were edited simultaneously. Now fixed.
+- Fixed a bug which occurred in RasterLayers::remove_small_holes (win-crash)
 
 
 
