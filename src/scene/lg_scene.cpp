@@ -2433,18 +2433,8 @@ get_edges_in_rect_cut(std::vector<Edge*>& edgesOut,
 			if(LineBoxIntersection(vector3(vx1, vy1, vz1),
 								   vector3(vx2, vy2, vz2),
 								   boxMin, boxMax))
-/*
-			number tNear, tFar;
-			if(RayBoxIntersection(vector3(vx1, vy1, vz1),
-								  vector3(vx2 - vx1, vy2 - vy1, vz2 - vz1),
-								  boxMin, boxMax, &tNear, &tFar))
-*/
 			{
-				//if(tNear * tFar < 0 || (tNear >= 0 && tNear <= 1.))
-				{
-					//UG_LOG("tNear: " << tNear << ", tFar: " << tFar << endl);
-					edgesOut.push_back(e);
-				}
+				edgesOut.push_back(e);
 			}
 		}
 	}
