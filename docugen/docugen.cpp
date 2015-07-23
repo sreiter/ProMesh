@@ -6,7 +6,6 @@
 #include "common/util/path_provider.h"
 #include "common/util/plugin_util.h"
 #include "common/util/string_util.h"
-#include "common/util/stringify.h"
 #include "common/util/file_util.h"
 
 using namespace std;
@@ -32,7 +31,6 @@ string GroupNameToID(const string& str);
 
 void GenerateResourceFile(const string& filename, const string& contentPath);
 
-#define mkstr(s)	(Stringify() << s).str()
 #define mkpath(s)	(AdjustPathSeparators(mkstr(s)))
 
 map<string, bool>	groups;

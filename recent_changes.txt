@@ -1,5 +1,22 @@
 Recent changes:
 
+-------------------------------------------------------------------------------
+v 4.2.3
+Changes and additions:
+- .tex export now sorts elements before writing the output. Subset-Names are
+  now used to identify styles instead of subset indices.
+  An optional style-file 'custom_promesh_style.tex' is now optionally included
+  by the resulting .tex file. This allows users to override the default style
+  on a per-subset basis.
+
+- *.smesh files can now be loaded through File->Open. 'smesh' is a format defined
+  by 'tetgen'.
+
+Fixes:
+- Fixed a bug which sometimes occurred in ExtrudeLayers when 'allow for tets and pyras'
+  was enabled.
+  
+
 
 -------------------------------------------------------------------------------
 v 4.2.2

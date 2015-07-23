@@ -661,7 +661,7 @@ int MainWindow::openFile()
 								this,
 								tr("Load Geometry"),
 								path,
-								tr("geometry files (*.ugx *.vtu *.lgb *.obj *.txt *.art *.net *.dat *.lgm *.ng *.ele *.dump *.msh *.stl *.asc *.ASC)"));
+								tr("geometry files (*.ugx *.vtu *.lgb *.obj *.txt *.art *.net *.dat *.lgm *.ng *.smesh *.ele *.msh *.stl *.asc *.ASC *.dump)"));
 
 	for(QStringList::iterator iter = fileNames.begin();
 		iter != fileNames.end(); ++iter)

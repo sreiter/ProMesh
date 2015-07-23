@@ -30,7 +30,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">ProMesh User Manual
-   &#160;<span id="projectnumber">v4.2.2</span>
+   &#160;<span id="projectnumber">v4.2.3</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,6 +92,23 @@ $(document).ready(function(){initNavTree('pageRecentChanges.html','');});
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><pre class="fragment">Recent changes:
+
+-------------------------------------------------------------------------------
+v 4.2.3
+Changes and additions:
+- .tex export now sorts elements before writing the output. Subset-Names are
+  now used to identify styles instead of subset indices.
+  An optional style-file 'custom_promesh_style.tex' is now optionally included
+  by the resulting .tex file. This allows users to override the default style
+  on a per-subset basis.
+
+- *.smesh files can now be loaded through File-&gt;Open. 'smesh' is a format defined
+  by 'tetgen'.
+
+Fixes:
+- Fixed a bug which sometimes occurred in ExtrudeLayers when 'allow for tets and pyras'
+  was enabled.
+  
 
 
 -------------------------------------------------------------------------------
@@ -955,7 +972,7 @@ Fixes:
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">(c) Sebastian Reiter. Generated on Wed May 13 2015 12:01:17 for ProMesh User Manual by
+    <li class="footer">(c) Sebastian Reiter. Generated on Thu Jul 23 2015 10:46:27 for ProMesh User Manual by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 </li>
   </ul>
