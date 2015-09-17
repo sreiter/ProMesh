@@ -94,6 +94,7 @@ class MainWindow : public QMainWindow
 		void showShortcuts();
 		void showLicense();
 		void showAbout();
+		void showContact();
 		void newScript();
 		void editScript();
 		void quit();
@@ -203,6 +204,7 @@ class MainWindow : public QMainWindow
 		QAction*	m_actLicense;
 		QAction*	m_actJumpToScriptReference;
 		QAction*	m_actShowAbout;
+		QAction*	m_actShowContact;
 
 		QToolButton*	m_tbSelVrts;
 		QToolButton*	m_tbSelEdges;

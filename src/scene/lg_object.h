@@ -170,6 +170,21 @@ class LGObject : public ISceneObject, public ug::promesh::Mesh
 	///	ends the transform and either applies or reverts the changes made.
 		void end_transform(bool bApply);
 
+	///	stores current vertex coordinates in a coordinate buffer
+	/**	You may use 'restore_vertex_coordinates_from_buffer' to restore
+	 * vertex coordinates from buffered coordinates.*/
+		void buffer_current_vertex_coordinates();
+
+	///	assigns buffered coordinates to the mesh-vertices
+	/** Vertex coordinates can be buffered by a call to
+	 * 'buffer_current_vertex_coordinates'.
+	 *
+	 * \note that buffered coordinates and mesh-vertices are associated by
+	 * their index in the respective sequence. If the topology of a mesh
+	 * was changed since the last call to 'buffer_current_vertex_coordinates',
+	 * restoring vertex coordinates with this method may lead to unexpected results.*/
+		void restore_vertex_coordinates_from_buffer();
+		
 	protected:
 		void init();
 
@@ -217,7 +232,8 @@ class LGObject : public ISceneObject, public ug::promesh::Mesh
 		ug::vector3			m_transformStart;	// center where transform started
 		ug::vector3			m_transformCur;		// center of the current selection
 		std::vector<ug::Vertex*>	m_transformVertices;
-		std::vector<ug::vector3>		m_transformInitialPositions;
+		std::vector<ug::vector3>	m_transformInitialPositions;
+		std::vector<ug::vector3>	m_vertexCoordinateBuffer;///< used in calls to 'buffer_current_vertex_coordinates' and 'restore_vertex_coordinates_from_buffer'
 
 	protected:
 		struct IndicatorPoint{

@@ -91,9 +91,9 @@
 <file>html/group__ugbase_classVec1d.js</file>
 <file>html/group__promesh__Raster__Layers_classRasterLayers.js</file>
 <file>html/group__promesh__Grid__Generation.js</file>
+<file>html/navtreeindex2.js</file>
 <file>html/ftv2lastnode.png</file>
 <file>html/pageExternalLibraries.html</file>
-<file>html/group__promesh_classMesh.js</file>
 <file>html/group__ugbase_classEdge.js</file>
 <file>html/group__promesh_classFaceIterator.js</file>
 <file>html/ftv2vertline.png</file>
@@ -121,6 +121,7 @@
 <file>html/group__promesh__Grid__Generation__Geometries.js</file>
 <file>html/group__promesh__Remeshing__Merge__Vertices.js</file>
 <file>html/functions.html</file>
+<file>html/group__ugbase_classMesh.js</file>
 <file>html/group__promesh__Info.js</file>
 <file>html/toolbar-selection-element-type.png</file>
 <file>html/group__promesh__Raster__Layers.html</file>

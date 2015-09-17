@@ -7,11 +7,12 @@
 #include "common/util/plugin_util.h"
 #include "common/util/string_util.h"
 #include "common/util/file_util.h"
+#include "../plugins/experimental/promesh/mesh.h"
 
 using namespace std;
 using namespace ug;
 using namespace ug::bridge;
-
+using namespace ug::promesh;
 
 void DefineGroup(ostream& out, const char* id, const char* name, const char* desc,
 				 const char* parentGroup = NULL);
@@ -159,6 +160,7 @@ int main(){
 		WriteClass(out, reg, "Vec2d", "ugbase");
 		WriteClass(out, reg, "Vec3d", "ugbase");
 		WriteClass(out, reg, "Vec4d", "ugbase");
+		WriteClass(out, reg, "Mesh", "ugbase");
 		WriteClass(out, reg, "Grid", "ugbase");
 		WriteClass(out, reg, "ISelector", "ugbase");
 		WriteClass(out, reg, "Selector", "ugbase");

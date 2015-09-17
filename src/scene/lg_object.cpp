@@ -397,6 +397,7 @@ bool LGObject::redo()
 	return bLoadSuccessful;
 }
 
+
 void LGObject::set_num_display_lists(int num)
 {
 //	glGenLists creates returns an index to a list.
@@ -611,4 +612,37 @@ void LGObject::end_transform(bool bApply)
 	geometry_changed();
 }
 
+
+void LGObject::buffer_current_vertex_coordinates()
+{
+	Grid& grid = this->grid();
+	position_accessor_t aaPos = position_accessor();
+
+	m_vertexCoordinateBuffer.clear();
+	m_vertexCoordinateBuffer.reserve(grid.num<Vertex>());
+
+	for(VertexIterator ivrt = grid.begin<Vertex>();
+		ivrt != grid.end<Vertex>(); ++ivrt)
+	{
+		m_vertexCoordinateBuffer.push_back(aaPos[*ivrt]);
+	}
+}
+
+
+void LGObject::restore_vertex_coordinates_from_buffer()
+{
+	Grid& grid = this->grid();
+	position_accessor_t aaPos = position_accessor();
+
+	const size_t buflen = m_vertexCoordinateBuffer.size();
+	size_t ibuf = 0;
+
+	for(VertexIterator ivrt = grid.begin<Vertex>();
+		(ivrt != grid.end<Vertex>()) && (ibuf < buflen); ++ivrt, ++ibuf)
+	{
+		aaPos[*ivrt] = m_vertexCoordinateBuffer[ibuf];
+	}
+
+	geometry_changed();
+}
 

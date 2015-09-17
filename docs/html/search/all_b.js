@@ -14,7 +14,7 @@ var searchData=
   ['mergeatcenter',['MergeAtCenter',['../group__promesh__Remeshing__Merge__Vertices.html#gab371534bfad9f822993a705b70e5a7c0',1,'script_reference.cpp']]],
   ['mergeatfirst',['MergeAtFirst',['../group__promesh__Remeshing__Merge__Vertices.html#ga9dce8cf683e9fc39798bae38a8755b5e',1,'script_reference.cpp']]],
   ['mergeatlast',['MergeAtLast',['../group__promesh__Remeshing__Merge__Vertices.html#ga0cda155ce4ca027685cdeb3973ebeb28',1,'script_reference.cpp']]],
-  ['mesh',['Mesh',['../group__promesh.html#classMesh',1,'']]],
+  ['mesh',['Mesh',['../group__ugbase.html#classMesh',1,'']]],
   ['meshlayerboundaries',['MeshLayerBoundaries',['../group__promesh__Raster__Layers.html#gadec45fe7d6a84a31e81d170e77536e92',1,'script_reference.cpp']]],
   ['meshlayers',['MeshLayers',['../group__promesh__Raster__Layers.html#ga4eb2046a240360a310b532862197e90c',1,'script_reference.cpp']]],
   ['min_5fheight',['min_height',['../group__promesh__Raster__Layers.html#a39391aac01f67667c6b4e4e1821bcff2',1,'RasterLayerDesc']]],

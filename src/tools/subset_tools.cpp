@@ -58,6 +58,52 @@ class ToolAssignSubset : public ITool
 		}
 };
 
+class ToolAssignNewSubset : public ITool
+{
+	public:
+		void execute(LGObject* obj, QWidget* widget){
+			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
+
+			QString subsetName = "";
+			int newIndex = obj->subset_handler().num_subsets();
+			bool vertices = true;
+			bool edges = true;
+			bool faces = true;
+			bool volumes = true;
+
+			if(dlg){
+				subsetName = dlg->to_string(0);
+				vertices = dlg->to_bool(1);
+				edges = dlg->to_bool(2);
+				faces = dlg->to_bool(3);
+				volumes = dlg->to_bool(4);
+			}
+
+			promesh::AssignSubset(obj, newIndex, vertices, edges, faces, volumes);
+			if((newIndex >= 0) && (!subsetName.isEmpty()))
+				promesh::SetSubsetName(obj, newIndex, subsetName.toLocal8Bit().constData());
+
+			dlg->setString(0, QString(""));
+
+			obj->geometry_changed();
+		}
+
+		const char* get_name()		{return "Assign New Subset";}
+		const char* get_tooltip()	{return TOOLTIP_ASSIGN_SUBSET" The new index is automatically chosen as #subsets";}
+		const char* get_group()		{return "Subsets";}
+
+		ToolWidget* get_dialog(QWidget* parent){
+			ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
+											IDB_APPLY | IDB_OK | IDB_CLOSE);
+			dlg->addTextBox(tr("new subset name:"), "");
+			dlg->addCheckBox(tr("assign vertices"), true);
+			dlg->addCheckBox(tr("assign edges"), true);
+			dlg->addCheckBox(tr("assign faces"), true);
+			dlg->addCheckBox(tr("assign volumes"), true);
+			return dlg;
+		}
+};
+
 class ToolAssignSubsetColors : public ITool
 {
 	public:
@@ -466,6 +512,7 @@ void RegisterSubsetTools(ToolManager* toolMgr)
 	toolMgr->set_group_icon("Subsets", ":images/tool_subsets.png");
 
 	toolMgr->register_tool(new ToolAssignSubset, Qt::Key_S, SMK_ALT);
+	toolMgr->register_tool(new ToolAssignNewSubset);
 	toolMgr->register_tool(new ToolMoveSubset);
 	toolMgr->register_tool(new ToolSwapSubsets);
 	toolMgr->register_tool(new ToolJoinSubsets);

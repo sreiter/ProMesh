@@ -229,6 +229,9 @@ void MainWindow::init()
 	m_actShowAbout = new QAction(tr("About"), this);
 	connect(m_actShowAbout, SIGNAL(triggered()), this, SLOT(showAbout()));
 
+	m_actShowContact = new QAction(tr("Contact"), this);
+	connect(m_actShowContact, SIGNAL(triggered()), this, SLOT(showContact()));
+
 
 	QMenu* helpmenu = menuBar()->addMenu("&Help");
 	helpmenu->addAction(m_actHelp);
@@ -238,6 +241,7 @@ void MainWindow::init()
 	helpmenu->addAction(m_actRecentChanges);
 	helpmenu->addAction(m_actLicense);
 	helpmenu->addAction(m_actShowAbout);
+	helpmenu->addAction(m_actShowContact);
 
 
 	m_toolManager = new ToolManager(this);
@@ -942,6 +946,11 @@ void MainWindow::showScriptReference()
 void MainWindow::showAbout()
 {
 	launchHelpBrowser("pageAbout.html");
+}
+
+void MainWindow::showContact()
+{
+	launchHelpBrowser("pageContact.html");
 }
 
 void MainWindow::frontDrawModeChanged(int newMode)

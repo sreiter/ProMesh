@@ -640,11 +640,40 @@ public:
 };
 
 
+class ToolStoreVertexCoordinates : public ITool
+{
+public:
+	void execute(LGObject* obj, QWidget*){
+		obj->buffer_current_vertex_coordinates();
+	}
+
+	const char* get_name()		{return "Store Vertex Coordinates";}
+	const char* get_tooltip()	{return "Stores current vertex coordinates to the coordinate-buffer. Use 'Restore Vertex Coordinates' to restore them.";}
+	const char* get_group()		{return "Coordinate Transform | Coordinate Buffer";}
+};
+
+
+class ToolRestoreVertexCoordinates : public ITool
+{
+public:
+	void execute(LGObject* obj, QWidget*){
+		obj->restore_vertex_coordinates_from_buffer();
+	}
+
+	const char* get_name()		{return "Restore Vertex Coordinates";}
+	const char* get_tooltip()	{return "Restores vertex coordinates from the coordinate-buffer. Use 'Store Vertex Coordinates' to store them.";}
+	const char* get_group()		{return "Coordinate Transform | Coordinate Buffer";}
+};
+
+
 void RegisterCoordinateTransformTools(ToolManager* toolMgr)
 {
 	toolMgr->set_group_icon("Coordinate Transform", ":images/tool_transform.png");
 
 	toolMgr->register_tool(new ToolCoordinates);
+	toolMgr->register_tool(new ToolStoreVertexCoordinates);
+	toolMgr->register_tool(new ToolRestoreVertexCoordinates);
+
 	toolMgr->register_tool(new ToolSetPivotToSelectionCenter);
 	toolMgr->register_tool(new ToolSetPivotToMeshCenter);
 	toolMgr->register_tool(new ToolSetPivot);

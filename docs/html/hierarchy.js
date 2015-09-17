@@ -22,7 +22,7 @@ var hierarchy =
     [ "ISubsetHandler", "group__ugbase.html#classISubsetHandler", [
       [ "SubsetHandler", "group__ugbase.html#classSubsetHandler", null ]
     ] ],
-    [ "Mesh", "group__promesh.html#classMesh", null ],
+    [ "Mesh", "group__ugbase.html#classMesh", null ],
     [ "number", "group__nativeTypes.html#classnumber", null ],
     [ "RasterLayerDesc", "group__promesh__Raster__Layers.html#classRasterLayerDesc", null ],
     [ "RasterLayers", "group__promesh__Raster__Layers.html#classRasterLayers", null ],

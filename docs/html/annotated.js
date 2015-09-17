@@ -15,7 +15,7 @@ var annotated =
     [ "int", "group__nativeTypes.html#classint", null ],
     [ "ISelector", "group__ugbase.html#classISelector", "group__ugbase_classISelector" ],
     [ "ISubsetHandler", "group__ugbase.html#classISubsetHandler", "group__ugbase_classISubsetHandler" ],
-    [ "Mesh", "group__promesh.html#classMesh", "group__promesh_classMesh" ],
+    [ "Mesh", "group__ugbase.html#classMesh", "group__ugbase_classMesh" ],
     [ "number", "group__nativeTypes.html#classnumber", null ],
     [ "RasterLayerDesc", "group__promesh__Raster__Layers.html#classRasterLayerDesc", "group__promesh__Raster__Layers_classRasterLayerDesc" ],
     [ "RasterLayers", "group__promesh__Raster__Layers.html#classRasterLayers", "group__promesh__Raster__Layers_classRasterLayers" ],
