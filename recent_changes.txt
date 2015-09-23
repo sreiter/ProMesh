@@ -1,5 +1,14 @@
 Recent changes:
 -------------------------------------------------------------------------------
+v 4.2.5
+Changes and additions:
+- It is now possible to mark faces.
+
+Fixes:
+
+
+
+-------------------------------------------------------------------------------
 v 4.2.4
 Changes and additions:
 - Added tools to buffer and to restore vertex coordinates:
