@@ -11,7 +11,7 @@
 #include "common/error.h"
 #include "common/util/string_util.h"
 #include "../app.h"
-#include "../plugins/experimental/lua_shell/lua_shell.h"
+#include "../../plugins/LuaShell/lua_shell.h"
 #include "bindings/lua/lua_util.h"
 #include "common/error.h"
 

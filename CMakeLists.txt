@@ -141,9 +141,9 @@ else(TETGEN_LIBS-NOTFOUND)
 	set(PROMESH_LIBS ${PROMESH_LIBS} ${TETGEN_LIBS})
 endif(TETGEN_LIBS-NOTFOUND)
 
-include_directories(${UG_ROOT_PATH}/ugbase)
-include_directories(${UG_ROOT_PATH}/plugins/experimental/promesh)
-include_directories(${UG_ROOT_PATH}/externals/boost_1_56_0)
+include_directories(${UG_ROOT_PATH}/ugcore/ugbase)
+include_directories(${UG_ROOT_PATH}/plugins/ProMesh)
+include_directories(${UG_ROOT_PATH}/externals/BoostForUG4)
 link_directories(${UG_ROOT_PATH}/lib)
 
 # On some unix systems (e.g. ubuntu 12.04) glu.h is not automatically included.
