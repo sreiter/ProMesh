@@ -49,6 +49,7 @@ var searchData=
   ['selectlinkedvolumes',['SelectLinkedVolumes',['../group__promesh__Selection__Volumes.html#gaa1108b51f0d37bf55e684c14008349f9',1,'script_reference.cpp']]],
   ['selectlongedges',['SelectLongEdges',['../group__promesh__Selection__Edges.html#ga4171ac5ea9095c70339657024d7ff756',1,'script_reference.cpp']]],
   ['selectmarkededges',['SelectMarkedEdges',['../group__promesh__Selection__Edges.html#gabcd9badcc5b8adce345328ff7c811b64',1,'script_reference.cpp']]],
+  ['selectmarkedfaces',['SelectMarkedFaces',['../group__promesh__Selection__Faces.html#ga62ec03310f0b757bbdc24cad5d06d34f',1,'script_reference.cpp']]],
   ['selectmarkedvertices',['SelectMarkedVertices',['../group__promesh__Selection__Vertices.html#gac81edebf88c90e4c836823f7329a58df',1,'script_reference.cpp']]],
   ['selectnonmanifoldedges',['SelectNonManifoldEdges',['../group__promesh__Selection__Edges.html#gadbad6866dd8a2b4201f197e85784941d',1,'script_reference.cpp']]],
   ['selector',['Selector',['../group__ugbase.html#classSelector',1,'']]],

@@ -7,7 +7,7 @@
 #include "common/util/plugin_util.h"
 #include "common/util/string_util.h"
 #include "common/util/file_util.h"
-#include "../plugins/experimental/promesh/mesh.h"
+#include "../../plugins/ProMesh/mesh.h"
 
 using namespace std;
 using namespace ug;

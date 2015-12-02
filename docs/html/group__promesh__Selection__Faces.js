@@ -20,5 +20,6 @@ var group__promesh__Selection__Faces =
     [ "SelectLinkedBoundaryFaces", "group__promesh__Selection__Faces.html#ga34b6e585049df8b4f8c426eca2d7cd6a", null ],
     [ "SelectLinkedFaces", "group__promesh__Selection__Faces.html#ga812605ace0a27a34500f7c95a91c5694", null ],
     [ "SelectLinkedFlatFaces", "group__promesh__Selection__Faces.html#gae5020403a3db923424e814084de1aaed", null ],
-    [ "SelectLinkedManifoldFaces", "group__promesh__Selection__Faces.html#ga70407e76ace249ee2cc57f83f9aa16ff", null ]
+    [ "SelectLinkedManifoldFaces", "group__promesh__Selection__Faces.html#ga70407e76ace249ee2cc57f83f9aa16ff", null ],
+    [ "SelectMarkedFaces", "group__promesh__Selection__Faces.html#ga62ec03310f0b757bbdc24cad5d06d34f", null ]
 ];
