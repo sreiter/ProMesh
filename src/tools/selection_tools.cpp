@@ -582,6 +582,19 @@ class ToolSelectMarkedEdges : public ITool
 		const char* get_group()		{return "Selection | Edges";}
 };
 
+class ToolSelectMarkedFaces : public ITool
+{
+	public:
+		void execute(LGObject* obj, QWidget*){
+			promesh::SelectMarkedFaces(obj);
+			obj->selection_changed();
+		}
+
+		const char* get_name()		{return "Marked Faces";}
+		const char* get_tooltip()	{return TOOLTIP_SELECT_MARKED_FACES;}
+		const char* get_group()		{return "Selection | Faces";}
+};
+
 class ToolSelectUnorientableVolumes : public ITool
 {
 	public:
@@ -1212,6 +1225,7 @@ void RegisterSelectionTools(ToolManager* toolMgr)
 	toolMgr->register_tool(new ToolSelectAllFaces);
 	toolMgr->register_tool(new ToolDeselectAllFaces);
 	toolMgr->register_tool(new ToolSelectAssociatedFaces);
+	toolMgr->register_tool(new ToolSelectMarkedFaces);
 	toolMgr->register_tool(new ToolFaceSelectionFill);
 	toolMgr->register_tool(new ToolSelectIntersectingTriangles);
 	toolMgr->register_tool(new ToolSelectInnerFaces);

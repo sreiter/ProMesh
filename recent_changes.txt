@@ -1,8 +1,10 @@
 Recent changes:
+
 -------------------------------------------------------------------------------
 v 4.2.5
 Changes and additions:
 - It is now possible to mark faces.
+- Added Selection-Faces-MarkedFaces
 
 Fixes:
 
