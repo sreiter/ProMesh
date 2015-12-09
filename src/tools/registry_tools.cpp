@@ -1,10 +1,12 @@
 // created by Sebastian Reiter
 // s.b.reiter@gmail.com
 
+#include <locale>
 #include "common/util/stringify.h"
 #include "common/util/string_util.h"
 #include "bridge/bridge.h"
 #include "standard_tools.h"
+#include "../../plugins/ProMesh/promesh_plugin.h"
 
 using namespace std;
 using namespace ug;
@@ -21,10 +23,27 @@ static T ToNumber(const std::string& str){
 	return num;
 }
 
+template <int dim>
+static MathVector<dim> ToVector(const std::string& str){
+	string tmp = ReplaceAll(ReplaceAll(str, "]", ""), "[", "");
+	vector<string> toks;
+	toks = TokenizeTrimString(tmp, ',');
+
+	UG_COND_THROW((int)toks.size() != dim,
+				  "Bad default value. Expected vector of size " << dim
+				  << " but only encountered " << toks.size() << " values.");
+
+	MathVector<dim> v;
+	for(size_t i = 0; i < dim; ++i){
+		v[i] = ToNumber<number>(toks[i]);
+	}
+	return v;
+}
+
 
 class RegistryTool : public ITool{
 	public:
-		RegistryTool(std::string name, ExportedFunction* func) :
+		RegistryTool(std::string name, const ExportedFunction* func) :
 			m_name(name),
 			m_func(func)
 		{
@@ -263,6 +282,32 @@ class RegistryTool : public ITool{
 						dlg->addTextBox(qParamName, tr(""));
 					}break;
 
+					case Variant::VT_POINTER:
+					case Variant::VT_CONST_POINTER:
+					case Variant::VT_SMART_POINTER:
+					case Variant::VT_CONST_SMART_POINTER:{
+						const char* clsName = params.class_name(iparam);
+						if(strcmp(clsName, "Vec3d") == 0){
+							vector3 val(0, 0, 0);
+							if(!options.empty()){
+								for(size_t iopt = 0; iopt < options.size(); ++iopt){
+									tokens = TokenizeTrimString(options[iopt], '=');
+									if(tokens.size() == 2){
+										tokens[1] = ReplaceAll(tokens[1], string("D"), string(""));
+										if(tokens[0] == "value")
+											val = ToVector<3>(tokens[1]);
+									}
+								}
+							}
+							dlg->addVector(qParamName, 3, &val[0]);
+						}
+						else if(strcmp(clsName, "Vec2d") == 0){
+							dlg->addVector(qParamName, 2);
+						}
+						else
+							paramError = true;
+					}break;
+
 					default:
 						paramError = true;
 						break;
@@ -270,7 +315,8 @@ class RegistryTool : public ITool{
 
 				if(paramError){
 					UG_LOG("Unsupported parameter " << iparam << " in registry tool "
-						   << m_name << endl);
+						   << m_name << ": " << params.class_name(iparam) << endl);
+					break;
 				}
 			}
 
@@ -283,9 +329,9 @@ class RegistryTool : public ITool{
 		}
 
 	private:
-		std::string			m_name;
-		std::string			m_group;
-		ExportedFunction* 	m_func;
+		std::string					m_name;
+		std::string					m_group;
+		const ExportedFunction* 	m_func;
 };
 
 
@@ -364,3 +410,35 @@ void RegsiterRegistryTools(ToolManager* toolMgr)
 
 	RegisterTool(toolMgr, reg, "Convert To Tetrahedra", "ConvertToTetrahedra");
 }
+
+
+//the code below automatically registers all methods from the ProMesh plugin.
+//As soon as all default values are adjusted in those methods, the code below should
+//be used instead of the code above.
+// void RegsiterRegistryTools(ToolManager* toolMgr)
+// {
+// 	using namespace ug::promesh;
+// 	ProMeshRegistry& pmreg = GetProMeshRegistry();
+
+// 	for(ProMeshRegistry::func_iter_t fiter = pmreg.functions_begin();
+// 		fiter != pmreg.functions_end(); ++fiter)
+// 	{
+// 		const ProMeshFunction& f = *fiter;
+// 		if(!f.has_target(RT_PROMESH))
+// 			continue;
+
+// 		const bridge::ExportedFunction* ef = f.exported_function();
+// 		if(	ef->num_parameter() == 0 || strcmp(ef->parameter_class_name(0), "Mesh") != 0)
+// 			continue;
+
+// 	//	add a space before each uppercase letter
+// 		string toolName = ">> ";
+// 		for(string::const_iterator i = ef->name().begin(); i != ef->name().end(); ++i){
+// 			if(isupper(*i))
+// 				toolName.push_back(' ');
+// 			toolName.push_back(*i);
+// 		}
+
+// 		toolMgr->register_tool(new RegistryTool(toolName, ef));
+// 	}
+// }

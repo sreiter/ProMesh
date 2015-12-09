@@ -59,7 +59,7 @@ class ToolWidget : public QFrame
 
 		void addTextBox(const QString& caption, const QString& text);
 
-		void addVector(const QString& caption, int size);
+		void addVector(const QString& caption, int size, double* values = NULL);
 
 		void addMatrix(const QString& caption, int numRows, int numCols);
 

@@ -145,6 +145,13 @@ int main(){
 		DefineGroup(out, "promesh_Subsets_Separate", "Separate", "Tools to generate new subsets by separating elements in given subsets by topological or geometrical properties.", "promesh");
 		DefineGroup(out, "promesh_Util", "Util", "Utility classes and functions for scripting.", "promesh");
 
+		DefineGroup(out, "promesh_Coordinate_Transform_Move", "Move", "Tools to move the current selection or the current mesh.", "promesh_Coordinate_Transform");
+		DefineGroup(out, "promesh_Coordinate_Transform_Pivot", "Pivot", "Tools to set the pivot of the current mesh.", "promesh_Coordinate_Transform");
+		DefineGroup(out, "promesh_Coordinate_Transform_Rotate", "Rotate", "Tools to rotate the current selection", "promesh_Coordinate_Transform");
+		DefineGroup(out, "promesh_Coordinate_Transform_Scale", "Scale", "Tools to scale the current selection", "promesh_Coordinate_Transform");
+		DefineGroup(out, "promesh_Coordinate_Transform_Smoothing", "Smoothing", "Tools that relocate the vertices in order to improve the smoothness of a surface.", "promesh_Coordinate_Transform");
+		DefineGroup(out, "promesh_Coordinate_Transform_Subdivision_Projection", "Subdivision Projection", "Projection of vertices to their limit position according to certain subdivision schemes.", "promesh_Coordinate_Transform");
+
 		DefineType(out, "const", "A qualifier that indicates that the declared value will not be changed by a function.", "nativeTypes");
 		DefineType(out, "bool", "Boolean variable that can hold the values 'true' or 'false'", "nativeTypes");
 		DefineType(out, "char", "Variable that stores characters (abcde...01234...)", "nativeTypes");

@@ -32,7 +32,6 @@ set(ProMeshSRC	src/app.cpp
 				src/scene/lg_tmp_methods.cpp
 				src/scene/plane_sphere.cpp
 				src/scene/scene_interface.cpp
-				src/tools/tool_coordinates.cpp
 				src/tools/tool_frac_to_layer.cpp
 				src/tools/tool_manager.cpp
 				src/tools/standard_tools.cpp
@@ -51,6 +50,7 @@ set(ProMeshSRC	src/app.cpp
 				src/tools/remeshing_tools.cpp
 				src/tools/script_tools.cpp
 				src/util/file_util.cpp
+				src/widgets/coordinates_widget.cpp
 				src/widgets/double_slider.cpp
 				src/widgets/extendible_widget.cpp
 				src/widgets/file_widget.cpp

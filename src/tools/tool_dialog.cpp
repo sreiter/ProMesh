@@ -162,10 +162,18 @@ void ToolWidget::addTextBox(const QString& caption, const QString& text)
 	m_widgets.push_back(WidgetEntry(textBox, WT_TEXT_BOX));
 }
 
-void ToolWidget::addVector(const QString& caption, int size)
+void ToolWidget::addVector(const QString& caption, int size, double* values)
 {
 	MatrixWidget* mat = new MatrixWidget(size, 1, this);
-	mat->set_value(0, 0, 0);
+	if(values){
+		for(int i = 0; i < size; ++i)
+			mat->set_value(i, 0, values[i]);
+	}
+	else{
+		for(int i = 0; i < size; ++i)
+			mat->set_value(i, 0, 0);
+	}
+
 	current_form_layout()->addRow(caption, mat);
 	m_widgets.push_back(WidgetEntry(mat, WT_MATRIX));
 }

@@ -2,15 +2,15 @@
 //	s.b.reiter@googlemail.com
 //	y2011 m07 d06
 
-#ifndef TOOL_COORDINATES_H
-#define TOOL_COORDINATES_H
+#ifndef __H__COORDINATES_WIDGET
+#define __H__COORDINATES_WIDGET
 
 #include <QFrame>
 #include <QString>
 #include <sstream>
 #include <iomanip>
 #include "app.h"
-#include "standard_tools.h"
+#include "../tools/standard_tools.h"
 #include "common/error.h"
 
 
@@ -49,4 +49,4 @@ class CoordinatesWidget: public QFrame
 		bool			m_bRefreshingCoords;
 };
 
-#endif // TOOL_COORDINATES_H
+#endif // __H__COORDINATES_WIDGET

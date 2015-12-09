@@ -19,7 +19,7 @@
 #include "tools/standard_tools.h"
 #include "undo.h"
 #include "app.h"
-#include "tools/tool_coordinates.h"
+#include "widgets/coordinates_widget.h"
 #include "common/util/file_util.h"
 #include "bridge/bridge.h"
 #include "common/util/path_provider.h"

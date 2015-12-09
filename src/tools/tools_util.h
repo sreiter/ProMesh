@@ -2,7 +2,7 @@
 #define TOOLS_UTIL_H
 
 #include <QStringList>
-#include "tool_coordinates.h"
+#include "widgets/coordinates_widget.h"
 
 class ToolWidget;
 

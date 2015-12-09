@@ -27,7 +27,7 @@ public:
 			nc.z() = dlg->to_double(2);
 		}
 
-		promesh::SetSelectionCenter(obj, nc);
+		promesh::MoveSelectionTo(obj, nc);
 
 		obj->geometry_changed();
 	}
@@ -693,3 +693,38 @@ void RegisterCoordinateTransformTools(ToolManager* toolMgr)
 	toolMgr->register_tool(new ToolFlattenBentQuadrilaterals);
 	toolMgr->register_tool(new ToolApplyHeightfield);
 }
+
+//the code below should be used as soon as registry tools are used directly.
+// void RegisterCoordinateTransformTools(ToolManager* toolMgr)
+// {
+// 	toolMgr->set_group_icon("Coordinate Transform", ":images/tool_transform.png");
+
+// 	toolMgr->register_tool(new ToolCoordinates);
+// 	toolMgr->register_tool(new ToolStoreVertexCoordinates);
+// 	toolMgr->register_tool(new ToolRestoreVertexCoordinates);
+
+// 	toolMgr->register_tool(new ToolTransform);
+// 	toolMgr->register_tool(new ToolProjectToPlane);
+// 	toolMgr->register_tool(new ToolApplyHeightfield);
+	
+// 	// toolMgr->register_tool(new ToolSetPivotToSelectionCenter);
+// 	// toolMgr->register_tool(new ToolSetPivotToMeshCenter);
+// 	// toolMgr->register_tool(new ToolSetPivot);
+
+// 	// toolMgr->register_tool(new ToolMove);
+// 	// toolMgr->register_tool(new ToolMoveMeshTo);
+// 	// toolMgr->register_tool(new ToolNormalMove);
+// 	// toolMgr->register_tool(new ToolScale);
+// 	// toolMgr->register_tool(new ToolRotate);
+
+// 	// toolMgr->register_tool(new ToolConeTransform);
+// 	// toolMgr->register_tool(new ToolLaplacianSmooth);
+// 	// toolMgr->register_tool(new ToolTangentialSmooth);
+
+
+// 	// toolMgr->register_tool(new ToolProjectToLimitPLoop);
+// 	// toolMgr->register_tool(new ToolProjectToLimitSmoothBoundary);
+
+// 	// toolMgr->register_tool(new ToolFlattenBentQuadrilaterals);
+
+// }
