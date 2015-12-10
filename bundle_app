@@ -32,14 +32,4 @@ else
 # copy ProMesh to the Application path
   echo copying ProMesh4.app to Applications.
   cp -r -f "$execPath"/ProMesh4.app /Applications/
-# check if an ~/apps path exists
-  cd ~/apps
-  if [ `pwd` != ~/apps ]
-  then
-     echo couldn't find path ~/apps. Won't copy ProMesh4.app
-  else
-     echo moving ProMesh4.app to ~/apps
-     cp -r -f "$execPath"/ProMesh4.app ./
-     rm -rf "$execPath"/ProMesh4.app
-  fi
 fi
