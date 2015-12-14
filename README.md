@@ -27,8 +27,8 @@ as a stand-alone part of the UG4 simulation framework.
 ProMesh continues to be under active development at the
 [Goethe-Center for Scientific Computing](http://gcsc.uni-frankfurt.de/simulation-and-modelling).
 
-ProMesh is based on [UG4](https://github.com/UG4) (www.ug4.org/license).<br>
-ProMesh is developed in tight relation to the [UG4 ProMesh Plugin](https://github.com/UG4/plugin_ProMesh).
+ProMesh is based on UG4 (www.ug4.org/license).<br>
+ProMesh is developed in tight relation with [UG4-Core](https://github.com/UG4/ugcore) and the [UG4 ProMesh Plugin](https://github.com/UG4/plugin_ProMesh).
 
 Development of ProMesh was partially supported by the
 German Ministry of Economics and Technology (BMWi) under the contract numbers
