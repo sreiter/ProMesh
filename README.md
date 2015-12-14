@@ -1,5 +1,5 @@
 # ProMesh #
-## Grid Generation for Scientific Computing ##
+## Grid Generation for Scientific Computations ##
 
 **ProMesh** is a cross-platform meshing software with support for
 unstructured grids of 1, 2, and 3 dimensions. It supports different element
