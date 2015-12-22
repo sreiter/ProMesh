@@ -1,6 +1,16 @@
 Recent changes:
 
 -------------------------------------------------------------------------------
+v 4.2.6
+Changes and additions:
+- Adjusted subset-assignment in ExtrudeLayers so that the longest edge is now
+  deciding on the assignment.
+
+Fixes:
+
+
+
+-------------------------------------------------------------------------------
 v 4.2.5
 Changes and additions:
 - It is now possible to mark faces.
