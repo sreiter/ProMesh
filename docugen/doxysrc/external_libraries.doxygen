@@ -13,7 +13,7 @@ of all those libraries and the license under which each of them is used.
 - \ref subTetgen "TetGen (free for non-commercial use)"
 - \ref subTribox "tribox (custom license)"
 - \ref subTritri "tritri (custom license)"
-- \ref subUG4 "UG4 (custom license)"
+- \ref subUG4 "UG4 (LGPLv3 + attributions)"
 
 
 <hr>
@@ -257,30 +257,33 @@ DEALINGS IN THE SOFTWARE.
 
 <hr>
 \subsection subUG4 UG4 (Unstructude Grids 4)
-UG4 is used under a custom license. For more information on UG4 please have a look
-at the article below.
-
-> Andreas Vogel, Sebastian Reiter, Martin Rupp, Arne Naegel and Gabriel Wittum<br>
-> <b>UG 4 - A Novel Flexible Software System for Simulating PDE Based Models on High Performance Computers</b><br>
-> In: Computation and Visualisation in Science, August 2013, Volume 16, Issue 4, pp 165-179.<br>
-
 \verbatim
-BIBTEX:
-@article{vogel_ug_2013,
-year={2013},
-issn={1432-9360},
-journal={Computing and Visualization in Science},
-volume={16},
-number={4},
-doi={10.1007/s00791-014-0232-9},
-title={UG 4: A novel flexible software system for simulating PDE based models on high performance computers},
-url={http://dx.doi.org/10.1007/s00791-014-0232-9},
-publisher={Springer Berlin Heidelberg},
-keywords={Simulation framework; Unstructured grids; Multigrid; Parallelization},
-author={Vogel, Andreas and Reiter, Sebastian and Rupp, Martin and Nägel, Arne and Wittum, Gabriel},
-pages={165-179},
-language={English}
-}
-\endverbatim
+UG4 - Unstructured Grids 4
+Copyright 2009-2015 Goethe Center for Scientific Computing, University Frankfurt
 
+UG4 is free software: you can redistribute it and/or modify it under the
+terms of the GNU Lesser General Public License version 3 (as published by the
+Free Software Foundation) with the following additional attribution
+requirements (according to LGPL/GPL v3 §7):
+
+(1) The following notice must be displayed in the Appropriate Legal Notices
+of covered and combined works: "Based on UG4 (www.ug4.org/license)".
+
+(2) The following notice must be displayed at a prominent place in the
+terminal output of covered works: "Based on UG4 (www.ug4.org/license)".
+
+(3) The following bibliography is recommended for citation and must be
+preserved in all covered files:
+"Reiter, S., Vogel, A., Heppner, I., Rupp, M., and Wittum, G. A massively
+  parallel geometric multigrid solver on hierarchically distributed grids.
+  Computing and visualization in science 16, 4 (2013), 151-164"
+"Vogel, A., Reiter, S., Rupp, M., Nägel, A., and Wittum, G. UG4 -- a novel
+  flexible software system for simulating pde based models on high performance
+  computers. Computing and visualization in science 16, 4 (2013), 165-179"
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU Lesser General Public License for more details.
+\endverbatim
 */

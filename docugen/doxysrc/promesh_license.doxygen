@@ -1,49 +1,25 @@
 /** \page pageProMeshLicense ProMesh License
+\verbatim
+Copyright (c) 2008-2015:  G-CSC, Goethe University Frankfurt
+Copyright (c) 2006-2008:  Steinbeis Forschungszentrum (STZ Ölbronn)
+Copyright (c) 2006-2015:  Sebastian Reiter
 
-<b>ProMesh4 Binary Code License</b>
+ProMesh is free software: you can redistribute it and/or modify it under the
+terms of the GNU Lesser General Public License version 3 (as published by the
+Free Software Foundation) with the following additional attribution
+requirements (according to LGPL/GPL v3 §7):
 
-The ProMesh4 application ("ProMesh4") is licensed to the licensee
-only upon  the condition that the licensee accepts all of the terms 
-contained in this License Agreement ("Agreement"). 
-By downloading, installing and/or using ProMesh4, the licensee 
-accepts the full terms of this Agreement.
+(1) The following notice must be displayed in the Appropriate Legal Notices
+of covered and combined works: "Based on ProMesh (www.promesh3d.com)".
 
+(2) The following bibliography is recommended for citation and must be
+preserved in all covered files:
+"Reiter, S. and Wittum, G. ProMesh -- a flexible interactive meshing software
+  for unstructured hybrid grids in 1, 2, and 3 dimensions. In preparation."
 
-<b>Definitions</b>
-
-1. Licensee means the individual that uses ProMesh4 under the 
-terms of this License Agreement.
-2. The licensors are the Goethe Center for Scientific Computing (G-CSC),
-Goethe University Frankfurt am Main, Germany and the Steinbeis 
-Zentrum "Simulation in Technology", Ölbronn, Germany.
-
-<b>License To Use</b>
-
-1. Subject to the terms and conditions of this Agreement, the 
-licensee is hereby granted a non-exclusive, non-transferable, 
-limited license to use ProMesh4 complete and unmodified for
-non-commercial purposes only.
-2. Redistribution of ProMesh4 is not permitted by this Agreement. 
-Additional licenses for developers and/or publishers are not 
-covered by this Agreement.
-
-<b>Warranty</b>
-
-The program is licensed free of charge and there is no warranty 
-for the program, to the extent permitted by applicable law. The 
-program is provided "as is" without warranty of any kind, 
-either expressed or implied, including, but not limited to, the 
-implied warranties of merchantability and fitness for a particular 
-purpose. The entire risk as to the quality and performance of 
-the program is with the licensee. Should the program prove 
-defective, the licensee assumes the cost of all necessary 
-servicing, repair or correction.
-
-In no event unless required by applicable law will the licensor 
-be liable to the licensee for damages, including any general, 
-special, incidental or consequential damages arising out of the 
-use or inability to use the program (including but not limited 
-to loss of data or data being rendered inaccurate or losses 
-sustained by the licensee or a failure of the program to operate 
-with any other programs).
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU Lesser General Public License for more details.
+\endverbatim
 */
