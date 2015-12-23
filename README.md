@@ -20,6 +20,8 @@ additional tools, allowing users to enhance ProMesh and streamline their workflo
 Please have a look at www.promesh3d.com. Installers for different operating systems
 (Linux, Mac-OSX, Windows) are provided here together with information on recent changes.
 
+ProMesh's user manual and scripting reference documentation can be found in ProMesh by clicking Help->"User Manual" or [online](http://sreiter.github.io/ProMesh/).
+
 ## About ##
 ProMesh has been created by Sebastian Reiter during his work at the
 *Goethe-Center for Scientific Computing at the Goethe-University Frankfurt am Main*
