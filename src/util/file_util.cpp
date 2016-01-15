@@ -38,7 +38,7 @@ using namespace std;
 QString GetFileContent(QString filename)
 {
 	QFile inputFile(filename);
-	inputFile.open(QIODevice::ReadOnly);
+	inputFile.open(QIODevice::ReadOnly | QIODevice::Text);
 	QTextStream in(&inputFile);
 	return in.readAll();
 }
