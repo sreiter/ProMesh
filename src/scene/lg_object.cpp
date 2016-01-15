@@ -252,6 +252,7 @@ void LGObject::init()
 	m_undoHistory.set_suffix(".ugx");
 
 	m_transformType = TT_NONE;
+	m_selectionDisplayListIndex = -1;
 }
 
 void LGObject::visuals_changed()

@@ -58,6 +58,7 @@ class LGScene : public TScene<LGObject>
 
 	///	updates the visuals of pObj.
 		virtual void update_visuals(LGObject* pObj);
+		virtual void update_selection_visuals(LGObject* obj);
 
 		ug::Vertex* get_clicked_vertex(LGObject* pObj,
 									const ug::vector3& from,

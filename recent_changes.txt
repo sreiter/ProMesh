@@ -1,6 +1,16 @@
 Recent changes:
 
 -------------------------------------------------------------------------------
+v 4.2.8
+Changes and additions:
+- Improved selection speed for big grids by restricting updates to the involved
+  display lists to the selection list only.
+
+Fixes:
+
+
+
+-------------------------------------------------------------------------------
 v 4.2.7
 Changes and additions:
 - Further improvements to subset-assignment in ExtrudeLayers. Total layer

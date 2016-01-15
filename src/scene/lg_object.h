@@ -249,6 +249,9 @@ class LGObject : public ISceneObject, public ug::promesh::Mesh
 		int					m_numInitializedSubsets;
 		bool				m_selectionChangedSinceLastUndoPoint;
 
+	//	currently used by LGScene to update the selection visuals only.
+		int					m_selectionDisplayListIndex;
+		
 	private:
 	//	transform
 		TransformType		m_transformType;

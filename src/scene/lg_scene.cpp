@@ -182,7 +182,7 @@ void LGScene::object_selection_changed()
 {
 	LGObject* obj = dynamic_cast<LGObject*>(sender());
 	if(obj){
-		update_visuals(obj);
+		update_selection_visuals(obj);
 		emit selection_changed();
 	}
 }
@@ -782,6 +782,7 @@ void LGScene::update_visuals(LGObject* pObj)
 	if(bDrawSelection){
 		assert(curDisplayListIndex < numDisplayLists);
 		render_selection(pObj, curDisplayListIndex);
+		pObj->m_selectionDisplayListIndex = curDisplayListIndex;
 		++curDisplayListIndex;
 	}
 
@@ -793,6 +794,16 @@ void LGScene::update_visuals(LGObject* pObj)
 	}
 
 	emit visuals_updated();
+}
+
+void LGScene::update_selection_visuals(LGObject* obj)
+{
+	if(obj->m_selectionDisplayListIndex < 0)
+		update_visuals(obj);
+	else{
+		render_selection(obj, obj->m_selectionDisplayListIndex);
+		emit visuals_updated();
+	}
 }
 
 void LGScene::render_skeleton(LGObject* pObj)
