@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ProMesh User Manual
-   &#160;<span id="projectnumber">v4.2.7</span>
+   &#160;<span id="projectnumber">v4.2.9*</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -101,28 +101,122 @@ $(document).ready(function(){initNavTree('group__promesh__File__IO.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaaa3488c62df0769c7da2451a2daa3237"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaaa3488c62df0769c7da2451a2daa3237"></a>
-<a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__File__IO.html#gaaa3488c62df0769c7da2451a2daa3237">LoadMesh</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__nativeTypes.html#classchar">char</a> *filename)</td></tr>
-<tr class="memdesc:gaaa3488c62df0769c7da2451a2daa3237"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a <a class="el" href="group__ugbase.html#classMesh">Mesh</a> from File. The format is automatically recognized by the filname's suffix. Supported formats are: (ugx, vtu (ascii), obj, stl (ascii and binary), lgm, ng, ele, msh, asc, net, art). <br /></td></tr>
+<tr class="memitem:gaaa3488c62df0769c7da2451a2daa3237"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__File__IO.html#gaaa3488c62df0769c7da2451a2daa3237">LoadMesh</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__nativeTypes.html#classchar">char</a> *filename)</td></tr>
+<tr class="memdesc:gaaa3488c62df0769c7da2451a2daa3237"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a <a class="el" href="group__ugbase.html#classMesh">Mesh</a> from File. The format is automatically recognized by the filname's suffix. Supported formats are: (ugx, vtu (ascii), obj, stl (ascii and binary), lgm, ng, ele, msh, asc, net, art).  <a href="#gaaa3488c62df0769c7da2451a2daa3237">More...</a><br /></td></tr>
 <tr class="separator:gaaa3488c62df0769c7da2451a2daa3237"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac9ea503272729f385d1ee2649c89c3fd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac9ea503272729f385d1ee2649c89c3fd"></a>
-<a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__File__IO.html#gac9ea503272729f385d1ee2649c89c3fd">SaveMesh</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__nativeTypes.html#classchar">char</a> *filename)</td></tr>
-<tr class="memdesc:gac9ea503272729f385d1ee2649c89c3fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Saves a <a class="el" href="group__ugbase.html#classMesh">Mesh</a> to File. The format is automatically recognized by the filname's suffix. Supported formats are: (ugx, vtu (ascii), obj, stl (ascii), ncdf, smesh, ele, tikz/tex, asc, net, art). <br /></td></tr>
+<tr class="memitem:gac9ea503272729f385d1ee2649c89c3fd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__File__IO.html#gac9ea503272729f385d1ee2649c89c3fd">SaveMesh</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__nativeTypes.html#classchar">char</a> *filename)</td></tr>
+<tr class="memdesc:gac9ea503272729f385d1ee2649c89c3fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Saves a <a class="el" href="group__ugbase.html#classMesh">Mesh</a> to File. The format is automatically recognized by the filname's suffix. Supported formats are: (ugx, vtu (ascii), obj, stl (ascii), ncdf, smesh, ele, tikz/tex, asc, net, art).  <a href="#gac9ea503272729f385d1ee2649c89c3fd">More...</a><br /></td></tr>
 <tr class="separator:gac9ea503272729f385d1ee2649c89c3fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga46eb0ade32431752cae290264786272b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga46eb0ade32431752cae290264786272b"></a>
-<a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__File__IO.html#ga46eb0ade32431752cae290264786272b">ExportToUG3</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__nativeTypes.html#classchar">char</a> *filenamePrefix, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__nativeTypes.html#classchar">char</a> *lgmName, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__nativeTypes.html#classchar">char</a> *problemName)</td></tr>
-<tr class="memdesc:ga46eb0ade32431752cae290264786272b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes a mesh to the UG3 legacy format (.lgm and .ng) <br /></td></tr>
+<tr class="memitem:ga46eb0ade32431752cae290264786272b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__File__IO.html#ga46eb0ade32431752cae290264786272b">ExportToUG3</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__nativeTypes.html#classchar">char</a> *filenamePrefix, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__nativeTypes.html#classchar">char</a> *lgmName, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__nativeTypes.html#classchar">char</a> *problemName)</td></tr>
+<tr class="memdesc:ga46eb0ade32431752cae290264786272b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes a mesh to the UG3 legacy format (.lgm and .ng)  <a href="#ga46eb0ade32431752cae290264786272b">More...</a><br /></td></tr>
 <tr class="separator:ga46eb0ade32431752cae290264786272b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Functions to read and write meshes from/to files. </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga46eb0ade32431752cae290264786272b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__nativeTypes.html#classbool">bool</a> ExportToUG3 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>mesh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__nativeTypes.html#classchar">char</a> *&#160;</td>
+          <td class="paramname"><em>filenamePrefix</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__nativeTypes.html#classchar">char</a> *&#160;</td>
+          <td class="paramname"><em>lgmName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__nativeTypes.html#classchar">char</a> *&#160;</td>
+          <td class="paramname"><em>problemName</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Writes a mesh to the UG3 legacy format (.lgm and .ng) </p>
+
+</div>
+</div>
+<a class="anchor" id="gaaa3488c62df0769c7da2451a2daa3237"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__nativeTypes.html#classbool">bool</a> LoadMesh </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>mesh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__nativeTypes.html#classchar">char</a> *&#160;</td>
+          <td class="paramname"><em>filename</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Loads a <a class="el" href="group__ugbase.html#classMesh">Mesh</a> from File. The format is automatically recognized by the filname's suffix. Supported formats are: (ugx, vtu (ascii), obj, stl (ascii and binary), lgm, ng, ele, msh, asc, net, art). </p>
+
+</div>
+</div>
+<a class="anchor" id="gac9ea503272729f385d1ee2649c89c3fd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__nativeTypes.html#classbool">bool</a> SaveMesh </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>mesh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__nativeTypes.html#classchar">char</a> *&#160;</td>
+          <td class="paramname"><em>filename</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Saves a <a class="el" href="group__ugbase.html#classMesh">Mesh</a> to File. The format is automatically recognized by the filname's suffix. Supported formats are: (ugx, vtu (ascii), obj, stl (ascii), ncdf, smesh, ele, tikz/tex, asc, net, art). </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">(c) Sebastian Reiter. Generated on Fri Jan 15 2016 12:11:55 for ProMesh User Manual by
+    <li class="footer">(c) Sebastian Reiter. Generated on Tue Apr 5 2016 14:54:10 for ProMesh User Manual by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.11 </li>
   </ul>

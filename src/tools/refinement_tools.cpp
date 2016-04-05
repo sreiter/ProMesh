@@ -39,10 +39,13 @@ class ToolRefine : public ITool
 		void execute(LGObject* obj, QWidget* widget){
 			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 			bool strictSubsetInheritance = false;
-			if(dlg)
+			bool useSnapPoints = false;
+			if(dlg){
 				strictSubsetInheritance = dlg->to_bool(0);
+				useSnapPoints = dlg->to_bool(1);
+			}
 
-			promesh::Refine(obj, strictSubsetInheritance);
+			promesh::Refine(obj, strictSubsetInheritance, useSnapPoints);
 
 		//	done
 			obj->geometry_changed();
@@ -56,6 +59,7 @@ class ToolRefine : public ITool
 			ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
 											IDB_APPLY | IDB_OK | IDB_CLOSE);
 			dlg->addCheckBox(tr("strict subset inheritance:"), false);
+			dlg->addCheckBox(tr("use snap points:"), false);
 			return dlg;
 		}
 };

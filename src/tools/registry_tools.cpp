@@ -398,6 +398,8 @@ void RegsiterRegistryTools(ToolManager* toolMgr)
 	RegisterTool(toolMgr, reg, "Measure Selection Area", "MeasureSelectionArea");
 	RegisterTool(toolMgr, reg, "Measure Selection Volume", "MeasureSelectionVolume");
 
+	RegisterTool(toolMgr, reg, "Move Vertices Along Edges", "MoveVerticesAlongEdges");
+
 	// RegisterTool(toolMgr, reg, "Weighted Edge Smooth", "WeightedEdgeSmooth");
 	// RegisterTool(toolMgr, reg, "Weighted Face Smooth", "WeightedFaceSmooth");
 	// RegisterTool(toolMgr, reg, "Weighted Normal Smooth", "WeightedNormalSmooth");

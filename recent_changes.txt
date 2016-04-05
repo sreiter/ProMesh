@@ -1,6 +1,16 @@
 Recent changes:
 
 -------------------------------------------------------------------------------
+v 4.2.9
+Changes and additions:
+- "Info-PrintSelectionInfo" now also supports selected edges.
+
+Fixes:
+- Fixed a crash in "Info-PrintSelectionInfo" which occurred if not at least
+  2 vertices were selected.
+
+
+-------------------------------------------------------------------------------
 v 4.2.8
 Changes and additions:
 - Improved selection speed for big grids by restricting updates to the involved

@@ -10,5 +10,6 @@ var group__promesh__Subsets =
     [ "EraseSubset", "group__promesh__Subsets.html#ga3a303bf6d793389796d94f3492552038", null ],
     [ "JoinSubsets", "group__promesh__Subsets.html#gadae9dc3d1e089cc1482fc6767ef94541", null ],
     [ "MoveSubset", "group__promesh__Subsets.html#gaed9de321de99276bfc157ed2d392e027", null ],
+    [ "SetSubsetName", "group__promesh__Subsets.html#ga18e48220a913a26e8754c631566c7d08", null ],
     [ "SwapSubsets", "group__promesh__Subsets.html#ga0ac8f2fdcdbcb35e443a6edc3dacaeb4", null ]
 ];

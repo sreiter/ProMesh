@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ProMesh User Manual
-   &#160;<span id="projectnumber">v4.2.7</span>
+   &#160;<span id="projectnumber">v4.2.9*</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -101,36 +101,184 @@ $(document).ready(function(){initNavTree('group__promesh__Remeshing__Refinement.
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gac5853541397d49a13d1e68fc736e70bd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac5853541397d49a13d1e68fc736e70bd"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Remeshing__Refinement.html#gac5853541397d49a13d1e68fc736e70bd">Refine</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classbool">bool</a> strict_subset_inheritance)</td></tr>
-<tr class="memdesc:gac5853541397d49a13d1e68fc736e70bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Refines selected elements and builds a regular closure. <br /></td></tr>
-<tr class="separator:gac5853541397d49a13d1e68fc736e70bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga21b108a9b6761ad12256efd7200d4d79"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga21b108a9b6761ad12256efd7200d4d79"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Remeshing__Refinement.html#ga21b108a9b6761ad12256efd7200d4d79">HangingNodeRefine</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classbool">bool</a> strict_subset_inheritance, <a class="el" href="group__nativeTypes.html#classbool">bool</a> anisotropic)</td></tr>
-<tr class="memdesc:ga21b108a9b6761ad12256efd7200d4d79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Refines selected elements using hanging nodes. <br /></td></tr>
+<tr class="memitem:gae96592a4817070651de24a977ca9a4ff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Remeshing__Refinement.html#gae96592a4817070651de24a977ca9a4ff">Refine</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classbool">bool</a> strict_subset_inheritance, <a class="el" href="group__nativeTypes.html#classbool">bool</a> use_snap_points)</td></tr>
+<tr class="memdesc:gae96592a4817070651de24a977ca9a4ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Refines selected elements and builds a regular closure.  <a href="#gae96592a4817070651de24a977ca9a4ff">More...</a><br /></td></tr>
+<tr class="separator:gae96592a4817070651de24a977ca9a4ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga21b108a9b6761ad12256efd7200d4d79"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Remeshing__Refinement.html#ga21b108a9b6761ad12256efd7200d4d79">HangingNodeRefine</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classbool">bool</a> strict_subset_inheritance, <a class="el" href="group__nativeTypes.html#classbool">bool</a> anisotropic)</td></tr>
+<tr class="memdesc:ga21b108a9b6761ad12256efd7200d4d79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Refines selected elements using hanging nodes.  <a href="#ga21b108a9b6761ad12256efd7200d4d79">More...</a><br /></td></tr>
 <tr class="separator:ga21b108a9b6761ad12256efd7200d4d79"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad3449d705a9ce2959ea8a2e54525ae6c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad3449d705a9ce2959ea8a2e54525ae6c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Remeshing__Refinement.html#gad3449d705a9ce2959ea8a2e54525ae6c">RefineSmooth</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classbool">bool</a> strict_subset_inheritance)</td></tr>
-<tr class="memdesc:gad3449d705a9ce2959ea8a2e54525ae6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Refines selected elements using piecewise smooth refinement. <br /></td></tr>
+<tr class="memitem:gad3449d705a9ce2959ea8a2e54525ae6c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Remeshing__Refinement.html#gad3449d705a9ce2959ea8a2e54525ae6c">RefineSmooth</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classbool">bool</a> strict_subset_inheritance)</td></tr>
+<tr class="memdesc:gad3449d705a9ce2959ea8a2e54525ae6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Refines selected elements using piecewise smooth refinement.  <a href="#gad3449d705a9ce2959ea8a2e54525ae6c">More...</a><br /></td></tr>
 <tr class="separator:gad3449d705a9ce2959ea8a2e54525ae6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3b54422361a16a3ee56be309783dcd7a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3b54422361a16a3ee56be309783dcd7a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Remeshing__Refinement.html#ga3b54422361a16a3ee56be309783dcd7a">RefineSmoothBoundary2D</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classbool">bool</a> strict_subset_inheritance)</td></tr>
-<tr class="memdesc:ga3b54422361a16a3ee56be309783dcd7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Refines selected elements using smooth subdivision rules on the boundary edges. <br /></td></tr>
+<tr class="memitem:ga3b54422361a16a3ee56be309783dcd7a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Remeshing__Refinement.html#ga3b54422361a16a3ee56be309783dcd7a">RefineSmoothBoundary2D</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classbool">bool</a> strict_subset_inheritance)</td></tr>
+<tr class="memdesc:ga3b54422361a16a3ee56be309783dcd7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Refines selected elements using smooth subdivision rules on the boundary edges.  <a href="#ga3b54422361a16a3ee56be309783dcd7a">More...</a><br /></td></tr>
 <tr class="separator:ga3b54422361a16a3ee56be309783dcd7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4fe187f1cbef018c9489da7c7688dd12"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga4fe187f1cbef018c9489da7c7688dd12"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Remeshing__Refinement.html#ga4fe187f1cbef018c9489da7c7688dd12">InsertCenter</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *param, <a class="el" href="group__nativeTypes.html#classbool">bool</a> param)</td></tr>
-<tr class="memdesc:ga4fe187f1cbef018c9489da7c7688dd12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts a central vertex in all selected elements. <br /></td></tr>
+<tr class="memitem:ga4fe187f1cbef018c9489da7c7688dd12"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Remeshing__Refinement.html#ga4fe187f1cbef018c9489da7c7688dd12">InsertCenter</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *param, <a class="el" href="group__nativeTypes.html#classbool">bool</a> param)</td></tr>
+<tr class="memdesc:ga4fe187f1cbef018c9489da7c7688dd12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts a central vertex in all selected elements.  <a href="#ga4fe187f1cbef018c9489da7c7688dd12">More...</a><br /></td></tr>
 <tr class="separator:ga4fe187f1cbef018c9489da7c7688dd12"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Generation of new elements through refinement of selected existing elements. </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga21b108a9b6761ad12256efd7200d4d79"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void HangingNodeRefine </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>mesh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
+          <td class="paramname"><em>strict_subset_inheritance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
+          <td class="paramname"><em>anisotropic</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Refines selected elements using hanging nodes. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga4fe187f1cbef018c9489da7c7688dd12"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void InsertCenter </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>param</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
+          <td class="paramname"><em>param</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Inserts a central vertex in all selected elements. </p>
+
+</div>
+</div>
+<a class="anchor" id="gae96592a4817070651de24a977ca9a4ff"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Refine </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>mesh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
+          <td class="paramname"><em>strict_subset_inheritance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
+          <td class="paramname"><em>use_snap_points</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Refines selected elements and builds a regular closure. </p>
+
+</div>
+</div>
+<a class="anchor" id="gad3449d705a9ce2959ea8a2e54525ae6c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RefineSmooth </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>mesh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
+          <td class="paramname"><em>strict_subset_inheritance</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Refines selected elements using piecewise smooth refinement. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga3b54422361a16a3ee56be309783dcd7a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RefineSmoothBoundary2D </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>mesh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
+          <td class="paramname"><em>strict_subset_inheritance</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Refines selected elements using smooth subdivision rules on the boundary edges. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">(c) Sebastian Reiter. Generated on Fri Jan 15 2016 12:11:55 for ProMesh User Manual by
+    <li class="footer">(c) Sebastian Reiter. Generated on Tue Apr 5 2016 14:54:10 for ProMesh User Manual by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.11 </li>
   </ul>

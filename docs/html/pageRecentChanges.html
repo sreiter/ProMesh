@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ProMesh User Manual
-   &#160;<span id="projectnumber">v4.2.7</span>
+   &#160;<span id="projectnumber">v4.2.9*</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -94,6 +94,26 @@ $(document).ready(function(){initNavTree('pageRecentChanges.html','');});
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><pre class="fragment">Recent changes:
+
+-------------------------------------------------------------------------------
+v 4.2.9
+Changes and additions:
+- "Info-PrintSelectionInfo" now also supports selected edges.
+
+Fixes:
+- Fixed a crash in "Info-PrintSelectionInfo" which occurred if not at least
+  2 vertices were selected.
+
+
+-------------------------------------------------------------------------------
+v 4.2.8
+Changes and additions:
+- Improved selection speed for big grids by restricting updates to the involved
+  display lists to the selection list only.
+
+Fixes:
+
+
 
 -------------------------------------------------------------------------------
 v 4.2.7
@@ -1023,7 +1043,7 @@ Fixes:
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">(c) Sebastian Reiter. Generated on Fri Jan 15 2016 12:11:55 for ProMesh User Manual by
+    <li class="footer">(c) Sebastian Reiter. Generated on Tue Apr 5 2016 14:54:10 for ProMesh User Manual by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.11 </li>
   </ul>

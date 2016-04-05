@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ProMesh User Manual
-   &#160;<span id="projectnumber">v4.2.7</span>
+   &#160;<span id="projectnumber">v4.2.9*</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -101,24 +101,59 @@ $(document).ready(function(){initNavTree('group__promesh__Coordinate__Transform_
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaadd497f414a7982434b73154c01de88a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaadd497f414a7982434b73154c01de88a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Coordinate__Transform__Subdivision__Projection.html#gaadd497f414a7982434b73154c01de88a">ProjectToLimitPiecewiseLoop</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
-<tr class="memdesc:gaadd497f414a7982434b73154c01de88a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Projects all vertices in the grid to their limit positions as defined by the piecewise loop scheme. <br /></td></tr>
+<tr class="memitem:gaadd497f414a7982434b73154c01de88a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Coordinate__Transform__Subdivision__Projection.html#gaadd497f414a7982434b73154c01de88a">ProjectToLimitPiecewiseLoop</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
+<tr class="memdesc:gaadd497f414a7982434b73154c01de88a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Projects all vertices in the grid to their limit positions as defined by the piecewise loop scheme.  <a href="#gaadd497f414a7982434b73154c01de88a">More...</a><br /></td></tr>
 <tr class="separator:gaadd497f414a7982434b73154c01de88a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga544b75f59d63be243b7e5441f1a1cf8f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga544b75f59d63be243b7e5441f1a1cf8f"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Coordinate__Transform__Subdivision__Projection.html#ga544b75f59d63be243b7e5441f1a1cf8f">ProjectToLimitSmoothBoundary</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
-<tr class="memdesc:ga544b75f59d63be243b7e5441f1a1cf8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Projects all boundary-vertices in the grid to their limit positions as defined by the b-spline subdivision scheme. <br /></td></tr>
+<tr class="memitem:ga544b75f59d63be243b7e5441f1a1cf8f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Coordinate__Transform__Subdivision__Projection.html#ga544b75f59d63be243b7e5441f1a1cf8f">ProjectToLimitSmoothBoundary</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
+<tr class="memdesc:ga544b75f59d63be243b7e5441f1a1cf8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Projects all boundary-vertices in the grid to their limit positions as defined by the b-spline subdivision scheme.  <a href="#ga544b75f59d63be243b7e5441f1a1cf8f">More...</a><br /></td></tr>
 <tr class="separator:ga544b75f59d63be243b7e5441f1a1cf8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Projection of vertices to their limit position according to certain subdivision schemes. </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="gaadd497f414a7982434b73154c01de88a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ProjectToLimitPiecewiseLoop </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>mesh</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Projects all vertices in the grid to their limit positions as defined by the piecewise loop scheme. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga544b75f59d63be243b7e5441f1a1cf8f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ProjectToLimitSmoothBoundary </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>mesh</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Projects all boundary-vertices in the grid to their limit positions as defined by the b-spline subdivision scheme. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">(c) Sebastian Reiter. Generated on Fri Jan 15 2016 12:11:55 for ProMesh User Manual by
+    <li class="footer">(c) Sebastian Reiter. Generated on Tue Apr 5 2016 14:54:10 for ProMesh User Manual by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.11 </li>
   </ul>

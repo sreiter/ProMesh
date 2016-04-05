@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ProMesh User Manual
-   &#160;<span id="projectnumber">v4.2.7</span>
+   &#160;<span id="projectnumber">v4.2.9*</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -101,36 +101,237 @@ $(document).ready(function(){initNavTree('group__promesh__Coordinate__Transform_
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gafc45eb57cb201691539159a98fc7d47c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafc45eb57cb201691539159a98fc7d47c"></a>
-<a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Coordinate__Transform__Move.html#gafc45eb57cb201691539159a98fc7d47c">MoveSelectionTo</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *center)</td></tr>
-<tr class="memdesc:gafc45eb57cb201691539159a98fc7d47c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves the selected elements so that the new selection center will lie at the specified position. <br /></td></tr>
+<tr class="memitem:ga467ffcba6bf6888535f6c47d7ba491cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Coordinate__Transform__Move.html#ga467ffcba6bf6888535f6c47d7ba491cc">GetSelectionCenter</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *centerOut)</td></tr>
+<tr class="separator:ga467ffcba6bf6888535f6c47d7ba491cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafc45eb57cb201691539159a98fc7d47c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Coordinate__Transform__Move.html#gafc45eb57cb201691539159a98fc7d47c">MoveSelectionTo</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *center)</td></tr>
+<tr class="memdesc:gafc45eb57cb201691539159a98fc7d47c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves the selected elements so that the new selection center will lie at the specified position.  <a href="#gafc45eb57cb201691539159a98fc7d47c">More...</a><br /></td></tr>
 <tr class="separator:gafc45eb57cb201691539159a98fc7d47c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga29c6fd98f405e47802cf609fff5b570e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga29c6fd98f405e47802cf609fff5b570e"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Coordinate__Transform__Move.html#ga29c6fd98f405e47802cf609fff5b570e">Move</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *offset)</td></tr>
-<tr class="memdesc:ga29c6fd98f405e47802cf609fff5b570e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves selected vertices. <br /></td></tr>
+<tr class="memitem:ga29c6fd98f405e47802cf609fff5b570e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Coordinate__Transform__Move.html#ga29c6fd98f405e47802cf609fff5b570e">Move</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *offset)</td></tr>
+<tr class="memdesc:ga29c6fd98f405e47802cf609fff5b570e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves selected vertices.  <a href="#ga29c6fd98f405e47802cf609fff5b570e">More...</a><br /></td></tr>
 <tr class="separator:ga29c6fd98f405e47802cf609fff5b570e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga60202ff1f676889e679049b393784ed7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga60202ff1f676889e679049b393784ed7"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Coordinate__Transform__Move.html#ga60202ff1f676889e679049b393784ed7">MoveMeshTo</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *new_position)</td></tr>
-<tr class="memdesc:ga60202ff1f676889e679049b393784ed7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves the active mesh and its pivot, so that the pivot will be located on the specified position. <br /></td></tr>
+<tr class="memitem:ga60202ff1f676889e679049b393784ed7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Coordinate__Transform__Move.html#ga60202ff1f676889e679049b393784ed7">MoveMeshTo</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *new_position)</td></tr>
+<tr class="memdesc:ga60202ff1f676889e679049b393784ed7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves the active mesh and its pivot, so that the pivot will be located on the specified position.  <a href="#ga60202ff1f676889e679049b393784ed7">More...</a><br /></td></tr>
 <tr class="separator:ga60202ff1f676889e679049b393784ed7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab31121ea0c39af5f61a3bfdd07a8033e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab31121ea0c39af5f61a3bfdd07a8033e"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Coordinate__Transform__Move.html#gab31121ea0c39af5f61a3bfdd07a8033e">MoveAlongNormal</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classdouble">double</a> offset)</td></tr>
-<tr class="memdesc:gab31121ea0c39af5f61a3bfdd07a8033e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves selected vertices along their normal by the specified offset. <br /></td></tr>
+<tr class="memitem:gab31121ea0c39af5f61a3bfdd07a8033e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Coordinate__Transform__Move.html#gab31121ea0c39af5f61a3bfdd07a8033e">MoveAlongNormal</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classdouble">double</a> offset)</td></tr>
+<tr class="memdesc:gab31121ea0c39af5f61a3bfdd07a8033e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves selected vertices along their normal by the specified offset.  <a href="#gab31121ea0c39af5f61a3bfdd07a8033e">More...</a><br /></td></tr>
 <tr class="separator:gab31121ea0c39af5f61a3bfdd07a8033e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga342d081f256c2941fecc2815cb8a8a7c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga342d081f256c2941fecc2815cb8a8a7c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Coordinate__Transform__Move.html#ga342d081f256c2941fecc2815cb8a8a7c">MoveAlongNormal</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classdouble">double</a> offset, <a class="el" href="group__nativeTypes.html#classbool">bool</a> use_precalculated_normals)</td></tr>
-<tr class="memdesc:ga342d081f256c2941fecc2815cb8a8a7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves selected vertices along their normal by the specified offset. <br /></td></tr>
+<tr class="memitem:ga342d081f256c2941fecc2815cb8a8a7c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Coordinate__Transform__Move.html#ga342d081f256c2941fecc2815cb8a8a7c">MoveAlongNormal</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classdouble">double</a> offset, <a class="el" href="group__nativeTypes.html#classbool">bool</a> use_precalculated_normals)</td></tr>
+<tr class="memdesc:ga342d081f256c2941fecc2815cb8a8a7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves selected vertices along their normal by the specified offset.  <a href="#ga342d081f256c2941fecc2815cb8a8a7c">More...</a><br /></td></tr>
 <tr class="separator:ga342d081f256c2941fecc2815cb8a8a7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga73308fcef4c9c90b0b2eff1377bd994a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Coordinate__Transform__Move.html#ga73308fcef4c9c90b0b2eff1377bd994a">MoveVerticesAlongEdges</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classdouble">double</a> relative_offset)</td></tr>
+<tr class="memdesc:ga73308fcef4c9c90b0b2eff1377bd994a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves selected vertices along selected edges by an offset relative to those selected edges. If a selected vertex is connected to multiple selected edges, the new position will be averaged between the individual offsets.  <a href="#ga73308fcef4c9c90b0b2eff1377bd994a">More...</a><br /></td></tr>
+<tr class="separator:ga73308fcef4c9c90b0b2eff1377bd994a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Tools to move the current selection or the current mesh. </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga467ffcba6bf6888535f6c47d7ba491cc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__nativeTypes.html#classbool">bool</a> GetSelectionCenter </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>mesh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
+          <td class="paramname"><em>centerOut</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga29c6fd98f405e47802cf609fff5b570e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Move </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>mesh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
+          <td class="paramname"><em>offset</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Moves selected vertices. </p>
+
+</div>
+</div>
+<a class="anchor" id="gab31121ea0c39af5f61a3bfdd07a8033e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MoveAlongNormal </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>mesh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classdouble">double</a>&#160;</td>
+          <td class="paramname"><em>offset</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Moves selected vertices along their normal by the specified offset. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga342d081f256c2941fecc2815cb8a8a7c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MoveAlongNormal </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>mesh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classdouble">double</a>&#160;</td>
+          <td class="paramname"><em>offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
+          <td class="paramname"><em>use_precalculated_normals</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Moves selected vertices along their normal by the specified offset. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga60202ff1f676889e679049b393784ed7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MoveMeshTo </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>mesh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
+          <td class="paramname"><em>new_position</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Moves the active mesh and its pivot, so that the pivot will be located on the specified position. </p>
+
+</div>
+</div>
+<a class="anchor" id="gafc45eb57cb201691539159a98fc7d47c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__nativeTypes.html#classbool">bool</a> MoveSelectionTo </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>mesh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
+          <td class="paramname"><em>center</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Moves the selected elements so that the new selection center will lie at the specified position. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga73308fcef4c9c90b0b2eff1377bd994a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MoveVerticesAlongEdges </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>mesh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classdouble">double</a>&#160;</td>
+          <td class="paramname"><em>relative_offset</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Moves selected vertices along selected edges by an offset relative to those selected edges. If a selected vertex is connected to multiple selected edges, the new position will be averaged between the individual offsets. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">(c) Sebastian Reiter. Generated on Fri Jan 15 2016 12:11:55 for ProMesh User Manual by
+    <li class="footer">(c) Sebastian Reiter. Generated on Tue Apr 5 2016 14:54:10 for ProMesh User Manual by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.11 </li>
   </ul>

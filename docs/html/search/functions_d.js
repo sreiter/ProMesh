@@ -1,19 +1,9 @@
 var searchData=
 [
-  ['refine',['Refine',['../group__promesh__Remeshing__Refinement.html#gac5853541397d49a13d1e68fc736e70bd',1,'script_reference.cpp']]],
-  ['refinesmooth',['RefineSmooth',['../group__promesh__Remeshing__Refinement.html#gad3449d705a9ce2959ea8a2e54525ae6c',1,'script_reference.cpp']]],
-  ['refinesmoothboundary2d',['RefineSmoothBoundary2D',['../group__promesh__Remeshing__Refinement.html#ga3b54422361a16a3ee56be309783dcd7a',1,'script_reference.cpp']]],
-  ['remove_5fsmall_5fholes',['remove_small_holes',['../group__promesh__Raster__Layers.html#a7493341a35e16d5029232a60af5bf489',1,'RasterLayers']]],
-  ['removedoubleedges',['RemoveDoubleEdges',['../group__promesh__Remeshing__Remove__Doubles.html#ga946cb7a4b145e8d83b78a64fed4b1d55',1,'script_reference.cpp']]],
-  ['removedoublefaces',['RemoveDoubleFaces',['../group__promesh__Remeshing__Remove__Doubles.html#ga82c10289608d6a881019604c59bc9875',1,'script_reference.cpp']]],
-  ['removedoubles',['RemoveDoubles',['../group__promesh__Remeshing__Remove__Doubles.html#ga41fd43216491328a3e426a6d080a1b1c',1,'script_reference.cpp']]],
-  ['replacelowvalencevertices',['ReplaceLowValenceVertices',['../group__promesh__Remeshing__Triangulation.html#gaa5d5908537ab0d256f2776a4e597724f',1,'script_reference.cpp']]],
-  ['replacevalence3vertices',['ReplaceValence3Vertices',['../group__promesh__Remeshing__Triangulation.html#ga88d5ad0d615ef8180b1623a9fea53e95',1,'script_reference.cpp']]],
-  ['resolveedgeintersection',['ResolveEdgeIntersection',['../group__promesh__Remeshing__Resolve__Intersections__Advanced.html#gadeb49d723cf03e9aff2e630c76891723',1,'script_reference.cpp']]],
-  ['resolveselfintersections',['ResolveSelfIntersections',['../group__promesh__Remeshing__Resolve__Intersections.html#gab478cb8a07b9b2c01328a15130530bf2',1,'script_reference.cpp']]],
-  ['resolvetriangleintersections',['ResolveTriangleIntersections',['../group__promesh__Remeshing__Resolve__Intersections__Advanced.html#ga07bb54d9c2131ee0947dc9d6167d9b8c',1,'script_reference.cpp']]],
-  ['retetrahedralize',['Retetrahedralize',['../group__promesh__Remeshing__Tetrahedra.html#gac08492910c32fca0ba9320797963ed04',1,'script_reference.cpp']]],
-  ['retriangulate',['Retriangulate',['../group__promesh__Remeshing__Triangulation.html#gafb5980d29bf477b771ad6a6e5112779a',1,'script_reference.cpp']]],
-  ['rotatearoundcenter',['RotateAroundCenter',['../group__promesh__Coordinate__Transform__Rotate.html#ga4276f80cfeca42f4c6f09c8b765dfb18',1,'script_reference.cpp']]],
-  ['rotatearoundpivot',['RotateAroundPivot',['../group__promesh__Coordinate__Transform__Rotate.html#ga0a56558a0140777cb7ef741c394e212c',1,'script_reference.cpp']]]
+  ['octahedron_5fbegin',['octahedron_begin',['../group__ugbase.html#a7d35e27ac3e864a9b3e874c02acff881',1,'Mesh::octahedron_begin()'],['../group__ugbase.html#a7d35e27ac3e864a9b3e874c02acff881',1,'Mesh::octahedron_begin()']]],
+  ['octahedron_5fend',['octahedron_end',['../group__ugbase.html#a68ef31bdc378f7d807a877609744baf2',1,'Mesh::octahedron_end()'],['../group__ugbase.html#a68ef31bdc378f7d807a877609744baf2',1,'Mesh::octahedron_end()']]],
+  ['octahedron_5fselection_5fbegin',['octahedron_selection_begin',['../group__ugbase.html#afe6da875a5ba6545e4e355dda6ab08f5',1,'Mesh::octahedron_selection_begin()'],['../group__ugbase.html#afe6da875a5ba6545e4e355dda6ab08f5',1,'Mesh::octahedron_selection_begin()']]],
+  ['octahedron_5fselection_5fend',['octahedron_selection_end',['../group__ugbase.html#a0450364f4a34fda1ca918258d68deee9',1,'Mesh::octahedron_selection_end()'],['../group__ugbase.html#a0450364f4a34fda1ca918258d68deee9',1,'Mesh::octahedron_selection_end()']]],
+  ['octahedron_5fsubset_5fbegin',['octahedron_subset_begin',['../group__ugbase.html#a32257c3f7854ac5340a09005a9a9b640',1,'Mesh::octahedron_subset_begin(int param)'],['../group__ugbase.html#a32257c3f7854ac5340a09005a9a9b640',1,'Mesh::octahedron_subset_begin(int param)']]],
+  ['octahedron_5fsubset_5fend',['octahedron_subset_end',['../group__ugbase.html#a7a5c53bd7b9d8ff7d260c9a4d150c009',1,'Mesh::octahedron_subset_end(int param)'],['../group__ugbase.html#a7a5c53bd7b9d8ff7d260c9a4d150c009',1,'Mesh::octahedron_subset_end(int param)']]]
 ];

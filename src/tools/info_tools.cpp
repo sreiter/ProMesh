@@ -67,24 +67,39 @@ class ToolPrintSelectionDirection : public ITool
 			ug::Selector& sel = obj->selector();
 			LGObject::position_accessor_t aaPos = obj->position_accessor();
 
-			VertexIterator i0 = sel.begin<Vertex>();
-			if(i0 == sel.end<Vertex>()){
-				UG_LOG("At least 2 vertices have to be selected");
-			}
-
-			VertexIterator i1 = sel.begin<Vertex>();
-			++i1;
-			if(i1 == sel.end<Vertex>()){
-				UG_LOG("At least 2 vertices have to be selected");
-			}
-
-			while(i1 != sel.end<Vertex>()){
-				vector3 d;
-				VecSubtract(d, aaPos[*i1], aaPos[*i0]);
-				UG_LOG("direction between vertices " << aaPos[*i0] << " and "
-						<< aaPos[*i1] << ": " << d << endl);
-				++i0;
+			bool gotSome = false;
+			if(sel.num<Vertex>() >= 2){
+				VertexIterator i0 = sel.begin<Vertex>();
+				VertexIterator i1 = sel.begin<Vertex>();
 				++i1;
+				while(i1 != sel.end<Vertex>()){
+					vector3 d;
+					VecSubtract(d, aaPos[*i1], aaPos[*i0]);
+					UG_LOG("  direction between vertices " << aaPos[*i0] << " and "
+							<< aaPos[*i1] << ": " << d << endl);
+					++i0;
+					++i1;
+				}
+				gotSome = true;
+			}
+			
+			if(sel.num<Edge>() >= 1){
+				for(EdgeIterator eiter = sel.begin<Edge>();
+					eiter != sel.end<Edge>(); ++eiter)
+				{
+					Edge* e = *eiter;
+					vector3 d;
+					VecSubtract(d, aaPos[e->vertex(1)], aaPos[e->vertex(0)]);
+					UG_LOG("  direction of edge " << aaPos[e->vertex(0)] << " - "
+							<< aaPos[e->vertex(1)] << ": " << d << endl);
+				}
+				gotSome = true;
+			}
+
+			if(!gotSome){
+				UG_LOG("ERROR in 'Print Selection Direction':\n"
+					   "At least 2 vertices or one edge have to be selected!\n");
+				return;
 			}
 		}
 

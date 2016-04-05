@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ProMesh User Manual
-   &#160;<span id="projectnumber">v4.2.7</span>
+   &#160;<span id="projectnumber">v4.2.9*</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -100,11 +100,15 @@ $(document).ready(function(){initNavTree('group__promesh__Util.html','');});
 <p>Utility classes and functions for scripting.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:classBox"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Util.html#classBox">Box</a></td></tr>
+<tr class="separator:classBox"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gafcb8e1a08d847105c2ab0c1e074ea466"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafcb8e1a08d847105c2ab0c1e074ea466"></a>
-<a class="el" href="group__promesh__Util.html#classBox">Box</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Util.html#gafcb8e1a08d847105c2ab0c1e074ea466">GetBoundingBox</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *param)</td></tr>
-<tr class="memdesc:gafcb8e1a08d847105c2ab0c1e074ea466"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the bounding box of the specified mesh. <br /></td></tr>
+<tr class="memitem:gafcb8e1a08d847105c2ab0c1e074ea466"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__promesh__Util.html#classBox">Box</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Util.html#gafcb8e1a08d847105c2ab0c1e074ea466">GetBoundingBox</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *param)</td></tr>
+<tr class="memdesc:gafcb8e1a08d847105c2ab0c1e074ea466"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the bounding box of the specified mesh.  <a href="#gafcb8e1a08d847105c2ab0c1e074ea466">More...</a><br /></td></tr>
 <tr class="separator:gafcb8e1a08d847105c2ab0c1e074ea466"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -121,7 +125,153 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Public Member Functions</h3></td></tr>
+<tr class="memitem:afd526c536469a9125e51d28d122d5cb8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Util.html#afd526c536469a9125e51d28d122d5cb8">set_min</a> (<a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *param)</td></tr>
+<tr class="separator:afd526c536469a9125e51d28d122d5cb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69f3dccc5b587fa3337e0f9a7b123cdb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Util.html#a69f3dccc5b587fa3337e0f9a7b123cdb">set_max</a> (<a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *param)</td></tr>
+<tr class="separator:a69f3dccc5b587fa3337e0f9a7b123cdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a492bf3fd112f9f15898c89db5cc2f263"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Util.html#a492bf3fd112f9f15898c89db5cc2f263">local_to_global</a> (<a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *param, <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *param)</td></tr>
+<tr class="separator:a492bf3fd112f9f15898c89db5cc2f263"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a091401ac9a4a09424628948c0083bd8c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Util.html#a091401ac9a4a09424628948c0083bd8c">global_to_local</a> (<a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *param, <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *param)</td></tr>
+<tr class="separator:a091401ac9a4a09424628948c0083bd8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff5fbf7d9274b876894db80030bac416"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Util.html#aff5fbf7d9274b876894db80030bac416">min</a> ()</td></tr>
+<tr class="separator:aff5fbf7d9274b876894db80030bac416"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4216495945fdb4a2a6837a7d872f96c6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Util.html#a4216495945fdb4a2a6837a7d872f96c6">max</a> ()</td></tr>
+<tr class="separator:a4216495945fdb4a2a6837a7d872f96c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h4 class="groupheader">Member Function Documentation</h4>
+<a class="anchor" id="a091401ac9a4a09424628948c0083bd8c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void global_to_local </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
+          <td class="paramname"><em>param</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
+          <td class="paramname"><em>param</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a492bf3fd112f9f15898c89db5cc2f263"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void local_to_global </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
+          <td class="paramname"><em>param</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
+          <td class="paramname"><em>param</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a4216495945fdb4a2a6837a7d872f96c6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a>* max </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aff5fbf7d9274b876894db80030bac416"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a>* min </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a69f3dccc5b587fa3337e0f9a7b123cdb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void set_max </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
+          <td class="paramname"><em>param</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="afd526c536469a9125e51d28d122d5cb8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void set_min </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
+          <td class="paramname"><em>param</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="gafcb8e1a08d847105c2ab0c1e074ea466"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__promesh__Util.html#classBox">Box</a>* GetBoundingBox </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>param</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the bounding box of the specified mesh. </p>
 
 </div>
 </div>
@@ -131,7 +281,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">(c) Sebastian Reiter. Generated on Fri Jan 15 2016 12:11:55 for ProMesh User Manual by
+    <li class="footer">(c) Sebastian Reiter. Generated on Tue Apr 5 2016 14:54:10 for ProMesh User Manual by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.11 </li>
   </ul>
