@@ -76,6 +76,39 @@ QComboBox::down-arrow {
     height: 9px;
 }
 
+QMenuBar {
+	border-bottom: 2px solid #2A2A2A;
+}
+
+QMenu {
+	border: 1px solid #111111;
+	padding: 2px 2px 2px 2px;
+    background-color: #2A2A2A;
+}
+
+QMenu::item {
+
+}
+
+QMenuBar::item {
+    spacing: 3px; /* spacing between menu bar items */
+    padding: 2px 4px 2px;
+    background: transparent;
+}
+
+QMenu::item:selected, QMenuBar::item:selected { /* when selected using mouse or keyboard */
+    background: #555555;
+}
+
+QMenu::item:hover, QMenuBar::item:hover { /* when selected using mouse or keyboard */
+    background-color: #666666;
+}
+
+QMenu::item:pressed, QMenuBar::item:pressed {
+    background-color: #2A2A2A;
+}
+
+
 /*QComboBox:on {
     padding-top: 3px;
     padding-left: 20px;
