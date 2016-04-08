@@ -33,7 +33,6 @@
 class QLayout;
 class QFrame;
 
-
 class WidgetContainer : public QFrame
 {
 	Q_OBJECT
@@ -46,6 +45,15 @@ class WidgetContainer : public QFrame
 
 	private:
 		QLayout*		m_layout;
+};
+
+class WidgetContainerSeparator : public QFrame
+{
+	Q_OBJECT
+	
+	public:
+		WidgetContainerSeparator(QWidget* parent);
+		virtual ~WidgetContainerSeparator();
 };
 
 #endif

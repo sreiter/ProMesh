@@ -67,6 +67,12 @@ ToolWidget::ToolWidget(const QString& name, QWidget* parent,
 		m_signalMapper->setMapping(btn, IDB_APPLY);
 		connect(btn, SIGNAL(clicked()), m_signalMapper, SLOT(map()));
 	}
+
+	// QFrame* sep = new QFrame(this);
+	// sep->setFrameShape(QFrame::HLine);
+	// sep->setFrameShadow(QFrame::Sunken);
+	// baseLayout->addWidget(sep);
+
 /*
 	if(buttons & IDB_PREVIEW){
 		QPushButton* btn = new QPushButton(tr("Preview"), this);

@@ -28,10 +28,10 @@
 #ifndef COLOR_WIDGET_H
 #define COLOR_WIDGET_H
 
-#include <QWidget>
+#include <QFrame>
 #include <QColor>
 
-class ColorWidget : public QWidget
+class ColorWidget : public QFrame
 {
 	Q_OBJECT
 

@@ -33,7 +33,7 @@
 
 
 ExtendibleWidget::ExtendibleWidget(QWidget* parent) :
-	QWidget(parent),
+	QFrame(parent),
 	m_widget(NULL)
 {
 	QVBoxLayout* mainLayout = new QVBoxLayout(this);

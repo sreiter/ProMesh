@@ -39,7 +39,7 @@
 using namespace std;
 
 ToolBrowser::ToolBrowser(QWidget* parent) :
-	QWidget(parent),
+	QFrame(parent),
 	m_iconTab(NULL),
 	m_revision(0)
 {

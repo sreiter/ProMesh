@@ -37,9 +37,11 @@ WidgetContainer::WidgetContainer(QWidget* parent) : QFrame(parent)
 	m_layout->setContentsMargins(0, 0, 0, 0);
 	this->setLayout(m_layout);
 	this->setLineWidth(1);
+	// m_layout->addWidget(new WidgetContainerSeparator(this));
 	//this->setContentsMargins(1, 1, 1, 0);
 	//this->setFrameStyle(QFrame::Box | QFrame::Plain);
-	setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
+	// setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
+	// setFrameStyle(QFrame::NoFrame | QFrame::Plain);
 }
 
 WidgetContainer::~WidgetContainer()
@@ -66,4 +68,18 @@ void WidgetContainer::addWidget(QWidget* widget, Qt::Alignment alignment)
 	widget->setParent(this);
 	m_layout->addWidget(widget);
 	m_layout->setAlignment(widget, alignment);
+	// m_layout->addWidget(new WidgetContainerSeparator(this));
+}
+
+
+
+WidgetContainerSeparator::WidgetContainerSeparator(QWidget* parent) :
+	QFrame(parent)
+{
+	setFrameStyle(QFrame::HLine | QFrame::Plain);
+	setLineWidth(0);
+}
+
+WidgetContainerSeparator::~WidgetContainerSeparator()
+{
 }

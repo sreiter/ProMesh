@@ -36,7 +36,7 @@ class QVBoxLayout;
 class ExtendibleWidgetHeader;
 
 
-class ExtendibleWidget : public QWidget
+class ExtendibleWidget : public QFrame
 {
 	Q_OBJECT
 

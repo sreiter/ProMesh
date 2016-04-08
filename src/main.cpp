@@ -77,8 +77,8 @@ int main(int argc, char *argv[])
 	myApp.setQuitOnLastWindowClosed(true);
 
 
-	myApp.setStyleSheet(GetFileContent(":/styles/promesh_style.txt"));
-	//myApp.setStyleSheet(GetFileContent("/home/sreiter/projects/ProMesh/trunk/styles/promesh_style.txt"));
+	myApp.setStyleSheet(GetFileContent(":/styles/promesh_style.css"));
+	// myApp.setStyleSheet(GetFileContent("/home/sreiter/projects/ProMesh/ProMesh/styles/promesh_style.css"));
 
 /*
 	if(!QGLFormat::hasOpenGL())

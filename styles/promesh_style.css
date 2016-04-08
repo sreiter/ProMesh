@@ -1,0 +1,209 @@
+
+QWidget {
+	border: 0px solid #8f8f91;
+	border-radius: 0px;
+	background-color: #333333;
+	color: #FFFFFF;
+}
+
+/*
+QFrame {
+	border: 0px solid #8f8f91;
+	border-radius: 0px;
+	background-color: #333333;
+}*/
+
+
+/*QToolBar {
+	border: 0px;
+	background-color: #444444;
+}
+
+ExtendibleWidget {
+	border: 0px;
+	background-color: #444444;
+}
+
+ToolWidget {
+	border: 0px;
+	background-color: #444444;
+}
+
+WidgetContainer {
+	background-color: #444444;
+}
+
+QLabel {
+	color: #FFFFFF;
+}*/
+
+
+QComboBox{
+	border: 1px solid #2A2A2A;
+	padding: 0px 3px 0px 3px;
+    background-color: #444444;
+	color: #FFFFFF;
+}
+
+QComboBox::indicator{
+    background-color:transparent;
+    selection-background-color:transparent;
+    color:transparent;
+    selection-color:transparent;
+}
+
+QComboBox QAbstractItemView {
+	border: 1px solid #2A2A2A;
+	padding: 0px 0px 0px 0px;
+    background-color: #2A2A2A;
+}
+
+QComboBox::item:selected {
+    border: 1px solid transparent;
+    background:#666666;
+}
+
+QComboBox::drop-down {
+	border-left: 1px solid #2A2A2A;
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+	width: 14px;
+}
+
+QComboBox::down-arrow {
+	image: url(:images/arrow-down.png);
+    width: 9px;
+    height: 9px;
+}
+
+/*QComboBox:on {
+    padding-top: 3px;
+    padding-left: 20px;
+}
+*/
+
+WidgetContainerSeparator {
+	/*border: 1px solid black;*/
+	color: black;
+	background-color: transparent;
+}
+
+/*CoordinatesWidget {
+	border-bottom: 2px solid #222222;
+	margin-bottom: 4px;
+}*/
+
+ToolWidget, CoordinatesWidget {
+	border-bottom: 2px solid #222222;
+	margin-bottom: 4px;
+}
+
+/*ToolBrowser {
+	background-color: #444444;
+}*/
+
+
+QMainWindow::separator {
+    background: #2A2A2A;
+    width: 3px; /* when vertical */
+    height: 3px; /* when horizontal */
+}
+
+QDockWidget::title {
+    text-align: left; /* align the text to the left */
+    padding-left: 2px;
+    background: #2A2A2A;
+}
+
+/*QAbstractScrollArea {
+	background-color: #2A2A2A;
+}*/
+
+QStatusBar {
+	background: #2A2A2A;
+}
+
+QPushButton {
+    /*border: 1px solid #8f8f91;*/
+    border: 1px solid #111111;
+	padding-left: 3px;
+	padding-right: 3px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	margin-top: 1px;
+	margin-bottom: 1px;
+    border-radius: 0px;
+    /*background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #f6f7fa, stop: 1 #dadbde);*/
+    min-width: 40px;
+    background-color: #444444;
+    color: #FFFFFF;
+}
+
+QPushButton:hover {
+	background-color: #666666;
+    /*background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #dadbde, stop: 1 #f6f7fa);*/
+}
+
+QPushButton:pressed {
+	background-color: #2A2A2A;
+    /*background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #dadbde, stop: 1 #f6f7fa);*/
+}
+
+QPushButton:flat {
+    border: none; /* no border for a flat push button */
+}
+
+QPushButton:default {
+    border-color: navy;
+	background-color: #CCAA55;
+}
+
+
+WidgetContainer > QPushButton {
+	margin-left: 2px;
+}
+
+QLineEdit {
+	border: 1px solid #2A2A2A;
+    background-color: #444444;
+}
+
+QDoubleSpinBox {
+    border: 1px solid #2A2A2A;
+    background-color: #444444;
+    min-width: 100px;
+    max-width: 100px;
+}
+
+QDoubleSpinBox::up-button {
+    subcontrol-origin: border;
+    subcontrol-position: top right; /* position at the top right corner */
+}
+
+QDoubleSpinBox::down-button {
+    subcontrol-origin: border;
+    subcontrol-position: bottom right; /* position at the top right corner */
+}
+
+
+QToolButton {
+    border: none;
+    /*background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #f6f7fa, stop: 1 #dadbde);*/
+}
+
+QToolButton:open { /* when the button has its menu open */
+	/*border: 1px solid #2A2A2A;*/
+	background-color: #2A2A2A;
+}
+
+
+QCheckBox {
+}
+
+ColorWidget {
+	border: 1px solid #2A2A2A;
+}

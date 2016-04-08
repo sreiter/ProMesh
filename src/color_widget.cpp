@@ -28,7 +28,7 @@
 #include <QtWidgets>
 #include "color_widget.h"
 
-ColorWidget::ColorWidget(QWidget* parent) : QWidget(parent)
+ColorWidget::ColorWidget(QWidget* parent) : QFrame(parent)
 {
 	m_color = Qt::black;
 }
@@ -42,6 +42,7 @@ void ColorWidget::setColor(const QColor& color)
 
 void ColorWidget::paintEvent(QPaintEvent* event)
 {
+	QFrame::paintEvent(event);
 	QPainter painter(this);
 	painter.setBrush(QBrush(m_color, Qt::SolidPattern));
 	painter.drawRect(rect());

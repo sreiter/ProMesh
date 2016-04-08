@@ -31,6 +31,7 @@
 #include <map>
 #include <string>
 #include <QWidget>
+#include <QFrame>
 #include "tools/tool_manager.h"
 
 class ExtendibleWidget;
@@ -40,7 +41,7 @@ class QVBoxLayout;
 class WidgetContainer;
 class WidgetList;
 
-class ToolBrowser : public QWidget
+class ToolBrowser : public QFrame
 {
 	Q_OBJECT
 
