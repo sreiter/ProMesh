@@ -1,0 +1,8 @@
+@veryDark	#111111
+@dark		#202020
+@default	#2A2A2A
+@light		#444444
+@lighter	#555555
+@veryLight	#666666
+@text		#FFFFFF
+@highlight	#FFAA00

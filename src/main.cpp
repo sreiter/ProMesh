@@ -77,8 +77,30 @@ int main(int argc, char *argv[])
 	myApp.setQuitOnLastWindowClosed(true);
 
 
-	myApp.setStyleSheet(GetFileContent(":/styles/promesh_style.css"));
-	// myApp.setStyleSheet(GetFileContent("/home/sreiter/projects/ProMesh/ProMesh/styles/promesh_style.css"));
+	// myApp.setStyleSheet(GetFileContent(":/styles/promesh_style.css"));
+	QString qss = GetFileContent(":/styles/promesh_style.css");
+	QString varsStr = GetFileContent(":/styles/dark_theme_variables.txt");
+	// QString qss = GetFileContent("/home/sreiter/projects/ProMesh/ProMesh/styles/promesh_style.css");
+	// QString varsStr = GetFileContent("/home/sreiter/projects/ProMesh/ProMesh/styles/dark_theme_variables.txt");
+	QStringList varsList = varsStr.split(QRegularExpression("[\r\n]"),QString::SkipEmptyParts);
+	QRegularExpression regVar("\\s*(@\\w+)\\s*(.+)");
+	QMap<QString, QString> varMap;
+	for(QStringList::Iterator iter = varsList.begin(); iter != varsList.end(); ++iter){
+		cout << "  " << iter->toStdString() << "\n";
+		QRegularExpressionMatch match = regVar.match(*iter);
+		if(match.hasMatch()){
+			varMap[match.captured(1)] = match.captured(2);
+		}
+	}
+	
+	QMapIterator<QString, QString> mapIter(varMap);
+	mapIter.toBack();
+	while(mapIter.hasPrevious()){
+		mapIter.previous();
+		qss.replace(mapIter.key(), mapIter.value());
+	}
+
+	myApp.setStyleSheet(qss);
 
 /*
 	if(!QGLFormat::hasOpenGL())

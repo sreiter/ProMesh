@@ -1,48 +1,49 @@
+/*using dark_theme_variables.txt*/
 
 QWidget {
-	border: 0px solid #8f8f91;
+	border: 0px solid @dark;
 	border-radius: 0px;
-	background-color: #333333;
-	color: #FFFFFF;
+	background-color: @default;
+	color: @text;
 }
 
 /*
 QFrame {
 	border: 0px solid #8f8f91;
 	border-radius: 0px;
-	background-color: #333333;
+	background-color: @default;
 }*/
 
 
 /*QToolBar {
 	border: 0px;
-	background-color: #444444;
+	background-color: @light;
 }
 
 ExtendibleWidget {
 	border: 0px;
-	background-color: #444444;
+	background-color: @light;
 }
 
 ToolWidget {
 	border: 0px;
-	background-color: #444444;
+	background-color: @light;
 }
 
 WidgetContainer {
-	background-color: #444444;
+	background-color: @light;
 }
 
 QLabel {
-	color: #FFFFFF;
+	color: @text;
 }*/
 
 
 QComboBox{
-	border: 1px solid #2A2A2A;
+	border: 1px solid @dark;
 	padding: 0px 3px 0px 3px;
-    background-color: #444444;
-	color: #FFFFFF;
+    background-color: @light;
+	color: @text;
 }
 
 QComboBox::indicator{
@@ -53,18 +54,18 @@ QComboBox::indicator{
 }
 
 QComboBox QAbstractItemView {
-	border: 1px solid #2A2A2A;
+	border: 1px solid @dark;
 	padding: 0px 0px 0px 0px;
-    background-color: #2A2A2A;
+    background-color: @dark;
 }
 
 QComboBox::item:selected {
     border: 1px solid transparent;
-    background:#666666;
+    background:@veryLight;
 }
 
 QComboBox::drop-down {
-	border-left: 1px solid #2A2A2A;
+	border-left: 1px solid @dark;
 	subcontrol-origin: padding;
 	subcontrol-position: top right;
 	width: 14px;
@@ -76,14 +77,18 @@ QComboBox::down-arrow {
     height: 9px;
 }
 
+QMainWindow > QToolBar {
+	border-bottom: 2px solid @dark;
+}
+
 QMenuBar {
-	border-bottom: 2px solid #2A2A2A;
+	/*border-bottom: 2px solid @dark;*/
 }
 
 QMenu {
-	border: 1px solid #111111;
+	border: 1px solid @veryDark;
 	padding: 2px 2px 2px 2px;
-    background-color: #2A2A2A;
+    background-color: @dark;
 }
 
 QMenu::item {
@@ -97,15 +102,15 @@ QMenuBar::item {
 }
 
 QMenu::item:selected, QMenuBar::item:selected { /* when selected using mouse or keyboard */
-    background: #555555;
+    background: @lighter;
 }
 
 QMenu::item:hover, QMenuBar::item:hover { /* when selected using mouse or keyboard */
-    background-color: #666666;
+    background-color: @veryLight;
 }
 
 QMenu::item:pressed, QMenuBar::item:pressed {
-    background-color: #2A2A2A;
+    background-color: @dark;
 }
 
 
@@ -132,12 +137,12 @@ ToolWidget, CoordinatesWidget {
 }
 
 /*ToolBrowser {
-	background-color: #444444;
+	background-color: @light;
 }*/
 
 
 QMainWindow::separator {
-    background: #2A2A2A;
+    background: @dark;
     width: 3px; /* when vertical */
     height: 3px; /* when horizontal */
 }
@@ -145,20 +150,58 @@ QMainWindow::separator {
 QDockWidget::title {
     text-align: left; /* align the text to the left */
     padding-left: 2px;
-    background: #2A2A2A;
+    background: @dark;
 }
 
 /*QAbstractScrollArea {
-	background-color: #2A2A2A;
+	background-color: @dark;
 }*/
 
+QScrollBar {
+	border: 1px solid @veryDark;
+	background: @dark;
+	margin: 15px 0px 15px 0px;
+	width: 14px;
+}
+
+QScrollBar::handle {
+	/*margin: 16px 1px 16px 1px;*/
+	background: @light;
+	min-height: 10px;
+}
+
+QScrollBar::add-line:vertical {
+	border: 1px solid @veryDark;
+	background: @dark;
+	width: 12px;
+	height: 12px;
+	subcontrol-position: bottom;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:vertical {
+	border: 1px solid @veryDark;
+	background: @dark;
+	width: 12px;
+	height: 12px;
+	subcontrol-position: top;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
+	border: 1px solid @veryDark;
+	background: @text;
+	width: 4px;
+	height: 4px;
+}
+
 QStatusBar {
-	background: #2A2A2A;
+	background: @dark;
 }
 
 QPushButton {
     /*border: 1px solid #8f8f91;*/
-    border: 1px solid #111111;
+    border: 1px solid @veryDark;
 	padding-left: 3px;
 	padding-right: 3px;
 	padding-top: 1px;
@@ -169,18 +212,18 @@ QPushButton {
     /*background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                       stop: 0 #f6f7fa, stop: 1 #dadbde);*/
     min-width: 40px;
-    background-color: #444444;
-    color: #FFFFFF;
+    background-color: @light;
+    color: @text;
 }
 
 QPushButton:hover {
-	background-color: #666666;
+	background-color: @veryLight;
     /*background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                       stop: 0 #dadbde, stop: 1 #f6f7fa);*/
 }
 
 QPushButton:pressed {
-	background-color: #2A2A2A;
+	background-color: @dark;
     /*background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                       stop: 0 #dadbde, stop: 1 #f6f7fa);*/
 }
@@ -200,13 +243,13 @@ WidgetContainer > QPushButton {
 }
 
 QLineEdit {
-	border: 1px solid #2A2A2A;
-    background-color: #444444;
+	border: 1px solid @dark;
+    background-color: @light;
 }
 
 QDoubleSpinBox {
-    border: 1px solid #2A2A2A;
-    background-color: #444444;
+    border: 1px solid @dark;
+    background-color: @light;
     min-width: 100px;
     max-width: 100px;
 }
@@ -224,13 +267,11 @@ QDoubleSpinBox::down-button {
 
 QToolButton {
     border: none;
-    /*background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                      stop: 0 #f6f7fa, stop: 1 #dadbde);*/
 }
 
-QToolButton:open { /* when the button has its menu open */
-	/*border: 1px solid #2A2A2A;*/
-	background-color: #2A2A2A;
+QToolBar > QToolButton:open { /* when the button has its menu open */
+	border: 1px solid @veryDark;
+	background-color: @highlight;
 }
 
 
@@ -238,5 +279,5 @@ QCheckBox {
 }
 
 ColorWidget {
-	border: 1px solid #2A2A2A;
+	border: 1px solid @dark;
 }
