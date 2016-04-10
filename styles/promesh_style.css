@@ -73,8 +73,8 @@ QComboBox::drop-down {
 
 QComboBox::down-arrow {
 	image: url(:images/arrow-down.png);
-    width: 9px;
-    height: 9px;
+    width: 8px;
+    height: 8px;
 }
 
 QMainWindow > QToolBar {
@@ -114,11 +114,18 @@ QMenu::item:pressed, QMenuBar::item:pressed {
 }
 
 
-/*QComboBox:on {
-    padding-top: 3px;
-    padding-left: 20px;
+SceneInspector > QHeaderView::section {
+	background-color: @light;
+	color: @text;
 }
-*/
+
+/*SceneInspector::item:selected {
+    background-color: @highlight;
+}
+
+SceneInspector::item:selected:active{
+    background-color: background-color: @highlight;
+}*/
 
 WidgetContainerSeparator {
 	/*border: 1px solid black;*/
@@ -188,11 +195,20 @@ QScrollBar::sub-line:vertical {
     subcontrol-origin: margin;
 }
 
-QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
+QScrollBar::up-arrow:vertical {
 	border: 1px solid @veryDark;
-	background: @text;
-	width: 4px;
-	height: 4px;
+	background: transparent;
+	image: url(:images/arrow-up.png);
+    width: 8px;
+    height: 8px;
+}
+
+QScrollBar::down-arrow:vertical {
+	border: 1px solid @veryDark;
+	background: transparent;
+	image: url(:images/arrow-down.png);
+    width: 8px;
+    height: 8px;
 }
 
 QStatusBar {

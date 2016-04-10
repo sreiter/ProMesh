@@ -1,5 +1,17 @@
 Recent changes:
 
+
+-------------------------------------------------------------------------------
+v 4.3.0
+Changes and additions:
+- New interface design (dark theme).
+- Added 'snap-points' which are considered during refinement. They allow for
+  more varied refinement schemes.
+
+Fixes:
+
+
+
 -------------------------------------------------------------------------------
 v 4.2.9
 Changes and additions:
@@ -8,6 +20,7 @@ Changes and additions:
 Fixes:
 - Fixed a crash in "Info-PrintSelectionInfo" which occurred if not at least
   2 vertices were selected.
+
 
 
 -------------------------------------------------------------------------------

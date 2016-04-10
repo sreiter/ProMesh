@@ -77,7 +77,6 @@ int main(int argc, char *argv[])
 	myApp.setQuitOnLastWindowClosed(true);
 
 
-	// myApp.setStyleSheet(GetFileContent(":/styles/promesh_style.css"));
 	QString qss = GetFileContent(":/styles/promesh_style.css");
 	QString varsStr = GetFileContent(":/styles/dark_theme_variables.txt");
 	// QString qss = GetFileContent("/home/sreiter/projects/ProMesh/ProMesh/styles/promesh_style.css");
@@ -86,7 +85,6 @@ int main(int argc, char *argv[])
 	QRegularExpression regVar("\\s*(@\\w+)\\s*(.+)");
 	QMap<QString, QString> varMap;
 	for(QStringList::Iterator iter = varsList.begin(); iter != varsList.end(); ++iter){
-		cout << "  " << iter->toStdString() << "\n";
 		QRegularExpressionMatch match = regVar.match(*iter);
 		if(match.hasMatch()){
 			varMap[match.captured(1)] = match.captured(2);

@@ -1,6 +1,6 @@
 @veryDark	#111111
 @dark		#202020
-@default	#2A2A2A
+@default	#303030
 @light		#444444
 @lighter	#555555
 @veryLight	#666666

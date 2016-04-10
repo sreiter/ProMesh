@@ -1,13 +1,13 @@
 /** \page pageAbout About
 \promesh<br>
-Copyright (c) 2008-2015:  G-CSC, Goethe University Frankfurt<br>
+Copyright (c) 2008-2016:  G-CSC, Goethe University Frankfurt<br>
 Copyright (c) 2006-2008:  Steinbeis Forschungszentrum (STZ Ölbronn)<br>
-Copyright (c) 2006-2015:  Sebastian Reiter<br>
+Copyright (c) 2006-2016:  Sebastian Reiter<br>
 
 \promesh is based on the <em>UG4</em> simulation framework (www.ug4.org/license).
 <hr>
 
-\promesh is under active development at the <em>Goethe-Center for Scientific Computing</em>
+\promesh has been developed by Sebastian Reiter at the <em>Goethe-Center for Scientific Computing</em>
 at the <em>Goethe-University Frankfurt, Germany</em>
 (<a title="Simulation and Modeling at the Goethe Center for Scientific Computing"
 href="http://gcsc.uni-frankfurt.de/simulation-and-modelling">
