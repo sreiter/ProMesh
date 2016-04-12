@@ -42,7 +42,7 @@ ExtendibleWidget::ExtendibleWidget(QWidget* parent) :
 
 	mainLayout->setSpacing(0);
 	mainLayout->setContentsMargins(0, 0, 10, 0);
-	hLayout->setSpacing(10);
+	hLayout->setSpacing(0);
 	hLayout->setContentsMargins(0, 0, 0, 0);
 	m_vLayout->setContentsMargins(10, 0, 0, 0);
 
@@ -52,7 +52,7 @@ ExtendibleWidget::ExtendibleWidget(QWidget* parent) :
 
 	m_toolButton = new QToolButton(this);
 	m_toolButton->setCheckable(true);
-	m_toolButton->setArrowType(Qt::RightArrow);
+	// m_toolButton->setArrowType(Qt::RightArrow);
 	hLayout->addWidget(m_toolButton);
 
 	ExtendibleWidgetHeader* header = new ExtendibleWidgetHeader(this);
@@ -103,12 +103,12 @@ void ExtendibleWidget::setChecked(bool checked)
 	}
 
 	if(checked){
-		m_toolButton->setArrowType(Qt::DownArrow);
+		// m_toolButton->setArrowType(Qt::DownArrow);
 		if(m_widget)
 			m_widget->show();
 	}
 	else{
-		m_toolButton->setArrowType(Qt::RightArrow);
+		// m_toolButton->setArrowType(Qt::RightArrow);
 		if(m_widget)
 			m_widget->hide();
 	}

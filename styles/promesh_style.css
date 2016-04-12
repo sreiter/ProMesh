@@ -7,37 +7,28 @@ QWidget {
 	color: @text;
 }
 
-/*
-QFrame {
-	border: 0px solid #8f8f91;
-	border-radius: 0px;
-	background-color: @default;
-}*/
 
-
-/*QToolBar {
-	border: 0px;
-	background-color: @light;
+ExtendibleWidget > QToolButton {
+	image: url(:images/arrow-right.png);
 }
 
-ExtendibleWidget {
-	border: 0px;
-	background-color: @light;
+ExtendibleWidget > QToolButton::checked {
+	image: url(:images/arrow-down.png);
 }
 
-ToolWidget {
-	border: 0px;
-	background-color: @light;
+
+
+QTreeView::branch:has-children:!has-siblings:closed,
+QTreeView::branch:closed:has-children:has-siblings {
+        border-image: none;
+        image: url(:images/arrow-right.png);
 }
 
-WidgetContainer {
-	background-color: @light;
+QTreeView::branch:open:has-children:!has-siblings,
+QTreeView::branch:open:has-children:has-siblings  {
+        border-image: none;
+        image: url(:images/arrow-down.png);
 }
-
-QLabel {
-	color: @text;
-}*/
-
 
 QComboBox{
 	border: 1px solid @dark;
@@ -169,6 +160,10 @@ QScrollBar {
 	background: @dark;
 	margin: 15px 0px 15px 0px;
 	width: 14px;
+}
+
+QScrollBar::add-page, QScrollBar::sub-page {
+    background: none;
 }
 
 QScrollBar::handle {
