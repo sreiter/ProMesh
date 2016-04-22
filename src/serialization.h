@@ -30,5 +30,17 @@
 #include <boost/serialization/nvp.hpp>
 
 #define MAKE_NVP( name, val)	boost::serialization::make_nvp( name, val )
- 
+
+namespace boost{
+namespace serialization{
+	template <typename Archive>
+	void serialize(Archive& ar, ug::vector3& v, const unsigned int version)
+	{
+		ar & MAKE_NVP("x", v[0]);
+		ar & MAKE_NVP("y", v[1]);
+		ar & MAKE_NVP("z", v[2]);
+	}
+}
+}
+
 #endif	//__H__UG_serialization

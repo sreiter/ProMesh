@@ -25,10 +25,12 @@
 
 #include <string>
 #include "serialization.h"
+#include "common/math/ugmath_types.h"
 #include "boost/serialization/export.hpp"
 
 #ifndef __H__PROMESH_sera_test
 #define __H__PROMESH_sera_test
+
 
 class SeraBase {
 public:
@@ -51,7 +53,8 @@ class SeraTest
 public:
 	SeraTest() :
 		m_id( 12345 ),
-		m_name( "nameOfSeraTest" )
+		m_name( "nameOfSeraTest" ),
+		m_pos(3.1, 2.2, 1.3)
 	{};
 
 	~SeraTest()	{};
@@ -64,10 +67,12 @@ private:
 	{
 		ar & MAKE_NVP("id", m_id);
 		ar & MAKE_NVP("name", m_name);
+		ar & MAKE_NVP("pos", m_pos);
 	}
 
 	int 		m_id;
 	std::string	m_name;
+	ug::vector3	m_pos;
 };
 
 

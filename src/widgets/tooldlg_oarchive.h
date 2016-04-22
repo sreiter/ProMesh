@@ -131,8 +131,22 @@ private:
 	void save(const T &t){
 	}
 
-	void save(int i){
-		tool_widget(m_curName)->addSpinBox(QString(m_curName).append(":"), -1e+9, 1e+9, i, 1, 0);
+	void save(int val){
+		create_spinner<int>(-1.e9, 1.e9, val, 1, 0);
+	}
+
+	void save(float val){
+		create_spinner<float>(-1.e9, 1.e9, val, 1, 6);
+	}
+
+	void save(double val){
+		create_spinner<float>(-1.e9, 1.e9, val, 1, 6);
+	}
+
+	template <class T>
+	void create_spinner(T min, T max, T value, T step, T digits)
+	{
+		tool_widget(m_curName)->addSpinBox(QString(m_curName).append(":"), min, max, value, step, digits);
 	}
 
 	void save(const std::string& t){
