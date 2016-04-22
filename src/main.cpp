@@ -36,7 +36,9 @@
 #include "sera_test.h"
 #include <boost/archive/xml_oarchive.hpp>
 #include "widgets/tooldlg_oarchive.h"
+#include "widgets/property_widget.h"
 #include <QDialog>
+
 
 using namespace std;
 
@@ -120,6 +122,7 @@ int main(int argc, char *argv[])
 //	ug::script::InitLibGridScript(ug::script::GetLuaState());
 
 	MainWindow* pMainWindow = app::getMainWindow();
+
 	pMainWindow->init();
 
 	myApp.setMainWindow(pMainWindow);
@@ -136,22 +139,22 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	// SeraTest2 test;
-	// SeraBase* base = &test;
 
-	// QDialog* dlg = new QDialog(pMainWindow);
-	// QVBoxLayout* layout = new QVBoxLayout(dlg);
-	// dlg->setLayout(layout);
-	// tooldlg_oarchive oa(dlg);
-	
-	// oa << MAKE_NVP("SeraTest", test);
 
-	// if(oa.widget()){
-	// 	layout->addWidget(oa.widget());
-	// }
-	// layout->addStretch(1);
-	// dlg->resize(QSize(400, 800));
-	// dlg->show();
+	SeraTest2 test;
+	SeraBase* base = &test;
+
+	QDialog* dlg = new QDialog(pMainWindow);
+	QVBoxLayout* layout = new QVBoxLayout(dlg);
+	dlg->setLayout(layout);
+
+	PropertyWidget* pw = new PropertyWidget(dlg);
+	layout->addWidget(pw);
+
+	pw->populate(base, "SeraTest");
+
+	dlg->resize(QSize(400, 800));
+	dlg->show();
 
 	return myApp.exec();
 }

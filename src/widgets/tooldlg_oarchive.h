@@ -27,6 +27,7 @@
 #define __H__PROMESH_tooldlg_oarchive
 
 #include <iostream>
+#include <stack>
 #include <boost/type_traits/is_enum.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/eval_if.hpp>
@@ -39,7 +40,8 @@
 #include <boost/serialization/version.hpp>
 #include <boost/serialization/serialization.hpp>
 #include <boost/archive/detail/common_oarchive.hpp>
- #include <boost/archive/impl/archive_serializer_map.ipp>
+#include <boost/archive/detail/register_archive.hpp>
+#include <boost/archive/impl/archive_serializer_map.ipp>
 
 #include <QFrame>
 #include <QVBoxLayout>
@@ -57,202 +59,159 @@ public:
 
 	tooldlg_oarchive(QWidget* parent) :
 		m_parent(parent),
-		m_frame(NULL),
-		m_curToolWidget(NULL),
 		m_layout(NULL),
-		m_curName(0)
+		m_curName("")
 	{
-		m_frame = new QFrame(parent);
-		m_layout = new QVBoxLayout(m_frame);
-		m_layout->setSpacing(0);
-		m_layout->setContentsMargins(0, 0, 0, 0);
-		m_frame->setLayout(m_layout);
-		m_frame->setLineWidth(1);
+		push_widget_layer();
 	}
 
-	QWidget* widget() {return m_frame;}
-
-//	ignore pointer polymorphism
-	// template<class T>
-	// void register_type(const T * = NULL){}
-
-	// unsigned int get_library_version(){
-	// 	return 0;
-	// }
+	QWidget* widget()
+	{
+		if(m_widgetLayers.empty())
+			push_widget_layer();
+		return m_widgetLayers.top().frame();
+	}
 
 	void save_binary(const void *address, std::size_t count){}
 
-	// // the << operators 
-	// template<class T>
-	// tooldlg_oarchive & operator<<(T const & t){
-	// 	save(t, "unknown");
-	// 	return * this;
-	// }
 
-	// template<class T>
-	// tooldlg_oarchive & operator<<(T * const t){
-	// 	if(t != NULL)
-	// 		*this << *t;
-	// 	return * this;
-	// }
+	void save_object(
+        const void *x, 
+        const boost::archive::detail::basic_oserializer & bos
+    )
+    {
+    	if(m_curName){
+	    	push_widget_layer(m_curName);
+	    	base_t::save_object(x, bos);
+	    	pop_widget_layer();
+	    }
+	    else{
+	    	base_t::save_object(x, bos);
+	    }
+    }
 
-	// template<class T, int N>
-	// tooldlg_oarchive & operator<<(const T (&t)[N]){
-	// 	return *this << boost::serialization::make_array(
-	// 		static_cast<const T *>(&t[0]),
-	// 		N
-	// 	);
-	// }
+	void save_pointer(
+		const void * t, 
+		const boost::archive::detail::basic_pointer_oserializer * bpos_ptr)
+    {
+    	if(m_curName){
+	    	push_widget_layer(m_curName);
+	    	base_t::save_pointer(t, bpos_ptr);
+	    	pop_widget_layer();
+	    }
+	    else{
+	    	base_t::save_pointer(t, bpos_ptr);
+	    }
+    }
 
-	// template<class T>
-	// tooldlg_oarchive & operator<<(const boost::serialization::nvp< T > & t){
-	// 	const char* name = t.name();
-	// 	const T& val = t.const_value();
-	// 	save(val, name);
-	// 	return *this;
-	// }
 
-	// // the & operator 
-	// template<class T>
-	// tooldlg_oarchive & operator&(const T & t){
-	// 	return *this << t;
-	// }
 
 private:
 	friend class boost::archive::detail::interface_oarchive <tooldlg_oarchive>;
 	friend class boost::archive::save_access;
 
-	ToolWidget* get_tool_widget(const char* name) {
-		if(!m_curToolWidget){
-			m_curToolWidget = new ToolWidget(QString(name), m_frame, NULL, 0);
-			m_layout->addWidget(m_curToolWidget);
-			m_layout->setAlignment(m_curToolWidget, Qt::AlignLeft);
-		}
-
-		return m_curToolWidget;
+	ToolWidget* tool_widget(const char* name) {
+		if(m_widgetLayers.empty())
+			push_widget_layer("");
+		return m_widgetLayers.top().toolWidget();
 	}
-
-
-
-	template<class Archive>
-	struct save_enum_type {
-		template<class T>
-		static void invoke(Archive &ar, const T &t, const char* name){
-			// ar.m_os << static_cast<int>(t);
-		}
-	};
-
-
-	template<class Archive>
-	struct save_primitive {
-		static ToolWidget* tw(Archive& ar, const char* name){
-			return ar.get_tool_widget(QString(name).append(":").toLocal8Bit().constData());
-		}
-
-		template<class T>
-		static void invoke(Archive & ar, const T & t, const char* name){
-			std::cout << "can't create tool entry for " << name << " with type " << typeid(t).name() << std::endl;
-		}
-
-		static void invoke(Archive & ar, int t, const char* name){
-			tw(ar, name)->addSlider(QString(name), 0, 10, 1);
-		}
-
-		static void invoke(Archive & ar, const std::string& t, const char* name){
-			tw(ar, name)->addTextBox(QString(name), QString(t.c_str()));
-		}
-	};
-
-
-	template<class Archive>
-	struct save_only {
-		template<class T>
-		static void invoke(Archive & ar, const T & t, const char* name){
-			ExtendibleWidget* extWidget = new ExtendibleWidget(ar.m_frame);
-			ar.m_layout->addWidget(extWidget);
-			ar.m_layout->setAlignment(extWidget, Qt::AlignLeft);
-
-			tooldlg_oarchive tar(extWidget);
-			boost::serialization::serialize_adl(
-				tar, 
-				const_cast<T &>(t), 
-				boost::serialization::version< T >::value
-			);
-			
-			extWidget->setText(QString(name));
-			extWidget->setWidget(tar.widget());
-			extWidget->setChecked(true);
-		}
-
-		template<class T>
-		static void invoke(Archive & ar, T * t, const char* name){
-			invoke(ar, *t, name);
-		}
-	};
-
-
 
 	template<class T>
 	void save_override(const T &t, int i){
-		// base_t::save_override (t, i);
-		save(t, "unknown");
-		// base_t::save_override(t, i);
+		base_t::save_override(t, i);
 	}
 
 	template<class T>
 	void save_override(const boost::serialization::nvp <T> &t, int i){
-		// m_curName = t.name();
-		// base_t::save_override(t.const_value(), i);
-		save (t.value(), t.name());
-		// std::cout << "name: " << t.name() << std::endl;
-		// base_t::save_override (t, i);
+		m_curName = t.name();
+		base_t::save_override(t, i);
 	}
-
-	// template<class T>
-	// void save_override(const boost::serialization::nvp <T*> &t, int i){
-	// 	base_t::save_override (t, i);
-	// }
 
 	template<class T>
 	void save(const T &t){
-		save (t, m_curName);
 	}
 
-	template<class T>
-	void save(const T &t, const char* name){
-		typedef 
-			BOOST_DEDUCED_TYPENAME boost::mpl::eval_if<boost::is_enum< T >,
-				boost::mpl::identity<save_enum_type<tooldlg_oarchive> >,
-			//else
-			BOOST_DEDUCED_TYPENAME boost::mpl::eval_if<
-				// if its primitive
-					boost::mpl::equal_to<
-						boost::serialization::implementation_level< T >,
-						boost::mpl::int_<boost::serialization::primitive_type>
-					>,
-					boost::mpl::identity<save_primitive<tooldlg_oarchive> >,
-			// else
-				boost::mpl::identity<save_only<tooldlg_oarchive> >
-			> >::type typex;
-		typex::invoke(*this, t, name);
+	void save(int i){
+		tool_widget(m_curName)->addSpinBox(QString(m_curName).append(":"), -1e+9, 1e+9, i, 1, 0);
 	}
 
-	// template<class T>
-	// void save(T *t, const char* name){
-	// 	save(*t, name);
-	// }
+	void save(const std::string& t){
+		tool_widget(m_curName)->addTextBox(QString(m_curName).append(":"), QString(t.c_str()));
+	}
 
 	#ifndef BOOST_NO_STD_WSTRING
 	void save(const std::wstring &ws){
 	}
 	#endif
 
+	void push_widget_layer(const char* name = 0)
+	{
+		QWidget* parent = m_parent;
+		QLayout* layout = m_layout;
+		if(!m_widgetLayers.empty()){
+			parent = m_widgetLayers.top().frame();
+			layout = m_widgetLayers.top().layout();
+		}
+
+		ExtendibleWidget* extWidget = NULL;
+		if(name != 0 && *name != 0){
+			extWidget = new ExtendibleWidget(parent);
+			layout->addWidget(extWidget);
+			layout->setAlignment(extWidget, Qt::AlignLeft);
+			extWidget->setText(QString(name));
+			extWidget->setChecked(true);
+			parent = extWidget;
+			layout = NULL;
+		}
+
+		m_widgetLayers.push(WidgetLayer(parent));
+
+		if(extWidget)
+			extWidget->setWidget(m_widgetLayers.top().frame());
+	}
+
+	void pop_widget_layer()
+	{
+		if(!m_widgetLayers.empty()){
+			m_widgetLayers.pop();
+		}
+	}
+
+	class WidgetLayer {
+		public:
+			WidgetLayer (QWidget* parent) :
+				m_toolWidget(NULL)
+			{
+				m_frame = new QFrame(parent);
+				m_layout = new QVBoxLayout(m_frame);
+				m_layout->setSpacing(0);
+				m_layout->setContentsMargins(0, 0, 0, 0);
+				m_frame->setLayout(m_layout);
+				m_frame->setLineWidth(1);
+			};
+
+			QFrame* frame ()		{return m_frame;}
+			QLayout* layout ()		{return m_layout;}
+			ToolWidget* toolWidget(){
+				if(!m_toolWidget){
+					m_toolWidget = new ToolWidget(QString("--properties--"), m_frame, NULL, 0);
+					m_layout->addWidget(m_toolWidget);
+					m_layout->setAlignment(m_toolWidget, Qt::AlignLeft);
+				}
+				return m_toolWidget;
+			}
+
+		private:
+			QFrame*			m_frame;
+			QLayout*		m_layout;
+			ToolWidget*		m_toolWidget;
+	};
 
 	QWidget*		m_parent;
 	QFrame*			m_frame;
-	ToolWidget*		m_curToolWidget;
+	std::stack<WidgetLayer>	m_widgetLayers;
 	QLayout*		m_layout;
-	const char*		m_curName;
+	const char*		m_curName;	///< can be NULL due to intermediate objects
 };
 
 BOOST_SERIALIZATION_REGISTER_ARCHIVE(tooldlg_oarchive);
