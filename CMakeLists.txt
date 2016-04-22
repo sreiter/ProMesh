@@ -26,6 +26,7 @@
 cmake_minimum_required(VERSION 2.8.11)
 project(P_PROMESH4)
 
+set (CMAKE_CXX_STANDARD 11)
 
 # Some options which allow to control makefile generation
 option(DEBUG "If enabled a debug build is performed - this slows down performance." OFF)
@@ -33,7 +34,6 @@ option(UG_ROOT_PATH "The path to ug4. Has to contain the ugbase and lib director
 option(TETGEN_PATH "The path to tetgen. Has to contain the static tet library.")
 option(QT_CMAKE_PATH "Folder containing cmake-modules for the chosen architecture.")
 option(USE_WEBKIT "Enable or disable QtWebKit support. If enabled, ProMesh's help will be displayed in an internal window." OFF)
-
 
 set(ProMeshSRC	src/app.cpp
 				src/main.cpp
@@ -92,7 +92,9 @@ if(USE_WEBKIT)
 	set(ProMeshSRC ${ProMeshSRC} src/widgets/help_browser.cpp)
 endif(USE_WEBKIT)
 
-
+set(Boost_USE_STATIC_LIBS   ON)
+FIND_PACKAGE( Boost 1.48 COMPONENTS serialization REQUIRED )
+INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 
 # Qt5 with OpenGL support is required.
 # in order to use a custom installation of QT, specify QT_CMAKE_PATH when running
@@ -168,7 +170,6 @@ endif(TETGEN_LIBS-NOTFOUND)
 
 include_directories(${UG_ROOT_PATH}/ugcore/ugbase)
 include_directories(${UG_ROOT_PATH}/plugins/ProMesh)
-include_directories(${UG_ROOT_PATH}/externals/BoostForUG4)
 link_directories(${UG_ROOT_PATH}/lib)
 
 # On some unix systems (e.g. ubuntu 12.04) glu.h is not automatically included.
@@ -220,4 +221,4 @@ if(USE_WEBKIT)
 	set(PM_LIBS ${PM_LIBS} Qt5::WebKitWidgets)
 endif(USE_WEBKIT)
 
-TARGET_LINK_LIBRARIES(ProMesh4 ${PM_LIBS})
+TARGET_LINK_LIBRARIES(ProMesh4 ${PM_LIBS} ${Boost_LIBRARIES})
