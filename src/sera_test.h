@@ -89,7 +89,8 @@ private:
 	template <class Archive>
 	void serialize( Archive& ar, const unsigned int version)
 	{
-		ar & ug::make_nvp("base", boost::serialization::base_object<SeraBase>(*this));
+		UG_EMPTY_BASE_CLASS_SERIALIZATION(SeraTest2, SeraBase);
+		// ar & ug::make_nvp("base", boost::serialization::base_object<SeraBase>(*this));
 		ar & ug::make_nvp("properties", m_properties);
 		ar & ug::make_nvp("int", m_int);
 	}

@@ -32,7 +32,7 @@
 #include "app.h"
 #include "util/file_util.h"
 
-// //TESTING
+//TESTING
 // #include "sera_test.h"
 // #include <boost/archive/xml_oarchive.hpp>
 // #include "widgets/tooldlg_oarchive.h"
