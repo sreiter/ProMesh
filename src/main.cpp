@@ -32,13 +32,16 @@
 #include "app.h"
 #include "util/file_util.h"
 
-//TESTING
-#include "sera_test.h"
-#include <boost/archive/xml_oarchive.hpp>
-#include "widgets/tooldlg_oarchive.h"
-#include "widgets/property_widget.h"
-#include <QDialog>
-
+// //TESTING
+// #include "sera_test.h"
+// #include <boost/archive/xml_oarchive.hpp>
+// #include "widgets/tooldlg_oarchive.h"
+// #include "widgets/property_widget.h"
+// #include <QDialog>
+// #include "common/error.h"
+// #include "common/log.h"
+// #include "lib_grid/algorithms/refinement/refinement_projectors/cylinder_projector.h"
+// #include "lib_grid/boost_class_serialization_exports.h"
 
 using namespace std;
 
@@ -123,6 +126,67 @@ int main(int argc, char *argv[])
 
 	MainWindow* pMainWindow = app::getMainWindow();
 
+
+	// try{
+	// 	SeraTest2 test;
+	// 	SeraBase* base = &test;
+	// 	test.m_properties.m_pos = ug::vector3(2.2, 1.1, 3.3);
+	// 	test.m_int = 1;
+
+	// 	QDialog* dlg = new QDialog(pMainWindow);
+	// 	QVBoxLayout* layout = new QVBoxLayout(dlg);
+	// 	dlg->setLayout(layout);
+
+	// 	PropertyWidget* pw = new PropertyWidget(dlg);
+	// 	layout->addWidget(pw);
+
+	// 	pw->populate(base, "SeraTest");
+
+	// 	dlg->resize(QSize(400, 800));
+	// 	dlg->show();
+
+
+	// 	SeraTest2 testOut;
+	// 	pw->retrieve_values(testOut);
+	// 	UG_LOG("Retrieved vector " << testOut.m_properties.m_pos << std::endl);
+	// 	UG_LOG("Retrieved int " << testOut.m_int << std::endl);
+	// }
+	// catch(ug::UGError& err){
+	// 	UG_LOG("ERROR received during widget serialization:\n");
+	// 	for(size_t i = 0; i < err.num_msg(); ++i)
+	// 		UG_LOG("  " << err.get_file(i) << ": " << err.get_line(i)
+	// 			   << ": " << err.get_msg(i) << "\n");
+	// }
+	// catch(...){
+	// 	UG_LOG("  Unknown error...\n");
+	// }
+
+	// try{
+	// 	QDialog* dlg = new QDialog(pMainWindow);
+	// 	QVBoxLayout* layout = new QVBoxLayout(dlg);
+	// 	dlg->setLayout(layout);
+
+	// 	PropertyWidget* pw = new PropertyWidget(dlg);
+	// 	layout->addWidget(pw);
+
+	// 	ug::CylinderProjector<ug::AVector3> cylProj;
+	// 	ug::IRefinementCallback* base = &cylProj;
+	// 	pw->populate(base, "Projector");
+
+	// 	dlg->resize(QSize(400, 800));
+	// 	dlg->show();
+
+	// }
+	// catch(ug::UGError& err){
+	// 	UG_LOG("ERROR received during widget serialization:\n");
+	// 	for(size_t i = 0; i < err.num_msg(); ++i)
+	// 		UG_LOG("  " << err.get_file(i) << ": " << err.get_line(i)
+	// 			   << ": " << err.get_msg(i) << "\n");
+	// }
+	// catch(...){
+	// 	UG_LOG("  Unknown error...\n");
+	// }
+
 	pMainWindow->init();
 
 	myApp.setMainWindow(pMainWindow);
@@ -138,23 +202,6 @@ int main(int argc, char *argv[])
 											 QFileInfo(argv[i]).absolutePath());
 		}
 	}
-
-
-
-	SeraTest2 test;
-	SeraBase* base = &test;
-
-	QDialog* dlg = new QDialog(pMainWindow);
-	QVBoxLayout* layout = new QVBoxLayout(dlg);
-	dlg->setLayout(layout);
-
-	PropertyWidget* pw = new PropertyWidget(dlg);
-	layout->addWidget(pw);
-
-	pw->populate(base, "SeraTest");
-
-	dlg->resize(QSize(400, 800));
-	dlg->show();
 
 	return myApp.exec();
 }

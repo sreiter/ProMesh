@@ -28,13 +28,15 @@
 
 #include <QVBoxLayout>
 #include "tooldlg_oarchive.h"
+#include "tooldlg_iarchive.h"
+#include "common/boost_serialization_routines.h"
 
 template <typename T>
 void PropertyWidget::
-populate (const T* t, const char* name)
+populate (const T& t, const char* name)
 {
 	tooldlg_oarchive oa(m_spacerWidget);
-	oa << MAKE_NVP(name, t);
+	oa << ug::make_nvp(name, t);
 	QWidget* newContent = oa.widget();
 
 	if(m_content) {
@@ -49,9 +51,17 @@ populate (const T* t, const char* name)
 
 template <typename T>
 void PropertyWidget::
-retrieve_values (T* t)
+populate (const T* t, const char* name)
 {
+	populate(*t, name);
+}
 
+template <typename T>
+void PropertyWidget::
+retrieve_values (T& t)
+{
+	tooldlg_iarchive ia(m_content);
+	ia >> t;
 }
 
 #endif	//__H__UG_property_widget_impl

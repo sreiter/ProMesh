@@ -24,9 +24,8 @@
  */
 
 #include <string>
-#include "serialization.h"
+#include "common/boost_serialization.h"
 #include "common/math/ugmath_types.h"
-#include "boost/serialization/export.hpp"
 
 #ifndef __H__PROMESH_sera_test
 #define __H__PROMESH_sera_test
@@ -46,7 +45,7 @@ private:
 
 };
 
-BOOST_SERIALIZATION_ASSUME_ABSTRACT(SeraBase)
+BOOST_SERIALIZATION_ASSUME_ABSTRACT(SeraBase);
 
 class SeraTest
 {
@@ -59,27 +58,30 @@ public:
 
 	~SeraTest()	{};
 	
+	int 		m_id;
+	std::string	m_name;
+	ug::vector3	m_pos;
+
 private:
 	friend class boost::serialization::access;
 
 	template <class Archive>
 	void serialize( Archive& ar, const unsigned int version)
 	{
-		ar & MAKE_NVP("id", m_id);
-		ar & MAKE_NVP("name", m_name);
-		ar & MAKE_NVP("pos", m_pos);
+		ar & ug::make_nvp("id", m_id);
+		ar & ug::make_nvp("name", m_name);
+		ar & ug::make_nvp("pos", m_pos);
 	}
-
-	int 		m_id;
-	std::string	m_name;
-	ug::vector3	m_pos;
 };
 
 
 class SeraTest2 : public SeraBase
 {
 public:
-	SeraTest2()	{}
+	SeraTest2() : m_int(0)	{}
+
+	SeraTest	m_properties;
+	int			m_int;
 
 private:
 	friend class boost::serialization::access;
@@ -87,15 +89,10 @@ private:
 	template <class Archive>
 	void serialize( Archive& ar, const unsigned int version)
 	{
-		// ar & MAKE_NVP("base", boost::serialization::base_object<SeraBase>(*this));
-		ar & MAKE_NVP("properties", m_properties);
-		boost::serialization::void_cast_register<SeraTest2, SeraBase>(
-				static_cast<SeraTest2 *>(NULL),
-				static_cast<SeraBase *>(NULL)
-				);
+		ar & ug::make_nvp("base", boost::serialization::base_object<SeraBase>(*this));
+		ar & ug::make_nvp("properties", m_properties);
+		ar & ug::make_nvp("int", m_int);
 	}
-
-	SeraTest	m_properties;
 };
 
 BOOST_CLASS_EXPORT(SeraTest2)

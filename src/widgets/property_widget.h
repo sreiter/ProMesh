@@ -41,10 +41,13 @@ class PropertyWidget : public QFrame
 		virtual ~PropertyWidget();
 
 		template <typename T>
+		void populate(const T& t, const char* name);
+
+		template <typename T>
 		void populate(const T* t, const char* name);
 
 		template <typename T>
-		void retrieve_values(T* t);
+		void retrieve_values(T& t);
 
 	private:
 		QScrollArea*	m_scrollArea;
