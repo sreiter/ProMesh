@@ -114,7 +114,10 @@ class ToolWidget : public QFrame
 		bool setStringList(int paramIndex, const QStringList& stringList);
 
 		void clear();
-		
+	
+	signals:
+		void valueChanged (int index);
+
 	protected:
 	///	convertes the value of the i-th input element to a number.
 	/**	inices start from 0. Elements are indexed in the order they
@@ -166,6 +169,7 @@ class ToolWidget : public QFrame
 
 	protected:
 		QSignalMapper*	m_signalMapper;
+		QSignalMapper*	m_valueSignalMapper;
 		QVBoxLayout*	m_mainLayout;
 		QFormLayout*	m_currentFormLayout;
 		ITool*			m_tool;

@@ -68,6 +68,10 @@ ToolWidget::ToolWidget(const QString& name, QWidget* parent,
 		connect(btn, SIGNAL(clicked()), m_signalMapper, SLOT(map()));
 	}
 
+	m_valueSignalMapper = new QSignalMapper(this);
+	connect(m_valueSignalMapper, SIGNAL(mapped(int)),
+			this, SIGNAL(valueChanged(int)));
+
 	// QFrame* sep = new QFrame(this);
 	// sep->setFrameShape(QFrame::HLine);
 	// sep->setFrameShadow(QFrame::Sunken);
@@ -133,6 +137,8 @@ void ToolWidget::addSlider(const QString& caption,
 	slider->setRange(min, max);
 	slider->setValue(value);
 	current_form_layout()->addRow(caption, slider);
+	m_valueSignalMapper->setMapping(slider, (int)m_widgets.size());
+	connect(slider, SIGNAL(valueChanged()), m_valueSignalMapper, SLOT(map()));
 	m_widgets.push_back(WidgetEntry(slider, WT_SLIDER));
 }
 
@@ -147,6 +153,14 @@ void ToolWidget::addSpinBox(const QString& caption,
 	spinner->setDecimals(numDecimals);
 	spinner->setSingleStep(stepSize);
 	current_form_layout()->addRow(caption, spinner);
+
+	m_valueSignalMapper->setMapping(spinner, (int)m_widgets.size());
+	
+	connect(spinner,
+			SIGNAL(valueChanged(double)),
+			m_valueSignalMapper, SLOT(map()));
+	
+
 	m_widgets.push_back(WidgetEntry(spinner, WT_SPIN_BOX));
 }
 
@@ -158,6 +172,8 @@ void ToolWidget::addComboBox(const QString& caption,
 	combo->addItems(entries);
 	combo->setCurrentIndex(activeEntry);
 	current_form_layout()->addRow(caption, combo);
+	m_valueSignalMapper->setMapping(combo, (int)m_widgets.size());
+	connect(combo, SIGNAL(currentIndexChanged(int)), m_valueSignalMapper, SLOT(map()));
 	m_widgets.push_back(WidgetEntry(combo, WT_COMBO_BOX));
 }
 
@@ -168,6 +184,8 @@ void ToolWidget::addCheckBox(const QString& caption,
 	check->setChecked(bChecked);
 	m_currentFormLayout = NULL;
 	m_mainLayout->addWidget(check);
+	m_valueSignalMapper->setMapping(check, (int)m_widgets.size());
+	connect(check, SIGNAL(stateChanged(int)), m_valueSignalMapper, SLOT(map()));
 	m_widgets.push_back(WidgetEntry(check, WT_CHECK_BOX));
 }
 
@@ -188,6 +206,8 @@ void ToolWidget::addTextBox(const QString& caption, const QString& text)
 	QLineEdit* textBox = new QLineEdit(this);
 	textBox->setText(text);
 	current_form_layout()->addRow(caption, textBox);
+	m_valueSignalMapper->setMapping(textBox, (int)m_widgets.size());
+	connect(textBox, SIGNAL(textChanged(const QString&)), m_valueSignalMapper, SLOT(map()));
 	m_widgets.push_back(WidgetEntry(textBox, WT_TEXT_BOX));
 }
 
@@ -204,6 +224,8 @@ void ToolWidget::addVector(const QString& caption, int size, double* values)
 	}
 
 	current_form_layout()->addRow(caption, mat);
+	m_valueSignalMapper->setMapping(mat, (int)m_widgets.size());
+	connect(mat, SIGNAL(valueChanged()), m_valueSignalMapper, SLOT(map()));
 	m_widgets.push_back(WidgetEntry(mat, WT_MATRIX));
 }
 
@@ -211,6 +233,8 @@ void ToolWidget::addMatrix(const QString& caption, int numRows, int numCols)
 {
 	MatrixWidget* mat = new MatrixWidget(numRows, numCols, this);
 	current_form_layout()->addRow(caption, mat);
+	m_valueSignalMapper->setMapping(mat, (int)m_widgets.size());
+	connect(mat, SIGNAL(valueChanged()), m_valueSignalMapper, SLOT(map()));
 	m_widgets.push_back(WidgetEntry(mat, WT_MATRIX));
 }
 

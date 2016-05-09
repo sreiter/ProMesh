@@ -43,6 +43,9 @@ class MatrixWidget : public QWidget
 		double value(int row, int col) const;
 		void set_value(int row, int col, double value);
 
+	signals:
+		void valueChanged();
+		
 	protected:
 		TruncatedDoubleSpinBox* get_spin_box(int row, int col) const;
 

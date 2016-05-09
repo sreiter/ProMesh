@@ -33,14 +33,17 @@
 #include "util/file_util.h"
 
 //TESTING
-// #include "sera_test.h"
-// #include <boost/archive/xml_oarchive.hpp>
+#include <QDialog>
+#include <QVBoxLayout>
 // #include "widgets/tooldlg_oarchive.h"
-// #include "widgets/property_widget.h"
-// #include <QDialog>
-// #include "common/error.h"
-// #include "common/log.h"
-// #include "lib_grid/algorithms/refinement/refinement_projectors/cylinder_projector.h"
+// #include "widgets/tooldlg_iarchive.h"
+#include "sera_test.h"
+#include <boost/archive/xml_oarchive.hpp>
+#include "widgets/property_widget.h"
+#include "common/error.h"
+#include "common/log.h"
+#include "lib_grid/algorithms/refinement/refinement_projectors_old/cylinder_projector.h"
+#include "lib_grid/algorithms/refinement/projectors/cylinder_projector.h"
 // #include "lib_grid/boost_class_serialization_exports.h"
 
 using namespace std;
@@ -161,6 +164,7 @@ int main(int argc, char *argv[])
 	// 	UG_LOG("  Unknown error...\n");
 	// }
 
+
 	// try{
 	// 	QDialog* dlg = new QDialog(pMainWindow);
 	// 	QVBoxLayout* layout = new QVBoxLayout(dlg);
@@ -169,8 +173,8 @@ int main(int argc, char *argv[])
 	// 	PropertyWidget* pw = new PropertyWidget(dlg);
 	// 	layout->addWidget(pw);
 
-	// 	ug::CylinderProjector<ug::AVector3> cylProj;
-	// 	ug::IRefinementCallback* base = &cylProj;
+	// 	ug::CylinderProjectorNew cylProj;
+	// 	ug::RefinementProjector& base = cylProj;
 	// 	pw->populate(base, "Projector");
 
 	// 	dlg->resize(QSize(400, 800));
@@ -187,6 +191,16 @@ int main(int argc, char *argv[])
 	// 	UG_LOG("  Unknown error...\n");
 	// }
 
+
+//	testing...
+	// QDialog* dlg = new QDialog(pMainWindow);
+	// ProjectorWidget* pw = new ProjectorWidget(dlg);
+	// QVBoxLayout* layout = new QVBoxLayout(dlg);
+	// dlg->setLayout(layout);
+	// layout->addWidget(pw);
+	// dlg->resize(QSize(400, 800));
+
+
 	pMainWindow->init();
 
 	myApp.setMainWindow(pMainWindow);
@@ -202,6 +216,8 @@ int main(int argc, char *argv[])
 											 QFileInfo(argv[i]).absolutePath());
 		}
 	}
+
+	// dlg->show();
 
 	return myApp.exec();
 }

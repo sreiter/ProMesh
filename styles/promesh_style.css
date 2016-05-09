@@ -37,6 +37,12 @@ QComboBox{
 	color: @text;
 }
 
+QListWidget{
+	border: 1px solid @dark;
+    background-color: @light;
+	color: @text;
+}
+
 QComboBox::indicator{
     background-color:transparent;
     selection-background-color:transparent;

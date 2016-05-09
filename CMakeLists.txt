@@ -81,6 +81,7 @@ set(ProMeshSRC	src/app.cpp
 				src/widgets/file_widget.cpp
 				src/widgets/icon_tab_widget.cpp
 				src/widgets/matrix_widget.cpp
+				src/widgets/projector_widget.cpp
 				src/widgets/property_widget.cpp
 				src/widgets/tool_browser_widget.cpp
 				src/widgets/truncated_double_spin_box.cpp

@@ -41,6 +41,7 @@ populate (const T& t, const char* name)
 
 	if(m_content) {
 		m_spacerLayout->replaceWidget(m_content, newContent);
+		delete m_content;
 	}
 	else{
 		m_spacerLayout->addWidget(newContent);

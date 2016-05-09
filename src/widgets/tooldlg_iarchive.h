@@ -167,6 +167,8 @@ private:
 	template<class T>
 	void load_override (const boost::serialization::nvp <T> &t, int i){
 		m_curName = t.name();
+		if(m_curName)
+			UG_LOG("m_curName: " << m_curName << "\n");
 		base_t::load_override(t, i);
 	}
 

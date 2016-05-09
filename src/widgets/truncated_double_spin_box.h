@@ -38,6 +38,9 @@ class TruncatedDoubleSpinBox : public QDoubleSpinBox
 	public:
 		TruncatedDoubleSpinBox(QWidget* parent);
 		virtual QString textFromValue ( double value ) const;
+
+	signals:
+		void valueChanged (double value);
 };
 
 #endif	//__H__truncated_double_spin_box

@@ -55,6 +55,7 @@ MatrixWidget::MatrixWidget(int numRows, int numCols, QWidget* parent) :
 
 			grid->addWidget(box, row, col, Qt::AlignCenter);
 			m_spinBoxes.push_back(box);
+			connect(box, SIGNAL(valueChanged(double)), this, SIGNAL(valueChanged()));
 		}
 	}
 }

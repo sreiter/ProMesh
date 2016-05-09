@@ -49,7 +49,9 @@
 #include "common/util/plugin_util.h"
 #include "util/file_util.h"
 #include "tools/tool_manager.h"
+#include "widgets/projector_widget.h"
 #include "widgets/tool_browser_widget.h"
+#include "widgets/widget_list.h"
 
 #ifdef PROMESH_USE_WEBKIT
 	#include "widgets/help_browser.h"
@@ -70,7 +72,7 @@ using namespace ug;
 ////////////////////////////////////////////////////////////////////////
 //	constructor
 MainWindow::MainWindow() :
-	m_settings("G-CSC", "ProMesh4"),
+	m_settings("G-CSC", "ProMesh4.3"),
 	m_selectionElement(0),
 	m_selectionMode(0),
 	m_curSelectionMode(-1),
@@ -328,12 +330,23 @@ void MainWindow::init()
 	pSceneInspectorDock->setWidget(m_sceneInspector);
 	addDockWidget(Qt::RightDockWidgetArea, pSceneInspectorDock);
 
+//	create the projector dock
+	QDockWidget* pProjectorDock = new QDockWidget(tr("Projectors"), this);
+	pProjectorDock->setFeatures(QDockWidget::NoDockWidgetFeatures);
+	pProjectorDock->setObjectName(tr("projector_dock"));
+	auto projectorList = new WidgetList(pProjectorDock);
+	ProjectorWidget* projectorWidget = new ProjectorWidget(projectorList, m_scene);
+	projectorList->addWidget(projectorWidget);
+	pProjectorDock->setWidget(projectorList);
+	addDockWidget(Qt::RightDockWidgetArea, pProjectorDock);
+	connect(m_sceneInspector, SIGNAL(subsetChanged(ISceneObject*, int)),
+			projectorWidget, SLOT(setActiveSubset(ISceneObject*, int)));
+
 //	create the clip-plane widget
 	QDockWidget* pClipPlaneDock= new QDockWidget(tr("Clip Planes"), this);
 	pClipPlaneDock->setFeatures(QDockWidget::NoDockWidgetFeatures);
 	pClipPlaneDock->setObjectName(tr("clip_plane_widget_dock"));
 	ClipPlaneWidget* clipPlaneWidget = new ClipPlaneWidget(pClipPlaneDock);
-	clipPlaneWidget->setObjectName(tr("clip_plane_widget"));
 	clipPlaneWidget->setScene(m_scene);
 	pClipPlaneDock->setWidget(clipPlaneWidget);
 	addDockWidget(Qt::RightDockWidgetArea, pClipPlaneDock);

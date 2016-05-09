@@ -30,7 +30,16 @@
 TruncatedDoubleSpinBox::
 TruncatedDoubleSpinBox(QWidget* parent) :
 	QDoubleSpinBox(parent)
-{}
+{
+	connect (this,
+			 static_cast<void(QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+			 this,
+			 static_cast<void(TruncatedDoubleSpinBox::*)(double)>(&TruncatedDoubleSpinBox::valueChanged));
+
+	// connect (static_cast<QDoubleSpinBox*>(this),
+	// 		 SIGNAL(static_cast<void(QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged)),
+	// 		 this, SIGNAL(valueChanged (double)));
+}
 
 QString TruncatedDoubleSpinBox::
 textFromValue(double value) const
