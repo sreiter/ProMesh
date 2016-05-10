@@ -39,6 +39,14 @@
 #include "common/boost_serialization_routines.h"
 #include "lib_grid/boost_class_serialization_exports.h"
 
+
+#include "lib_grid/algorithms/refinement/projectors.h"
+
+#include <boost/static_assert.hpp>
+#include <boost/mpl/for_each.hpp>
+#include <boost/type_traits/is_base_of.hpp>
+
+
 ProjectorWidget::
 ProjectorWidget (QWidget* parent, LGScene* scene) :
 	QFrame(parent),
@@ -78,38 +86,6 @@ ProjectorWidget::
 }
 
 void ProjectorWidget::
-setActiveSubset(ISceneObject* obj, int subsetIndex)
-{
-	if (m_activeObject == dynamic_cast<LGObject*>(obj) &&
-		m_activeSubsetIndex == subsetIndex)
-	{
-		return;
-	}
-
-	m_activeObject = dynamic_cast<LGObject*>(obj);
-	m_activeSubsetIndex = subsetIndex;
-	if(m_activeObject){
-		setEnabled(true);
-		ug::SPRefinementProjector proj =
-				m_activeObject->projection_handler().projector(subsetIndex);
-
-		auto reg = ug::promesh::GetProMeshRegistry();
-		QString itemText = QString(reg.projector_name(*proj).c_str());
-		int newIndex = m_typeBox->findText(itemText);
-		if(newIndex != m_typeBox->currentIndex())
-			m_typeBox->setCurrentIndex(newIndex);
-		else
-			update_content(proj.get());
-	}
-	else{
-		setEnabled(false);
-		if(m_curContent)
-			delete m_curContent;
-		m_curContent = NULL;
-	}
-}
-
-void ProjectorWidget::
 objectToBeRemoved(ISceneObject* pObj)
 {
 	if(pObj == static_cast<ISceneObject*>(m_activeObject))
@@ -133,21 +109,60 @@ changeEvent(QEvent* evt)
 	}
 }
 
+
+void ProjectorWidget::
+setActiveSubset(ISceneObject* obj, int subsetIndex)
+{
+	if (m_activeObject == dynamic_cast<LGObject*>(obj) &&
+		m_activeSubsetIndex == subsetIndex)
+	{
+		return;
+	}
+
+	m_activeObject = dynamic_cast<LGObject*>(obj);
+	m_activeSubsetIndex = subsetIndex;
+	if(m_activeObject){
+		std::cout << "setActiveSubset executed.\n";
+		setEnabled(true);
+		ug::SPRefinementProjector proj =
+				m_activeObject->projection_handler().projector(subsetIndex);
+
+		auto reg = ug::promesh::GetProMeshRegistry();
+		QString itemText = QString(reg.projector_name(*proj).c_str());
+		int newIndex = m_typeBox->findText(itemText);
+		if(newIndex != m_typeBox->currentIndex())
+			m_typeBox->setCurrentIndex(newIndex);
+		else
+			update_content(proj.get());
+	}
+	else{
+		setEnabled(false);
+		if(m_curContent)
+			delete m_curContent;
+		m_curContent = NULL;
+	}
+}
+
 void ProjectorWidget::
 projectorTypeChanged(const QString &text)
 {
 	if(!m_activeObject)
 		return;
 
-	std::string projName = text.toStdString();
-
 	auto reg = ug::promesh::GetProMeshRegistry();
-	ug::SPRefinementProjector proj = reg.projector_info(projName).factory();
-	proj->set_geometry(m_activeObject->geometry());
-	// UG_LOG("created projector: " << typeid(*proj).name() << std::endl);
-		
-	m_activeObject->projection_handler().set_projector(m_activeSubsetIndex, proj);
-	update_content(proj.get());
+	std::string projName = text.toStdString();
+//	if the current projector for the active subset has a different name, create a new one
+	ug::SPRefinementProjector curProj =
+			m_activeObject->projection_handler().projector(m_activeSubsetIndex);
+	if(reg.projector_name(*curProj) != projName){
+		ug::SPRefinementProjector proj = reg.projector_info(projName).factory();
+		proj->set_geometry(m_activeObject->geometry());
+		m_activeObject->projection_handler().set_projector(m_activeSubsetIndex, proj);
+		// UG_LOG("created projector: " << typeid(*proj).name() << std::endl);
+		update_content(proj.get());
+	}
+	else
+		update_content(curProj.get());
 }
 
 void ProjectorWidget::
@@ -169,17 +184,84 @@ update_content(ug::RefinementProjector* proj)
 	}
 }
 
+
+namespace detail{
+	template <typename TArchive, typename TBaseClass, typename TDerivedClass>
+	void CallArchiveOnDerivedClass (TArchive& ar, TBaseClass& base)
+	{
+		BOOST_STATIC_ASSERT((boost::is_base_of<TBaseClass, TDerivedClass>::value));
+		TDerivedClass& derived = dynamic_cast<TDerivedClass&>(base);
+		ar & derived;
+	}
+
+	template <typename TRegistry>
+	struct RegisterTypesFunctor
+	{
+		RegisterTypesFunctor(TRegistry* reg) : m_reg(reg) {}
+
+	///	inserts classes into the set of known classes
+	/**	This function allows for the usage of boost::mpl::for_each*/
+		template <typename T> void operator()(T)
+		{
+			m_reg->template add<T>();
+		}
+
+		private:
+		TRegistry* m_reg;
+	};
+}
+
+template <class TArchive, class TBase, class TSeq>
+struct CallArchiveOnMostDerivedClass
+{
+	CallArchiveOnMostDerivedClass()
+	{
+		std::cout << "calling for_each on " << typeid(TSeq).name() << std::endl;
+		detail::RegisterTypesFunctor<CallArchiveOnMostDerivedClass> func(this);
+		boost::mpl::for_each<TSeq>(func);
+	}
+
+	template <class T>
+	void call(TArchive& ar, T& t)
+	{
+		std::string name(typeid(t).name());
+		std::cout << "calling archive on class '" << name  << "'\n";
+		typename callback_map_t::iterator i = m_callbackMap.find(name);
+		if(i != m_callbackMap.end())
+			i->second(ar, t);
+		else
+			std::cout << "WARNING: invalid derived class used in serializeation.\n" << std::endl;
+	}
+
+	template <class TDerived>
+	void add()
+	{
+		std::string name(typeid(TDerived).name());
+		std::cout << "registering class '" << name << "'\n";
+		m_callbackMap[name] =
+				&detail::CallArchiveOnDerivedClass<TArchive, TBase, TDerived>;
+	}
+
+	private:
+	typedef void (*callback_t)(TArchive&, TBase&);
+	typedef std::map<std::string, callback_t>	callback_map_t;
+	callback_map_t	m_callbackMap;
+};
+
 void ProjectorWidget::
 valueChanged ()
 {
 	UG_LOG("DEBUG: Value changed!\n");
 	if(m_curContent && m_activeObject){
+		static CallArchiveOnMostDerivedClass <tooldlg_iarchive,
+											  ug::RefinementProjector,
+											  ug::ProjectorTypes>
+				serializer;
+
 		ug::SPRefinementProjector proj =
 				m_activeObject->projection_handler().projector(m_activeSubsetIndex);
 
-		auto reg = ug::promesh::GetProMeshRegistry();
 		tooldlg_iarchive ia(m_curContent);
-
-		// reg.projector_info(reg.projector_name(*proj)).iarchiveReader(*proj, ta);
+		serializer.call(ia, *proj);
 	}
 }
