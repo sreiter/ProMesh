@@ -85,7 +85,7 @@ public:
     )
     {
     	if(m_curName){
-    		std::cout << m_prefix << "load_object: " << m_curName << std::endl;
+    		// std::cout << m_prefix << "load_object: " << m_curName << std::endl;
 	    	push_child_layer();
 	    	base_t::load_object(x, bis);
 	    	pop_widget_layer();
@@ -103,7 +103,7 @@ public:
             const boost::serialization::extended_type_info & eti))
     {
     	if(m_curName){
-    		std::cout << m_prefix << "load_pointer: " << m_curName << std::endl;
+    		// std::cout << m_prefix << "load_pointer: " << m_curName << std::endl;
 	    	push_child_layer();
 	    	const boost::archive::detail::basic_pointer_iserializer * 
 	    		ret = base_t::load_pointer(t, bpis_ptr, finder);
@@ -167,8 +167,8 @@ private:
 	template<class T>
 	void load_override (const boost::serialization::nvp <T> &t, int i){
 		m_curName = t.name();
-		if(m_curName)
-			UG_LOG("m_curName: " << m_curName << "\n");
+		// if(m_curName)
+		// 	UG_LOG("m_curName: " << m_curName << "\n");
 		base_t::load_override(t, i);
 	}
 
@@ -183,7 +183,7 @@ private:
 		UG_COND_THROW(!ok, "conversion to int failed. "
 					  "Input widget sequence does not match input class");
 		top_layer().next_tool();
-		std::cout << m_prefix << "load " << m_curName << ": " << val << std::endl;
+		// std::cout << m_prefix << "load " << m_curName << ": " << val << std::endl;
 	}
 
 	void load (float& val){
@@ -192,7 +192,7 @@ private:
 		UG_COND_THROW(!ok, "conversion to float failed. "
 					  "Input widget sequence does not match input class");
 		top_layer().next_tool();
-		std::cout << m_prefix << "load " << m_curName << ": " << val << std::endl;
+		// std::cout << m_prefix << "load " << m_curName << ": " << val << std::endl;
 	}
 
 	void load (double& val){
@@ -201,7 +201,7 @@ private:
 		UG_COND_THROW(!ok, "conversion to double failed. "
 					  "Input widget sequence does not match input class");
 		top_layer().next_tool();
-		std::cout << m_prefix << "load " << m_curName << ": " << val << std::endl;
+		// std::cout << m_prefix << "load " << m_curName << ": " << val << std::endl;
 	}
 
 	void load (std::string& val){
@@ -210,7 +210,7 @@ private:
 		UG_COND_THROW(!ok, "conversion to string failed. "
 					  "Input widget sequence does not match input class");
 		top_layer().next_tool();
-		std::cout << m_prefix << "load " << m_curName << ": " << val << std::endl;
+		// std::cout << m_prefix << "load " << m_curName << ": " << val << std::endl;
 	}
 
 	#ifndef BOOST_NO_STD_WSTRING

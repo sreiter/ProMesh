@@ -35,6 +35,49 @@ option(TETGEN_PATH "The path to tetgen. Has to contain the static tet library.")
 option(QT_CMAKE_PATH "Folder containing cmake-modules for the chosen architecture.")
 option(USE_WEBKIT "Enable or disable QtWebKit support. If enabled, ProMesh's help will be displayed in an internal window." OFF)
 
+
+# add flag for c language only
+function (add_c_flag flag)
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${flag}" CACHE STRING "overriden flags!" FORCE)
+endfunction(add_c_flag)
+
+# add flag for c++ language only
+function (add_cpp_flag flag)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${flag}" CACHE STRING "overriden flags!" FORCE)
+endfunction(add_cpp_flag)
+
+# add flag for c and c++ language
+function(add_cxx_flag flag)
+	add_c_flag(${flag})
+	add_cpp_flag(${flag})
+endfunction(add_cxx_flag)
+
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Cray")
+	# Cray Compiler: add support for gnu extensions
+	add_cxx_flag("-h gnu")
+	# remove warning "The controlling expression is constant"
+	add_cxx_flag("-hnomessage=236")
+elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "XL")
+    # currently no flags for IBM xl compiler
+    # however, the -Wall option is not supported
+elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+	add_definitions("/EHsc")
+	# The following flag is necessary for gigantic .obj files
+    # which cause problems on Windows
+	add_cxx_flag("/bigobj")
+elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+	add_cxx_flag("-Wall")
+	add_cxx_flag("-Wno-multichar")
+elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+	add_cxx_flag("-Wall")
+	add_cxx_flag("-Wno-multichar")
+    # for some reason -Wsign-compare is not in -Wall for Clang 
+	add_cxx_flag("-Wsign-compare")
+	add_cxx_flag(-Wno-unused-local-typedef)
+	add_cxx_flag(-Wno-unknown-warning-option)
+endif()
+
+
 set(ProMeshSRC	src/app.cpp
 				src/main.cpp
 				src/main_window.cpp

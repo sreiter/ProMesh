@@ -81,7 +81,7 @@ public:
     )
     {
     	if(m_curName){
-    		std::cout << m_prefix << "save_object: " << m_curName << std::endl;
+    		// std::cout << m_prefix << "save_object: " << m_curName << std::endl;
 	    	push_widget_layer(m_curName);
 	    	base_t::save_object(x, bos);
 	    	pop_widget_layer();
@@ -96,7 +96,7 @@ public:
 		const boost::archive::detail::basic_pointer_oserializer * bpos_ptr)
     {
     	if(m_curName){
-    		std::cout << m_prefix << "save_pointer: " << m_curName << std::endl;
+    		// std::cout << m_prefix << "save_pointer: " << m_curName << std::endl;
 	    	push_widget_layer(m_curName);
 	    	base_t::save_pointer(t, bpos_ptr);
 	    	pop_widget_layer();
@@ -134,17 +134,17 @@ private:
 	}
 
 	void save(int val){
-		std::cout << m_prefix << "save " << m_curName << ": " << val << std::endl;
+		// std::cout << m_prefix << "save " << m_curName << ": " << val << std::endl;
 		create_spinner<int>(-1.e9, 1.e9, val, 1, 0);
 	}
 
 	void save(float val){
-		std::cout << m_prefix << "save " << m_curName << ": " << val << std::endl;
+		// std::cout << m_prefix << "save " << m_curName << ": " << val << std::endl;
 		create_spinner<float>(-1.e9, 1.e9, val, 1, 6);
 	}
 
 	void save(double val){
-		std::cout << m_prefix << "save " << m_curName << ": " << val << std::endl;
+		// std::cout << m_prefix << "save " << m_curName << ": " << val << std::endl;
 		create_spinner<float>(-1.e9, 1.e9, val, 1, 6);
 	}
 
@@ -155,7 +155,7 @@ private:
 	}
 
 	void save(const std::string& val){
-		std::cout << m_prefix << "save " << m_curName << ": " << val << std::endl;
+		// std::cout << m_prefix << "save " << m_curName << ": " << val << std::endl;
 		tool_widget(m_curName)->addTextBox(QString(m_curName).append(":"), QString(val.c_str()));
 	}
 

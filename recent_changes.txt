@@ -7,6 +7,7 @@ Changes and additions:
 - New interface design (dark theme).
 - Added 'snap-points' which are considered during refinement. They allow for
   more varied refinement schemes.
+- Projectors have been introduced and are considered during refinement.
 
 Fixes:
 
