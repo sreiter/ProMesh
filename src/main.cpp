@@ -37,13 +37,13 @@
 #include <QVBoxLayout>
 // #include "widgets/tooldlg_oarchive.h"
 // #include "widgets/tooldlg_iarchive.h"
-#include "sera_test.h"
-#include <boost/archive/xml_oarchive.hpp>
-#include "widgets/property_widget.h"
-#include "common/error.h"
-#include "common/log.h"
-#include "lib_grid/algorithms/refinement/refinement_projectors_old/cylinder_projector.h"
-#include "lib_grid/algorithms/refinement/projectors/cylinder_projector.h"
+// #include "sera_test.h"
+// #include <boost/archive/xml_oarchive.hpp>
+// #include "widgets/property_widget.h"
+// #include "common/error.h"
+// #include "common/log.h"
+// #include "lib_grid/algorithms/refinement/refinement_projectors_old/cylinder_projector.h"
+// #include "lib_grid/algorithms/refinement/projectors/cylinder_projector.h"
 // #include "lib_grid/boost_class_serialization_exports.h"
 
 using namespace std;

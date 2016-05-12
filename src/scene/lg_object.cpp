@@ -111,6 +111,9 @@ bool LoadLGObjectFromFile(LGObject* pObjOut, const char* filename)
 				if(ugxReader.num_selectors(0) > 0)
 					ugxReader.selector(pObjOut->selector(), 0, 0);
 
+				if(ugxReader.num_projection_handlers(0) > 0)
+					ugxReader.projection_handler(pObjOut->projection_handler(), 0, 0);
+
 				bLoadSuccessful = true;
 			}
 		}
@@ -191,6 +194,7 @@ bool SaveLGObjectToFile(LGObject* pObj, const char* filename)
 			ugxWriter.add_subset_handler(pObj->subset_handler(), "defSH", 0);
 			ugxWriter.add_subset_handler(pObj->crease_handler(), "markSH", 0);
 			ugxWriter.add_selector(pObj->selector(), "defSel", 0);
+			ugxWriter.add_projection_handler(pObj->projection_handler(), "defPH", 0);
 			return ugxWriter.write_to_file(filename);
 		}
 		else if(strcmp(pSuffix, ".lgb") == 0)
