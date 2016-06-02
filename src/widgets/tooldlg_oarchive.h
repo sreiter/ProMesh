@@ -118,6 +118,24 @@ private:
 		return m_widgetLayers.top().toolWidget();
 	}
 
+	template <class T>
+	void save_override(const T &t) {
+		base_t::save_override(t);
+	}
+
+	template<class T>
+	void save_override(const boost::serialization::nvp <T> &t){
+		m_curName = t.name();
+		base_t::save_override(t);
+	}
+
+	// void save_override(const boost::archive::version_type&)				{}
+	// void save_override(const boost::archive::object_id_type&)			{}
+	// void save_override(const boost::archive::class_id_type&)			{}
+	// void save_override(const boost::archive::class_id_optional_type&)	{}
+	// void save_override(const boost::archive::class_name_type&)			{}
+	// void save_override(const boost::archive::tracking_type&)			{}
+
 	template<class T>
 	void save_override(const T &t, int i){
 		base_t::save_override(t, i);

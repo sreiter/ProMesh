@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ProMesh User Manual
-   &#160;<span id="projectnumber">v4.3.0*</span>
+   &#160;<span id="projectnumber">v4.3.0</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -95,17 +95,40 @@ $(document).ready(function(){initNavTree('pageRecentChanges.html','');});
 <div class="contents">
 <div class="textblock"><pre class="fragment">Recent changes:
 
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+-- VERSION 4.3
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 
 -------------------------------------------------------------------------------
 v 4.3.0
 Changes and additions:
 - New interface design (dark theme).
+- Refinement projectors can now be specified per subset. During refinement they
+  can transform the geometry in different ways (e.g. to better approximate some
+  smooth boundary description). Projectors can be applied to any subset and should
+  behave correctly even for inner manifold subsets in volume geometries
+  (e.g. inner boundaries).
+- Current projectors:
+  * Default (inserts vertices at midpoints of parent elements)
+  * Sphere (with optional influence radius)
+  * Cylinder (with optional influence radius)
+  * Smooth (Laplacian smoothing)
+  * Subdivision (Loop subdivision)
+- ugx Files now support refinement projectors.
 - Added 'snap-points' which are considered during refinement. They allow for
   more varied refinement schemes.
 
 Fixes:
 
 
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+-- VERSION 4.2
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 
 -------------------------------------------------------------------------------
 v 4.2.9
@@ -267,6 +290,14 @@ Fixes:
   possible to create new volume elements from affected prisms and/or pyramids.
 
 
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+-- VERSION 4.1
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
+
 -------------------------------------------------------------------------------
 v 4.1.9
 Changes and additions:
@@ -395,6 +426,12 @@ Fixes:
 - CoordinateTransform-&gt;Scale now scales around the selections center again.
 
 
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+-- VERSION 4.0
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 
 -------------------------------------------------------------------------------
 v 4.0.9
@@ -571,14 +608,12 @@ Fixes:
 
 
 
+
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
 -------------------------   OLD VERSION: ProMesh 3   --------------------------
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
-
-
-
 
 
 -------------------------------------------------------------------------------
@@ -1056,7 +1091,7 @@ Fixes:
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">(c) Sebastian Reiter. Generated on Tue May 10 2016 12:27:14 for ProMesh User Manual by
+    <li class="footer">(c) Sebastian Reiter. Generated on Thu Jun 2 2016 10:09:40 for ProMesh User Manual by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.11 </li>
   </ul>

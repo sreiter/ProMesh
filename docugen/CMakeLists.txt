@@ -37,6 +37,10 @@ else(UNIX AND NOT CYGWIN)
 	add_definitions(-DUNIX)
 endif(UNIX AND NOT CYGWIN)
 
+set(Boost_USE_STATIC_LIBS   ON)
+FIND_PACKAGE( Boost 1.48 COMPONENTS serialization REQUIRED )
+INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
+
 set(LIBS grid_s)
 
 # LIBGRID LIBRARY
@@ -72,8 +76,7 @@ endif(TETGEN_LIBS-NOTFOUND)
 
 include_directories(${UG_ROOT_PATH}/ugcore/ugbase)
 include_directories(${UG_ROOT_PATH}/plugins/experimental/promesh)
-include_directories(${UG_ROOT_PATH}/externals/BoostForUG4)
 link_directories(${UG_ROOT_PATH}/lib)
 
 add_executable(docugen docugen.cpp)
-target_link_libraries(docugen ${LIBS})
+target_link_libraries(docugen ${LIBS} ${Boost_LIBRARIES})

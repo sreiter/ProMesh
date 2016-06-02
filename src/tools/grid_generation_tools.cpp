@@ -1014,12 +1014,6 @@ public:
  };
 */
 
-bool CreateFractal(LGObject* obj, number scaleFac, size_t numIterations)
-{
-	ug::HangingNodeRefiner_Grid href(obj->grid());
-	return ug::CreateFractal_NormalScale(obj->grid(), href, scaleFac, numIterations);
-}
-
 void RegisterGridGenerationTools(ToolManager* toolMgr)
 {
 	toolMgr->set_group_icon("Grid Generation", ":images/tool_geometry_generation.png");

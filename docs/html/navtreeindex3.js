@@ -1,6 +1,5 @@
 var NAVTREEINDEX3 =
 {
-"group__ugbase.html#classVertex":[1,0,2,11],
 "group__ugbase.html#classVolume":[1,0,2,14],
 "hierarchy.html":[1,2],
 "index.html":[],

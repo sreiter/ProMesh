@@ -159,6 +159,24 @@ private:
 		return twdgt;
 	}
 
+	// void load_override (boost::archive::version_type&)			{}
+	// void load_override(boost::archive::object_id_type&)			{}
+	// void load_override(boost::archive::class_id_type&)			{}
+	// void load_override(boost::archive::class_id_optional_type&)	{}
+	// void load_override(boost::archive::class_name_type&)		{}
+	// void load_override(boost::archive::tracking_type&)			{}
+
+	template<class T>
+	void load_override (T &t){
+		base_t::load_override(t);
+	}
+
+	template<class T>
+	void load_override (const boost::serialization::nvp <T> &t){
+		m_curName = t.name();
+		base_t::load_override(t);
+	}
+
 	template<class T>
 	void load_override (T &t, int i){
 		base_t::load_override(t, i);
@@ -167,8 +185,6 @@ private:
 	template<class T>
 	void load_override (const boost::serialization::nvp <T> &t, int i){
 		m_curName = t.name();
-		// if(m_curName)
-		// 	UG_LOG("m_curName: " << m_curName << "\n");
 		base_t::load_override(t, i);
 	}
 

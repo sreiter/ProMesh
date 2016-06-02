@@ -137,9 +137,10 @@ if(USE_WEBKIT)
 	set(ProMeshSRC ${ProMeshSRC} src/widgets/help_browser.cpp)
 endif(USE_WEBKIT)
 
-set(Boost_USE_STATIC_LIBS   ON)
-FIND_PACKAGE( Boost 1.48 COMPONENTS serialization REQUIRED )
-INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
+# set(Boost_USE_STATIC_LIBS   ON)
+# FIND_PACKAGE( Boost 1.48 COMPONENTS serialization REQUIRED )
+# INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
+include_directories(${UG_ROOT_PATH}/externals/BoostForUG4)
 
 # Qt5 with OpenGL support is required.
 # in order to use a custom installation of QT, specify QT_CMAKE_PATH when running

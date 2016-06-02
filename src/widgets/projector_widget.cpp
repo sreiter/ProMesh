@@ -41,7 +41,7 @@
 #include "common/util/factory.h"
 
 // #include "lib_grid/boost_class_serialization_exports.h"
-#include "lib_grid/algorithms/refinement/projectors.h"
+#include "lib_grid/refinement/projectors/projectors.h"
 
 static ug::Factory<ug::RefinementProjector, ug::ProjectorTypes>	projFactory;
 

@@ -140,33 +140,6 @@ class ToolRefineSmooth : public ITool
 		}
 };
 
-class ToolRefineSmoothBoundary2D : public ITool
-{
-	public:
-		void execute(LGObject* obj, QWidget* widget){
-			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
-
-			bool strictSubsetInheritance = false;
-			if(dlg)
-				strictSubsetInheritance = dlg->to_bool(0);
-
-			promesh::RefineSmoothBoundary2D(obj, strictSubsetInheritance);
-
-		//	done
-			obj->geometry_changed();
-		}
-
-		const char* get_name()		{return "Refine Smooth Boudary 2d";}
-		const char* get_tooltip()	{return TOOLTIP_REFINE_SMOOTH_BOUNDARY_2D;}
-		const char* get_group()		{return "Remeshing | Refinement";}
-
-		ToolWidget* get_dialog(QWidget* parent){
-			ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
-											IDB_APPLY | IDB_OK | IDB_CLOSE);
-			dlg->addCheckBox(tr("strict subset inheritance:"), false);
-			return dlg;
-		}
-};
 /*
 class ToolFracturedMediaRefine : public ITool
 {
@@ -232,40 +205,6 @@ class ToolFracturedMediaRefine : public ITool
 };
 */
 
-
-class ToolCreateFractal : public ITool
-{
-public:
-	void execute(LGObject* obj, QWidget* widget){
-		ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
-
-		size_t numIterations = 5;
-		double scaleFac = 0.5;
-
-		if(dlg){
-			numIterations = dlg->to_int(0);
-			scaleFac = dlg->to_double(1);
-		}
-
-		promesh::CreateFractal(obj, numIterations, scaleFac);
-
-	//	done
-		obj->geometry_changed();
-	}
-
-	const char* get_name()		{return "Fractal Refine";}
-	const char* get_tooltip()	{return TOOLTIP_CREATE_FRACTAL;}
-	const char* get_group()		{return "Remeshing | Refinement";}
-
-	ToolWidget* get_dialog(QWidget* parent){
-		ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
-								IDB_APPLY | IDB_CLOSE);
-		dlg->addSpinBox(tr("iterations"), 0, 1.e+9, 5, 1, 0);
-		dlg->addSpinBox(tr("scale-factor"), -1e+9, 1e+9, 0.5, 0.1, 9);
-		return dlg;
-	}
-};
-
 class ToolInsertCenter : public ITool
 {
 	public:
@@ -299,9 +238,7 @@ void RegisterRefinementTools(ToolManager* toolMgr)
 	toolMgr->register_tool(new ToolRefine, Qt::Key_R, SMK_ALT);
 	toolMgr->register_tool(new ToolHangingNodeRefine);
 	toolMgr->register_tool(new ToolRefineSmooth);
-	toolMgr->register_tool(new ToolRefineSmoothBoundary2D);
 	toolMgr->register_tool(new ToolInsertCenter);
 	//toolMgr->register_tool(new ToolFracturedMediaRefine);
-	toolMgr->register_tool(new ToolCreateFractal);
 }
 
