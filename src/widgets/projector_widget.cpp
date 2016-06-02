@@ -55,7 +55,7 @@ ProjectorWidget (QWidget* parent, LGScene* scene) :
 {
 	m_vlayout = new QVBoxLayout(this);
 
-	auto hbox = new QHBoxLayout();
+	QHBoxLayout* hbox = new QHBoxLayout();
 	m_vlayout->addLayout(hbox);
 
 	hbox->addWidget(new QLabel(tr("type:")));
@@ -179,7 +179,10 @@ update_content(ug::RefinementProjector* proj)
 
 //	connect change-signals of all tool-widgets to contentChanged
 	QList<ToolWidget*> toolWidgets = newContent->findChildren<ToolWidget*>();
-	for(auto tw : toolWidgets) {
+	for(QList<ToolWidget*>::iterator iter = toolWidgets.begin();
+		iter!= toolWidgets.end(); ++iter)
+	{
+		ToolWidget* tw = *iter;
 		connect(tw, SIGNAL(valueChanged(int)), this, SLOT(valueChanged()));
 	}
 }

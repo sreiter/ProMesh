@@ -334,7 +334,7 @@ void MainWindow::init()
 	QDockWidget* pProjectorDock = new QDockWidget(tr("Projectors"), this);
 	pProjectorDock->setFeatures(QDockWidget::NoDockWidgetFeatures);
 	pProjectorDock->setObjectName(tr("projector_dock"));
-	auto projectorList = new WidgetList(pProjectorDock);
+	WidgetList* projectorList = new WidgetList(pProjectorDock);
 	ProjectorWidget* projectorWidget = new ProjectorWidget(projectorList, m_scene);
 	projectorList->addWidget(projectorWidget);
 	pProjectorDock->setWidget(projectorList);

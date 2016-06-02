@@ -53,7 +53,7 @@ class tooldlg_oarchive :
 		public boost::archive::detail::common_oarchive<tooldlg_oarchive>
 {
 public:
-	using base_t = boost::archive::detail::common_oarchive<tooldlg_oarchive>;
+	typedef boost::archive::detail::common_oarchive<tooldlg_oarchive> base_t;
 	typedef boost::mpl::bool_<false> is_loading;
 	typedef boost::mpl::bool_<true> is_saving;
 

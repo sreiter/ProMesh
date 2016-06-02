@@ -54,7 +54,7 @@ class tooldlg_iarchive :
 		public boost::archive::detail::common_iarchive<tooldlg_iarchive>
 {
 public:
-	using base_t = boost::archive::detail::common_iarchive<tooldlg_iarchive>;
+	typedef boost::archive::detail::common_iarchive<tooldlg_iarchive> base_t;
 	typedef boost::mpl::bool_<true> is_loading;
 	typedef boost::mpl::bool_<false> is_saving;
 

@@ -26,7 +26,7 @@
 cmake_minimum_required(VERSION 2.8.11)
 project(P_PROMESH4)
 
-set (CMAKE_CXX_STANDARD 11)
+# set (CMAKE_CXX_STANDARD 11)
 
 # Some options which allow to control makefile generation
 option(DEBUG "If enabled a debug build is performed - this slows down performance." OFF)
