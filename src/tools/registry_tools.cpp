@@ -88,6 +88,8 @@ class RegistryTool : public ITool{
 			ParameterStack paramsIn, paramsOut;
 			paramsIn.push(static_cast<Mesh*>(obj));
 			
+			vector<ConstSmartPtr<void> > tmpSmartPtrs;
+
 			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 			if(dlg){
 				const ParameterInfo& params = m_func->params_in();
@@ -115,6 +117,28 @@ class RegistryTool : public ITool{
 						case Variant::VT_STDSTRING:
 							paramsIn.push(dlg->to_string(toolParam).toStdString());
 							break;
+						case Variant::VT_POINTER:
+						case Variant::VT_CONST_POINTER:
+						case Variant::VT_SMART_POINTER:
+						case Variant::VT_CONST_SMART_POINTER:{
+							const char* clsName = params.class_name(iparam);
+							if(strcmp(clsName, "Vec3d") == 0){
+								SmartPtr<vector3> pv(new vector3);
+								*pv = dlg->to_vector3(toolParam);
+								
+								if(params.type(iparam) == Variant::VT_POINTER ||
+								   params.type(iparam) == Variant::VT_CONST_POINTER)
+								{
+									tmpSmartPtrs.push_back(pv);
+									paramsIn.push(pv.get());
+								}
+								else
+									paramsIn.push(pv);
+							}
+							else{
+								UG_THROW("Unsupported Type in RegistryTool for parameter " << toolParam);
+							}
+						}break;
 						default:
 							UG_THROW("Unsupported Type in RegistryTool for parameter " << toolParam);
 							break;
@@ -163,6 +187,7 @@ class RegistryTool : public ITool{
 				UG_LOG(endl);
 			}
 
+			tmpSmartPtrs.clear();
 			obj->geometry_changed();
 		}
 
@@ -431,6 +456,11 @@ void RegsiterRegistryTools(ToolManager* toolMgr)
 
 	RegisterTool(toolMgr, reg, "Remove Double Faces", "RemoveDoubleFaces");
 	
+	RegisterTool(toolMgr, reg, "Extrude and Move", "ExtrudeAndMove");
+	RegisterTool(toolMgr, reg, "Extrude and Scale", "ExtrudeAndScale");
+	RegisterTool(toolMgr, reg, "Extrude Along Normal", "ExtrudeAlongNormal");
+	RegisterTool(toolMgr, reg, "Extrude Cylinders", "ExtrudeCylinders");
+
 	RegisterTool(toolMgr, reg, "Simplify Polylines", "SimplifyPolylines");
 	RegisterTool(toolMgr, reg, "Simplify Smoothed Polylines", "SimplifySmoothedPolylines");
 

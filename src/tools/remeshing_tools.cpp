@@ -379,83 +379,83 @@ public:
 
 
 
-class ToolExtrude : public ITool
-{
-	public:
-		void execute(LGObject* obj, QWidget* widget){
-		ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
-			bool createFaces = true;
-			bool createVolumes = true;
-			vector3 totalDir(0, 1., 0);
-			int numSteps = 1;
+// class ToolExtrude : public ITool
+// {
+// 	public:
+// 		void execute(LGObject* obj, QWidget* widget){
+// 		ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
+// 			bool createFaces = true;
+// 			bool createVolumes = true;
+// 			vector3 totalDir(0, 1., 0);
+// 			int numSteps = 1;
 
-			if(dlg){
-				createFaces = dlg->to_bool(0);
-				createVolumes = dlg->to_bool(1);
-				totalDir.x() = dlg->to_double(2);
-				totalDir.y() = dlg->to_double(3);
-				totalDir.z() = dlg->to_double(4);
-				numSteps = dlg->to_int(5);
-			}
+// 			if(dlg){
+// 				createFaces = dlg->to_bool(0);
+// 				createVolumes = dlg->to_bool(1);
+// 				totalDir.x() = dlg->to_double(2);
+// 				totalDir.y() = dlg->to_double(3);
+// 				totalDir.z() = dlg->to_double(4);
+// 				numSteps = dlg->to_int(5);
+// 			}
 
-			promesh::Extrude(obj, totalDir, numSteps, createFaces, createVolumes);
+// 			promesh::Extrude(obj, totalDir, numSteps, createFaces, createVolumes);
 
-			obj->geometry_changed();
-		}
+// 			obj->geometry_changed();
+// 		}
 
-		const char* get_name()		{return "Extrude";}
-		const char* get_tooltip()	{return TOOLTIP_EXTRUDE;}
-		const char* get_group()		{return "Remeshing | Extrusion";}
+// 		const char* get_name()		{return "Extrude";}
+// 		const char* get_tooltip()	{return TOOLTIP_EXTRUDE;}
+// 		const char* get_group()		{return "Remeshing | Extrusion";}
 
-		ToolWidget* get_dialog(QWidget* parent){
-			ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
-											IDB_APPLY | IDB_OK | IDB_CANCEL);
-			dlg->addCheckBox("create faces:", true);
-			dlg->addCheckBox("create volumes:", true);
-			dlg->addSpinBox("x-total:", -1.e+9, 1.e+9, 0., 0.1, 9);
-			dlg->addSpinBox("y-total:", -1.e+9, 1.e+9, 0., 0.1, 9);
-			dlg->addSpinBox("z-total:", -1.e+9, 1.e+9, 0., 0.1, 9);
-			dlg->addSpinBox("num steps:", 1, 1.e+9, 1, 1, 0);
-			return dlg;
-		}
-};
+// 		ToolWidget* get_dialog(QWidget* parent){
+// 			ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
+// 											IDB_APPLY | IDB_OK | IDB_CANCEL);
+// 			dlg->addCheckBox("create faces:", true);
+// 			dlg->addCheckBox("create volumes:", true);
+// 			dlg->addSpinBox("x-total:", -1.e+9, 1.e+9, 0., 0.1, 9);
+// 			dlg->addSpinBox("y-total:", -1.e+9, 1.e+9, 0., 0.1, 9);
+// 			dlg->addSpinBox("z-total:", -1.e+9, 1.e+9, 0., 0.1, 9);
+// 			dlg->addSpinBox("num steps:", 1, 1.e+9, 1, 1, 0);
+// 			return dlg;
+// 		}
+// };
 
-class ToolExtrudeCylinders : public ITool
-{
-public:
-	void execute(LGObject* obj, QWidget* widget){
-		ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
-		number height = 1.;
-		number radius = 1.;
-		number snapThreshold = 0.1;
-		//bool createVolumes = false;
+// class ToolExtrudeCylinders : public ITool
+// {
+// public:
+// 	void execute(LGObject* obj, QWidget* widget){
+// 		ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
+// 		number height = 1.;
+// 		number radius = 1.;
+// 		number snapThreshold = 0.1;
+// 		//bool createVolumes = false;
 
-		if(dlg){
-			height = (number)dlg->to_double(0);
-			radius = (number)dlg->to_double(1);
-			snapThreshold = (number)dlg->to_double(2);
-			//createVolumes = dlg->to_bool(3);
-		}
+// 		if(dlg){
+// 			height = (number)dlg->to_double(0);
+// 			radius = (number)dlg->to_double(1);
+// 			snapThreshold = (number)dlg->to_double(2);
+// 			//createVolumes = dlg->to_bool(3);
+// 		}
 
-		promesh::ExtrudeCylinders(obj, height, radius, snapThreshold);
+// 		promesh::ExtrudeCylinders(obj, height, radius, snapThreshold);
 
-		obj->geometry_changed();
-	}
+// 		obj->geometry_changed();
+// 	}
 
-	const char* get_name()		{return "Extrude Cylinders";}
-	const char* get_tooltip()	{return TOOLTIP_EXTRUDE_CYLINDERS;}
-	const char* get_group()		{return "Remeshing | Extrusion";}
+// 	const char* get_name()		{return "Extrude Cylinders";}
+// 	const char* get_tooltip()	{return TOOLTIP_EXTRUDE_CYLINDERS;}
+// 	const char* get_group()		{return "Remeshing | Extrusion";}
 
-	ToolWidget* get_dialog(QWidget* parent){
-		ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
-										IDB_APPLY | IDB_OK | IDB_CANCEL);
-		dlg->addSpinBox("height: ", -1.e+9, 1.e+9, 1, 1, 9);
-		dlg->addSpinBox("radius: ", -1.e+9, 1.e+9, 1, 1, 9);
-		dlg->addSpinBox(tr("rim snap threshold:"), 0, 1e+10, 0.01, 0.01, 9);
-		//dlg->addCheckBox("create volumes: ", false);
-		return dlg;
-	}
-};
+// 	ToolWidget* get_dialog(QWidget* parent){
+// 		ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
+// 										IDB_APPLY | IDB_OK | IDB_CANCEL);
+// 		dlg->addSpinBox("height: ", -1.e+9, 1.e+9, 1, 1, 9);
+// 		dlg->addSpinBox("radius: ", -1.e+9, 1.e+9, 1, 1, 9);
+// 		dlg->addSpinBox(tr("rim snap threshold:"), 0, 1e+10, 0.01, 0.01, 9);
+// 		//dlg->addCheckBox("create volumes: ", false);
+// 		return dlg;
+// 	}
+// };
 
 class ToolCreateShrinkGeometry : public ITool
 {
@@ -502,8 +502,8 @@ void RegisterRemeshingTools(ToolManager* toolMgr)
     toolMgr->register_tool(new ToolRetetrahedralize);
 
     toolMgr->register_tool(new ToolDuplicate);
-	toolMgr->register_tool(new ToolExtrude);
-	toolMgr->register_tool(new ToolExtrudeCylinders);
+	// toolMgr->register_tool(new ToolExtrude);
+	// toolMgr->register_tool(new ToolExtrudeCylinders);
 
 	toolMgr->register_tool(new ToolCreateShrinkGeometry);
 }

@@ -27,8 +27,8 @@ var NAVTREEINDEX0 =
 "group__promesh.html#a7f6d49d98c4f4b04467134dbdbfabf45":[1,0,0,9,2],
 "group__promesh.html#a8903a4e9f3d5fb42d0faa9d53e21d85c":[1,0,0,10,0],
 "group__promesh.html#a8903a4e9f3d5fb42d0faa9d53e21d85c":[1,0,0,9,0],
-"group__promesh.html#a8903a4e9f3d5fb42d0faa9d53e21d85c":[1,0,0,11,0],
 "group__promesh.html#a8903a4e9f3d5fb42d0faa9d53e21d85c":[1,0,0,12,0],
+"group__promesh.html#a8903a4e9f3d5fb42d0faa9d53e21d85c":[1,0,0,11,0],
 "group__promesh.html#a8da973688d45b86b031bc262cd2c5714":[1,0,0,9,4],
 "group__promesh.html#ab0a7ddcc09183991ad519e69318ca609":[1,0,0,11,3],
 "group__promesh.html#ac30e27e3f1bb41972eb2c00e4648dbc1":[1,0,0,11,4],
@@ -130,8 +130,11 @@ var NAVTREEINDEX0 =
 "group__promesh__Remeshing__Edge__Operations.html#gaac8d4a85b3b0d63e33cf5221d85f91e4":[1,0,0,4,0,0],
 "group__promesh__Remeshing__Edge__Operations.html#gac0a7128c11a2b334854bbad0c79fd9a3":[1,0,0,4,0,2],
 "group__promesh__Remeshing__Extrusion.html":[1,0,0,4,1],
+"group__promesh__Remeshing__Extrusion.html#ga06eed732c655552ab77614841122aa84":[1,0,0,4,1,3],
 "group__promesh__Remeshing__Extrusion.html#ga0e89765cc34a60d7cab664e68125754e":[1,0,0,4,1,0],
-"group__promesh__Remeshing__Extrusion.html#ga30f1901f48eeee80556248951f4a2081":[1,0,0,4,1,1],
+"group__promesh__Remeshing__Extrusion.html#ga21ec5b1cc2398fbd91e218bfddbac12a":[1,0,0,4,1,2],
+"group__promesh__Remeshing__Extrusion.html#ga30f1901f48eeee80556248951f4a2081":[1,0,0,4,1,4],
+"group__promesh__Remeshing__Extrusion.html#ga538eefbeb97870e9f849e032bfbf24f2":[1,0,0,4,1,1],
 "group__promesh__Remeshing__Merge__Vertices.html":[1,0,0,4,2],
 "group__promesh__Remeshing__Merge__Vertices.html#ga0cda155ce4ca027685cdeb3973ebeb28":[1,0,0,4,2,2],
 "group__promesh__Remeshing__Merge__Vertices.html#ga9dce8cf683e9fc39798bae38a8755b5e":[1,0,0,4,2,1],
@@ -246,8 +249,5 @@ var NAVTREEINDEX0 =
 "group__promesh__Selection__Vertices.html#ga54eeef7199711dfff43c50d442278c22":[1,0,0,5,3,0],
 "group__promesh__Selection__Vertices.html#ga5947a4030792195ca064a790d69440f8":[1,0,0,5,3,8],
 "group__promesh__Selection__Vertices.html#ga5c6edbe965b52f0239ae989b1c057cea":[1,0,0,5,3,7],
-"group__promesh__Selection__Vertices.html#ga7cfdf54d1bb55f05fd8c6314dac895f0":[1,0,0,5,3,11],
-"group__promesh__Selection__Vertices.html#gaacf488b89c2867602316ff5d8d303385":[1,0,0,5,3,1],
-"group__promesh__Selection__Vertices.html#gab9e251f4621c7de69549dd3b423d1ea5":[1,0,0,5,3,13],
-"group__promesh__Selection__Vertices.html#gabf33d16547e9ba53bd0a17eafb3a6ed8":[1,0,0,5,3,10]
+"group__promesh__Selection__Vertices.html#ga7cfdf54d1bb55f05fd8c6314dac895f0":[1,0,0,5,3,11]
 };
