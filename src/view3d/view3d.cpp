@@ -244,15 +244,18 @@ drawSelectionRect(bool bDrawIt, float xMin, float yMin,
 
 unsigned int View3D::get_camera_drag_flags()
 {
-	Qt::KeyboardModifiers keys = QApplication::keyboardModifiers();
+	const Qt::KeyboardModifiers keys = QApplication::keyboardModifiers();
+	const bool shiftPressed = bool(keys & Qt::ShiftModifier);
+	const bool ctrlPressed = bool(keys & Qt::ControlModifier);
 	unsigned int dragFlags = cam::CDF_NONE;
 	
-	if((keys & Qt::ControlModifier) == Qt::ControlModifier)
-		dragFlags |= cam::CDF_MOVE;
+	if(shiftPressed){
+		if(ctrlPressed)
+			dragFlags = cam::CDF_MOVE;
+		else
+			dragFlags = cam::CDF_ZOOM;
+	}
 
-	if((keys & Qt::ShiftModifier) == Qt::ShiftModifier)
-		dragFlags |= cam::CDF_ZOOM;
-		
 	return dragFlags;
 }
 
@@ -416,9 +419,10 @@ void View3D::mousePressEvent(QMouseEvent *event)
 //	if alt is pressed, we'll refocus the clicked geometry.
 //	if not, we'll start dragging.
 	if(event->button() == Qt::LeftButton){
-		if((QApplication::keyboardModifiers() & Qt::AltModifier) == Qt::AltModifier)
-			refocus_by_screen_coords(event->x(), event->y());
-		else
+		const bool shiftPressed = bool(QApplication::keyboardModifiers() & Qt::ShiftModifier);
+		const bool ctrlPressed = bool(QApplication::keyboardModifiers() & Qt::ControlModifier);
+
+		if((!ctrlPressed) || (shiftPressed && ctrlPressed))
 			m_camera.begin_drag(event->x(), event->y(),
 								get_camera_drag_flags());
 	}

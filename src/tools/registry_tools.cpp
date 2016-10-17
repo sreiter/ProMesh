@@ -441,6 +441,8 @@ void RegsiterRegistryTools(ToolManager* toolMgr)
 	RegisterTool(toolMgr, reg, "Selection Kinks", "SelectSelectionKinkVertices");
 	RegisterTool(toolMgr, reg, "Subset Kinks", "SelectSubsetKinkVertices");
 
+	RegisterTool(toolMgr, reg, "Edges By Direction", "SelectEdgesByDirection");
+
 	RegisterTool(toolMgr, reg, "Linked Edges", "SelectLinkedEdges");
 	RegisterTool(toolMgr, reg, "Linked Faces", "SelectLinkedFaces");
 	RegisterTool(toolMgr, reg, "Linked Volumes", "SelectLinkedVolumes");
@@ -449,6 +451,8 @@ void RegsiterRegistryTools(ToolManager* toolMgr)
 	RegisterTool(toolMgr, reg, "Select Anisotropic Volumes", "SelectAnisotropicVolumes");
 	
 	RegisterTool(toolMgr, reg, "Select Short Polychains", "SelectShortPolychains");
+
+	RegisterTool(toolMgr, reg, "Select Elements By Split-Plane", "SelectElementsBySplitPlane");
 
 	RegisterTool(toolMgr, reg, "Interface Vertices", "SelectInterfaceVertices");
 	RegisterTool(toolMgr, reg, "Interface Edges", "SelectInterfaceEdges");

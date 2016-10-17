@@ -33,6 +33,7 @@
 #include "scene/lg_object.h"
 #include "common/log.h"
 
+
 namespace app
 {
 
@@ -82,6 +83,7 @@ inline LGObject* createEmptyLGObject(const char* name)
 {
     return getMainWindow()->create_empty_object(name);
 }
+
 
 ///	returns the path in which user-data is placed (e.g. $HOME/.promesh)
 QDir UserDataDir();

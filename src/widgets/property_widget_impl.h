@@ -48,6 +48,16 @@ populate (const T& t, const char* name)
 		m_spacerLayout->addStretch(1);
 	}
 	m_content = newContent;
+
+	//	connect change-signals of all tool-widgets to contentChanged
+	QList<ToolWidget*> toolWidgets = newContent->findChildren<ToolWidget*>();
+	for(QList<ToolWidget*>::iterator iter = toolWidgets.begin();
+		iter!= toolWidgets.end(); ++iter)
+	{
+		ToolWidget* tw = *iter;
+		connect(tw, SIGNAL(valueChanged(int)), this, SIGNAL(valueChanged()));
+	}
+
 }
 
 template <typename T>

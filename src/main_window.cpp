@@ -28,6 +28,8 @@
 #include <iostream>
 #include <QtWidgets>
 #include <QDesktopServices>
+#include <boost/archive/xml_oarchive.hpp>
+#include <boost/archive/xml_iarchive.hpp>
 #include "main_window.h"
 #include "view3d/view3d.h"
 #include "scene/lg_scene.h"
@@ -47,10 +49,12 @@
 #include "bridge/bridge.h"
 #include "common/util/path_provider.h"
 #include "common/util/plugin_util.h"
+#include "options/options.h"
 #include "util/file_util.h"
 #include "tools/tool_manager.h"
 #include "widgets/projector_widget.h"
 #include "widgets/tool_browser_widget.h"
+#include "widgets/property_widget.h"
 #include "widgets/widget_list.h"
 
 #ifdef PROMESH_USE_WEBKIT
@@ -72,7 +76,7 @@ using namespace ug;
 ////////////////////////////////////////////////////////////////////////
 //	constructor
 MainWindow::MainWindow() :
-	m_settings("G-CSC", "ProMesh4.3"),
+	m_settings("G-CSC", "ProMesh4.3*"),
 	m_selectionElement(0),
 	m_selectionMode(0),
 	m_curSelectionMode(-1),
@@ -93,6 +97,7 @@ void MainWindow::init()
 	setAcceptDrops(true);
 	setGeometry(0, 0, 1024, 600);
 
+
 //	create view and scene
 	m_pView = new View3D;
 	setCentralWidget(m_pView);
@@ -111,6 +116,8 @@ void MainWindow::init()
 	connect(m_scene, SIGNAL(visuals_updated()),
 			m_pView, SLOT(update()));
 
+
+	setTabPosition(Qt::BottomDockWidgetArea, QTabWidget::West);
 //	create the log widget
 	m_pLog = new QDockWidget(tr("log"), this);
 	m_pLog->setFeatures(QDockWidget::NoDockWidgetFeatures);
@@ -128,6 +135,16 @@ void MainWindow::init()
 	m_pLog->setWidget(pLogText);
 
 	addDockWidget(Qt::BottomDockWidgetArea, m_pLog);
+
+
+	QDockWidget* optionDock = new QDockWidget(tr("options"), this);
+	optionDock->setFeatures(QDockWidget::NoDockWidgetFeatures);
+	optionDock->setObjectName(tr("options"));
+	m_optWidget = new PropertyWidget(optionDock);
+	connect(m_optWidget, SIGNAL(valueChanged()), this, SLOT(optionsChanged()));
+	optionDock->setWidget(m_optWidget);
+	loadOptions();
+	tabifyDockWidget(m_pLog, optionDock);
 
 //	redirect cout
 	Q_DebugStream* pDebugStream = new Q_DebugStream(GetLogAssistant().logger(), pLogText);
@@ -373,8 +390,10 @@ void MainWindow::init()
 	restoreGeometry(settings().value("mainWindow/geometry").toByteArray());
 	restoreState(settings().value("mainWindow/windowState").toByteArray());
 
+	m_pLog->raise();
+	
 //	init the status bar
-	statusBar()->show();
+	// statusBar()->show();
 
 //	init undo
 	QDir tmpPath(QDir::tempPath());
@@ -1181,4 +1200,48 @@ void MainWindow::editScript()
 void MainWindow::quit()
 {
 	this->close();
+}
+
+void MainWindow::
+refreshOptions()
+{
+	m_optWidget->populate(&GetOptions(), "options");
+}
+
+void MainWindow::
+optionsChanged ()
+{
+	m_optWidget->retrieve_values(GetOptions());
+	saveOptions();
+}
+
+void
+MainWindow::
+saveOptions ()
+{
+	string filename = app::UserDataDir().path().toStdString().
+			append("/config.xml");
+
+	ofstream out(filename.c_str());
+	boost::archive::xml_oarchive ar(out);
+
+	ar & make_nvp("config", GetOptions());
+}
+
+void MainWindow::
+loadOptions ()
+{
+	QString userOptsName = app::UserDataDir().path().append("/config.xml");
+	if(!FileExists(userOptsName)){
+		QFile::copy(":/resources/config.xml", userOptsName);
+	}
+
+	if(FileExists(userOptsName)){
+		ifstream in(userOptsName.toStdString().c_str());
+		boost::archive::xml_iarchive ar(in);
+
+		ar & make_nvp("config", GetOptions());
+	}
+
+	refreshOptions();
 }

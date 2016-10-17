@@ -31,6 +31,7 @@
 #include "app.h"
 #include "lib_grid/algorithms/selection_util.h"
 #include "tools/tool_manager.h"
+#include "options/options.h"
 
 using namespace std;
 using namespace ug;
@@ -130,7 +131,7 @@ void MainWindow::endMouseMoveAction(bool bApply)
 }
 
 
-
+// BEGIN: QMainWindow events
 void MainWindow::mousePressEvent(QMouseEvent* event)
 {
 	if(m_mouseMoveAction != MMA_DEFAULT){
@@ -245,6 +246,9 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
 
 	QMainWindow::keyReleaseEvent(event);
 }
+
+// END QMainWindow events
+
 
 template <class TElem>
 void MainWindow::
@@ -390,6 +394,73 @@ void MainWindow::view3dMousePressed(QMouseEvent *event)
 			}break;
 
 		}//	end of mode-switch
+	}
+	else{
+		const bool shiftPressed = bool(QApplication::keyboardModifiers() & Qt::ShiftModifier);
+		const bool ctrlPressed = bool(QApplication::keyboardModifiers() & Qt::ControlModifier);
+		if(ctrlPressed && !shiftPressed){
+			if(LGObject* o = app::getActiveObject()){
+			//	place a new vertex
+				vector3 from, to;
+				if(!m_pView->get_ray_to_geometry(from, to, event->x(), event->y())){
+					// UG_LOG("from: " << from << endl);
+					// UG_LOG("to: " << to << endl);
+
+					vector3 dir;
+					VecSubtract(dir, to, from);
+					vector3 p = *m_pView->camera().get_to();
+					vector3 n = *m_pView->camera().get_dir();
+					// UG_LOG("p: " << p << endl);
+					// UG_LOG("n: " << n << endl);
+					VecNormalize(n, n);
+					vector3 newTo;
+					number t;
+					if(!RayPlaneIntersection(newTo, t, from, dir, p, n)){
+						UG_LOG("ERROR: Can't determine target position of new vertex!\n");
+						return;
+					}
+					to = newTo;
+				}
+
+				int si = app::getActiveSubsetIndex();
+				if(si < 0) si = 0;
+
+			//	check if a vertex is close
+				const number snapDistSq = sq(GetOptions().drawPath.snapDistance);
+				Vertex* vrt = NULL;
+				Grid& g = o->grid();
+
+				LGObject::position_accessor_t& aaPos = o->position_accessor();
+
+				for(VertexIterator ivrt = g.vertices_begin();
+					ivrt != g.vertices_end(); ++ivrt)
+				{
+					if(VecDistanceSq(aaPos[*ivrt], to) <= snapDistSq){
+						vrt = *ivrt;
+						break;
+					}
+				}
+
+				if(!vrt){
+					vrt = o->create_vertex(to);
+					o->subset_handler().assign_subset(vrt, si);
+				}
+
+				Selector& sel = o->selector();
+				for(VertexIterator ivrt = sel.begin<Vertex>();
+					ivrt != sel.end<Vertex>(); ++ivrt)
+				{
+					if(*ivrt != vrt){
+						Edge* e = *o->grid().create<RegularEdge>(EdgeDescriptor(*ivrt, vrt));
+						o->subset_handler().assign_subset(e, si);
+					}
+				}
+				sel.clear();
+				sel.select(vrt);
+				o->geometry_changed();
+				// UG_LOG("created vertex at " << to << "\n");
+			}
+		}
 	}
 }
 

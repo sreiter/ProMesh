@@ -23,42 +23,34 @@
  * GNU Lesser General Public License for more details.
  */
 
-#ifndef __H__PROMESH_property_widget
-#define __H__PROMESH_property_widget
+#ifndef __H__PROMESH_draw_path_options
+#define __H__PROMESH_draw_path_options
 
-#include <QFrame>
+#include "common/boost_serialization.h"
 
-class QLayout;
-class QScrollArea;
-class QVBoxLayout;
+namespace opts{
 
-class PropertyWidget : public QFrame
-{
-	Q_OBJECT
+struct DrawPath {
+	number snapDistance;
 
-	public:
-		PropertyWidget(QWidget* parent);
-		virtual ~PropertyWidget();
+	DrawPath() : 
+		snapDistance (0)
+		{}
 
-		template <typename T>
-		void populate(const T& t, const char* name);
+private:
+	friend class boost::serialization::access;
 
-		template <typename T>
-		void populate(const T* t, const char* name);
-
-		template <typename T>
-		void retrieve_values(T& t);
-
-	signals:
-		void valueChanged();
-		
-	private:
-		QScrollArea*	m_scrollArea;
-		QWidget*		m_spacerWidget;
-		QWidget*		m_content;
-		QVBoxLayout* 	m_spacerLayout;
+	template <class Archive>
+	void serialize( Archive& ar, const unsigned int version)
+	{
+		using namespace ug;
+		ar & make_nvp("snap_distance", snapDistance);
+	}
 };
 
-#include "property_widget_impl.h"
+}
 
-#endif	//__H__UG_property_widget
+BOOST_CLASS_VERSION(opts::DrawPath, 0);
+
+
+#endif	//__H__UG_draw_path_options

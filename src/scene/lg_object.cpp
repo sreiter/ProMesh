@@ -111,8 +111,9 @@ bool LoadLGObjectFromFile(LGObject* pObjOut, const char* filename)
 				if(ugxReader.num_selectors(0) > 0)
 					ugxReader.selector(pObjOut->selector(), 0, 0);
 
-				if(ugxReader.num_projection_handlers(0) > 0)
+				if(ugxReader.num_projection_handlers(0) > 0){
 					ugxReader.projection_handler(pObjOut->projection_handler(), 0, 0);
+				}
 
 				bLoadSuccessful = true;
 			}
@@ -374,6 +375,7 @@ void LGObject::create_undo_point()
 	m_selectionChangedSinceLastUndoPoint = false;
 	const char* filename = m_undoHistory.create_history_entry();
 	SaveLGObjectToFile(this, filename);
+	// UG_LOG("WARNING: NO UNDO POINT CREATED! THIS IS A DEBUG VERSION OF PROMESH!\n");
 }
 
 bool LGObject::undo()

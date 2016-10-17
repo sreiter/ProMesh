@@ -54,6 +54,7 @@ class QToolButton;
 class QHelpBrowser;
 class ToolManager;
 class ToolBrowser;
+class PropertyWidget;
 
 ////////////////////////////////////////////////////////////////////////
 ///	the main window.
@@ -121,6 +122,9 @@ class MainWindow : public QMainWindow
 		void newScript();
 		void editScript();
 		void quit();
+		void saveOptions();
+		void loadOptions();
+		void refreshOptions();
 
 	protected slots:
 		void frontDrawModeChanged(int newMode);
@@ -139,6 +143,7 @@ class MainWindow : public QMainWindow
 		void sceneInspectorClicked(QMouseEvent* event);
 		void refreshToolDialogsClicked();
 		void browseUserScripts();
+		void optionsChanged();
 
 	protected:
 		void closeEvent(QCloseEvent *event);
@@ -197,6 +202,7 @@ class MainWindow : public QMainWindow
 		ToolBrowser*				m_toolBrowser;
 		QDockWidget*				m_toolBrowserDock;
 		QDialog*					m_dlgAbout;
+		PropertyWidget*				m_optWidget;
 		
 		#ifdef PROMESH_USE_WEBKIT
 			QHelpBrowser*			m_helpBrowser;

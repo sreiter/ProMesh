@@ -11,8 +11,13 @@ Recent changes:
 -------------------------------------------------------------------------------
 v 4.3.1
 Changes and additions:
+- Added options-panel
+- Added 'draw path' options
+- Draw Path: by holding CTRL one can now create paths through left-clicks
 - Renamed Remeshing-Extrude-Extrude to Remeshing-Extrude-ExtrudeAndMove
 - Added Remeshing-Extrude-ExtrudeAndScale
+- Added Selection-SelectBySplitPlane
+- Added Selection-Edges-EdgesByDirection
 
 Fixes:
 
