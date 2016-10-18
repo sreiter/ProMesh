@@ -61,7 +61,7 @@ elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "XL")
     # currently no flags for IBM xl compiler
     # however, the -Wall option is not supported
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-	add_definitions("/EHsc")
+	# add_definitions(/E/c)
 	# The following flag is necessary for gigantic .obj files
     # which cause problems on Windows
 	add_cxx_flag("/bigobj")
@@ -140,6 +140,7 @@ endif(USE_WEBKIT)
 # set(Boost_USE_STATIC_LIBS   ON)
 # FIND_PACKAGE( Boost 1.48 COMPONENTS serialization REQUIRED )
 # INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
+add_definitions( -DBOOST_ALL_NO_LIB )
 include_directories(SYSTEM ${UG_ROOT_PATH}/externals/BoostForUG4)
 
 # Qt5 with OpenGL support is required.
