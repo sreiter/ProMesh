@@ -99,6 +99,8 @@ class MainWindow : public QMainWindow
 
 		void launchHelpBrowser(const QString& pageName);
 		
+		void check_options() const;
+		
 	signals:
 		void activeObjectChanged();
 		void refreshToolDialogs();

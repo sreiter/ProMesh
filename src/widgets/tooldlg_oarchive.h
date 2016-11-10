@@ -151,6 +151,11 @@ private:
 	void save(const T &t){
 	}
 
+	void save(bool val){
+		// std::cout << m_prefix << "save " << m_curName << ": " << val << std::endl;
+		tool_widget(m_curName)->addCheckBox(QString(m_curName).append(":"), val);
+	}
+
 	void save(int val){
 		// std::cout << m_prefix << "save " << m_curName << ": " << val << std::endl;
 		create_spinner<int>(-1.e9, 1.e9, val, 1, 0);
@@ -197,7 +202,7 @@ private:
 			layout->addWidget(extWidget);
 			layout->setAlignment(extWidget, Qt::AlignLeft);
 			extWidget->setText(QString(name));
-			extWidget->setChecked(true);
+			extWidget->setChecked(false);
 			parent = extWidget;
 			layout = NULL;
 		}

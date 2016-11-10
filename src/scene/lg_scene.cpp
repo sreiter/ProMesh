@@ -87,7 +87,7 @@ void LGScene::set_camera_parameters(float fromX, float fromY, float fromZ,
 }
 
 void LGScene::set_perspective(float fovy, int viewWidth, int viewHeight,
-								float zNear, float zFar)
+							  float zNear, float zFar)
 {
 	m_viewWidth = viewWidth;
 	m_viewHeight = viewHeight;
@@ -101,6 +101,23 @@ void LGScene::set_perspective(float fovy, int viewWidth, int viewHeight,
 	gluPerspective(m_fovy, m_aspectRatio, m_zNear, m_zFar);
 	glMatrixMode(GL_MODELVIEW);
 }
+
+void LGScene::set_ortho_perspective(float left, float right, float bottom,
+									float top, float zNear, float zFar)
+{
+	m_viewWidth = right-left;
+	m_viewHeight = top-bottom;
+	m_zNear = zNear;
+	m_zFar = zFar;
+	m_fovy = 1;
+	m_aspectRatio = float(m_viewWidth) / m_viewHeight;
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(left, right, bottom, top, zNear, zFar);
+	glMatrixMode(GL_MODELVIEW);
+}
+
 
 int LGScene::add_object(LGObject* obj, bool autoDelete)
 {

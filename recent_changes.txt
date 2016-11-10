@@ -13,6 +13,7 @@ v 4.3.1
 Changes and additions:
 - Added options-panel
 - Added 'draw path' options
+- Added 'undo' options
 - Draw Path: by holding CTRL one can now create paths through left-clicks
 - Renamed Remeshing-Extrude-Extrude to Remeshing-Extrude-ExtrudeAndMove
 - Added Remeshing-Extrude-ExtrudeAndScale

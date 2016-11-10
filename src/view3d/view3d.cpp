@@ -33,7 +33,9 @@
 
 using namespace std;
 
-View3D::View3D(QWidget *parent) : QGLWidget(parent)
+View3D::View3D(QWidget *parent) :
+	QGLWidget(parent),
+	m_orthoPerspective(false)
 {
 	m_viewWidth = 100;
 	m_viewHeight = 100;
@@ -135,8 +137,21 @@ void View3D::paintGL()
 	//	set render-attributes
 		//m_pRenderer->set_draw_mode(m_drawMode);
 		m_pRenderer->set_transform((float*)&mat);
-		m_pRenderer->set_perspective(m_fovy, m_viewWidth, m_viewHeight,
-									 m_zNear, m_zFar);
+		
+		if(!m_orthoPerspective){
+			m_pRenderer->set_perspective(m_fovy, m_viewWidth, m_viewHeight,
+										 m_zNear, m_zFar);
+		}
+		else{
+		//todo: This is only a very rough implentation and is in no way ready for broad use
+			float zoom = VecDistance(*vFrom, *vTo);
+			float aspectInv = float(m_viewWidth) / float(m_viewHeight);
+			float fromDist = VecLength(*vFrom);
+			UG_LOG("zoom: " << zoom << endl);
+			m_pRenderer->set_ortho_perspective(-zoom*aspectInv, zoom*aspectInv,
+											   -zoom, zoom, -100, 100);
+		}
+
 	//	draw the scene
 		m_pRenderer->draw();
 

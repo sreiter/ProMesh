@@ -78,6 +78,39 @@ QMainWindow > QToolBar {
 	border-bottom: 2px solid @dark;
 }
 
+QMainWindow > QToolBar::handle {
+	background-color: @dark;
+	width: 4px;
+}
+
+/*QTabBar::tab:first {
+	margin-top: 32px;
+}*/
+
+QTabBar::tab {
+	border: 1px solid @veryDark;
+	background-color: @dark;
+	color: @text;
+	padding-left: 1px;
+	padding-right: 1px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+QTabBar::tab::selected {
+	border: 1px solid @veryDark;
+	background-color: @light;
+	color: @text;
+	padding-left: 1px;
+	padding-right: 1px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+QTabBar::tab:!selected {
+    margin-left: 2px; /* make non-selected tabs look smaller */
+}
+
 QMenuBar {
 	/*border-bottom: 2px solid @dark;*/
 }

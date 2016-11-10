@@ -23,19 +23,18 @@
  * GNU Lesser General Public License for more details.
  */
 
-#ifndef __H__PROMESH_options
-#define __H__PROMESH_options
+#ifndef __H__PROMESH_undo_options
+#define __H__PROMESH_undo_options
 
-#include "draw_path_options.h"
-#include "undo_options.h"
-#include "common/boost_serialization.h"
+namespace opts {
 
+struct Undo {
+	bool enabled;
+	bool geometryChangesOnly;
 
-namespace opts{
-
-struct Options{
-	DrawPath	drawPath;
-	Undo		undo;
+	Undo() :
+		enabled(true)
+		{}
 
 private:
 	friend class boost::serialization::access;
@@ -44,19 +43,12 @@ private:
 	void serialize( Archive& ar, const unsigned int version)
 	{
 		using namespace ug;
-		ar & make_nvp("draw_path", drawPath);
-		ar & make_nvp("undo", undo);
+		ar & make_nvp("enabled", enabled);
 	}
 };
 
-}
+}// end of namespace opts
 
-BOOST_CLASS_VERSION(opts::Options, 0);
+BOOST_CLASS_VERSION(opts::Undo, 0);
 
-inline opts::Options& GetOptions ()
-{
-	static opts::Options o;
-	return o;
-}
-
-#endif	//__H__UG_options
+#endif	//__H__UG_undo_options

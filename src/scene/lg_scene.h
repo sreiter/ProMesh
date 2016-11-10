@@ -152,6 +152,9 @@ class LGScene : public TScene<LGObject>
 		virtual void set_perspective(float fovy, int viewWidth, int viewHeight,
 									float zNear, float zFar);
 
+		virtual void set_ortho_perspective(float left, float right, float bottom,
+											float top, float zNear, float zFar);
+
 	///	returns the distance of the near and far clipping plane.
 		virtual void get_clip_distance_estimate(float& nearOut, float& farOut,
 												float fromX, float fromY, float fromZ,

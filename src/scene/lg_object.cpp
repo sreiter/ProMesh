@@ -28,6 +28,7 @@
 #include <cstring>
 #include <string>
 #include "lg_object.h"
+#include "../options/options.h"
 #include "lib_grid/file_io/file_io.h"
 #include "lib_grid/file_io/file_io_art.h"
 #include "lib_grid/file_io/file_io_dump.h"
@@ -372,14 +373,22 @@ bool LGObject::load_ugx(const char* filename)
 
 void LGObject::create_undo_point()
 {
-	m_selectionChangedSinceLastUndoPoint = false;
-	const char* filename = m_undoHistory.create_history_entry();
-	SaveLGObjectToFile(this, filename);
+	if(GetOptions().undo.enabled){
+		m_selectionChangedSinceLastUndoPoint = false;
+		const char* filename = m_undoHistory.create_history_entry();
+		SaveLGObjectToFile(this, filename);
+	}
 	// UG_LOG("WARNING: NO UNDO POINT CREATED! THIS IS A DEBUG VERSION OF PROMESH!\n");
 }
 
 bool LGObject::undo()
 {
+	if(!GetOptions().undo.enabled){
+		UG_LOG("UNDO DISABLED!\n"
+			"If you want to activate them please do so in the Options panel (Options-undo)\n");
+		return true;
+	}
+
 	if(m_selectionChangedSinceLastUndoPoint)
 		create_undo_point();
 

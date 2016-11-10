@@ -114,6 +114,7 @@ class View3D : public QGLWidget
 		float	m_zFar;
 		int		m_viewWidth;
 		int		m_viewHeight;
+		bool m_orthoPerspective;
 
 	//	camera interpolation
 		cam::SCameraState	m_csOld;
@@ -125,7 +126,7 @@ class View3D : public QGLWidget
 		QColor				m_bgColor;
 		QTimer*				m_pTimer;
 		QTime				m_time;
-
+		
 	//	selection rect
 		bool m_bDrawSelRect;
 		cam::vector2 m_selRectMin;

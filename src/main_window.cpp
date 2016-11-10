@@ -406,6 +406,16 @@ void MainWindow::init()
 	}
 
 	show();
+	check_options();
+}
+
+void MainWindow::check_options() const
+{
+	const opts::Options& o = GetOptions();
+
+	if(!o.undo.enabled) {
+		UG_LOG("OPTIONS WARNING: Undo is disabled!\n");
+	}
 }
 
 MainWindow::~MainWindow()

@@ -193,6 +193,15 @@ private:
 		// std::cout << m_prefix << "load unknown\n";
 	}
 
+	void load (bool& val){
+		bool ok = false;
+		val = tool_widget()->to_bool(top_layer().tool_index(), &ok);
+		UG_COND_THROW(!ok, "conversion to bool failed. "
+					  "Input widget sequence does not match input class");
+		top_layer().next_tool();
+		// std::cout << m_prefix << "load " << m_curName << ": " << val << std::endl;
+	}
+
 	void load (int& val){
 		bool ok = false;
 		val = tool_widget()->to_int(top_layer().tool_index(), &ok);
