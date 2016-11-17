@@ -41,6 +41,7 @@
 #include <boost/serialization/serialization.hpp>
 #include <boost/archive/detail/common_iarchive.hpp>
 #include <boost/archive/detail/register_archive.hpp>
+#include "common/boost_serialization.h"
 
 #include <QFrame>
 #include <QVBoxLayout>
@@ -287,5 +288,12 @@ private:
 };
 
 BOOST_SERIALIZATION_REGISTER_ARCHIVE(tooldlg_iarchive);
+
+namespace ug{
+template <>
+struct ArchiveInfo <tooldlg_iarchive> {
+	static const ArchiveType TYPE = AT_GUI;
+};
+}//	end of namespace ug
 
 #endif	//__H__UG_tooldlg_iarchive

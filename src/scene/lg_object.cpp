@@ -373,8 +373,8 @@ bool LGObject::load_ugx(const char* filename)
 
 void LGObject::create_undo_point()
 {
+	m_selectionChangedSinceLastUndoPoint = false;
 	if(GetOptions().undo.enabled){
-		m_selectionChangedSinceLastUndoPoint = false;
 		const char* filename = m_undoHistory.create_history_entry();
 		SaveLGObjectToFile(this, filename);
 	}
@@ -389,11 +389,11 @@ bool LGObject::undo()
 		return true;
 	}
 
-	if(m_selectionChangedSinceLastUndoPoint)
-		create_undo_point();
-
 	if(!m_undoHistory.can_undo())
 		return false;
+
+	if(m_selectionChangedSinceLastUndoPoint)
+		create_undo_point();
 
 	const char* filename = m_undoHistory.undo();
 

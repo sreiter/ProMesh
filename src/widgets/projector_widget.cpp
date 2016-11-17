@@ -63,6 +63,7 @@ ProjectorWidget (QWidget* parent, LGScene* scene) :
 	hbox->addWidget(m_typeBox);
 	hbox->addStretch(2);
 
+	m_typeBox->addItem(QString("none"));
 	for(size_t iproj = 0; iproj < projFactory.num_classes(); ++iproj){
 		m_typeBox->addItem(QString(projFactory.class_name(iproj).c_str()));
 	}
@@ -122,12 +123,17 @@ setActiveSubset(ISceneObject* obj, int subsetIndex)
 		ug::SPRefinementProjector proj =
 				m_activeObject->projection_handler().projector(subsetIndex);
 
-		QString itemText = QString(projFactory.class_name(*proj).c_str());
-		int newIndex = m_typeBox->findText(itemText);
-		if(newIndex != m_typeBox->currentIndex())
-			m_typeBox->setCurrentIndex(newIndex);
-		else
-			update_content(proj.get());
+		if(proj.valid()){
+			QString itemText = QString(projFactory.class_name(*proj).c_str());
+			int newIndex = m_typeBox->findText(itemText);
+			if(newIndex != m_typeBox->currentIndex())
+				m_typeBox->setCurrentIndex(newIndex);
+			else
+				update_content(proj.get());
+		}
+		else if(m_typeBox->currentIndex() != 0){
+			m_typeBox->setCurrentIndex(0);
+		}
 	}
 	else{
 		setEnabled(false);
@@ -144,23 +150,38 @@ projectorTypeChanged(const QString &text)
 		return;
 
 	std::string projName = text.toStdString();
-//	if the current projector for the active subset has a different name, create a new one
-	ug::SPRefinementProjector curProj =
-			m_activeObject->projection_handler().projector(m_activeSubsetIndex);
-	if(projFactory.class_name(*curProj) != projName){
-		ug::SPRefinementProjector proj = projFactory.create(projName);
-		proj->set_geometry(m_activeObject->geometry());
-		m_activeObject->projection_handler().set_projector(m_activeSubsetIndex, proj);
-		// UG_LOG("created projector: " << typeid(*proj).name() << std::endl);
-		update_content(proj.get());
+	if(projName.compare("none") == 0){
+		m_activeObject->projection_handler()
+			.set_projector(m_activeSubsetIndex, ug::SPRefinementProjector());
+		update_content(NULL);
 	}
-	else
-		update_content(curProj.get());
+	else{
+	//	if the current projector for the active subset has a different name, create a new one
+		ug::SPRefinementProjector curProj =
+				m_activeObject->projection_handler().projector(m_activeSubsetIndex);
+		if(curProj.invalid() || projFactory.class_name(*curProj) != projName){
+			ug::SPRefinementProjector proj = projFactory.create(projName);
+			proj->set_geometry(m_activeObject->geometry());
+			m_activeObject->projection_handler().set_projector(m_activeSubsetIndex, proj);
+			// UG_LOG("created projector: " << typeid(*proj).name() << std::endl);
+			update_content(proj.get());
+		}
+		else
+			update_content(curProj.get());
+	}
 }
 
 void ProjectorWidget::
 update_content(ug::RefinementProjector* proj)
 {
+	if(!proj){
+		if(m_curContent){
+			delete m_curContent;
+			m_curContent = NULL;
+		}
+		return;
+	}
+
 	static ug::Archivar <tooldlg_oarchive,
 						 ug::RefinementProjector,
 						 ug::ProjectorTypes>
