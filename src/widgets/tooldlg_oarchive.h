@@ -61,11 +61,14 @@ public:
 	tooldlg_oarchive(QWidget* parent) :
 		m_parent(parent),
 		m_layout(NULL),
-		m_curName("")
+		m_curName(""),
+		m_expandProperties(false)
 	{
 		push_widget_layer();
 	}
 
+	void set_expand_properties(bool expand)	{m_expandProperties = expand;}
+	
 	QWidget* widget()
 	{
 		if(m_widgetLayers.empty())
@@ -203,7 +206,7 @@ private:
 			layout->addWidget(extWidget);
 			layout->setAlignment(extWidget, Qt::AlignLeft);
 			extWidget->setText(QString(name));
-			extWidget->setChecked(false);
+			extWidget->setChecked(m_expandProperties);
 			parent = extWidget;
 			layout = NULL;
 		}
@@ -261,6 +264,7 @@ private:
 	QLayout*		m_layout;
 	const char*		m_curName;	///< can be NULL due to intermediate objects
 	std::string		m_prefix;
+	bool			m_expandProperties;
 };
 
 BOOST_SERIALIZATION_REGISTER_ARCHIVE(tooldlg_oarchive);

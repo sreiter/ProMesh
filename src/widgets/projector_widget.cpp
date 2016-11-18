@@ -188,7 +188,8 @@ update_content(ug::RefinementProjector* proj)
 				archivar;
 
 	tooldlg_oarchive oa(this);
-
+	oa.set_expand_properties(true);
+	
 	archivar.archive(oa, *proj, "properties");
 
 	QWidget* newContent = oa.widget();
