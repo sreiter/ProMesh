@@ -9,6 +9,18 @@ Recent changes:
 
 
 -------------------------------------------------------------------------------
+v 4.3.2
+Changes and additions:
+- Internal adjustments to better support attachment serialization and
+  deserialization.
+- A RasterLayersProjector can now be generated along with a layered geometry and
+  used during refinement. It will also be exported to .ugx files.
+
+Fixes:
+
+
+
+-------------------------------------------------------------------------------
 v 4.3.1
 Changes and additions:
 - Added options-panel
