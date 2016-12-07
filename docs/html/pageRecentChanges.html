@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ProMesh User Manual
-   &#160;<span id="projectnumber">v4.3.1</span>
+   &#160;<span id="projectnumber">v4.3.2</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -104,10 +104,30 @@ $(document).ready(function(){initNavTree('pageRecentChanges.html','');});
 
 
 -------------------------------------------------------------------------------
+v 4.3.2
+Changes and additions:
+- Internal adjustments to better support attachment serialization and
+  deserialization.
+- A RasterLayersProjector can now be generated along with a layered geometry and
+  used during refinement. It will also be exported to .ugx files.
+- Draw Path: Instead of using CTRL one now places vertices by pressing the key 'V'
+- Camera: Camera may now be moved by holding CTRL again.
+
+Fixes:
+
+
+
+-------------------------------------------------------------------------------
 v 4.3.1
 Changes and additions:
+- Added options-panel
+- Added 'draw path' options
+- Added 'undo' options
+- Draw Path: by holding CTRL one can now create paths through left-clicks
 - Renamed Remeshing-Extrude-Extrude to Remeshing-Extrude-ExtrudeAndMove
 - Added Remeshing-Extrude-ExtrudeAndScale
+- Added Selection-SelectBySplitPlane
+- Added Selection-Edges-EdgesByDirection
 
 Fixes:
 
@@ -1103,7 +1123,7 @@ Fixes:
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">(c) Sebastian Reiter. Generated on Thu Jun 9 2016 15:27:28 for ProMesh User Manual by
+    <li class="footer">(c) Sebastian Reiter. Generated on Wed Dec 7 2016 13:21:30 for ProMesh User Manual by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.11 </li>
   </ul>

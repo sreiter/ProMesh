@@ -20,5 +20,6 @@ var searchData=
   ['extrudeandscale',['ExtrudeAndScale',['../group__promesh__Remeshing__Extrusion.html#ga06eed732c655552ab77614841122aa84',1,'script_reference.cpp']]],
   ['extrudecylinders',['ExtrudeCylinders',['../group__promesh__Remeshing__Extrusion.html#ga30f1901f48eeee80556248951f4a2081',1,'script_reference.cpp']]],
   ['extrudefaceswithtets',['ExtrudeFacesWithTets',['../group__promesh__Remeshing__Tetrahedra.html#ga040131e4e0f5b2bf8c15045c842c781b',1,'script_reference.cpp']]],
-  ['extrudelayers',['ExtrudeLayers',['../group__promesh__Raster__Layers.html#gace52f38f64173084fd79c5b3615f688c',1,'script_reference.cpp']]]
+  ['extrudelayers',['ExtrudeLayers',['../group__promesh__Raster__Layers.html#gace52f38f64173084fd79c5b3615f688c',1,'script_reference.cpp']]],
+  ['extrudelayersandaddprojector',['ExtrudeLayersAndAddProjector',['../group__promesh__Raster__Layers.html#ga5a0d410386c7585fda0e49194336a285',1,'script_reference.cpp']]]
 ];

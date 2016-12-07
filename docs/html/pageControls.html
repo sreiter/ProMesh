@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ProMesh User Manual
-   &#160;<span id="projectnumber">v4.3.1</span>
+   &#160;<span id="projectnumber">v4.3.2</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -172,6 +172,19 @@ Important Shortcuts</h2>
 </ul>
 <p><br />
  </p><hr/>
+ <h1><a class="anchor" id="secGeometryCreation"></a>
+Geometry Creation Controls</h1>
+<h2><a class="anchor" id="subsecDrawPath"></a>
+Draw Path</h2>
+<ul>
+<li><p class="startli"><b>'v':</b> New vertices and edges can be created by pointing somewhere with the mouse and then pressing <b>'v'</b>. If the mouse points onto a piece of existing geometry, the new vertex will be placed on the geometry. If the mouse points into empty space, the new vertex will be placed in the plane through the camera focus point, parallel to the camera-plane.</p>
+<p class="startli">Edges will be created between all selected vertices and the newly placed vertex. Afterwards the newly created vertex is selected. This allows to draw a path by repeatedly pressing 'v'.</p>
+<p class="startli">To avoid the creation of edges make sure to deselect any vertices before pressing 'v' (e.g. by pressing 'a')</p>
+<p class="startli">If a new vertex is placed close to an existing vertex, then the new vertex is <em>snapped</em> to the existing one and the two vertices are merged. The <em>snap distance</em> can be adjusted in the options menu under <em>Options-DrawPath</em>.</p>
+</li>
+</ul>
+<p><br />
+ </p><hr/>
  <h1><a class="anchor" id="secGeometryTransform"></a>
 Geometry Transformation Controls</h1>
 <p>The currently selected elements can be moved or scaled through mouse-input. All transformations are triggered through a keyboard shortcut. After pressing such a key, moving the mouse will transform the geometry. Pressing the <em>Left-Mouse-Button</em> will finish the transformation. By pressing the <em>Right-Mouse-Button</em> (or <em>'ESC'</em>) instead, one cancels the transformation, thus moving everything back at where it was when the transform key was pressed.</p>
@@ -188,7 +201,7 @@ Move Geometry</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">(c) Sebastian Reiter. Generated on Thu Jun 9 2016 15:27:28 for ProMesh User Manual by
+    <li class="footer">(c) Sebastian Reiter. Generated on Wed Dec 7 2016 13:21:30 for ProMesh User Manual by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.11 </li>
   </ul>

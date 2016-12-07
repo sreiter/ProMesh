@@ -117,6 +117,7 @@ class MainWindow : public QMainWindow
 		void showHelp();
 		void showScriptReference();
 		void showRecentChanges();
+		void showControls();
 		void showShortcuts();
 		void showLicense();
 		void showAbout();
@@ -169,6 +170,10 @@ class MainWindow : public QMainWindow
 		void beginMouseMoveAction(MouseMoveAction mma);
 		void updateMouseMoveAction();
 		void endMouseMoveAction(bool bApply);
+
+	///	casts a ray to the camera-focus plane and places the vertex there
+	/**	The method can be fine-tuned through options.drawPath.*/
+		void insertVertexAtScreenCoord(number x, number y);
 
 	protected:
 	//	3d view
@@ -231,6 +236,7 @@ class MainWindow : public QMainWindow
 
 		QAction*	m_actHelp;
 		QAction*	m_actRecentChanges;
+		QAction*	m_actControls;
 		QAction*	m_actShortcuts;
 		QAction*	m_actLicense;
 		QAction*	m_actJumpToScriptReference;

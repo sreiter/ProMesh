@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ProMesh User Manual
-   &#160;<span id="projectnumber">v4.3.1</span>
+   &#160;<span id="projectnumber">v4.3.2</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -147,6 +147,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga07fb278b1c485844401a6e936d06e4f1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection.html#ga07fb278b1c485844401a6e936d06e4f1">CloseSelection</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
 <tr class="memdesc:ga07fb278b1c485844401a6e936d06e4f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects all associated elements of lower dimensions.  <a href="#ga07fb278b1c485844401a6e936d06e4f1">More...</a><br /></td></tr>
 <tr class="separator:ga07fb278b1c485844401a6e936d06e4f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga311fcd62aedd89a1302c84b16e2904f3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection.html#ga311fcd62aedd89a1302c84b16e2904f3">SelectElementsBySplitPlane</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classbool">bool</a> select_vrts, <a class="el" href="group__nativeTypes.html#classbool">bool</a> select_edges, <a class="el" href="group__nativeTypes.html#classbool">bool</a> select_faces, <a class="el" href="group__nativeTypes.html#classbool">bool</a> select_volumes, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *pivot, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *normal)</td></tr>
+<tr class="memdesc:ga311fcd62aedd89a1302c84b16e2904f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects elements whose center lies in front of the specified plane.  <a href="#ga311fcd62aedd89a1302c84b16e2904f3">More...</a><br /></td></tr>
+<tr class="separator:ga311fcd62aedd89a1302c84b16e2904f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Tools to perform and to manipulate the current selection. </p>
@@ -276,6 +279,64 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Selects all vertices, edges ,faces and volumes of the current grid. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga311fcd62aedd89a1302c84b16e2904f3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SelectElementsBySplitPlane </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>mesh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
+          <td class="paramname"><em>select_vrts</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
+          <td class="paramname"><em>select_edges</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
+          <td class="paramname"><em>select_faces</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
+          <td class="paramname"><em>select_volumes</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
+          <td class="paramname"><em>pivot</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
+          <td class="paramname"><em>normal</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Selects elements whose center lies in front of the specified plane. </p>
 
 </div>
 </div>
@@ -447,7 +508,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">(c) Sebastian Reiter. Generated on Thu Jun 9 2016 15:27:28 for ProMesh User Manual by
+    <li class="footer">(c) Sebastian Reiter. Generated on Wed Dec 7 2016 13:21:30 for ProMesh User Manual by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.11 </li>
   </ul>

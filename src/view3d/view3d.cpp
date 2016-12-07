@@ -49,6 +49,8 @@ View3D::View3D(QWidget *parent) :
 	m_pRenderer = NULL;
 	setFormat(QGLFormat(QGL::DoubleBuffer | QGL::DepthBuffer));
 
+	glViewport(0, 0, m_viewWidth, m_viewHeight);
+
 	this->setFocusPolicy(Qt::StrongFocus);
 
 	m_camInterpDur = 500.f;
@@ -67,6 +69,9 @@ View3D::~View3D()
 void View3D::set_renderer(IRenderer3D* renderer)
 {
 	m_pRenderer = renderer;
+	if(m_pRenderer)
+		m_pRenderer->set_perspective(m_fovy, m_viewWidth, m_viewHeight,
+									 m_zNear, m_zFar);
 	updateGL();
 }
 
@@ -88,6 +93,9 @@ void View3D::set_projection(float fovy, float zNear, float zFar)
 	m_fovy = fovy;
 	m_zNear = zNear;
 	m_zFar = zFar;
+	if(m_pRenderer)
+		m_pRenderer->set_perspective(m_fovy, m_viewWidth, m_viewHeight,
+									 m_zNear, m_zFar);
 	updateGL();
 }
 
@@ -107,6 +115,9 @@ void View3D::resizeGL(int width, int height)
 	//gluPerspective(m_fovy, m_aspectRatio, m_zNear, m_zFar);
 	m_camera.set_window(width, height);
 	//glMatrixMode(GL_MODELVIEW);
+	if(m_pRenderer)
+		m_pRenderer->set_perspective(m_fovy, m_viewWidth, m_viewHeight,
+									 m_zNear, m_zFar);
 }
 
 void View3D::paintGL()
@@ -146,7 +157,7 @@ void View3D::paintGL()
 		//todo: This is only a very rough implentation and is in no way ready for broad use
 			float zoom = VecDistance(*vFrom, *vTo);
 			float aspectInv = float(m_viewWidth) / float(m_viewHeight);
-			float fromDist = VecLength(*vFrom);
+			// float fromDist = VecLength(*vFrom);
 			UG_LOG("zoom: " << zoom << endl);
 			m_pRenderer->set_ortho_perspective(-zoom*aspectInv, zoom*aspectInv,
 											   -zoom, zoom, -100, 100);
@@ -264,12 +275,10 @@ unsigned int View3D::get_camera_drag_flags()
 	const bool ctrlPressed = bool(keys & Qt::ControlModifier);
 	unsigned int dragFlags = cam::CDF_NONE;
 	
-	if(shiftPressed){
-		if(ctrlPressed)
-			dragFlags = cam::CDF_MOVE;
-		else
-			dragFlags = cam::CDF_ZOOM;
-	}
+	if(shiftPressed)
+		dragFlags |= cam::CDF_ZOOM;
+	if(ctrlPressed)
+		dragFlags |= cam::CDF_MOVE;
 
 	return dragFlags;
 }
@@ -340,14 +349,26 @@ get_ray_to_geometry(cam::vector3& vFromOut,
 	GLdouble projMat[16];
 	GLint viewport[4];
 
-	for(int i = 0; i < 4; ++i)
-	{
-			for(int j = 0; j < 4; ++j)
-					modelMat[4*i + j] = tMat[i][j];
+	for(int i = 0; i < 4; ++i){
+		// UG_LOG("dbg - trans: ");
+		for(int j = 0; j < 4; ++j){
+			// UG_LOG(tMat[i][j] << ", ");
+			modelMat[4*i + j] = tMat[i][j];
+		}
+		// UG_LOG(std::endl);
 	}
 
 	glGetDoublev(GL_PROJECTION_MATRIX, projMat);
 	glGetIntegerv(GL_VIEWPORT, viewport);
+
+
+	// for(int i = 0; i < 4; ++i){
+	// 	UG_LOG("dbg - proj: ");
+	// 	for(int j = 0; j < 4; ++j){
+	// 		UG_LOG(projMat[4*i + j] << ", ");
+	// 	}
+	// 	UG_LOG(std::endl);
+	// }
 
 	GLdouble vx, vy, vz;
 	gluUnProject(screenX, winSize.height() - screenY, 0,
@@ -434,12 +455,8 @@ void View3D::mousePressEvent(QMouseEvent *event)
 //	if alt is pressed, we'll refocus the clicked geometry.
 //	if not, we'll start dragging.
 	if(event->button() == Qt::LeftButton){
-		const bool shiftPressed = bool(QApplication::keyboardModifiers() & Qt::ShiftModifier);
-		const bool ctrlPressed = bool(QApplication::keyboardModifiers() & Qt::ControlModifier);
-
-		if((!ctrlPressed) || (shiftPressed && ctrlPressed))
-			m_camera.begin_drag(event->x(), event->y(),
-								get_camera_drag_flags());
+		m_camera.begin_drag(event->x(), event->y(),
+							get_camera_drag_flags());
 	}
 	else if(event->button() == Qt::MidButton){
 		m_camera.begin_drag(event->x(), event->y(), cam::CDF_MOVE);

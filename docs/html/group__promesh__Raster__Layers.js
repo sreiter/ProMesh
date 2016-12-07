@@ -3,6 +3,7 @@ var group__promesh__Raster__Layers =
     [ "RasterLayers", "group__promesh__Raster__Layers.html#classRasterLayers", [
       [ "RasterLayers", "group__promesh__Raster__Layers.html#a5abef069e63ed52c4725da57240311e5", null ],
       [ "blur_layers", "group__promesh__Raster__Layers.html#a22346065068bcdfa92e0f8767a523130", null ],
+      [ "construct_relative_to_global_height_table", "group__promesh__Raster__Layers.html#a7e731325be00f9fb796ee5caad63b7cc", null ],
       [ "eliminate_invalid_cells", "group__promesh__Raster__Layers.html#ac08c45ff87061169e77fa1f4a9b4b0b1", null ],
       [ "invalidate_flat_cells", "group__promesh__Raster__Layers.html#af8249460f68ed97f40943fe0b9ee25a0", null ],
       [ "invalidate_small_lenses", "group__promesh__Raster__Layers.html#a80a6059c4562b3bae69a16b2b26d92cf", null ],
@@ -17,6 +18,7 @@ var group__promesh__Raster__Layers =
       [ "min_height", "group__promesh__Raster__Layers.html#a39391aac01f67667c6b4e4e1821bcff2", null ]
     ] ],
     [ "ExtrudeLayers", "group__promesh__Raster__Layers.html#gace52f38f64173084fd79c5b3615f688c", null ],
+    [ "ExtrudeLayersAndAddProjector", "group__promesh__Raster__Layers.html#ga5a0d410386c7585fda0e49194336a285", null ],
     [ "MeshLayerBoundaries", "group__promesh__Raster__Layers.html#gadec45fe7d6a84a31e81d170e77536e92", null ],
     [ "MeshLayers", "group__promesh__Raster__Layers.html#ga4eb2046a240360a310b532862197e90c", null ]
 ];

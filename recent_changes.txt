@@ -15,6 +15,8 @@ Changes and additions:
   deserialization.
 - A RasterLayersProjector can now be generated along with a layered geometry and
   used during refinement. It will also be exported to .ugx files.
+- Draw Path: Instead of using CTRL one now places vertices by pressing the key 'V'
+- Camera: Camera may now be moved by holding CTRL again.
 
 Fixes:
 

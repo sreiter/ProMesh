@@ -4,6 +4,10 @@ SELECTION:
 - a:          Select All / Deselect All
 - c:          Close Selection (selects all associated elements of lower dimension)
 
+GRID GENERATION:
+- v:		  Create a vertex at the cursor position and connect it to
+			  selected vertices by edges.
+
 SUBSETS:
 - Alt + s:    Assign Subset
 
@@ -12,7 +16,7 @@ MARKS:
 
 REFINEMENT:
 - Alt + r:    Refine
-	
+
 TOPOLOGY:
 - Delete:     Erase Selected Elements
 - Alt + m:    Merge

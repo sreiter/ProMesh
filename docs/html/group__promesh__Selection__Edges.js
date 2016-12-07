@@ -9,6 +9,7 @@ var group__promesh__Selection__Edges =
     [ "SelectEdgeByCoordinate", "group__promesh__Selection__Edges.html#ga28863aa083cd44b0e6a539a4242b04f6", null ],
     [ "SelectEdgeByCylindricalCoordinate", "group__promesh__Selection__Edges.html#gac39b47ffabddca724c66a3369d15b763", null ],
     [ "SelectEdgeByIndex", "group__promesh__Selection__Edges.html#ga9ca9a07ca363d3d9a3737109d2784878", null ],
+    [ "SelectEdgesByDirection", "group__promesh__Selection__Edges.html#ga4a37923a2487dc54633ebf3c1a461485", null ],
     [ "SelectEdgesInBox", "group__promesh__Selection__Edges.html#ga94a0c6019477a029c32a4435eb71a78c", null ],
     [ "SelectEdgesInCylinder", "group__promesh__Selection__Edges.html#ga6b888026b5258813227c9c4eb2692791", null ],
     [ "SelectInnerEdges", "group__promesh__Selection__Edges.html#ga6971ee68293a198a7cc9a69ffcee920f", null ],

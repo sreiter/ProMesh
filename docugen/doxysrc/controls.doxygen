@@ -68,6 +68,29 @@ The following keyboard shortcuts are often useful when performing selections:
 
 <br>
 <hr>
+\section secGeometryCreation	Geometry Creation Controls
+
+\subsection subsecDrawPath Draw Path
+	- <b>'v':</b>	New vertices and edges can be created by pointing somewhere with the mouse and
+				then pressing <b>'v'</b>. If the mouse points onto a piece of existing geometry,
+				the new vertex will be placed on the geometry. If the mouse points into empty
+				space, the new vertex will be placed in the plane through the camera focus point,
+				parallel to the camera-plane.
+
+				Edges will be created between all selected vertices and the
+				newly placed vertex. Afterwards the newly created vertex is
+				selected. This allows to draw a path by repeatedly pressing 'v'.
+
+				To avoid the creation of edges make sure to deselect any vertices
+				before pressing 'v' (e.g. by pressing 'a')
+
+				If a new vertex is placed close to an existing vertex, then the
+				new vertex is <em>snapped</em> to the existing one and the two
+				vertices are merged. The <em>snap distance</em> can be adjusted
+				in the options menu under <em>Options-DrawPath</em>.
+
+<br>
+<hr>
 \section secGeometryTransform	Geometry Transformation Controls
 The currently selected elements can be moved or scaled through mouse-input. All
 transformations are triggered through a keyboard shortcut. After pressing such

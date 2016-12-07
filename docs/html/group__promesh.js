@@ -118,6 +118,8 @@ var group__promesh =
       [ "pivot", "group__ugbase.html#a99b0c6726c4000c1456e041e74dad26f", null ],
       [ "position", "group__ugbase.html#a068f2c437ae426fcf561b5e837d42875", null ],
       [ "position", "group__ugbase.html#a068f2c437ae426fcf561b5e837d42875", null ],
+      [ "position_attachment", "group__ugbase.html#ab5477ff1e0d6ca787f679288da0a7273", null ],
+      [ "position_attachment", "group__ugbase.html#ab5477ff1e0d6ca787f679288da0a7273", null ],
       [ "prism_begin", "group__ugbase.html#a7f8a38f1a313a8e8c059e7409378b824", null ],
       [ "prism_begin", "group__ugbase.html#a7f8a38f1a313a8e8c059e7409378b824", null ],
       [ "prism_end", "group__ugbase.html#a5527e5e534bfc764eeb7aac8030781fa", null ],

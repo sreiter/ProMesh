@@ -262,6 +262,9 @@ void MainWindow::init()
 	m_actLicense = new QAction(tr("License"), this);
 	connect(m_actLicense, SIGNAL(triggered()), this, SLOT(showLicense()));
 
+	m_actControls = new QAction(tr("Controls"), this);
+	connect(m_actControls, SIGNAL(triggered()), this, SLOT(showControls()));
+
 	m_actShortcuts = new QAction(tr("Shortcuts"), this);
 	connect(m_actShortcuts, SIGNAL(triggered()), this, SLOT(showShortcuts()));
 
@@ -278,8 +281,9 @@ void MainWindow::init()
 	QMenu* helpmenu = menuBar()->addMenu("&Help");
 	helpmenu->addAction(m_actHelp);
 	helpmenu->addSeparator();
-	helpmenu->addAction(m_actJumpToScriptReference);
+	helpmenu->addAction(m_actControls);
 	helpmenu->addAction(m_actShortcuts);
+	helpmenu->addAction(m_actJumpToScriptReference);
 	helpmenu->addAction(m_actRecentChanges);
 	helpmenu->addAction(m_actLicense);
 	helpmenu->addAction(m_actShowAbout);
@@ -695,6 +699,7 @@ LGObject* MainWindow::create_empty_object(const char* name)
 	if(index != -1)
 		setActiveObject(index);
 
+	pObj->geometry_changed();
 	return pObj;
 }
 
@@ -991,6 +996,11 @@ void MainWindow::showHelp()
 void MainWindow::showRecentChanges()
 {
 	launchHelpBrowser("pageRecentChanges.html");
+}
+
+void MainWindow::showControls()
+{
+	launchHelpBrowser("pageControls.html");
 }
 
 void MainWindow::showShortcuts()
