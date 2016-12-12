@@ -7,6 +7,15 @@ Recent changes:
 -------------------------------------------------------------------------------
 
 
+-------------------------------------------------------------------------------
+v 4.3.3
+Changes and additions:
+- Adjusted draw-color of edges, so that they are always slightly different from
+  the draw-color of faces.
+
+Fixes:
+
+
 
 -------------------------------------------------------------------------------
 v 4.3.2

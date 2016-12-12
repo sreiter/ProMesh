@@ -445,6 +445,23 @@ void LGScene::get_clip_distance_estimate(float& nearOut, float& farOut,
 	nearOut = min(nearOut, (float)VecLength(dir) / 100.f);
 }
 
+static QColor ColorAdjust(const QColor& c)
+{
+	static const int colDif = 50;
+	if(c.redF() + c.blueF() + c.greenF() > 2.6) {
+		return QColor (	max<int>(0, c.red() - colDif),
+						max<int>(0, c.green() - colDif),
+						max<int>(0, c.blue() - colDif),
+						c.alpha());
+	}
+	else {
+		return QColor (	min<int>(255, c.red() + colDif),
+						min<int>(255, c.green() + colDif),
+						min<int>(255, c.blue() + colDif),
+						c.alpha());
+	}
+}
+
 void LGScene::draw()
 {
 	static GLfloat lightDirection[] = { 0, 0.0, 1.0, 0.0 };
@@ -573,7 +590,7 @@ void LGScene::draw()
 				glDepthMask(true);
 			}
 
-		//	draw single-pass-color
+// 		//	draw single-pass-color
 			if(drawSinglePassColor || drawDoublePassColor){
 				for(int j = 0; j < obj->num_display_lists(); ++j)
 				{
@@ -606,6 +623,8 @@ void LGScene::draw()
 					}
 				}
 			}
+
+
 //	draw single-pass-no-light
 			if(drawSinglePassNoLight){
 				QColor objCol = obj->get_color();
@@ -645,13 +664,15 @@ void LGScene::draw()
 */
 						//glEnable(GL_COLOR_MATERIAL);
 						//glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
-						QColor sCol = obj->get_subset_color(si);
-						glColor3f(objCol.redF() * sCol.redF(),
-												objCol.greenF() * sCol.greenF(),
-												objCol.blueF() * sCol.blueF());
-						GLfloat glCol[4] = {GLfloat(objCol.redF() * sCol.redF()),
-											GLfloat(objCol.greenF() * sCol.greenF()),
-											GLfloat(objCol.blueF() * sCol.blueF()),
+
+						glColor3f (	objCol.redF(),
+									objCol.greenF(),
+									objCol.blueF());
+						
+						QColor sCol = ColorAdjust(obj->get_subset_color(si));
+						GLfloat glCol[4] = {GLfloat(sCol.redF()),
+											GLfloat(sCol.greenF()),
+											GLfloat(sCol.blueF()),
 											GLfloat(1)};
 
 						glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, glCol);
