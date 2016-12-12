@@ -12,6 +12,7 @@ v 4.3.3
 Changes and additions:
 - Adjusted draw-color of edges, so that they are always slightly different from
   the draw-color of faces.
+- Fixed z-Buffer artifacts on Windows
 
 Fixes:
 

@@ -497,7 +497,7 @@ void LGScene::draw()
 
 		//	draw double-pass-shaded
 			if(drawDoublePassShaded){
-				glPolygonOffset(1.f, 1.f);
+				glPolygonOffset(1, 2);
 				int drawMode[2];
 				drawMode[0] = m_drawModeFront;
 				drawMode[1] = m_drawModeBack;
@@ -579,10 +579,12 @@ void LGScene::draw()
 									glDisable(GL_LINE_SMOOTH);
 									glLineWidth(1.f);
 								}
+								glDisable(GL_POLYGON_OFFSET_FILL);
 								glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 								glMaterialfv( GL_FRONT_AND_BACK, GL_DIFFUSE, wireColor);
 								glCallList(obj->get_display_list(j));
+								glEnable(GL_POLYGON_OFFSET_FILL);
 							}
 						}
 					}
@@ -608,7 +610,7 @@ void LGScene::draw()
 						glEnable(GL_LINE_SMOOTH);
 						glDisable(GL_LIGHTING);
 						//glDisable(GL_POLYGON_OFFSET_FILL);
-						glPolygonOffset(0.5f, 0.5f);
+						glPolygonOffset(1, 1);
 						glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
 
 						if(drawDoublePassColor)
@@ -654,7 +656,7 @@ void LGScene::draw()
 
 						//glLightfv( GL_LIGHT0, GL_DIFFUSE, lightAmbient);
 						//glDisable(GL_POLYGON_OFFSET_FILL);
-						glPolygonOffset(0.5f, 0.5f);
+						glPolygonOffset(1, 1);
 						glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
 /*
 						if(drawDoublePassColor)
