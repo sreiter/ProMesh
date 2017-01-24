@@ -22,6 +22,8 @@ TOPOLOGY:
 - Alt + m:    Merge
 - Alt + c:    Collapse Edge
 - Alt + w:    Swap Edge
+- q:          Convert To Quadrilaterals
+              (selected faces and neighbors of selected edges)
 
 COORDINATE TRANSFORM:
 - g:          Grab (move)

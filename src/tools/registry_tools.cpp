@@ -387,7 +387,9 @@ class RegistryTool : public ITool{
 void RegisterTool(ToolManager* toolMgr,
 				  Registry& reg,
 				  std::string toolName,
-				  std::string funcName)
+				  std::string funcName,
+				  int key = 0,
+				  uint shortcutModifierKeys = SMK_NONE)
 {
 	for(size_t ifct = 0; ifct < reg.num_functions(); ++ifct){
 		ExportedFunction& f = reg.get_function(ifct);
@@ -403,7 +405,7 @@ void RegisterTool(ToolManager* toolMgr,
 
 			//	o has to be added
 				RegistryTool* tool = new RegistryTool(toolName, &o);
-				toolMgr->register_tool(tool);
+				toolMgr->register_tool(tool, key, shortcutModifierKeys);
 			}
 		}
 	}
@@ -468,6 +470,7 @@ void RegsiterRegistryTools(ToolManager* toolMgr)
 	RegisterTool(toolMgr, reg, "Simplify Polylines", "SimplifyPolylines");
 	RegisterTool(toolMgr, reg, "Simplify Smoothed Polylines", "SimplifySmoothedPolylines");
 
+	RegisterTool(toolMgr, reg, "Convert To Quadrilaterals", "ConvertToQuadrilaterals", Qt::Key_Q);
 	RegisterTool(toolMgr, reg, "Convert To Tetrahedra", "ConvertToTetrahedra");
 }
 

@@ -23,6 +23,7 @@
 <file>html/navtree.js</file>
 <file>html/group__promesh__Coordinate__Transform__Pivot.js</file>
 <file>html/group__promesh__Grid__Generation.html</file>
+<file>html/group__promesh__Remeshing__Quadrilaterals.js</file>
 <file>html/functions_b.html</file>
 <file>html/group__promesh__Selection__Faces.js</file>
 <file>html/group__promesh__Selection.js</file>
@@ -148,6 +149,7 @@
 <file>html/group__promesh__Remeshing__Polylines.js</file>
 <file>html/functions_func_g.html</file>
 <file>html/group__promesh__Selection__Vertices.html</file>
+<file>html/group__promesh__Remeshing__Quadrilaterals.html</file>
 <file>html/group__promesh__Coordinate__Transform.js</file>
 <file>html/dir_5a65c234afd0f15d535260f2845b5fc1.html</file>
 <file>html/group__promesh__Grid__Generation__Geometries.js</file>
@@ -327,6 +329,7 @@
 <file>html/search/functions_8.html</file>
 <file>html/search/groups_8.html</file>
 <file>html/search/functions_12.js</file>
+<file>html/search/groups_10.js</file>
 <file>html/search/all_1.html</file>
 <file>html/search/classes_5.html</file>
 <file>html/search/all_3.js</file>
@@ -345,6 +348,7 @@
 <file>html/search/classes_8.js</file>
 <file>html/search/functions_14.js</file>
 <file>html/search/pages_5.js</file>
+<file>html/search/groups_10.html</file>
 <file>html/search/groups_8.js</file>
 <file>html/search/all_10.html</file>
 <file>html/search/classes_a.html</file>

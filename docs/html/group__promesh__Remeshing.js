@@ -5,6 +5,7 @@ var group__promesh__Remeshing =
     [ "Merge Vertices", "group__promesh__Remeshing__Merge__Vertices.html", "group__promesh__Remeshing__Merge__Vertices" ],
     [ "Orientation", "group__promesh__Remeshing__Orientation.html", "group__promesh__Remeshing__Orientation" ],
     [ "Polylines", "group__promesh__Remeshing__Polylines.html", "group__promesh__Remeshing__Polylines" ],
+    [ "Quadrilaterals", "group__promesh__Remeshing__Quadrilaterals.html", "group__promesh__Remeshing__Quadrilaterals" ],
     [ "Raster Layers", "group__promesh__Raster__Layers.html", "group__promesh__Raster__Layers" ],
     [ "Refinement", "group__promesh__Remeshing__Refinement.html", "group__promesh__Remeshing__Refinement" ],
     [ "Remove Doubles", "group__promesh__Remeshing__Remove__Doubles.html", "group__promesh__Remeshing__Remove__Doubles" ],
