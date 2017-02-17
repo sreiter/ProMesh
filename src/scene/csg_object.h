@@ -1,9 +1,7 @@
 /*
- * Copyright (c) 2008-2015:  G-CSC, Goethe University Frankfurt
- * Copyright (c) 2006-2008:  Steinbeis Forschungszentrum (STZ Ölbronn)
- * Copyright (c) 2006-2015:  Sebastian Reiter
+ * Copyright (c) 2017:  G-CSC, Goethe University Frankfurt
  * Author: Sebastian Reiter
- *
+ * 
  * This file is part of ProMesh.
  * 
  * ProMesh is free software: you can redistribute it and/or modify it under the
@@ -25,42 +23,21 @@
  * GNU Lesser General Public License for more details.
  */
 
-#ifndef RCLICK_MENU_SCENE_INSPECTOR_H
-#define RCLICK_MENU_SCENE_INSPECTOR_H
+#ifndef __H__PROMESH_csg_object
+#define __H__PROMESH_csg_object
 
-#include <QMenu>
-#include "scene_inspector.h"
+#include "lg_object.h"
 
-class RClickMenu_SceneInspector : public QWidget
+class CSGObject;
+
+
+CSGObject* CreateEmptyCSGObject(const char* name);
+
+
+class CSGObject : public LGObject
 {
-	Q_OBJECT
-
 	public:
-		RClickMenu_SceneInspector(SceneInspector * sceneInspector);
-
-		void exec(const QPoint& p);
-
-		QMenu*	getMenu ()	{return m_menu;}
-
-	protected slots:
-		void rename();
-		void showAllSubsets();
-		void hideAllSubsets();
-		void toggleAllSubsetVisibilities();
-		void printSubsetContents();
-		void reload();
-
-	private:
-		QMenu*			m_menu;
-		SceneInspector*	m_sceneInspector;
-
-		QAction*	m_actRename;
-		QAction*	m_actShowAllSubsets;
-		QAction*	m_actHideAllSubsets;
-		QAction*	m_actPrintSubsetContents;
-		QAction*	m_actToggleAllSubsetVisibilities;
-		QAction*	m_actReload;
-		//QAction*	m_actHideOtherSubsets;
+		virtual void selection_changed();
 };
 
-#endif // RCLICK_MENU_SCENE_INSPECTOR_H
+#endif	//__H__UG_csg_object

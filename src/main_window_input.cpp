@@ -32,6 +32,7 @@
 #include "lib_grid/algorithms/selection_util.h"
 #include "tools/tool_manager.h"
 #include "options/options.h"
+#include "modules/module_interface.h"
 
 using namespace std;
 using namespace ug;
@@ -231,18 +232,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
 			break;
 
 		default:
-			{
-				uint mods = 0;
-
-				if(qtMods.testFlag(Qt::ShiftModifier))
-					mods |= SMK_SHIFT;
-				if(qtMods.testFlag(Qt::ControlModifier))
-					mods |= SMK_CTRL;
-				if(qtMods.testFlag(Qt::AltModifier))
-					mods |= SMK_ALT;
-
-				m_toolManager->execute_shortcut(event->key(), mods);
-			}
+			m_activeModule->keyPressEvent(event);
 			break;
 	}
 

@@ -46,15 +46,15 @@ class ProjectorWidget : public QFrame
 	Q_OBJECT
 
 	public:
-		ProjectorWidget (QWidget* parent, LGScene* scene);
+		ProjectorWidget (QWidget* parent);
 		virtual ~ProjectorWidget ();
 
 	public slots:
 		void setActiveSubset(ISceneObject* obj, int subsetIndex);
+		void objectToBeRemoved(ISceneObject* pObj);
 
 	private slots:
 		// void object_added(ISceneObject* pObj);
-		void objectToBeRemoved(ISceneObject* pObj);
 		void projectorTypeChanged(const QString &text);
 		void valueChanged();
 

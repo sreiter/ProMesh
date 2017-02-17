@@ -33,6 +33,7 @@
 #include "lib_grid/algorithms/remeshing/delaunay_triangulation.h"
 #include "tools/grid_generation_tools.h"
 #include "tooltips.h"
+#include "../scene/csg_object.h"
 
 //#include "lib_discretization/spatial_discretization/disc_util/finite_volume_output.h"
 
@@ -56,7 +57,7 @@ class ToolNewMesh : public ITool
 			}
 
 		//	create a new empty object and merge the selected ones into it
-			app::createEmptyLGObject(objName.toLocal8Bit().constData());
+			app::createEmptyObject(objName.toLocal8Bit().constData(), SOT_LG);
 		}
 
 		const char* get_name()		{return "New Mesh";}
@@ -72,6 +73,42 @@ class ToolNewMesh : public ITool
 			return dlg;
 		}
 };
+
+
+class ToolNewCSGObject : public ITool
+{
+	public:
+		void execute(LGObject* obj, QWidget* widget){
+			using namespace std;
+			using namespace ug;
+
+			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
+
+		//	get parameters
+			QString objName = "new csg object";
+
+			if(dlg){
+				objName = dlg->to_string(0);
+			}
+
+		//	create a new empty object and merge the selected ones into it
+			app::createEmptyObject(objName.toLocal8Bit().constData(), SOT_CSG);
+		}
+
+		const char* get_name()		{return "New CSG Object";}
+		const char* get_tooltip()	{return TOOLTIP_NEW_CSG_OBJECT;}
+		const char* get_group()		{return "Grid Generation";}
+		bool accepts_null_object_ptr()	{return true;}
+
+		QWidget* get_dialog(QWidget* parent){
+			ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
+											IDB_APPLY | IDB_OK | IDB_CLOSE);
+		//	The name of the new mesh
+			dlg->addTextBox(tr("name:"), "new csg object");
+			return dlg;
+		}
+};
+
 
 class ToolNewMeshFromSelection : public ITool
 {
@@ -89,7 +126,7 @@ class ToolNewMeshFromSelection : public ITool
 				objName = dlg->to_string(0);
 			}
 
-			LGObject* newObj = app::createEmptyLGObject(objName.toLocal8Bit().constData());
+			LGObject* newObj = app::createEmptyObject(objName.toLocal8Bit().constData(), SOT_LG);
 			CopySelection(obj, newObj);
 			newObj->geometry_changed();
 		}
@@ -133,7 +170,7 @@ class ToolMergeMeshes : public ITool
 			}
 
 		//	create a new empty object and merge the selected ones into it
-			LGObject* mergedObj = app::createEmptyLGObject(mergedObjName.toStdString().c_str());
+			LGObject* mergedObj = app::createEmptyObject(mergedObjName.toStdString().c_str(), SOT_LG);
 			Grid& mrgGrid = mergedObj->grid();
 			SubsetHandler& mrgSH = mergedObj->subset_handler();
 
@@ -292,7 +329,7 @@ class ToolCreateVertex : public ITool
 		//	since we're accepting NULL-Ptr Objects, we have to create a new one
 		//	if none was supplied.
 			if(!obj)
-				obj = app::createEmptyLGObject("new mesh");
+				obj = app::createEmptyObject("new mesh", SOT_LG);
 
 			int newSubsetIndex = 0;
 			if(obj == app::getActiveObject())
@@ -397,7 +434,7 @@ public:
 	//	since we're accepting NULL-Ptr Objects, we have to create a new one
 	//	if none was supplied.
 		if(!obj)
-			obj = app::createEmptyLGObject("new mesh");
+			obj = app::createEmptyObject("new mesh", SOT_LG);
 
 		int orientation = 0;
 		number width = 1.;
@@ -488,7 +525,7 @@ public:
 	//	since we're accepting NULL-Ptr Objects, we have to create a new one
 	//	if none was supplied.
 		if(!obj)
-			obj = app::createEmptyLGObject("new mesh");
+			obj = app::createEmptyObject("new mesh", SOT_LG);
 
 	//todo: add a 'regular' flag. This requires that the optimizer can
 	//		be applied to a selected subset of the grid.
@@ -537,7 +574,7 @@ public:
 	//	since we're accepting NULL-Ptr Objects, we have to create a new one
 	//	if none was supplied.
 		if(!obj)
-			obj = app::createEmptyLGObject("new mesh");
+			obj = app::createEmptyObject("new mesh", SOT_LG);
 
 		vector3 boxMin(-1, -1, -1);
 		vector3 boxMax(1, 1, 1);
@@ -589,7 +626,7 @@ public:
 	//	since we're accepting NULL-Ptr Objects, we have to create a new one
 	//	if none was supplied.
 		if(!obj)
-			obj = app::createEmptyLGObject("new mesh");
+			obj = app::createEmptyObject("new mesh", SOT_LG);
 
 	//todo: add a 'regular' flag. This requires that the optimizer can
 	//		be applied to a selected subset of the grid.
@@ -636,7 +673,7 @@ public:
 	//	since we're accepting NULL-Ptr Objects, we have to create a new one
 	//	if none was supplied.
 		if(!obj)
-			obj = app::createEmptyLGObject("new mesh");
+			obj = app::createEmptyObject("new mesh", SOT_LG);
 
 		int newSI = 0;
 		bool createVolume = false;
@@ -673,7 +710,7 @@ public:
 	//	since we're accepting NULL-Ptr Objects, we have to create a new one
 	//	if none was supplied.
 		if(!obj)
-			obj = app::createEmptyLGObject("new mesh");
+			obj = app::createEmptyObject("new mesh", SOT_LG);
 
 		int newSI = 0;
 		bool createVolume = false;
@@ -712,7 +749,7 @@ public:
 	//	since we're accepting NULL-Ptr Objects, we have to create a new one
 	//	if none was supplied.
 		if(!obj)
-			obj = app::createEmptyLGObject("new mesh");
+			obj = app::createEmptyObject("new mesh", SOT_LG);
 
 		int newSI = 0;
 		bool createVolume = false;
@@ -1019,6 +1056,7 @@ void RegisterGridGenerationTools(ToolManager* toolMgr)
 	toolMgr->set_group_icon("Grid Generation", ":images/tool_geometry_generation.png");
 
 	toolMgr->register_tool(new ToolNewMesh);
+	toolMgr->register_tool(new ToolNewCSGObject);
 	toolMgr->register_tool(new ToolNewMeshFromSelection);
 	toolMgr->register_tool(new ToolMergeMeshes);
 

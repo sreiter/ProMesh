@@ -33,7 +33,7 @@ void ISceneObject::geometry_changed()
 	visuals_changed();
 }
 
-void ISceneObject::visuals_changed()
+void ISceneObject::visuals_changed(bool createUndoPoint)
 {
 	emit sig_visuals_changed();
 }

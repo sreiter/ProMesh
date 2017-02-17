@@ -268,7 +268,7 @@ bool SceneItemModel::setData ( const QModelIndex & index,
 			//	the visuals have to be updated
 				if(updateVisuals)
 				{
-					itemInfo->obj->visuals_changed();
+					itemInfo->obj->visuals_changed(false);
 					//m_scene->visibility_changed(itemInfo->obj);
 				}
 

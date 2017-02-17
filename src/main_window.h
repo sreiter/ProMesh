@@ -34,8 +34,9 @@
 #include "color_widget.h"
 #include "scene/lg_object.h"
 #include "view3d/view3d.h"
-#include "rclick_menu_scene_inspector.h"
 #include "scene/lg_scene.h"
+#include "scene_inspector.h"
+#include "modules/module_interface.h"
 
 ////////////////////////////////////////////////////////////////////////
 //	predeclarations
@@ -55,6 +56,11 @@ class QHelpBrowser;
 class ToolManager;
 class ToolBrowser;
 class PropertyWidget;
+
+enum SceneObjectType {
+	SOT_LG,
+	SOT_CSG
+};
 
 ////////////////////////////////////////////////////////////////////////
 ///	the main window.
@@ -90,7 +96,7 @@ class MainWindow : public QMainWindow
 
 		bool load_grid_from_file(const char* filename);
 		bool save_object_to_file(ISceneObject* obj, const char* filename);
-        LGObject* create_empty_object(const char* name);
+        LGObject* create_empty_object(const char* name, SceneObjectType sot);
 		inline QSettings& settings()	{return m_settings;}
 
 		LGObject* getActiveObject();
@@ -122,8 +128,6 @@ class MainWindow : public QMainWindow
 		void showLicense();
 		void showAbout();
 		void showContact();
-		void newScript();
-		void editScript();
 		void quit();
 		void saveOptions();
 		void loadOptions();
@@ -144,8 +148,6 @@ class MainWindow : public QMainWindow
 		void undo();
 		void redo();
 		void sceneInspectorClicked(QMouseEvent* event);
-		void refreshToolDialogsClicked();
-		void browseUserScripts();
 		void optionsChanged();
 
 	protected:
@@ -175,10 +177,18 @@ class MainWindow : public QMainWindow
 	/**	The method can be fine-tuned through options.drawPath.*/
 		void insertVertexAtScreenCoord(number x, number y);
 
+		void populateMenuBar ();
+		void activateModule (IModule* mod);
+		
 	protected:
 	//	3d view
 		View3D*		m_pView;
 		LGScene*	m_scene;
+
+	//	Modules
+		IModule*				m_activeModule;
+		IModule::dock_list_t	m_moduleDockWidgets;
+		std::vector<QMenu*>		m_moduleMenus;
 
 	//	tools
 		ColorWidget*	m_bgColor;
@@ -204,19 +214,17 @@ class MainWindow : public QMainWindow
 		QFileDialog*				m_dlgGeometryFiles;
 		SceneInspector*				m_sceneInspector;
 		QDockWidget*				m_pLog;
-		RClickMenu_SceneInspector*	m_rclickMenu_SI;
-		ToolManager*				m_toolManager;
-		ToolBrowser*				m_toolBrowser;
-		QDockWidget*				m_toolBrowserDock;
 		QDialog*					m_dlgAbout;
 		PropertyWidget*				m_optWidget;
-		
+		QMenu*						m_sceneInspectorRClickMenu;
+
 		#ifdef PROMESH_USE_WEBKIT
 			QHelpBrowser*			m_helpBrowser;
 		#endif
 
 	//	menus
-		//QMenu*		m_toolsMenu;
+		QMenu* m_fileMenu;
+		QMenu* m_helpMenu;
 
 	//	actions
 		QAction*	m_actNew;
@@ -228,11 +236,6 @@ class MainWindow : public QMainWindow
 		QAction*	m_actErase;
 		QAction*	m_actExportUG3;
 		QAction*	m_actQuit;
-
-		QAction*	m_actNewScript;
-		QAction*	m_actEditScript;
-		QAction*	m_actBrowseUserScripts;
-		QAction*	m_actRefreshToolDialogs;
 
 		QAction*	m_actHelp;
 		QAction*	m_actRecentChanges;

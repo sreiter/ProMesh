@@ -1,9 +1,7 @@
 /*
- * Copyright (c) 2008-2015:  G-CSC, Goethe University Frankfurt
- * Copyright (c) 2006-2008:  Steinbeis Forschungszentrum (STZ Ölbronn)
- * Copyright (c) 2006-2015:  Sebastian Reiter
+ * Copyright (c) 2017:  G-CSC, Goethe University Frankfurt
  * Author: Sebastian Reiter
- *
+ * 
  * This file is part of ProMesh.
  * 
  * ProMesh is free software: you can redistribute it and/or modify it under the
@@ -25,42 +23,60 @@
  * GNU Lesser General Public License for more details.
  */
 
-#ifndef RCLICK_MENU_SCENE_INSPECTOR_H
-#define RCLICK_MENU_SCENE_INSPECTOR_H
+#include "module_interface.h"
 
-#include <QMenu>
-#include "scene_inspector.h"
+IModule::
+IModule () :
+	QObject (),
+	m_parent (NULL)
+{}
 
-class RClickMenu_SceneInspector : public QWidget
+IModule::
+IModule (QWidget* parent) :
+	QObject (parent),
+	m_parent (parent)
+{}
+
+IModule::
+~IModule ()
+{}
+
+
+void IModule::
+activate (SceneInspector* sceneInspector, LGScene* scene)
 {
-	Q_OBJECT
+}
 
-	public:
-		RClickMenu_SceneInspector(SceneInspector * sceneInspector);
+void IModule::
+deactivate ()
+{
+}
 
-		void exec(const QPoint& p);
 
-		QMenu*	getMenu ()	{return m_menu;}
+IModule::dock_list_t
+IModule::
+getDockWidgets()
+{
+	return std::vector<std::pair<Qt::DockWidgetArea, QDockWidget*> > ();
+}
 
-	protected slots:
-		void rename();
-		void showAllSubsets();
-		void hideAllSubsets();
-		void toggleAllSubsetVisibilities();
-		void printSubsetContents();
-		void reload();
+std::vector<QToolBar*>
+IModule::
+getToolBars()
+{
+	return std::vector<QToolBar*> ();
+}
 
-	private:
-		QMenu*			m_menu;
-		SceneInspector*	m_sceneInspector;
+std::vector<QMenu*>
+IModule::
+getMenus()
+{
+	return std::vector<QMenu*>();
+}
 
-		QAction*	m_actRename;
-		QAction*	m_actShowAllSubsets;
-		QAction*	m_actHideAllSubsets;
-		QAction*	m_actPrintSubsetContents;
-		QAction*	m_actToggleAllSubsetVisibilities;
-		QAction*	m_actReload;
-		//QAction*	m_actHideOtherSubsets;
-};
-
-#endif // RCLICK_MENU_SCENE_INSPECTOR_H
+QMenu*
+IModule::
+getSceneInspectorMenu()
+{
+	return NULL;
+}

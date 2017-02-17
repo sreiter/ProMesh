@@ -171,7 +171,7 @@ public:
 			offset = dlg->to_double(0);
 		}
 
-		promesh::MoveAlongNormal(obj, offset, true);
+		promesh::MoveAlongNormal(obj, offset);
 
 		obj->geometry_changed();
 	}

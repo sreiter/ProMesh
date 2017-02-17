@@ -33,15 +33,14 @@
 #include "main_window.h"
 #include "view3d/view3d.h"
 #include "scene/lg_scene.h"
+#include "scene/csg_object.h"
 #include "scene_inspector.h"
 #include "scene_item_model.h"
-#include "clip_plane_widget.h"
 #include "QDebugStream.h"
 #include "lib_grid/lib_grid.h"
 #include "lib_grid/file_io/file_io_ug.h"
 #include "lib_grid/file_io/file_io_ugx.h"
 #include "lib_grid/file_io/file_io_lgb.h"
-#include "tools/standard_tools.h"
 #include "undo.h"
 #include "app.h"
 #include "widgets/coordinates_widget.h"
@@ -51,9 +50,7 @@
 #include "common/util/plugin_util.h"
 #include "options/options.h"
 #include "util/file_util.h"
-#include "tools/tool_manager.h"
-#include "widgets/projector_widget.h"
-#include "widgets/tool_browser_widget.h"
+#include "modules/mesh_module.h"
 #include "widgets/property_widget.h"
 #include "widgets/widget_list.h"
 
@@ -76,7 +73,8 @@ using namespace ug;
 ////////////////////////////////////////////////////////////////////////
 //	constructor
 MainWindow::MainWindow() :
-	m_settings("G-CSC", "ProMesh4.3*"),
+	m_activeModule (NULL),
+	m_settings("G-CSC", "ProMesh4.4*"),
 	m_selectionElement(0),
 	m_selectionMode(0),
 	m_curSelectionMode(-1),
@@ -212,44 +210,18 @@ void MainWindow::init()
 	m_actQuit = new QAction(tr("Quit"), this);
 	connect(m_actQuit, SIGNAL(triggered()), this, SLOT(quit()));
 
-	QMenu* filemenu = menuBar()->addMenu("&File");
-	filemenu->addAction(m_actNew);
-	filemenu->addAction(m_actOpen);
-	filemenu->addAction(m_actReload);
-	filemenu->addAction(m_actReloadAll);
-	filemenu->addAction(m_actSave);
-	filemenu->addAction(m_actErase);
-	filemenu->addSeparator();
-	filemenu->addAction(m_actExportUG3);
-	filemenu->addSeparator();
-	filemenu->addAction(m_actQuit);
+	m_fileMenu = new QMenu("&File", menuBar());
+	m_fileMenu->addAction(m_actNew);
+	m_fileMenu->addAction(m_actOpen);
+	m_fileMenu->addAction(m_actReload);
+	m_fileMenu->addAction(m_actReloadAll);
+	m_fileMenu->addAction(m_actSave);
+	m_fileMenu->addAction(m_actErase);
+	m_fileMenu->addSeparator();
+	m_fileMenu->addAction(m_actExportUG3);
+	m_fileMenu->addSeparator();
+	m_fileMenu->addAction(m_actQuit);
 
-
-//	script menu
-	m_actNewScript = new QAction(tr("New Script"), this);
-	m_actNewScript->setStatusTip("Creates a new script and opens it for editing");
-	connect(m_actNewScript, SIGNAL(triggered()), this, SLOT(newScript()));
-
-	m_actEditScript = new QAction(tr("Edit Script"), this);
-	m_actEditScript->setStatusTip("Opens a script for editing");
-	connect(m_actEditScript, SIGNAL(triggered()), this, SLOT(editScript()));
-
-	m_actBrowseUserScripts = new QAction(tr("Browse User Scripts"), this);
-	m_actBrowseUserScripts->setStatusTip("Opens the path at which user scripts are located.");
-	connect(m_actBrowseUserScripts, SIGNAL(triggered()), this, SLOT(browseUserScripts()));
-	
-	m_actRefreshToolDialogs = new QAction(tr("Refresh Tool Dialogs"), this);
-	m_actRefreshToolDialogs->setShortcut(tr("Ctrl+T"));
-	m_actRefreshToolDialogs->setStatusTip("Refreshes contents of tht tool-dialogs.");
-	connect(m_actRefreshToolDialogs, SIGNAL(triggered()), this, SLOT(refreshToolDialogsClicked()));
-
-	QMenu* scriptmenu = menuBar()->addMenu("&Scripts");
-	scriptmenu->addAction(m_actNewScript);
-	scriptmenu->addAction(m_actEditScript);
-	scriptmenu->addSeparator();
-	scriptmenu->addAction(m_actBrowseUserScripts);
-	scriptmenu->addSeparator();
-	scriptmenu->addAction(m_actRefreshToolDialogs);
 
 //	help menu
 	m_actHelp = new QAction(tr("&User Manual"), this);
@@ -278,32 +250,17 @@ void MainWindow::init()
 	connect(m_actShowContact, SIGNAL(triggered()), this, SLOT(showContact()));
 
 
-	QMenu* helpmenu = menuBar()->addMenu("&Help");
-	helpmenu->addAction(m_actHelp);
-	helpmenu->addSeparator();
-	helpmenu->addAction(m_actControls);
-	helpmenu->addAction(m_actShortcuts);
-	helpmenu->addAction(m_actJumpToScriptReference);
-	helpmenu->addAction(m_actRecentChanges);
-	helpmenu->addAction(m_actLicense);
-	helpmenu->addAction(m_actShowAbout);
-	helpmenu->addAction(m_actShowContact);
+	m_helpMenu = new QMenu("&Help", menuBar());
+	m_helpMenu->addAction(m_actHelp);
+	m_helpMenu->addSeparator();
+	m_helpMenu->addAction(m_actControls);
+	m_helpMenu->addAction(m_actShortcuts);
+	m_helpMenu->addAction(m_actJumpToScriptReference);
+	m_helpMenu->addAction(m_actRecentChanges);
+	m_helpMenu->addAction(m_actLicense);
+	m_helpMenu->addAction(m_actShowAbout);
+	m_helpMenu->addAction(m_actShowContact);
 
-
-	m_toolManager = new ToolManager(this);
-	try{
-		RegisterStandardTools(m_toolManager);
-	}
-	catch(UGError& err){
-		UG_LOG("ERROR: ")
-		for(size_t i = 0; i < err.num_msg(); ++i){
-			if(i > 0){
-				UG_LOG("       ");
-			}
-			UG_LOG(err.get_msg(i) << endl);
-		}
-		UG_LOG("------------------------------------------------------------------------------------------\n")
-	}
 
 //	create a tool bar for file handling
 	QToolBar* fileToolBar = addToolBar(tr("&File"));
@@ -351,48 +308,17 @@ void MainWindow::init()
 	pSceneInspectorDock->setWidget(m_sceneInspector);
 	addDockWidget(Qt::RightDockWidgetArea, pSceneInspectorDock);
 
-//	create the projector dock
-	QDockWidget* pProjectorDock = new QDockWidget(tr("Projectors"), this);
-	pProjectorDock->setFeatures(QDockWidget::NoDockWidgetFeatures);
-	pProjectorDock->setObjectName(tr("projector_dock"));
-	WidgetList* projectorList = new WidgetList(pProjectorDock);
-	ProjectorWidget* projectorWidget = new ProjectorWidget(projectorList, m_scene);
-	projectorList->addWidget(projectorWidget);
-	pProjectorDock->setWidget(projectorList);
-	addDockWidget(Qt::RightDockWidgetArea, pProjectorDock);
-	connect(m_sceneInspector, SIGNAL(subsetChanged(ISceneObject*, int)),
-			projectorWidget, SLOT(setActiveSubset(ISceneObject*, int)));
-
-//	create the clip-plane widget
-	QDockWidget* pClipPlaneDock= new QDockWidget(tr("Clip Planes"), this);
-	pClipPlaneDock->setFeatures(QDockWidget::NoDockWidgetFeatures);
-	pClipPlaneDock->setObjectName(tr("clip_plane_widget_dock"));
-	ClipPlaneWidget* clipPlaneWidget = new ClipPlaneWidget(pClipPlaneDock);
-	clipPlaneWidget->setScene(m_scene);
-	pClipPlaneDock->setWidget(clipPlaneWidget);
-	addDockWidget(Qt::RightDockWidgetArea, pClipPlaneDock);
-
-//	create the rclick menu for the scene-inspector
-	m_rclickMenu_SI = new RClickMenu_SceneInspector(m_sceneInspector);
-	m_rclickMenu_SI->setVisible(false);
 	connect(m_sceneInspector, SIGNAL(mouseClicked(QMouseEvent*)),
 			this, SLOT(sceneInspectorClicked(QMouseEvent*)));
 
 
-//	create the tool browser
-	m_toolBrowserDock = new QDockWidget(tr("Tool Browser"), this);
-	m_toolBrowserDock->setFeatures(QDockWidget::NoDockWidgetFeatures);
-	m_toolBrowserDock->setObjectName(tr("tool_browser_dock"));
-
-	m_toolBrowser = new ToolBrowser(this);
-	m_toolBrowser->refresh(m_toolManager);
-	m_toolBrowser->setObjectName(tr("tool_browser"));
-	m_toolBrowserDock->setWidget(m_toolBrowser);
-	addDockWidget(Qt::LeftDockWidgetArea, m_toolBrowserDock);
+	populateMenuBar ();
+	activateModule(new MeshModule(this));
 
 
-	restoreGeometry(settings().value("mainWindow/geometry").toByteArray());
-	restoreState(settings().value("mainWindow/windowState").toByteArray());
+
+	// restoreGeometry(settings().value("mainWindow/geometry").toByteArray());
+	// restoreState(settings().value("mainWindow/windowState").toByteArray());
 
 	m_pLog->raise();
 	
@@ -688,10 +614,22 @@ bool MainWindow::load_grid_from_file(const char* filename)
 	return false;
 }
 
-LGObject* MainWindow::create_empty_object(const char* name)
+LGObject* MainWindow::create_empty_object(const char* name, SceneObjectType sot)
 {
 //	create a new object
-    LGObject* pObj = CreateEmptyLGObject(name);
+	LGObject* pObj = NULL;
+
+	switch(sot){
+		case SOT_LG:
+    		pObj = CreateEmptyLGObject(name);
+    		break;
+
+    	case SOT_CSG:
+    		pObj = CreateEmptyCSGObject(name);
+	}
+
+	UG_COND_THROW(!pObj, "Invalid SceneObjectType specified!");
+
     pObj->set_element_mode(getLGElementMode());
 
 //	add it to the scene
@@ -722,7 +660,7 @@ bool MainWindow::save_object_to_file(ISceneObject* obj, const char* filename)
 //	public slots
 void MainWindow::newGeometry()
 {
-	create_empty_object("newObject");
+	create_empty_object("newObject", SOT_LG);
 }
 
 int MainWindow::openFile()
@@ -1139,7 +1077,8 @@ void MainWindow::dropEvent(QDropEvent* event)
 void MainWindow::sceneInspectorClicked(QMouseEvent* event)
 {
 	if(event->button() == Qt::RightButton){
-		m_rclickMenu_SI->exec(QCursor::pos());
+		if(m_sceneInspectorRClickMenu)
+			m_sceneInspectorRClickMenu->exec(QCursor::pos());
 	}
 
 	if(getActiveObject() != m_activeObject){
@@ -1166,54 +1105,6 @@ void MainWindow::redo()
 		if(!obj->redo()){
 			UG_LOG("no more steps to redo.\n");
 		}
-	}
-}
-
-void MainWindow::refreshToolDialogsClicked()
-{
-	RefreshScriptTools(m_toolManager);
-	m_toolBrowser->refresh(m_toolManager);
-}
-
-void MainWindow::browseUserScripts()
-{
-	QDir scriptDir = app::UserScriptDir();
-	QString path = QDir::toNativeSeparators(app::UserScriptDir().path());
-	QDesktopServices::openUrl(QUrl("file:///" + path));
-}
-
-void MainWindow::newScript()
-{
-	QString fileName = QFileDialog::getSaveFileName(
-									this,
-									tr("Script Name"),
-									QDir::toNativeSeparators(app::UserScriptDir().path()),
-									tr("script files (*.lua)"));
-	if(!fileName.endsWith(".lua"))
-		fileName.append(".lua");
-
-	if(!fileName.isEmpty()){
-		if(QFile::exists(fileName))
-			QFile::remove(fileName);
-		QFile::copy(":/resources/default-script.lua", fileName);
-		QFile::setPermissions(fileName, QFileDevice::ReadOwner | QFileDevice::WriteOwner |
-										QFileDevice::ReadUser | QFileDevice::WriteUser |
-										QFileDevice::ReadGroup);
-
-		QDesktopServices::openUrl(QUrl("file:///" + fileName));
-	}
-}
-
-void MainWindow::editScript()
-{
-	QString fileName = QFileDialog::getOpenFileName(
-									this,
-									tr("Script Name"),
-									QDir::toNativeSeparators(app::UserScriptDir().path()),
-									tr("script files (*.lua)"));
-
-	if(!fileName.isEmpty()){
-		QDesktopServices::openUrl(QUrl("file:///" + fileName));
 	}
 }
 
@@ -1264,4 +1155,59 @@ loadOptions ()
 	}
 
 	refreshOptions();
+}
+
+
+void MainWindow::
+populateMenuBar ()
+{
+	QMenuBar* bar = menuBar();
+	bar->clear();
+	bar->addMenu(m_fileMenu);
+
+	for(vector<QMenu*>::iterator i = m_moduleMenus.begin();
+		i != m_moduleMenus.end(); ++i)
+	{
+		bar->addMenu(*i);
+	}
+
+	bar->addMenu(m_helpMenu);
+}
+
+void MainWindow::
+activateModule (IModule* mod)
+{
+	typedef IModule::dock_list_t dock_list_t;
+
+	if(m_activeModule == mod)
+		return;
+
+	if(m_activeModule){
+	//	remove old modules dock widgets
+		for(dock_list_t::iterator i = m_moduleDockWidgets.begin();
+			i != m_moduleDockWidgets.end(); ++i)
+		{
+			removeDockWidget(i->second);
+		}
+
+		m_activeModule->deactivate();
+	}
+	
+	m_activeModule = mod;
+
+	if(m_activeModule){
+		m_activeModule->activate (m_sceneInspector, m_scene);
+		m_sceneInspectorRClickMenu = mod->getSceneInspectorMenu ();
+		m_moduleDockWidgets = mod->getDockWidgets ();
+		m_moduleMenus = mod->getMenus ();
+
+		populateMenuBar ();
+
+	//	add dock widgets
+		for(dock_list_t::iterator i = m_moduleDockWidgets.begin();
+			i != m_moduleDockWidgets.end(); ++i)
+		{
+			addDockWidget(i->first, i->second);
+		}
+	}
 }

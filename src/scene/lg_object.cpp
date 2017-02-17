@@ -261,7 +261,7 @@ void LGObject::init()
 	m_selectionDisplayListIndex = -1;
 }
 
-void LGObject::visuals_changed()
+void LGObject::visuals_changed(bool createUndoPoint)
 {
 //	set colors of new subsets
 	for(int i = m_numInitializedSubsets; i < m_subsetHandler.num_subsets(); ++i)
@@ -281,11 +281,11 @@ void LGObject::visuals_changed()
 //	add an entry to the history
 //	we have some situations in which we don't want to store undos.
 //	especially if we're currently transforming.
-	if(m_transformType == TT_NONE){
+	if(createUndoPoint && m_transformType == TT_NONE){
 		create_undo_point();
 	}
 
-	ISceneObject::visuals_changed();
+	ISceneObject::visuals_changed(createUndoPoint);
 }
 
 void LGObject::marks_changed()

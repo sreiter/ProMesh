@@ -79,9 +79,9 @@ inline LGScene* getActiveScene()
 	return getMainWindow()->get_scene();
 }
 
-inline LGObject* createEmptyLGObject(const char* name)
+inline LGObject* createEmptyObject(const char* name, SceneObjectType sot)
 {
-    return getMainWindow()->create_empty_object(name);
+    return getMainWindow()->create_empty_object(name, sot);
 }
 
 

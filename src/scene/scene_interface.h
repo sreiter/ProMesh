@@ -138,7 +138,7 @@ class ISceneObject : public QObject
 		virtual void geometry_changed();
 
 	///	triggers sig_visuals_changed.
-		virtual void visuals_changed();
+		virtual void visuals_changed(bool createUndoPoint = true);
 
 	///	triggers sig_visuals_changed.
 		virtual void selection_changed();

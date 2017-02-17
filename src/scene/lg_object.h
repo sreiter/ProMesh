@@ -113,7 +113,7 @@ class LGObject : public ISceneObject, public ug::promesh::Mesh
 
 		virtual void geometry_changed();
 	///	creates an undo entry, if no transform is currently performed.
-		virtual void visuals_changed();
+		virtual void visuals_changed(bool createUndoPoint = true);
 		void marks_changed();
 		void selection_changed();
 

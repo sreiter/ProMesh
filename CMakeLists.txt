@@ -95,6 +95,7 @@ set(ProMeshSRC	src/app.cpp
 				src/view3d/camera/matrix44.cpp
 				src/view3d/camera/basic_camera.cpp
 				src/view3d/camera/arc_ball.cpp
+				src/scene/csg_object.cpp
 				src/scene/lg_object.cpp
 				src/scene/lg_scene.cpp
 				src/scene/lg_tmp_methods.cpp
@@ -118,6 +119,8 @@ set(ProMeshSRC	src/app.cpp
 				src/tools/remeshing_tools.cpp
 				src/tools/script_tools.cpp
 				src/util/file_util.cpp
+				src/modules/module_interface.cpp
+				src/modules/mesh_module.cpp
 				src/widgets/coordinates_widget.cpp
 				src/widgets/double_slider.cpp
 				src/widgets/extendible_widget.cpp

@@ -11,7 +11,7 @@ for i = 1, sharpRefinements do
 	ClearSelection(mesh)
 	SelectCreaseEdges(mesh, creaseAngle)
 	ExtendSelection(mesh, 1)
-	Refine(mesh, strictSubsetInheritance)
+	Refine(mesh, strictSubsetInheritance, false)
 end
 
 for i = 1, smoothRefinements do

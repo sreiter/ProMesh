@@ -46,10 +46,9 @@
 static ug::Factory<ug::RefinementProjector, ug::ProjectorTypes>	projFactory;
 
 ProjectorWidget::
-ProjectorWidget (QWidget* parent, LGScene* scene) :
+ProjectorWidget (QWidget* parent) :
 	QFrame(parent),
 	m_curContent(NULL),
-	m_scene(scene),
 	m_activeObject(NULL),
 	m_activeSubsetIndex(-1)
 {
@@ -69,9 +68,6 @@ ProjectorWidget (QWidget* parent, LGScene* scene) :
 	}
 
 	setEnabled(false);
-
-	connect(m_scene, SIGNAL(object_to_be_removed(ISceneObject*)),
-			this, SLOT(objectToBeRemoved(ISceneObject*)));
 
 	connect(m_typeBox, SIGNAL(currentIndexChanged(const QString&)),
 			this, SLOT(projectorTypeChanged(const QString&)));

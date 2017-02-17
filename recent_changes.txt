@@ -7,6 +7,19 @@ Recent changes:
 -------------------------------------------------------------------------------
 
 
+
+-------------------------------------------------------------------------------
+v 4.3.5
+Changes and additions:
+- Speed up when visibilities are changed in the SceneInspector
+  (removed undo-points here)
+
+Fixes:
+- Face orientation during 3d extrusion is now preserved.
+- Added a warning for faces with unsupported numbers of vertices in .obj loading.
+
+
+
 -------------------------------------------------------------------------------
 v 4.3.4
 Changes and additions:
