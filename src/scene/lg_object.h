@@ -208,6 +208,14 @@ class LGObject : public ISceneObject, public ug::promesh::Mesh
 	 * restoring vertex coordinates with this method may lead to unexpected results.*/
 		void restore_vertex_coordinates_from_buffer();
 		
+	///	returns true if something was changed since the last save
+		bool save_required() const					{return m_saveRequired;}
+
+	///	call this method to change the saveRequired flag.
+	/**	Note: This method will automatically be called whenever the geometry
+	 *		  or the selection changed*/
+		void set_save_required(bool saveRequired)	{m_saveRequired = saveRequired;}
+
 	protected:
 		void init();
 
@@ -249,6 +257,8 @@ class LGObject : public ISceneObject, public ug::promesh::Mesh
 		int					m_numInitializedSubsets;
 		bool				m_selectionChangedSinceLastUndoPoint;
 
+		bool				m_saveRequired;
+		
 	//	currently used by LGScene to update the selection visuals only.
 		int					m_selectionDisplayListIndex;
 		

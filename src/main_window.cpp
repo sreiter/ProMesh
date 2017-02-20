@@ -601,6 +601,7 @@ bool MainWindow::load_grid_from_file(const char* filename)
 									s.get_radius() * 3.f);
 				}
 
+				pObj->set_save_required(false);
 				return true;
 			}
 		}
@@ -645,6 +646,7 @@ bool MainWindow::save_object_to_file(ISceneObject* obj, const char* filename)
 	LGObject* lgobj = dynamic_cast<LGObject*>(obj);
 	if(lgobj){
 		try{
+			lgobj->set_save_required(false);
 			return SaveLGObjectToFile(lgobj, filename);
 		}
 		catch(UGError err){
@@ -698,7 +700,9 @@ bool MainWindow::reloadActiveGeometry()
 {
 	LGObject* obj = app::getActiveObject();
 	if(obj){
-		return ReloadLGObject(obj);
+		bool success = ReloadLGObject(obj);
+		obj->set_save_required(false);
+		return success;
 	}
 	return false;
 }
@@ -710,6 +714,7 @@ bool MainWindow::reloadAllGeometries()
 		bool success = true;
 		for (int i = 0; i < scene->num_objects(); ++i){
 			success &= ReloadLGObject(scene->get_object(i));
+			scene->get_object(i)->set_save_required(false);
 		}
 		return success;
 	}
@@ -740,6 +745,9 @@ bool MainWindow::saveToFile()
 			else{
 				obj->set_name(QFileInfo(fileName).baseName().toLocal8Bit().constData());
 				obj->visuals_changed();
+				LGObject* lgobj = dynamic_cast<LGObject*>(obj);
+				if(lgobj)
+					lgobj->set_save_required(false);
 			}
 		}
 	}
@@ -851,12 +859,19 @@ void MainWindow::eraseActiveSceneObject()
 		int index = m_scene->get_object_index(obj);
 		if(index >= 0)
 		{
-			QString msg = QString("Erase '").append(obj->name()).append("'?\n").
-											append("No undo will be possible!");
-			QMessageBox::StandardButton reply;
-			reply = QMessageBox::question(this, "Erase?", msg,
-										  QMessageBox::Yes | QMessageBox::No);
-			if (reply == QMessageBox::Yes){
+			bool performErase = true;
+
+			LGObject* lgobj = dynamic_cast<LGObject*>(obj);
+			if(!lgobj || lgobj->save_required()){
+				QString msg = QString("Erase '").append(obj->name()).append("'?\n").
+												append("No undo will be possible!");
+				QMessageBox::StandardButton reply;
+				reply = QMessageBox::question(this, "Erase?", msg,
+											  QMessageBox::Yes | QMessageBox::No);
+				performErase = (reply == QMessageBox::Yes);
+			}
+
+			if(performErase){
 			//	perform erase
 				m_scene->erase_object(index);
 			//	select the next object

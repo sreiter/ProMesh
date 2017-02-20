@@ -13,7 +13,7 @@ Changes and additions:
 - Added 'AssignSubset' and 'AssignNewSubset' to the SceneInspectors R-Click Menu
 
 Fixes:
-
+- Popup question on 'EraseObject' only appears if the object has been changed.
 
 
 

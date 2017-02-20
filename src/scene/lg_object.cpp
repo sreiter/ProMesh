@@ -234,6 +234,8 @@ LGObject::~LGObject()
 
 void LGObject::init()
 {
+	m_saveRequired = false;
+	
 	m_selectionChangedSinceLastUndoPoint = false;
 
 	m_shFacesForVolRendering.set_supported_elements(SHE_FACE);
@@ -282,6 +284,7 @@ void LGObject::visuals_changed(bool createUndoPoint)
 //	we have some situations in which we don't want to store undos.
 //	especially if we're currently transforming.
 	if(createUndoPoint && m_transformType == TT_NONE){
+		set_save_required(true);
 		create_undo_point();
 	}
 
