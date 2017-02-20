@@ -316,9 +316,8 @@ void MainWindow::init()
 	activateModule(new MeshModule(this));
 
 
-
-	// restoreGeometry(settings().value("mainWindow/geometry").toByteArray());
-	// restoreState(settings().value("mainWindow/windowState").toByteArray());
+	restoreGeometry(settings().value("mainWindow/geometry").toByteArray());
+	restoreState(settings().value("mainWindow/windowState").toByteArray());
 
 	m_pLog->raise();
 	

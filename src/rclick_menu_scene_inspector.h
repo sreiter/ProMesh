@@ -43,6 +43,8 @@ class RClickMenu_SceneInspector : public QWidget
 		QMenu*	getMenu ()	{return m_menu;}
 
 	protected slots:
+		void assignSubset();
+		void assignNewSubset();
 		void rename();
 		void showAllSubsets();
 		void hideAllSubsets();
@@ -54,6 +56,8 @@ class RClickMenu_SceneInspector : public QWidget
 		QMenu*			m_menu;
 		SceneInspector*	m_sceneInspector;
 
+		QAction*	m_actAssignSubset;
+		QAction*	m_actAssignNewSubset;
 		QAction*	m_actRename;
 		QAction*	m_actShowAllSubsets;
 		QAction*	m_actHideAllSubsets;

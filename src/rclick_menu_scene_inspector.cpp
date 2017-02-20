@@ -29,8 +29,10 @@
 #include "rclick_menu_scene_inspector.h"
 #include "app.h"
 #include "tools/tool_dialog.h"
+#include "tools/subset_tools.h"
 
 using namespace std;
+using namespace ug;
 
 RClickMenu_SceneInspector::
 RClickMenu_SceneInspector(SceneInspector * sceneInspector) :
@@ -39,6 +41,14 @@ RClickMenu_SceneInspector(SceneInspector * sceneInspector) :
 	m_menu = new QMenu(this);
 
 //	populate the menu
+	m_actAssignSubset = new QAction(tr("Assign To Subset"), this);
+	connect(m_actAssignSubset, SIGNAL(triggered()), this, SLOT(assignSubset()));
+	m_menu->addAction(m_actAssignSubset);
+
+	m_actAssignNewSubset = new QAction(tr("Assign To New Subset"), this);
+	connect(m_actAssignNewSubset, SIGNAL(triggered()), this, SLOT(assignNewSubset()));
+	m_menu->addAction(m_actAssignNewSubset);
+
 	m_actRename = new QAction(tr("Rename"), this);
 	connect(m_actRename, SIGNAL(triggered()), this, SLOT(rename()));
 	m_menu->addAction(m_actRename);
@@ -69,6 +79,33 @@ RClickMenu_SceneInspector(SceneInspector * sceneInspector) :
 void RClickMenu_SceneInspector::
 exec(const QPoint& p){
 	m_menu->exec(p);
+}
+
+void RClickMenu_SceneInspector::assignSubset()
+{
+	LGObject* obj = app::getActiveObject();
+	if(obj){
+		int si = m_sceneInspector->getActiveSubsetIndex();
+		if(si != -1){
+			promesh::AssignSubset(obj, si, true, true, true, true);
+			obj->geometry_changed();
+		}
+	}
+}
+
+void RClickMenu_SceneInspector::assignNewSubset()
+{
+	LGObject* obj = app::getActiveObject();
+	if(obj){
+		int si = obj->subset_handler().num_subsets();
+		promesh::AssignSubset(obj, si, true, true, true, true);
+
+		obj->geometry_changed();
+		
+		int activeObjectIndex = m_sceneInspector->getActiveObjectIndex();
+		m_sceneInspector->setActiveSubset(activeObjectIndex, si);
+		rename();
+	}
 }
 
 void RClickMenu_SceneInspector::rename()
