@@ -7,22 +7,15 @@ Recent changes:
 -------------------------------------------------------------------------------
 
 -------------------------------------------------------------------------------
-v 4.4.0
+v 4.3.6
 Changes and additions:
-- Preparations for different Views
+- Added subset based boolean operations for CSG modelling
+  (Union, Intersection, Difference)
 - Added 'AssignSubset' and 'AssignNewSubset' to the SceneInspectors R-Click Menu
+- Preparations for different Views
 
 Fixes:
 - Popup question on 'EraseObject' only appears if the object has been changed.
-
-
-
-
--------------------------------------------------------------------------------
--------------------------------------------------------------------------------
--- VERSION 4.3
--------------------------------------------------------------------------------
--------------------------------------------------------------------------------
 
 
 

@@ -101,7 +101,7 @@ void RClickMenu_SceneInspector::assignNewSubset()
 		promesh::AssignSubset(obj, si, true, true, true, true);
 
 		obj->geometry_changed();
-		
+
 		int activeObjectIndex = m_sceneInspector->getActiveObjectIndex();
 		m_sceneInspector->setActiveSubset(activeObjectIndex, si);
 		rename();
@@ -166,6 +166,7 @@ void RClickMenu_SceneInspector::rename()
 				obj->set_subset_name(si, curName.c_str());
 			else
 				obj->set_name(curName.c_str());
+			obj->set_save_required(true);
 			m_sceneInspector->refreshView();
 		}
 		delete dlg;

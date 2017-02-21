@@ -472,6 +472,10 @@ void RegsiterRegistryTools(ToolManager* toolMgr)
 
 	RegisterTool(toolMgr, reg, "Convert To Quadrilaterals", "ConvertToQuadrilaterals", Qt::Key_Q);
 	RegisterTool(toolMgr, reg, "Convert To Tetrahedra", "ConvertToTetrahedra");
+
+	RegisterTool(toolMgr, reg, "Face Union", "FaceUnion");
+	RegisterTool(toolMgr, reg, "Face Intersection", "FaceIntersection");
+	RegisterTool(toolMgr, reg, "Face Difference", "FaceDifference");
 }
 
 
