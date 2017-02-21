@@ -1,5 +1,8 @@
 var NAVTREEINDEX3 =
 {
+"group__ugbase.html#aff716f34fee096cd4fdd5af527c6936c":[1,0,2,4,167],
+"group__ugbase.html#classEdge":[1,0,2,12],
+"group__ugbase.html#classFace":[1,0,2,13],
 "group__ugbase.html#classGrid":[1,0,2,5],
 "group__ugbase.html#classGridObject":[1,0,2,10],
 "group__ugbase.html#classISelector":[1,0,2,6],

@@ -73,6 +73,7 @@
 <file>html/functions_func_n.html</file>
 <file>html/group__promesh__Subsets.js</file>
 <file>html/group__promesh__Subsets__Separate.html</file>
+<file>html/group__promesh__Remeshing__Boolean__Operations.html</file>
 <file>html/group__promesh.js</file>
 <file>html/closed.png</file>
 <file>html/group__promesh__Raster__Layers_classRasterLayerDesc.js</file>
@@ -152,6 +153,7 @@
 <file>html/group__promesh__Remeshing__Quadrilaterals.html</file>
 <file>html/group__promesh__Coordinate__Transform.js</file>
 <file>html/dir_5a65c234afd0f15d535260f2845b5fc1.html</file>
+<file>html/group__promesh__Remeshing__Boolean__Operations.js</file>
 <file>html/group__promesh__Grid__Generation__Geometries.js</file>
 <file>html/group__promesh__Remeshing__Merge__Vertices.js</file>
 <file>html/functions.html</file>

@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ProMesh User Manual
-   &#160;<span id="projectnumber">v4.3.4</span>
+   &#160;<span id="projectnumber">v4.3.6</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -100,6 +100,30 @@ $(document).ready(function(){initNavTree('pageRecentChanges.html','');});
 -- VERSION 4.3
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------
+v 4.3.6
+Changes and additions:
+- Added subset based boolean operations for CSG modelling
+  (Union, Intersection, Difference)
+- Added 'AssignSubset' and 'AssignNewSubset' to the SceneInspectors R-Click Menu
+- Preparations for different Views
+
+Fixes:
+- Popup question on 'EraseObject' only appears if the object has been changed.
+
+
+
+-------------------------------------------------------------------------------
+v 4.3.5
+Changes and additions:
+- Speed up when visibilities are changed in the SceneInspector
+  (removed undo-points here)
+
+Fixes:
+- Face orientation during 3d extrusion is now preserved.
+- Added a warning for faces with unsupported numbers of vertices in .obj loading.
+
 
 
 -------------------------------------------------------------------------------
@@ -1142,7 +1166,7 @@ Fixes:
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">(c) Sebastian Reiter. Generated on Tue Jan 24 2017 16:52:38 for ProMesh User Manual by
+    <li class="footer">(c) Sebastian Reiter. Generated on Tue Feb 21 2017 17:00:45 for ProMesh User Manual by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.11 </li>
   </ul>

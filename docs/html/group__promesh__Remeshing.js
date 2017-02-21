@@ -1,5 +1,6 @@
 var group__promesh__Remeshing =
 [
+    [ "Boolean Operations", "group__promesh__Remeshing__Boolean__Operations.html", "group__promesh__Remeshing__Boolean__Operations" ],
     [ "Edge Operations", "group__promesh__Remeshing__Edge__Operations.html", "group__promesh__Remeshing__Edge__Operations" ],
     [ "Extrusion", "group__promesh__Remeshing__Extrusion.html", "group__promesh__Remeshing__Extrusion" ],
     [ "Merge Vertices", "group__promesh__Remeshing__Merge__Vertices.html", "group__promesh__Remeshing__Merge__Vertices" ],
