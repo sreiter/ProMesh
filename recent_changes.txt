@@ -6,6 +6,20 @@ Recent changes:
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
 
+
+-------------------------------------------------------------------------------
+v 4.3.7
+Changes and additions:
+- After Remeshing-PlaneCut, only new edges along the cut are selected now.
+- Added ProjectToLayers and ProjectToTopLayers to the scripting backend.
+- Added Selection-CoordinateRange tools
+
+Fixes:
+- Boolean operations now work if multiple subsets exist
+- Fixed default values in tool dialogs
+
+
+
 -------------------------------------------------------------------------------
 v 4.3.6
 Changes and additions:

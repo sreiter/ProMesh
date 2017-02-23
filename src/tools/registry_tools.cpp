@@ -460,6 +460,13 @@ void RegsiterRegistryTools(ToolManager* toolMgr)
 	RegisterTool(toolMgr, reg, "Interface Edges", "SelectInterfaceEdges");
 	RegisterTool(toolMgr, reg, "Interface Faces", "SelectInterfaceFaces");
 
+	RegisterTool(toolMgr, reg, "Select Elements By Range X", "SelectElementsByRangeX");
+	RegisterTool(toolMgr, reg, "Select Elements By Range Y", "SelectElementsByRangeY");
+	RegisterTool(toolMgr, reg, "Select Elements By Range Z", "SelectElementsByRangeZ");
+	RegisterTool(toolMgr, reg, "Deselect Elements By Range X", "DeselectElementsByRangeX");
+	RegisterTool(toolMgr, reg, "Deselect Elements By Range Y", "DeselectElementsByRangeY");
+	RegisterTool(toolMgr, reg, "Deselect Elements By Range Z", "DeselectElementsByRangeZ");
+
 	RegisterTool(toolMgr, reg, "Remove Double Faces", "RemoveDoubleFaces");
 	
 	RegisterTool(toolMgr, reg, "Extrude and Move", "ExtrudeAndMove");

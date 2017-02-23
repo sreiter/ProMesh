@@ -149,9 +149,9 @@ void ToolWidget::addSpinBox(const QString& caption,
 	TruncatedDoubleSpinBox* spinner = new TruncatedDoubleSpinBox(this);
 	spinner->setLocale(QLocale(tr("C")));
 	spinner->setRange(min, max);
-	spinner->setValue(value);
 	spinner->setDecimals(numDecimals);
 	spinner->setSingleStep(stepSize);
+	spinner->setValue(value);
 	current_form_layout()->addRow(caption, spinner);
 
 	m_valueSignalMapper->setMapping(spinner, (int)m_widgets.size());
