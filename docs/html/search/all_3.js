@@ -5,6 +5,9 @@ var searchData=
   ['deselectallfaces',['DeselectAllFaces',['../group__promesh__Selection__Faces.html#gaf662f3b2671ba9949c82171207ea82cf',1,'script_reference.cpp']]],
   ['deselectallvertices',['DeselectAllVertices',['../group__promesh__Selection__Vertices.html#ga54eeef7199711dfff43c50d442278c22',1,'script_reference.cpp']]],
   ['deselectallvolumes',['DeselectAllVolumes',['../group__promesh__Selection__Volumes.html#gae75f3bf21495bea205769dafba8c8a78',1,'script_reference.cpp']]],
+  ['deselectelementsbyrangex',['DeselectElementsByRangeX',['../group__promesh__Selection__Coordinate__Range.html#ga25f21f3d91650d54d2cd63937c184a25',1,'script_reference.cpp']]],
+  ['deselectelementsbyrangey',['DeselectElementsByRangeY',['../group__promesh__Selection__Coordinate__Range.html#ga8e5b8add9238253454f494b704c06f83',1,'script_reference.cpp']]],
+  ['deselectelementsbyrangez',['DeselectElementsByRangeZ',['../group__promesh__Selection__Coordinate__Range.html#ga65d118ee9de462519a89be6ee28c1189',1,'script_reference.cpp']]],
   ['double',['double',['../group__nativeTypes.html#classdouble',1,'']]],
   ['duplicate',['Duplicate',['../group__promesh__Remeshing.html#ga65e0ca6f97c044d0a43a5e1b36f9561c',1,'script_reference.cpp']]]
 ];

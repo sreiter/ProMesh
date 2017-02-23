@@ -1,5 +1,6 @@
 var group__promesh__Selection =
 [
+    [ "Coordinate Range", "group__promesh__Selection__Coordinate__Range.html", "group__promesh__Selection__Coordinate__Range" ],
     [ "Edges", "group__promesh__Selection__Edges.html", "group__promesh__Selection__Edges" ],
     [ "Faces", "group__promesh__Selection__Faces.html", "group__promesh__Selection__Faces" ],
     [ "Marks", "group__promesh__Selection__Marks.html", "group__promesh__Selection__Marks" ],

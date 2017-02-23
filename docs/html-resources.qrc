@@ -65,6 +65,7 @@
 <file>html/group__promesh__Remeshing__Tetrahedra.html</file>
 <file>html/functions_q.html</file>
 <file>html/functions_func_d.html</file>
+<file>html/group__promesh__Selection__Coordinate__Range.js</file>
 <file>html/group__promesh__Remeshing__Edge__Operations.js</file>
 <file>html/resize.js</file>
 <file>html/group__promesh__Coordinate__Transform__Smoothing.html</file>
@@ -190,6 +191,7 @@
 <file>html/sync_on.png</file>
 <file>html/group__promesh__Remeshing__Refinement.js</file>
 <file>html/arrowdown.png</file>
+<file>html/group__promesh__Selection__Coordinate__Range.html</file>
 <file>html/group__promesh.html</file>
 <file>html/pageRecentChanges.html</file>
 <file>html/group__promesh__Remeshing__Remove__Doubles.js</file>

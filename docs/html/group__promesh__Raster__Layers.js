@@ -20,5 +20,7 @@ var group__promesh__Raster__Layers =
     [ "ExtrudeLayers", "group__promesh__Raster__Layers.html#gace52f38f64173084fd79c5b3615f688c", null ],
     [ "ExtrudeLayersAndAddProjector", "group__promesh__Raster__Layers.html#ga5a0d410386c7585fda0e49194336a285", null ],
     [ "MeshLayerBoundaries", "group__promesh__Raster__Layers.html#gadec45fe7d6a84a31e81d170e77536e92", null ],
-    [ "MeshLayers", "group__promesh__Raster__Layers.html#ga4eb2046a240360a310b532862197e90c", null ]
+    [ "MeshLayers", "group__promesh__Raster__Layers.html#ga4eb2046a240360a310b532862197e90c", null ],
+    [ "ProjectToLayer", "group__promesh__Raster__Layers.html#ga7170d71b014282647e97c9cb80e1de6f", null ],
+    [ "ProjectToTopLayer", "group__promesh__Raster__Layers.html#ga9ebb4aa2c1cd10e1ad23027cad084735", null ]
 ];

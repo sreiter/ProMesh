@@ -22,9 +22,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"group__promesh__Selection__Vertices.html",
-"group__ugbase.html#a68ef31bdc378f7d807a877609744baf2",
-"group__ugbase.html#aff716f34fee096cd4fdd5af527c6936c"
+"group__promesh__Selection__Faces.html#gaf01d3dfeb0f38cbce64dd674a77a6463",
+"group__ugbase.html#a68a6772b4e166bf955157a113e3ff654",
+"group__ugbase.html#afc7c2bd64f6d133db92132f609ee6ad0"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
