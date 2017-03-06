@@ -54,6 +54,7 @@ MeshModule::
 MeshModule (QWidget* parent) :
 	IModule(parent),
 	m_sceneInspector(NULL),
+	m_scene(NULL),
 	m_sceneInspectorMenu(NULL)
 {}
 
