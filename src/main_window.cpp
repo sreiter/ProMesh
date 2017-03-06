@@ -74,7 +74,7 @@ using namespace ug;
 //	constructor
 MainWindow::MainWindow() :
 	m_activeModule (NULL),
-	m_settings("G-CSC", "ProMesh4.4*"),
+	m_settings("G-CSC", "ProMesh4.3.8"),
 	m_selectionElement(0),
 	m_selectionMode(0),
 	m_curSelectionMode(-1),
@@ -549,16 +549,13 @@ QToolBar* MainWindow::createVisibilityToolbar()
 	m_bgColor->setFixedWidth(24);
 	m_bgColor->setFixedHeight(24);
 
-	QColor defaultColor(100, 100, 100);
+	QString strDefColor("#666666");
 	if(settings().contains("bg-color")){
-		QVariant value = settings().value("bg-color", defaultColor);
-		if(value.canConvert<QColor>())
-			m_bgColor->setColor(value.value<QColor>());
-		else
-			m_bgColor->setColor(defaultColor);
+		QVariant value = settings().value("bg-color", strDefColor);
+		m_bgColor->setColor(QColor(value.toString()));
 	}
 	else
-		m_bgColor->setColor(defaultColor);
+		m_bgColor->setColor(QColor(strDefColor));
 
 	return visToolBar;
 }
@@ -993,7 +990,7 @@ void MainWindow::backDrawModeChanged(int newMode)
 void MainWindow::backgroundColorChanged(const QColor& color)
 {
 	m_pView->set_background_color(color);
-	settings().setValue("bg-color", color);
+	settings().setValue("bg-color", color.name());
 }
 
 void MainWindow::selectionElementChanged(int newElement)
