@@ -37,7 +37,12 @@ class MatrixWidget : public QWidget
 	Q_OBJECT
 
 	public:
-		MatrixWidget(int numRows, int numCols, QWidget* parent);
+	/**	If specified, colLabels must have 'numRows' entries.*/
+		MatrixWidget(	int numRows,
+						int numCols,
+						QWidget* parent,
+						const char** colLabels = NULL);
+
 		virtual ~MatrixWidget();
 
 		double value(int row, int col) const;
@@ -45,6 +50,10 @@ class MatrixWidget : public QWidget
 
 	signals:
 		void valueChanged();
+
+	protected slots:
+		void valueChanged(double);
+		void textEdited(const QString& newText);
 		
 	protected:
 		TruncatedDoubleSpinBox* get_spin_box(int row, int col) const;
@@ -54,6 +63,20 @@ class MatrixWidget : public QWidget
 		int m_numCols;
 
 		std::vector<TruncatedDoubleSpinBox*>	m_spinBoxes;
+		QLineEdit*								m_lineEdit;
+		bool									m_bRefreshingCoords;
 };
+
+
+class LineEdit_ClearBeforeDrop : public QLineEdit
+{
+	Q_OBJECT
+	public:
+		LineEdit_ClearBeforeDrop (QWidget* parent);
+		virtual ~LineEdit_ClearBeforeDrop ()	{};
+	protected:
+		virtual void dropEvent (QDropEvent* de);
+};
+
 
 #endif /* MATRIXWIDGET_H_ */

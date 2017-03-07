@@ -213,7 +213,10 @@ void ToolWidget::addTextBox(const QString& caption, const QString& text)
 
 void ToolWidget::addVector(const QString& caption, int size, double* values)
 {
-	MatrixWidget* mat = new MatrixWidget(size, 1, this);
+	const char* coordLabels[] = {"x", "y", "z", "w"};
+	const char** labels = size <= 4 ? coordLabels : NULL;
+	MatrixWidget* mat = new MatrixWidget(size, 1, this, labels);
+
 	if(values){
 		for(int i = 0; i < size; ++i)
 			mat->set_value(i, 0, values[i]);
@@ -223,7 +226,10 @@ void ToolWidget::addVector(const QString& caption, int size, double* values)
 			mat->set_value(i, 0, 0);
 	}
 
-	current_form_layout()->addRow(caption, mat);
+	mat->setContentsMargins(5, 0, 0, 0);
+
+	current_form_layout()->addRow(new QLabel(caption, this));
+	current_form_layout()->addRow(mat);
 	m_valueSignalMapper->setMapping(mat, (int)m_widgets.size());
 	connect(mat, SIGNAL(valueChanged()), m_valueSignalMapper, SLOT(map()));
 	m_widgets.push_back(WidgetEntry(mat, WT_MATRIX));
