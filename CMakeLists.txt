@@ -105,13 +105,10 @@ set(ProMeshSRC	src/app.cpp
 				src/tools/tool_manager.cpp
 				src/tools/standard_tools.cpp
 				src/tools/tool_dialog.cpp
-				src/tools/selection_tools.cpp
-				src/tools/mark_tools.cpp
 				src/tools/grid_generation_tools.cpp
 				src/tools/coordinate_transform_tools.cpp
 				src/tools/topology_tools.cpp
 				src/tools/info_tools.cpp
-				src/tools/subset_tools.cpp
 				src/tools/camera_tools.cpp
 				src/tools/fracture_tools.cpp
 				src/tools/refinement_tools.cpp

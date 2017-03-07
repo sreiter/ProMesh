@@ -328,7 +328,19 @@ class RegistryTool : public ITool{
 					case Variant::VT_CSTRING:
 					case Variant::VT_STDSTRING:
 					{
-						dlg->addTextBox(qParamName, tr(""));
+						QString val;
+						if(!options.empty()){
+							for(size_t iopt = 0; iopt < options.size(); ++iopt){
+								tokens = TokenizeTrimString(options[iopt], '=');
+								if(tokens.size() == 2){
+									if(tokens[0] == "value"){
+										tokens[1] = ReplaceAll(tokens[1], string("\""), string(""));
+										val = QString(tokens[1].c_str());
+									}
+								}
+							}
+						}
+						dlg->addTextBox(qParamName, val);
 					}break;
 
 					case Variant::VT_POINTER:

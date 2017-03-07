@@ -68,18 +68,13 @@ void RegisterStandardTools(ToolManager* toolMgr)
 //	camera
 	RegisterCameraTools(toolMgr);
 	RegisterGridGenerationTools(toolMgr);
+	RegisterInfoTools(toolMgr);
+
 	RegisterRegistryTools(toolMgr);
-	RegisterCoordinateTransformTools(toolMgr);
 	
-
-// //	selection
-// 	RegisterSelectionTools(toolMgr);
-
-// //	selection | marks
-// 	RegisterMarkTools(toolMgr);
-
-// //	subsets
-// 	RegisterSubsetTools(toolMgr);
+	RegisterCoordinateTransformTools(toolMgr);
+	RegisterFracToLayerTools(toolMgr);
+	RegisterScriptTools(toolMgr);
 
 // //	remeshing | refinement
 // 	RegisterRefinementTools(toolMgr);
@@ -89,13 +84,5 @@ void RegisterStandardTools(ToolManager* toolMgr)
 
 // //	remeshing | optimization
 // 	RegisterRemeshingTools(toolMgr);
-
-// //	remeshing | layers
-// 	RegisterFracToLayerTools(toolMgr);
-
-// //	info
-	RegisterInfoTools(toolMgr);
-
-//	scripts
-	RegisterScriptTools(toolMgr);
+	
 }
