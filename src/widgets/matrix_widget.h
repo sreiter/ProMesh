@@ -59,6 +59,7 @@ class MatrixWidget : public QWidget
 		void textEdited(const QString& newText);
 		
 	protected:
+		void update_text();
 		TruncatedDoubleSpinBox* get_spin_box(int row, int col) const;
 
 	private:

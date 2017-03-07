@@ -33,16 +33,10 @@
 void RegisterStandardTools(ToolManager* toolMgr);
 
 void RegisterCameraTools(ToolManager* toolMgr);
-void RegisterSelectionTools(ToolManager* toolMgr);
-void RegisterMarkTools(ToolManager* toolMgr);
-void RegisterRemeshingTools(ToolManager* toolMgr);
 void RegisterGridGenerationTools(ToolManager* toolMgr);
 void RegisterCoordinateTransformTools(ToolManager* toolMgr);
 void RegisterInfoTools(ToolManager* toolMgr);
-void RegisterTopologyTools(ToolManager* toolMgr);
-void RegisterSubsetTools(ToolManager* toolMgr);
 void RegisterFracToLayerTools(ToolManager* toolMgr);
-void RegisterRefinementTools(ToolManager* toolMgr);
 
 void RegisterRegistryTools(ToolManager* toolMgr);
 

@@ -12,6 +12,10 @@ v 4.3.8
 Changes and additions:
 - Changed registration procedure of tools
 - All coordinate input boxes now have a coherent design and accept text input
+- New shortcuts for Collapse (Merge), SplitEdge, SwapEdge, Refine.
+- Remeshing-EdgeOperations and Remeshing-Polylines are now merged into
+  Remeshing-Edges
+- Renamed Remeshing-Triangulation to Remeshing-Triangles
 
 Fixes:
 - Background color is now stored in a different way to avoid some problems on

@@ -8,20 +8,18 @@ GRID GENERATION:
 - v:		  Create a vertex at the cursor position and connect it to
 			  selected vertices by edges.
 
-SUBSETS:
-- Alt + s:    Assign Subset
-
 MARKS:
 - m:          Mark Selection
 
 REFINEMENT:
-- Alt + r:    Refine
+- r:          Refine
 
 TOPOLOGY:
 - Delete:     Erase Selected Elements
-- Alt + m:    Merge
-- Alt + c:    Collapse Edge
-- Alt + w:    Swap Edge
+- d:          Duplicate
+- o:          Collapse (Merge)
+- t:          Split Edge
+- w:          Swap Edge
 - q:          Convert To Quadrilaterals
               (selected faces and neighbors of selected edges)
 

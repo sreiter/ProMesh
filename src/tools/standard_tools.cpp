@@ -76,13 +76,7 @@ void RegisterStandardTools(ToolManager* toolMgr)
 	RegisterFracToLayerTools(toolMgr);
 	RegisterScriptTools(toolMgr);
 
-// //	remeshing | refinement
-// 	RegisterRefinementTools(toolMgr);
-
 // //	remeshing | topology
 // 	RegisterTopologyTools(toolMgr);
 
-// //	remeshing | optimization
-// 	RegisterRemeshingTools(toolMgr);
-	
 }

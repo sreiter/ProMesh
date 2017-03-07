@@ -100,21 +100,18 @@ set(ProMeshSRC	src/app.cpp
 				src/scene/lg_scene.cpp
 				src/scene/lg_tmp_methods.cpp
 				src/scene/plane_sphere.cpp
+				src/tools/camera_tools.cpp
+				src/tools/coordinate_transform_tools.cpp
+				src/tools/grid_generation_tools.cpp
+				src/tools/info_tools.cpp
+				src/tools/fracture_tools.cpp
+				src/tools/registry_tools.cpp
 				src/scene/scene_interface.cpp
-				src/tools/tool_frac_to_layer.cpp
-				src/tools/tool_manager.cpp
+				src/tools/script_tools.cpp
 				src/tools/standard_tools.cpp
 				src/tools/tool_dialog.cpp
-				src/tools/grid_generation_tools.cpp
-				src/tools/coordinate_transform_tools.cpp
-				src/tools/topology_tools.cpp
-				src/tools/info_tools.cpp
-				src/tools/camera_tools.cpp
-				src/tools/fracture_tools.cpp
-				src/tools/refinement_tools.cpp
-				src/tools/registry_tools.cpp
-				src/tools/remeshing_tools.cpp
-				src/tools/script_tools.cpp
+				src/tools/tool_frac_to_layer.cpp
+				src/tools/tool_manager.cpp
 				src/util/file_util.cpp
 				src/modules/module_interface.cpp
 				src/modules/mesh_module.cpp

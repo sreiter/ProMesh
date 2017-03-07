@@ -98,7 +98,6 @@ MatrixWidget(
 			m_grid->addWidget(box, row, col + colOffset, spinBoxAlignment);
 
 			m_spinBoxes.push_back(box);
-			connect(box, SIGNAL(valueChanged(double)), this, SIGNAL(valueChanged()));
 		}
 	}
 
@@ -137,9 +136,16 @@ double MatrixWidget::value(int row, int col) const
 
 void MatrixWidget::set_value(int row, int col, double value)
 {
+	if(m_bRefreshingCoords)
+		return;
+
+	m_bRefreshingCoords = true;
 	TruncatedDoubleSpinBox* box = get_spin_box(row, col);
-	if(box)
+	if(box){
 		box->setValue(value);
+		update_text();
+	}
+	m_bRefreshingCoords = false;
 }
 
 TruncatedDoubleSpinBox* MatrixWidget::get_spin_box(int row, int col) const
@@ -160,16 +166,10 @@ valueChanged(double)
 
 	m_bRefreshingCoords = true;
 
-	std::stringstream ss;
-	for(size_t i = 0; i < m_spinBoxes.size(); ++i){
-		ss << m_spinBoxes[i]->cleanText().toStdString();
-		if(i + 1 < m_spinBoxes.size())
-			ss << " ";
-	}
-
-	m_lineEdit->setText(ss.str().c_str());
+	update_text();
 
 	m_bRefreshingCoords = false;
+	emit valueChanged();
 }
 
 void MatrixWidget::
@@ -207,4 +207,18 @@ textEdited(const QString& newText)
 	}
 
 	m_bRefreshingCoords = false;
+	emit valueChanged();
+}
+
+void MatrixWidget::
+update_text()
+{
+	std::stringstream ss;
+	for(size_t i = 0; i < m_spinBoxes.size(); ++i){
+		ss << m_spinBoxes[i]->cleanText().toStdString();
+		if(i + 1 < m_spinBoxes.size())
+			ss << " ";
+	}
+
+	m_lineEdit->setText(ss.str().c_str());
 }
