@@ -34,6 +34,8 @@ class ToolManager;
 class ToolBrowser;
 class ProjectorWidget;
 class ClipPlaneWidget;
+class MatrixWidget;
+
 
 
 class MeshModule : public IModule {
@@ -72,6 +74,8 @@ protected slots:
 	void browseUserScripts();
 	void newScript();
 	void editScript();
+	void refreshCoordinates();
+	void coordinatesChanged();
 
 private:
 	SceneInspector* 			m_sceneInspector;
@@ -90,5 +94,6 @@ private:
 
 	ClipPlaneWidget* 	m_clipPlaneWidget;
 	ProjectorWidget*	m_projectorWidget;
+	MatrixWidget*		m_coordsWidget;
 };
 #endif	//__H__UG_mesh_module

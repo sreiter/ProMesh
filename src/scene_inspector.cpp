@@ -82,6 +82,9 @@ void SceneInspector::setScene(IScene* scene)
 
 void SceneInspector::mousePressEvent(QMouseEvent * event)
 {
+	const int oldActiveObjectIndex = getActiveObjectIndex();
+	const int oldActiveSubsetIndex = getActiveSubsetIndex();
+
 	QModelIndex index = indexAt(event->pos());
 	if(index.isValid()){
 		if(index.column() == 1)
@@ -95,7 +98,15 @@ void SceneInspector::mousePressEvent(QMouseEvent * event)
 		}
 	}
 	QTreeView::mousePressEvent(event);
-	emitSubsetChanged();
+	const int newActiveObjectIndex = getActiveObjectIndex();
+	const int newActiveSubsetIndex = getActiveSubsetIndex();
+
+	if(newActiveObjectIndex != oldActiveObjectIndex){
+		emit objectChanged(getActiveObject());
+		emit subsetChanged(getActiveObject(), newActiveSubsetIndex);
+	}
+	else if(newActiveSubsetIndex != oldActiveSubsetIndex)
+		emit subsetChanged(getActiveObject(), newActiveSubsetIndex);
 }
 
 void SceneInspector::mouseReleaseEvent(QMouseEvent* event)
@@ -139,14 +150,15 @@ void SceneInspector::setActiveObject(int index)
 {
 	if(index >= 0){
 		this->setCurrentIndex(m_model->index(index, 0));
-		emitSubsetChanged();
+		emit objectChanged(getActiveObject());
+		emit subsetChanged(getActiveObject(), getActiveSubsetIndex());
 	}
 }
 
 void SceneInspector::setActiveSubset(int objIndex, int subsetIndex)
 {
 	this->setCurrentIndex(m_model->index(subsetIndex, 0, m_model->index(objIndex, 0)));
-	emitSubsetChanged();
+	emit subsetChanged(getActiveObject(), getActiveSubsetIndex());
 }
 
 void SceneInspector::refreshView()
@@ -169,9 +181,4 @@ void SceneInspector::showSubset(int objIndex, int subsetIndex)
 	QModelIndex index = m_model->index(subsetIndex, 1, objModelIndex);
 	if(index.isValid())
 		m_model->setData(index, QVariant(true), SIDR_VISIBLE);
-}
-
-void SceneInspector::emitSubsetChanged()
-{
-	emit subsetChanged(getActiveObject(), getActiveSubsetIndex());
 }

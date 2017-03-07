@@ -65,14 +65,13 @@ class SceneInspector : public QTreeView
 
 	signals:
 		void mouseClicked(QMouseEvent* event);
+		void objectChanged(ISceneObject* obj);
 		void subsetChanged(ISceneObject* obj, int subsetIndex);
 
 	public slots:
 		void refreshView();
 
 	protected:
-		void emitSubsetChanged();
-
 		SceneItemModel*	m_model;
 };
 

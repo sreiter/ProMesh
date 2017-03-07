@@ -42,6 +42,8 @@
 #include "widgets/property_widget.h"
 #include "widgets/tool_browser_widget.h"
 #include "widgets/widget_list.h"
+#include "widgets/matrix_widget.h"
+#include "tools/coordinate_transform_tools.h"
 
 using namespace std;
 using namespace ug;
@@ -77,7 +79,7 @@ activate(SceneInspector* sceneInspector, LGScene* scene)
 	m_sceneInspector = sceneInspector;
 
 	if(m_dockWidgets.empty()){
-	//	create the projector dock
+	//	projector dock
 		QDockWidget* pProjectorDock = new QDockWidget(tr("Projectors"), parentWidget());
 		pProjectorDock->setFeatures(QDockWidget::NoDockWidgetFeatures);
 		pProjectorDock->setObjectName(tr("projector_dock"));
@@ -87,7 +89,8 @@ activate(SceneInspector* sceneInspector, LGScene* scene)
 		pProjectorDock->setWidget(projectorList);
 		m_dockWidgets.push_back(make_pair(Qt::RightDockWidgetArea, pProjectorDock));
 
-	//	create the clip-plane widget
+
+	//	clip-plane dock
 		QDockWidget* pClipPlaneDock= new QDockWidget(tr("Clip Planes"), parentWidget());
 		pClipPlaneDock->setFeatures(QDockWidget::NoDockWidgetFeatures);
 		pClipPlaneDock->setObjectName(tr("clip_plane_widget_dock"));
@@ -111,7 +114,7 @@ activate(SceneInspector* sceneInspector, LGScene* scene)
 		}
 
 
-	//	create the tool browser
+	//	tool browser dock
 		QDockWidget* toolBrowserDock = new QDockWidget(tr("Tool Browser"), parentWidget());
 		toolBrowserDock->setFeatures(QDockWidget::NoDockWidgetFeatures);
 		toolBrowserDock->setObjectName(tr("tool_browser_dock"));
@@ -121,6 +124,25 @@ activate(SceneInspector* sceneInspector, LGScene* scene)
 		m_toolBrowser->setObjectName(tr("tool_browser"));
 		toolBrowserDock->setWidget(m_toolBrowser);
 		m_dockWidgets.push_back(make_pair(Qt::LeftDockWidgetArea, toolBrowserDock));
+
+
+	//	coordinate dock
+		QDockWidget* coordinatesDock = new QDockWidget(tr("Coordinates"), parentWidget());
+		coordinatesDock->setFeatures(QDockWidget::NoDockWidgetFeatures);
+		coordinatesDock->setObjectName(tr("coordinates_dock"));
+		const char* coordLabels[] = {"x", "y", "z"};
+		m_coordsWidget = new MatrixWidget(3, 1, coordinatesDock, coordLabels, true);
+		connect(scene, SIGNAL(geometry_changed()), this, SLOT(refreshCoordinates()));
+		connect(scene, SIGNAL(selection_changed()), this, SLOT(refreshCoordinates()));
+		connect(m_sceneInspector, SIGNAL(objectChanged(ISceneObject*)), this, SLOT(refreshCoordinates()));
+		connect(m_coordsWidget, SIGNAL(valueChanged()), this, SLOT(coordinatesChanged()));
+
+		// m_coordsWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+		// QHBoxLayout* coordinatesLayout = new QHBoxLayout(coordinatesDock);
+		// coordinatesLayout->addWidget(m_coordsWidget);
+		coordinatesDock->setWidget(m_coordsWidget);
+		m_dockWidgets.push_back(make_pair(Qt::LeftDockWidgetArea, coordinatesDock));
+
 
 	//	script menu
 		QAction* actNewScript = new QAction(tr("New Script"), parentWidget());
@@ -174,11 +196,13 @@ deactivate()
 {
 	if(m_sceneInspector){
 		m_sceneInspector->disconnect(m_projectorWidget);
+		m_sceneInspector->disconnect(this);
 		m_sceneInspector = NULL;
 	}
 
 	if(m_scene){
 		m_scene->disconnect(m_projectorWidget);
+		m_scene->disconnect(this);
 		m_scene = NULL;
 	}
 }
@@ -276,5 +300,31 @@ void MeshModule::editScript()
 
 	if(!fileName.isEmpty()){
 		QDesktopServices::openUrl(QUrl("file:///" + fileName));
+	}
+}
+
+void MeshModule::refreshCoordinates()
+{
+	LGObject* obj = app::getActiveObject();
+	vector3 center(0, 0, 0);
+	if(obj){
+	//	calculate the center of the current selection
+		Grid::VertexAttachmentAccessor<APosition> aaPos(obj->grid(), aPosition);
+		CalculateCenter(center, obj->selector(), aaPos);
+	}
+
+	for(int i = 0; i < 3; ++i)
+		m_coordsWidget->set_value(i, 0, center[i]);
+}
+
+void MeshModule::coordinatesChanged()
+{
+	LGObject* obj = app::getActiveObject();
+	if(obj){
+		vector3 c(0, 0, 0);
+		for(int i = 0; i < 3; ++i)
+			c[i] = m_coordsWidget->value(i, 0);
+		promesh::MoveSelectionTo(obj, c);
+		obj->geometry_changed();
 	}
 }

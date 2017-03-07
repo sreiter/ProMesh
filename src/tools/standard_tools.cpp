@@ -67,12 +67,10 @@ void RegisterStandardTools(ToolManager* toolMgr)
 
 //	camera
 	RegisterCameraTools(toolMgr);
-
-// //	grid generation
 	RegisterGridGenerationTools(toolMgr);
-
-// //	coordinate transform
-// 	RegisterCoordinateTransformTools(toolMgr);
+	RegisterRegistryTools(toolMgr);
+	RegisterCoordinateTransformTools(toolMgr);
+	
 
 // //	selection
 // 	RegisterSelectionTools(toolMgr);
@@ -97,9 +95,6 @@ void RegisterStandardTools(ToolManager* toolMgr)
 
 // //	info
 	RegisterInfoTools(toolMgr);
-
-//	registry
-	RegisterRegistryTools(toolMgr);
 
 //	scripts
 	RegisterScriptTools(toolMgr);

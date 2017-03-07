@@ -47,7 +47,12 @@ dropEvent (QDropEvent* de)
 
 
 MatrixWidget::
-MatrixWidget(int numRows, int numCols, QWidget* parent, const char** labels) :
+MatrixWidget(
+		int numRows,
+		int numCols,
+		QWidget* parent,
+		const char** labels,
+		bool stretchValues) :
 	QWidget(parent),
 	m_numRows(numRows),
 	m_numCols(numCols),
@@ -55,21 +60,23 @@ MatrixWidget(int numRows, int numCols, QWidget* parent, const char** labels) :
 	m_bRefreshingCoords(false)
 {
 //	create a grid layout
-	QGridLayout* grid = new QGridLayout(this);
-	grid->setSpacing(0);
-	grid->setContentsMargins(0, 0, 0, 0);
+	m_grid = new QGridLayout(this);
+	m_grid->setSpacing(0);
+	m_grid->setContentsMargins(0, 0, 0, 0);
 
 	const bool useLabels = labels || numCols == 1;
 	int colOffset = useLabels ? 1 : 0;
 	Qt::Alignment spinBoxAlignment = useLabels ? Qt::AlignLeft : Qt::AlignCenter;
 
+	if(useLabels && stretchValues)
+		m_grid->setColumnStretch(1, 1);
 
 //	create the spin boxes
 	for(int col = 0; col < numCols; ++col){
 		for(int row = 0; row < numRows; ++row){
 			if(labels && col == 0){
-				QLabel* lbl = new QLabel(QString(labels[row]).append(" :"), this);
-				grid->addWidget(lbl, row, 0, Qt::AlignRight);
+				QLabel* lbl = new QLabel(QString(labels[row]).append(" "), this);
+				m_grid->addWidget(lbl, row, 0, Qt::AlignRight);
 			}
 			TruncatedDoubleSpinBox* box = new TruncatedDoubleSpinBox(this);
 			box->setDecimals(9);
@@ -88,7 +95,7 @@ MatrixWidget(int numRows, int numCols, QWidget* parent, const char** labels) :
 				box->setValue(0);
 
 
-			grid->addWidget(box, row, col + colOffset, spinBoxAlignment);
+			m_grid->addWidget(box, row, col + colOffset, spinBoxAlignment);
 
 			m_spinBoxes.push_back(box);
 			connect(box, SIGNAL(valueChanged(double)), this, SIGNAL(valueChanged()));
@@ -102,11 +109,17 @@ MatrixWidget(int numRows, int numCols, QWidget* parent, const char** labels) :
 
 		m_lineEdit = new LineEdit_ClearBeforeDrop(this);
 		m_lineEdit->setText(txt);
+		if(!stretchValues && !m_spinBoxes.empty())
+			m_lineEdit->setFixedWidth(m_spinBoxes.front()->width());
+		else{
+			m_lineEdit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+		}
+
 		connect(m_lineEdit, SIGNAL(textEdited(const QString&)),
 				this, SLOT(textEdited(const QString&)));
 
-		grid->addWidget(new QLabel(tr("text: "), this), numRows, 0, Qt::AlignRight);
-		grid->addWidget(m_lineEdit, numRows, 1, Qt::AlignLeft);
+		m_grid->addWidget(new QLabel(tr("text "), this), numRows, 0, Qt::AlignRight);
+		m_grid->addWidget(m_lineEdit, numRows, 1, Qt::AlignLeft);
 	}
 }
 

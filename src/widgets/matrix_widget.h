@@ -30,6 +30,8 @@
 
 #include <vector>
 #include <QWidget>
+#include <QLineEdit>
+
 #include "truncated_double_spin_box.h"
 
 class MatrixWidget : public QWidget
@@ -41,13 +43,14 @@ class MatrixWidget : public QWidget
 		MatrixWidget(	int numRows,
 						int numCols,
 						QWidget* parent,
-						const char** colLabels = NULL);
+						const char** colLabels = NULL,
+						bool stretchValues = false);
 
 		virtual ~MatrixWidget();
 
 		double value(int row, int col) const;
 		void set_value(int row, int col, double value);
-
+		
 	signals:
 		void valueChanged();
 
@@ -62,6 +65,7 @@ class MatrixWidget : public QWidget
 		int	m_numRows;
 		int m_numCols;
 
+		QGridLayout* 							m_grid;
 		std::vector<TruncatedDoubleSpinBox*>	m_spinBoxes;
 		QLineEdit*								m_lineEdit;
 		bool									m_bRefreshingCoords;
@@ -74,6 +78,13 @@ class LineEdit_ClearBeforeDrop : public QLineEdit
 	public:
 		LineEdit_ClearBeforeDrop (QWidget* parent);
 		virtual ~LineEdit_ClearBeforeDrop ()	{};
+		virtual QSize sizeHint () const
+		{
+			QSize sh = QLineEdit::sizeHint();
+			sh.setWidth(200);
+			return sh;
+		};
+
 	protected:
 		virtual void dropEvent (QDropEvent* de);
 };

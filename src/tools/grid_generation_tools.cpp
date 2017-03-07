@@ -1054,7 +1054,7 @@ public:
 void RegisterGridGenerationTools(ToolManager* toolMgr)
 {
 	toolMgr->register_tool(new ToolNewMesh);
-	toolMgr->register_tool(new ToolNewCSGObject);
+	// toolMgr->register_tool(new ToolNewCSGObject);
 	toolMgr->register_tool(new ToolNewMeshFromSelection);
 	toolMgr->register_tool(new ToolMergeMeshes);
 

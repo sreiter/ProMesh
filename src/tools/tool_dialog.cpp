@@ -226,7 +226,7 @@ void ToolWidget::addVector(const QString& caption, int size, double* values)
 			mat->set_value(i, 0, 0);
 	}
 
-	mat->setContentsMargins(5, 0, 0, 0);
+	mat->setContentsMargins(10, 0, 0, 0);
 
 	current_form_layout()->addRow(new QLabel(caption, this));
 	current_form_layout()->addRow(mat);
