@@ -78,6 +78,7 @@ void ToolManager::remove_tool(ITool* tool)
 void ToolManager::set_group_icon(const std::string& grpName, const char* iconName)
 {
 	m_groupIconMap[grpName] = QIcon(iconName);
+	add_known_group(grpName);
 }
 
 QIcon ToolManager::group_icon(const std::string& grpName) const
@@ -87,6 +88,15 @@ QIcon ToolManager::group_icon(const std::string& grpName) const
 		return i->second;
 	}
 	return m_defaultIcon;
+}
+
+void ToolManager::add_known_group(const std::string& grpName)
+{
+	for(size_t i = 0; i < m_knownGroups.size(); ++i){
+		if(m_knownGroups[i] == grpName)
+			return;
+	}
+	m_knownGroups.push_back(grpName);
 }
 
 void ToolManager::launchTool(int toolID)

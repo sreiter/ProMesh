@@ -44,7 +44,7 @@ void RegisterSubsetTools(ToolManager* toolMgr);
 void RegisterFracToLayerTools(ToolManager* toolMgr);
 void RegisterRefinementTools(ToolManager* toolMgr);
 
-void RegsiterRegistryTools(ToolManager* toolMgr);
+void RegisterRegistryTools(ToolManager* toolMgr);
 
 void RegisterScriptTools(ToolManager* toolMgr);
 int RefreshScriptTools(ToolManager* toolMgr);

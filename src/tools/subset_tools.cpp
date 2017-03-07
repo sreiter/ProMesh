@@ -532,8 +532,6 @@ class ToolAssignSubsetsByElementType : public ITool
 
 void RegisterSubsetTools(ToolManager* toolMgr)
 {
-	toolMgr->set_group_icon("Subsets", ":images/tool_subsets.png");
-
 	toolMgr->register_tool(new ToolAssignSubset, Qt::Key_S, SMK_ALT);
 	toolMgr->register_tool(new ToolAssignNewSubset);
 	toolMgr->register_tool(new ToolMoveSubset);

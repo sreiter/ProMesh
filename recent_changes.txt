@@ -8,6 +8,18 @@ Recent changes:
 
 
 -------------------------------------------------------------------------------
+v 4.3.8
+Changes and additions:
+- Changed registration procedure of tools
+- All coordinate input boxes now have a coherent design and accept text input
+
+Fixes:
+- Background color is now stored in a different way to avoid some problems on
+  some systems
+
+
+
+-------------------------------------------------------------------------------
 v 4.3.7
 Changes and additions:
 - After Remeshing-PlaneCut, only new edges along the cut are selected now.

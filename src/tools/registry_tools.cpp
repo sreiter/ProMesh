@@ -412,7 +412,56 @@ void RegisterTool(ToolManager* toolMgr,
 }
 
 
-void RegsiterRegistryTools(ToolManager* toolMgr)
+void RegisterRegistryTools(ToolManager* toolMgr)
+{
+	typedef ProMeshRegistry::func_iter_t func_iter_t;
+
+	ProMeshRegistry& reg = GetProMeshRegistry();
+
+	string toolName;
+
+	for(func_iter_t i_func = reg.functions_begin();
+		i_func != reg.functions_end(); ++i_func)
+	{
+		const detail::ProMeshFunction& pf = *i_func;
+
+		if(!pf.has_target(RT_PROMESH))
+			continue;
+
+		const ExportedFunction& o = *pf.exported_function();
+		if(o.num_parameter() == 0)
+			continue;
+
+		if(strcmp(o.parameter_class_name(0), "Mesh") != 0)
+			continue;
+
+		const string& funcName = o.name();
+		toolName.clear();
+		toolName.reserve(funcName.size() + 10);
+
+		bool lastWasUpper = true;
+		for(string::const_iterator i = funcName.begin(); i != funcName.end(); ++i)
+		{
+			if(isupper(*i)){
+				if(!lastWasUpper)
+					toolName.push_back(' ');
+				lastWasUpper = true;
+			}
+			else
+				lastWasUpper = false;
+
+
+			toolName.push_back(*i);
+		}
+
+		RegistryTool* tool = new RegistryTool(toolName, &o);
+		// toolMgr->register_tool(tool, key, shortcutModifierKeys);
+		toolMgr->register_tool(tool);
+	}
+}
+
+
+void RegisterRegistryTools_OLD(ToolManager* toolMgr)
 {
 	Registry& reg = GetUGRegistry();
 	RegisterTool(toolMgr, reg, "Measure Grid Length", "MeasureGridLength");
@@ -489,7 +538,7 @@ void RegsiterRegistryTools(ToolManager* toolMgr)
 //the code below automatically registers all methods from the ProMesh plugin.
 //As soon as all default values are adjusted in those methods, the code below should
 //be used instead of the code above.
-// void RegsiterRegistryTools(ToolManager* toolMgr)
+// void RegisterRegistryTools(ToolManager* toolMgr)
 // {
 // 	using namespace ug::promesh;
 // 	ProMeshRegistry& pmreg = GetProMeshRegistry();

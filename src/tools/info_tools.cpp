@@ -331,8 +331,6 @@ class ToolPrintLeastSquaresPlane: public ITool
 
 void RegisterInfoTools(ToolManager* toolMgr)
 {
-	toolMgr->set_group_icon("Info", ":images/tool_info.png");
-
 	toolMgr->register_tool(new ToolPrintSelectionCenter, Qt::Key_I, SMK_ALT);
 	toolMgr->register_tool(new ToolPrintSelectionDirection);
 	toolMgr->register_tool(new ToolPrintGeometryInfo, Qt::Key_I);

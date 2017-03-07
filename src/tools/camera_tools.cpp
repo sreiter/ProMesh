@@ -202,8 +202,6 @@ class ToolUnhideElements : public ITool
 
 void RegisterCameraTools(ToolManager* toolMgr)
 {
-	toolMgr->set_group_icon("Camera", ":images/tool_camera.png");
-
 	toolMgr->register_tool(new ToolCenterObject);
 	toolMgr->register_tool(new ToolCenterSelection);
 	toolMgr->register_tool(new ToolTopView);

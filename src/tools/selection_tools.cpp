@@ -1206,8 +1206,6 @@ class ToolCloseSelection: public ITool
 
 void RegisterSelectionTools(ToolManager* toolMgr)
 {
-	toolMgr->set_group_icon("Selection", ":images/tool_selection.png");
-
 //	GENERAL TOOLS
 	toolMgr->register_tool(new ToolClearSelection);
 	toolMgr->register_tool(new ToolSelectAll);

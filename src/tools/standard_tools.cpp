@@ -56,41 +56,50 @@ using namespace ug;
 void RegisterStandardTools(ToolManager* toolMgr)
 {
 
+	toolMgr->set_group_icon("Camera", ":images/tool_camera.png");
+	toolMgr->set_group_icon("Grid Generation", ":images/tool_geometry_generation.png");
+	toolMgr->set_group_icon("Coordinate Transform", ":images/tool_transform.png");
+	toolMgr->set_group_icon("Selection", ":images/tool_selection.png");
+	toolMgr->set_group_icon("Subsets", ":images/tool_subsets.png");
+	toolMgr->set_group_icon("Remeshing", ":images/tool_remeshing.png");
+	toolMgr->set_group_icon("Info", ":images/tool_info.png");
+	toolMgr->set_group_icon("Scripts", ":images/tool_scripts.png");
+
 //	camera
 	RegisterCameraTools(toolMgr);
 
-//	grid generation
+// //	grid generation
 	RegisterGridGenerationTools(toolMgr);
 
-//	coordinate transform
-	RegisterCoordinateTransformTools(toolMgr);
+// //	coordinate transform
+// 	RegisterCoordinateTransformTools(toolMgr);
 
-//	selection
-	RegisterSelectionTools(toolMgr);
+// //	selection
+// 	RegisterSelectionTools(toolMgr);
 
-//	selection | marks
-	RegisterMarkTools(toolMgr);
+// //	selection | marks
+// 	RegisterMarkTools(toolMgr);
 
-//	subsets
-	RegisterSubsetTools(toolMgr);
+// //	subsets
+// 	RegisterSubsetTools(toolMgr);
 
-//	remeshing | refinement
-	RegisterRefinementTools(toolMgr);
+// //	remeshing | refinement
+// 	RegisterRefinementTools(toolMgr);
 
-//	remeshing | topology
-	RegisterTopologyTools(toolMgr);
+// //	remeshing | topology
+// 	RegisterTopologyTools(toolMgr);
 
-//	remeshing | optimization
-	RegisterRemeshingTools(toolMgr);
+// //	remeshing | optimization
+// 	RegisterRemeshingTools(toolMgr);
 
-//	remeshing | layers
-	RegisterFracToLayerTools(toolMgr);
+// //	remeshing | layers
+// 	RegisterFracToLayerTools(toolMgr);
 
-//	info
+// //	info
 	RegisterInfoTools(toolMgr);
 
 //	registry
-	RegsiterRegistryTools(toolMgr);
+	RegisterRegistryTools(toolMgr);
 
 //	scripts
 	RegisterScriptTools(toolMgr);

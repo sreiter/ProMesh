@@ -118,6 +118,11 @@ void ToolBrowser::refresh(ToolManager* toolMgr)
 		m_layout->addWidget(m_iconTab);
 	}
 
+//	add empty groups to preserve the group order
+	for(size_t i = 0; i < toolMgr->num_known_groups(); ++i)
+		group_container(toolMgr->known_group(i));
+
+
 //	the revision is used to identify unused tool-entries
 	++m_revision;
 

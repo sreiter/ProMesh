@@ -487,8 +487,6 @@ public:
 
 void RegisterRemeshingTools(ToolManager* toolMgr)
 {
-	toolMgr->set_group_icon("Remeshing", ":images/tool_remeshing.png");
-
 	toolMgr->register_tool(new ToolConvertToTriangles);
 
 	toolMgr->register_tool(new ToolTriangleFill);

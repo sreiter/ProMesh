@@ -418,7 +418,6 @@ void RegisterScriptTools(ToolManager* toolMgr)
 	SmartPtr<luashell::LuaShell> shell = make_sp(new luashell::LuaShell());
 	ParseDirAndCreateTools(toolMgr, QDir(":/scripts"), "Scripts", shell);
 	ParseDirAndCreateTools(toolMgr, app::UserScriptDir(), "Scripts", shell);
-	toolMgr->set_group_icon("Scripts", ":images/tool_scripts.png");
 }
 
 int RefreshScriptTools(ToolManager* toolMgr)

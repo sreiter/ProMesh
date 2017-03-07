@@ -115,7 +115,9 @@ class ToolManager : public QObject
 	///	specify the resource- or file-name for the group's icon
 	/**	Note that icons are currently only loaded for top-level groups.
 	 * Also note, that the icon has to be specified before a tool browser
-	 * is created.*/
+	 * is created.
+	 * \note: The group will be added automatically to the list of known groups
+	 * \sa add_known_group.*/
 		void set_group_icon(const std::string& grpName, const char* iconName);
 		QIcon group_icon(const std::string& grpName) const;
 
@@ -125,6 +127,13 @@ class ToolManager : public QObject
 		void execute_shortcut(int key, uint modifiers);
 
 
+	///	adds a group to the list of known groups.
+	/**	Only top-level groups should be added to this list. The order in which
+	 * groups are made known is the order in which they should be displayed later on.
+	 * \sa set_group_icon*/
+		void add_known_group(const std::string& grpName);
+		size_t num_known_groups () const 				{return m_knownGroups.size();}
+		const std::string& known_group (size_t i) const	{return m_knownGroups.at(i);}
 
 	public slots:
 		void launchTool(int toolID);
@@ -141,8 +150,8 @@ class ToolManager : public QObject
 			uint	m_shortcutModifiers;
 		};
 
-		std::vector<ToolEntry>	m_registeredTools;
-
+		std::vector<ToolEntry>		m_registeredTools;
+		std::vector<std::string>	m_knownGroups;
 		GroupIconMap	m_groupIconMap;
 		QIcon			m_defaultIcon;
 };
