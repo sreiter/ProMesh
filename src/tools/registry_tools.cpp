@@ -85,37 +85,72 @@ class RegistryTool : public ITool{
 		virtual void execute(LGObject* obj,
 							 QWidget* widget)
 		{
+		//	log signature
+			QString actionLog = "--> ";
+			actionLog.append(m_group.c_str())
+					 .append("|")
+					 .append(m_func->name().c_str())
+					 .append("(");
+
+			for(size_t iparam = 0; iparam < m_func->num_parameter(); ++iparam){
+				if(iparam > 0)
+					actionLog.append(", ");
+				actionLog.append(m_func->parameter_name(iparam).c_str());
+			}
+			actionLog.append(")\n");
+
+
 			ParameterStack paramsIn, paramsOut;
 			paramsIn.push(static_cast<Mesh*>(obj));
 			
 			vector<ConstSmartPtr<void> > tmpSmartPtrs;
 
+			actionLog.append(m_func->name().c_str()).append("(");
+			actionLog.append("mesh");
+
 			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 			if(dlg){
 				const ParameterInfo& params = m_func->params_in();
 				for(int iparam = 1; iparam < params.size(); ++iparam){
+					actionLog.append(", ");
 					int toolParam = iparam - 1;
 					switch(params.type(iparam)){
 						case Variant::VT_BOOL:
 							paramsIn.push(dlg->to_bool(toolParam));
+							if(dlg->to_bool(toolParam))
+								actionLog.append("true");
+							else
+								actionLog.append("false");
 							break;
 						case Variant::VT_INT:
 							paramsIn.push(dlg->to_int(toolParam));
+							actionLog.append(
+								QString::number(dlg->to_int(toolParam)));
 							break;
 						case Variant::VT_SIZE_T:
 							paramsIn.push(static_cast<size_t>(dlg->to_int(toolParam)));
+							actionLog.append(
+								QString::number(dlg->to_int(toolParam)));
 							break;
 						case Variant::VT_FLOAT:
 							paramsIn.push(static_cast<float>(dlg->to_double(toolParam)));
+							actionLog.append(
+								QString::number(
+									dlg->to_double(toolParam), 'g', 8));
 							break;
 						case Variant::VT_DOUBLE:
 							paramsIn.push(dlg->to_double(toolParam));
+							actionLog.append(
+								QString::number(
+									dlg->to_double(toolParam), 'g', 12));
 							break;
 						case Variant::VT_CSTRING:
 							paramsIn.push(dlg->to_string(toolParam).toStdString().c_str());
+							actionLog.append(dlg->to_string(toolParam));
 							break;
 						case Variant::VT_STDSTRING:
 							paramsIn.push(dlg->to_string(toolParam).toStdString());
+							actionLog.append(dlg->to_string(toolParam));
 							break;
 						case Variant::VT_POINTER:
 						case Variant::VT_CONST_POINTER:
@@ -134,6 +169,12 @@ class RegistryTool : public ITool{
 								}
 								else
 									paramsIn.push(pv);
+
+								actionLog.append(
+									QString("Vec3d(%1,%2,%3)")
+										.arg((*pv)[0], 0, 'g', 12)
+										.arg((*pv)[1], 0, 'g', 12)
+										.arg((*pv)[2], 0, 'g', 12));
 							}
 							else{
 								UG_THROW("Unsupported Type in RegistryTool for parameter " << toolParam);
@@ -146,6 +187,9 @@ class RegistryTool : public ITool{
 				}
 			}
 
+			actionLog.append(")\n");
+
+		//	execute function
 			m_func->execute(paramsIn, paramsOut);
 
 			if(paramsOut.size() > 0){
@@ -188,6 +232,7 @@ class RegistryTool : public ITool{
 			}
 
 			tmpSmartPtrs.clear();
+			obj->log_action(actionLog);
 			obj->geometry_changed();
 		}
 
@@ -204,8 +249,10 @@ class RegistryTool : public ITool{
 
 		virtual QWidget* get_dialog(QWidget* parent)
 		{
-			if(m_func->num_parameter() <= 1)
+
+			if(m_func->num_parameter() <= 1){
 				return NULL;
+			}
 
 			ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
 											IDB_APPLY | IDB_OK | IDB_CLOSE);

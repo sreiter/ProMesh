@@ -688,3 +688,11 @@ void LGObject::restore_vertex_coordinates_from_buffer()
 	geometry_changed();
 }
 
+
+void LGObject::
+log_action(const QString& str)
+{
+	m_actionLog.append(str);
+	emit actionLogChanged(str);
+}
+

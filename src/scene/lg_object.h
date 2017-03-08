@@ -88,6 +88,8 @@ bool ReloadLGObject(LGObject* obj);
 ///	holds a grid, a subset-handler and the render-object.
 class LGObject : public ISceneObject, public ug::promesh::Mesh
 {
+	Q_OBJECT
+
 	public:
 		LGObject();
 		LGObject(const char* name);
@@ -216,6 +218,15 @@ class LGObject : public ISceneObject, public ug::promesh::Mesh
 	 *		  or the selection changed*/
 		void set_save_required(bool saveRequired)	{m_saveRequired = saveRequired;}
 
+	///	The action log lists all operations which were performed on the object.
+		const QString& action_log() const	{return m_actionLog;}
+
+	///	Adds text to the action log and emits 'actionLogChanged(str)'.
+		void log_action(const QString& str);
+
+	signals:
+		void actionLogChanged(const QString& newContent);
+
 	protected:
 		void init();
 
@@ -232,6 +243,7 @@ class LGObject : public ISceneObject, public ug::promesh::Mesh
 	protected:
 		typedef std::vector<GLuint>	DisplayListVec;
 		typedef std::vector<int>	DisplayModeVec;
+
 	public:
 	//protected:
 		std::string			m_fileName;
@@ -262,6 +274,8 @@ class LGObject : public ISceneObject, public ug::promesh::Mesh
 	//	currently used by LGScene to update the selection visuals only.
 		int					m_selectionDisplayListIndex;
 		
+		QString				m_actionLog;
+
 	private:
 	//	transform
 		TransformType		m_transformType;

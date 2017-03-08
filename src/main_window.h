@@ -44,18 +44,19 @@ class View3D;
 class LGScene;
 class ISceneObject;
 
-class QFileDialog;
 class QAction;
-class QTreeView;
-class QToolBar;
+class QFileDialog;
+class QHelpBrowser;
 class QPushButton;
 class QPoint;
-class SceneInspector;
+class QTextEdit;
+class QTreeView;
+class QToolBar;
 class QToolButton;
-class QHelpBrowser;
+class PropertyWidget;
+class SceneInspector;
 class ToolManager;
 class ToolBrowser;
-class PropertyWidget;
 
 enum SceneObjectType {
 	SOT_LG,
@@ -149,6 +150,8 @@ class MainWindow : public QMainWindow
 		void redo();
 		void sceneInspectorClicked(QMouseEvent* event);
 		void optionsChanged();
+		void refreshActionLog(ISceneObject* obj);
+		void actionLogChanged(const QString& newContent);
 
 	protected:
 		void closeEvent(QCloseEvent *event);
@@ -209,6 +212,7 @@ class MainWindow : public QMainWindow
 
 	//	use it as seldom as possible. It is mainly used to trigger the signal activeObjectChanged.
 		LGObject*	m_activeObject;
+		LGObject*	m_actionLogSender;
 
 	//	dialogs
 		QFileDialog*				m_dlgGeometryFiles;
@@ -216,6 +220,7 @@ class MainWindow : public QMainWindow
 		QDockWidget*				m_pLog;
 		QDialog*					m_dlgAbout;
 		PropertyWidget*				m_optWidget;
+		QTextEdit*					m_actionLog;
 		QMenu*						m_sceneInspectorRClickMenu;
 
 		#ifdef PROMESH_USE_WEBKIT

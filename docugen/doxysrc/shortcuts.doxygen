@@ -17,8 +17,7 @@ REFINEMENT:
 TOPOLOGY:
 - Delete:     Erase Selected Elements
 - d:          Duplicate
-- o:          Collapse (Merge)
-- t:          Split Edge
+- e:          Merge / Collapse
 - w:          Swap Edge
 - q:          Convert To Quadrilaterals
               (selected faces and neighbors of selected edges)

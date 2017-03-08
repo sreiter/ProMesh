@@ -74,7 +74,7 @@ using namespace ug;
 //	constructor
 MainWindow::MainWindow() :
 	m_activeModule (NULL),
-	m_settings("G-CSC", "ProMesh4.3.8"),
+	m_settings("G-CSC", "ProMesh4.3.8+"),
 	m_selectionElement(0),
 	m_selectionMode(0),
 	m_curSelectionMode(-1),
@@ -82,6 +82,7 @@ MainWindow::MainWindow() :
 	m_mouseMoveAction(MMA_DEFAULT),
 	m_activeAxis(X_AXIS | Y_AXIS | Z_AXIS),
 	m_activeObject(NULL),
+	m_actionLogSender(NULL),
 	#ifdef PROMESH_USE_WEBKIT
 		m_helpBrowser(NULL),
 	#endif
@@ -134,7 +135,22 @@ void MainWindow::init()
 
 	addDockWidget(Qt::BottomDockWidgetArea, m_pLog);
 
+//	action log dock
+	QDockWidget* actionLogDock = new QDockWidget(tr("actions"), this);
+	actionLogDock->setFeatures(QDockWidget::NoDockWidgetFeatures);
+	actionLogDock->setObjectName(tr("actionLog"));
 
+	m_actionLog = new QTextEdit(actionLogDock);
+	m_actionLog->setReadOnly(true);
+	m_actionLog->setAcceptRichText(false);
+	m_actionLog->setUndoRedoEnabled(false);
+	m_actionLog->setWordWrapMode(QTextOption::NoWrap);
+	m_actionLog->setCurrentFont(logFont);
+	actionLogDock->setWidget(m_actionLog);
+	addDockWidget(Qt::BottomDockWidgetArea, actionLogDock);
+	tabifyDockWidget(m_pLog, actionLogDock);
+
+//	option dock
 	QDockWidget* optionDock = new QDockWidget(tr("options"), this);
 	optionDock->setFeatures(QDockWidget::NoDockWidgetFeatures);
 	optionDock->setObjectName(tr("options"));
@@ -142,7 +158,7 @@ void MainWindow::init()
 	connect(m_optWidget, SIGNAL(valueChanged()), this, SLOT(optionsChanged()));
 	optionDock->setWidget(m_optWidget);
 	loadOptions();
-	tabifyDockWidget(m_pLog, optionDock);
+	tabifyDockWidget(actionLogDock, optionDock);
 
 //	redirect cout
 	Q_DebugStream* pDebugStream = new Q_DebugStream(GetLogAssistant().logger(), pLogText);
@@ -311,6 +327,8 @@ void MainWindow::init()
 	connect(m_sceneInspector, SIGNAL(mouseClicked(QMouseEvent*)),
 			this, SLOT(sceneInspectorClicked(QMouseEvent*)));
 
+	connect(m_sceneInspector, SIGNAL(objectChanged(ISceneObject*)),
+			this, SLOT(refreshActionLog(ISceneObject*)));
 
 	populateMenuBar ();
 	activateModule(new MeshModule(this));
@@ -859,6 +877,7 @@ void MainWindow::eraseActiveSceneObject()
 			bool performErase = true;
 
 			LGObject* lgobj = dynamic_cast<LGObject*>(obj);
+
 			if(!lgobj || lgobj->save_required()){
 				QString msg = QString("Erase '").append(obj->name()).append("'?\n").
 												append("No undo will be possible!");
@@ -869,6 +888,9 @@ void MainWindow::eraseActiveSceneObject()
 			}
 
 			if(performErase){
+				if(lgobj == m_actionLogSender)
+					m_actionLogSender = NULL;
+				
 			//	perform erase
 				m_scene->erase_object(index);
 			//	select the next object
@@ -1222,3 +1244,31 @@ activateModule (IModule* mod)
 		}
 	}
 }
+
+
+void MainWindow::
+refreshActionLog(ISceneObject* iobj)
+{
+	LGObject* obj = dynamic_cast<LGObject*>(iobj);
+	if(obj){
+		m_actionLog->setText(obj->action_log());
+		if(m_actionLogSender){
+			disconnect(m_actionLogSender, SIGNAL(actionLogChanged(const QString&)),
+					   this, SLOT(actionLogChanged(const QString&)));
+		}
+		m_actionLogSender = obj;
+		connect(obj, SIGNAL(actionLogChanged(const QString&)),
+				this, SLOT(actionLogChanged(const QString&)));
+	}
+}
+
+
+void MainWindow::
+actionLogChanged(const QString& newContent)
+{
+	LGObject* obj = dynamic_cast<LGObject*>(sender());
+	if(obj == m_actionLogSender){
+		m_actionLog->append(newContent);
+	}
+}
+
