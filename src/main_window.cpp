@@ -890,7 +890,7 @@ void MainWindow::eraseActiveSceneObject()
 			if(performErase){
 				if(lgobj == m_actionLogSender)
 					m_actionLogSender = NULL;
-				
+
 			//	perform erase
 				m_scene->erase_object(index);
 			//	select the next object
@@ -1268,7 +1268,10 @@ actionLogChanged(const QString& newContent)
 {
 	LGObject* obj = dynamic_cast<LGObject*>(sender());
 	if(obj == m_actionLogSender){
-		m_actionLog->append(newContent);
+		if(newContent.endsWith('\n'))
+			m_actionLog->append(newContent.left(newContent.size() - 1));
+		else
+			m_actionLog->append(newContent);
 	}
 }
 

@@ -262,6 +262,7 @@ class RegistryTool : public ITool{
 			
 			vector<string> tokens;
 			vector<string> options;
+			bool annotationErrors = false;;
 
 			for(int iparam = 1; iparam < params.size(); ++iparam){
 				string paramName = Stringify() << "param-" << iparam;
@@ -289,7 +290,11 @@ class RegistryTool : public ITool{
 										if((tmp == "true") || (tmp == "1"))
 											val = true;
 									}
+									else
+										annotationErrors = true;
 								}
+								else
+									annotationErrors = true;
 							}
 						}
 						dlg->addCheckBox(qParamName, val);
@@ -313,7 +318,11 @@ class RegistryTool : public ITool{
 										val = ToNumber<double>(tokens[1]);
 									else if(tokens[0] == "step")
 										step = ToNumber<double>(tokens[1]);
+									else
+										annotationErrors = true;
 								}
+								else
+									annotationErrors = true;
 							}
 						}
 						dlg->addSpinBox(qParamName, min, max, val, step, 0);
@@ -337,7 +346,11 @@ class RegistryTool : public ITool{
 										val = ToNumber<double>(tokens[1]);
 									else if(tokens[0] == "step")
 										step = ToNumber<double>(tokens[1]);
+									else
+										annotationErrors = true;
 								}
+								else
+									annotationErrors = true;
 							}
 						}
 						dlg->addSpinBox(qParamName, min, max, val, step, 0);
@@ -366,7 +379,11 @@ class RegistryTool : public ITool{
 										step = ToNumber<double>(tokens[1]);
 									else if(tokens[0] == "digits")
 										digits = ToNumber<double>(tokens[1]);
+									else
+										annotationErrors = true;
 								}
+								else
+									annotationErrors = true;
 							}
 						}
 						dlg->addSpinBox(qParamName, min, max, val, step, digits);
@@ -384,7 +401,11 @@ class RegistryTool : public ITool{
 										tokens[1] = ReplaceAll(tokens[1], string("\""), string(""));
 										val = QString(tokens[1].c_str());
 									}
+									else
+										annotationErrors = true;
 								}
+								else
+									annotationErrors = true;
 							}
 						}
 						dlg->addTextBox(qParamName, val);
@@ -404,7 +425,11 @@ class RegistryTool : public ITool{
 										tokens[1] = ReplaceAll(tokens[1], string("D"), string(""));
 										if(tokens[0] == "value")
 											val = ToVector<3>(tokens[1]);
+										else
+											annotationErrors = true;
 									}
+									else
+										annotationErrors = true;
 								}
 							}
 							dlg->addVector(qParamName, 3, &val[0]);
@@ -424,6 +449,12 @@ class RegistryTool : public ITool{
 				if(paramError){
 					UG_LOG("Unsupported parameter " << iparam << " in registry tool "
 						   << m_name << ": " << params.class_name(iparam) << endl);
+					break;
+				}
+
+				if(annotationErrors){
+					UG_LOG("Annotation errors occurred in registry tool "
+							<< m_name << endl);
 					break;
 				}
 			}
