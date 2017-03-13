@@ -116,6 +116,11 @@ void ToolManager::launchTool(int toolID)
 		}
 		else{
 			LGObject* obj = app::getActiveObject();
+			if(!obj){
+			//todo: create the appropriate object for the current module
+				obj = app::createEmptyObject("new mesh", SOT_LG);
+			}
+
 			if(obj || tool->accepts_null_object_ptr()){
 				try{
 					tool->execute(obj, NULL);

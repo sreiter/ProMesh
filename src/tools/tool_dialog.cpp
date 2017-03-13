@@ -255,6 +255,11 @@ void ToolWidget::addFileBrowser(const QString& caption, FileWidgetType fwt,
 void ToolWidget::buttonClicked(int buttonID)
 {
 	LGObject* obj = app::getActiveObject();
+	if(!obj){
+	//todo: create the appropriate object for the current module
+		obj = app::createEmptyObject("new mesh", SOT_LG);
+	}
+	
 	if(m_tool && (obj || m_tool->accepts_null_object_ptr())){
 		switch(buttonID){
 		case IDB_OK:

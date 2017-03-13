@@ -140,6 +140,7 @@ activate(SceneInspector* sceneInspector, LGScene* scene)
 		// m_coordsWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 		// QHBoxLayout* coordinatesLayout = new QHBoxLayout(coordinatesDock);
 		// coordinatesLayout->addWidget(m_coordsWidget);
+		m_coordsWidget->setFixedHeight(m_coordsWidget->sizeHint().height());
 		coordinatesDock->setWidget(m_coordsWidget);
 		m_dockWidgets.push_back(make_pair(Qt::LeftDockWidgetArea, coordinatesDock));
 

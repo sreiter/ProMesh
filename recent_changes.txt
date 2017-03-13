@@ -10,6 +10,9 @@ Recent changes:
 -------------------------------------------------------------------------------
 v 4.3.8
 Changes and additions:
+- If a tool is executed but no object exists yet, a new object will be created
+  automatically before the tool is applied.
+- Added CoordinateTransform-Mirror
 - Changed registration procedure of tools
 - All coordinate input boxes now have a coherent design and accept text input
 - New shortcuts for Collapse (Merge), SplitEdge, SwapEdge, Refine.
