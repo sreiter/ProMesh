@@ -3,6 +3,13 @@
 SELECTION:
 - a:          Select All / Deselect All
 - c:          Close Selection (selects all associated elements of lower dimension)
+- 1:          Selection element type: Vertex
+- 2:          Selection element type: Edge
+- 3:          Selection element type: Face
+- 4:          Selection element type: Volume
+- 5:          Selection mode: Click (single element)
+- 6:          Selection mode: Box (intersecting elements)
+- 7:          Selection mode: Box (contained elements)
 
 GRID GENERATION:
 - v:		  Create a vertex at the cursor position and connect it to

@@ -227,6 +227,15 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
 				m_activeAxis = Z_AXIS;
 			break;
 
+		case Qt::Key_1:	m_tbSelVrts->click();	break;
+		case Qt::Key_2:	m_tbSelEdges->click();	break;
+		case Qt::Key_3:	m_tbSelFaces->click();	break;
+		case Qt::Key_4:	m_tbSelVols->click();	break;
+
+		case Qt::Key_5: m_selModes->setCurrentIndex(0); break;
+		case Qt::Key_6: m_selModes->setCurrentIndex(1); break;
+		case Qt::Key_7: m_selModes->setCurrentIndex(2); break;
+
 		case Qt::Key_Escape:
 			endMouseMoveAction(false);
 			break;

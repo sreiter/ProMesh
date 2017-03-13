@@ -10,6 +10,7 @@ Recent changes:
 -------------------------------------------------------------------------------
 v 4.3.8
 Changes and additions:
+- Added shortcuts for selection-element-type and selection-mode (keys 1-7)
 - If a tool is executed but no object exists yet, a new object will be created
   automatically before the tool is applied.
 - Added CoordinateTransform-Mirror

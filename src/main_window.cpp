@@ -536,18 +536,18 @@ QToolBar* MainWindow::createVisibilityToolbar()
 
 //	add a combo-box for the selection modes
 	visToolBar->addSeparator();
-	QComboBox* selModes = new QComboBox(visToolBar);
-	visToolBar->addWidget(selModes);
-	selModes->addItem(QIcon(":images/icon_click_select.png"), tr(""));
-	selModes->addItem(QIcon(":images/icon_box_select_cut.png"), tr(""));
-	selModes->addItem(QIcon(":images/icon_box_select.png"), tr(""));
+	m_selModes = new QComboBox(visToolBar);
+	visToolBar->addWidget(m_selModes);
+	m_selModes->addItem(QIcon(":images/icon_click_select.png"), tr(""));
+	m_selModes->addItem(QIcon(":images/icon_box_select_cut.png"), tr(""));
+	m_selModes->addItem(QIcon(":images/icon_box_select.png"), tr(""));
 
 //	connect signals and slots
-	connect(selModes, SIGNAL(currentIndexChanged(int)),
+	connect(m_selModes, SIGNAL(currentIndexChanged(int)),
 			this, SLOT(selectionModeChanged(int)));
 
 //	init the value
-	selModes->setCurrentIndex(0);
+	m_selModes->setCurrentIndex(0);
 
 
 

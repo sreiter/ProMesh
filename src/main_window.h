@@ -45,6 +45,7 @@ class LGScene;
 class ISceneObject;
 
 class QAction;
+class QComboBox;
 class QFileDialog;
 class QHelpBrowser;
 class QPushButton;
@@ -260,6 +261,8 @@ class MainWindow : public QMainWindow
 		QToolButton*	m_tbRenderEdges;
 		QToolButton*	m_tbRenderFaces;
 		QToolButton*	m_tbRenderVols;
+
+		QComboBox*		m_selModes;
 };
 
 #endif // __H__MAIN_WINDOW__
