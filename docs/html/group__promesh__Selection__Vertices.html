@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ProMesh User Manual
-   &#160;<span id="projectnumber">v4.3.7</span>
+   &#160;<span id="projectnumber">v4.3.8</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -90,6 +90,7 @@ $(document).ready(function(){initNavTree('group__promesh__Selection__Vertices.ht
 
 <div class="header">
   <div class="summary">
+<a href="#groups">Modules</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Vertices<div class="ingroups"><a class="el" href="group__promesh.html">ProMesh Tools</a> &raquo; <a class="el" href="group__promesh__Selection.html">Selection</a></div></div>  </div>
@@ -99,14 +100,21 @@ $(document).ready(function(){initNavTree('group__promesh__Selection__Vertices.ht
 <p>Selection tools for vertices.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:group__promesh__Selection__Vertices__Coordinate__Based"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Vertices__Coordinate__Based.html">Coordinate Based</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:group__promesh__Selection__Vertices__Kinks"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Vertices__Kinks.html">Kinks</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gabf33d16547e9ba53bd0a17eafb3a6ed8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__ugbase.html#classVertex">Vertex</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Vertices.html#gabf33d16547e9ba53bd0a17eafb3a6ed8">SelectVertexByCoordinate</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *coordinate)</td></tr>
-<tr class="memdesc:gabf33d16547e9ba53bd0a17eafb3a6ed8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects a vertex given a coordinate.  <a href="#gabf33d16547e9ba53bd0a17eafb3a6ed8">More...</a><br /></td></tr>
-<tr class="separator:gabf33d16547e9ba53bd0a17eafb3a6ed8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7cfdf54d1bb55f05fd8c6314dac895f0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__ugbase.html#classVertex">Vertex</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Vertices.html#ga7cfdf54d1bb55f05fd8c6314dac895f0">SelectVertexByCylindricalCoordinate</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classdouble">double</a> rho, <a class="el" href="group__nativeTypes.html#classdouble">double</a> phi, <a class="el" href="group__nativeTypes.html#classdouble">double</a> z)</td></tr>
-<tr class="memdesc:ga7cfdf54d1bb55f05fd8c6314dac895f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects a vertex given a cylindrical coordinate.  <a href="#ga7cfdf54d1bb55f05fd8c6314dac895f0">More...</a><br /></td></tr>
-<tr class="separator:ga7cfdf54d1bb55f05fd8c6314dac895f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaacf488b89c2867602316ff5d8d303385"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Vertices.html#gaacf488b89c2867602316ff5d8d303385">SelectAllVertices</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
+<tr class="memdesc:gaacf488b89c2867602316ff5d8d303385"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects all vertices of the current grid.  <a href="#gaacf488b89c2867602316ff5d8d303385">More...</a><br /></td></tr>
+<tr class="separator:gaacf488b89c2867602316ff5d8d303385"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga54eeef7199711dfff43c50d442278c22"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Vertices.html#ga54eeef7199711dfff43c50d442278c22">DeselectAllVertices</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
+<tr class="memdesc:ga54eeef7199711dfff43c50d442278c22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deselects all vertices of the current grid.  <a href="#ga54eeef7199711dfff43c50d442278c22">More...</a><br /></td></tr>
+<tr class="separator:ga54eeef7199711dfff43c50d442278c22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4df4b70810742b306399e5ba5b516a86"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Vertices.html#ga4df4b70810742b306399e5ba5b516a86">SelectBoundaryVertices</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
 <tr class="memdesc:ga4df4b70810742b306399e5ba5b516a86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects vertices that lie on the boundary of the geometry.  <a href="#ga4df4b70810742b306399e5ba5b516a86">More...</a><br /></td></tr>
 <tr class="separator:ga4df4b70810742b306399e5ba5b516a86"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -116,36 +124,18 @@ Functions</h2></td></tr>
 <tr class="memitem:gae6cc162cd40b79a31a9b5cc4e222fc82"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Vertices.html#gae6cc162cd40b79a31a9b5cc4e222fc82">SelectAssociatedVertices</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
 <tr class="memdesc:gae6cc162cd40b79a31a9b5cc4e222fc82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects vertices that belong to selected edges, faces and volumes.  <a href="#gae6cc162cd40b79a31a9b5cc4e222fc82">More...</a><br /></td></tr>
 <tr class="separator:gae6cc162cd40b79a31a9b5cc4e222fc82"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaacf488b89c2867602316ff5d8d303385"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Vertices.html#gaacf488b89c2867602316ff5d8d303385">SelectAllVertices</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
-<tr class="memdesc:gaacf488b89c2867602316ff5d8d303385"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects all vertices of the current grid.  <a href="#gaacf488b89c2867602316ff5d8d303385">More...</a><br /></td></tr>
-<tr class="separator:gaacf488b89c2867602316ff5d8d303385"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga54eeef7199711dfff43c50d442278c22"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Vertices.html#ga54eeef7199711dfff43c50d442278c22">DeselectAllVertices</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
-<tr class="memdesc:ga54eeef7199711dfff43c50d442278c22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deselects all vertices of the current grid.  <a href="#ga54eeef7199711dfff43c50d442278c22">More...</a><br /></td></tr>
-<tr class="separator:ga54eeef7199711dfff43c50d442278c22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac81edebf88c90e4c836823f7329a58df"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Vertices.html#gac81edebf88c90e4c836823f7329a58df">SelectMarkedVertices</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
 <tr class="memdesc:gac81edebf88c90e4c836823f7329a58df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects vertices which are marked.  <a href="#gac81edebf88c90e4c836823f7329a58df">More...</a><br /></td></tr>
 <tr class="separator:gac81edebf88c90e4c836823f7329a58df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf00764a13cd21c0ef47af02c32c94010"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Vertices.html#gaf00764a13cd21c0ef47af02c32c94010">SelectInterfaceVertices</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classbool">bool</a> regard_selected_neighbors_only)</td></tr>
+<tr class="memdesc:gaf00764a13cd21c0ef47af02c32c94010"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects elements which are adjacent to higher dimensional elements of different subsets.  <a href="#gaf00764a13cd21c0ef47af02c32c94010">More...</a><br /></td></tr>
+<tr class="separator:gaf00764a13cd21c0ef47af02c32c94010"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacc1d39414e26927ddeba64b8ce9d69b0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Vertices.html#gacc1d39414e26927ddeba64b8ce9d69b0">SelectVertexByIndex</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classint">int</a> index)</td></tr>
 <tr class="memdesc:gacc1d39414e26927ddeba64b8ce9d69b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects a vertex given its index.  <a href="#gacc1d39414e26927ddeba64b8ce9d69b0">More...</a><br /></td></tr>
 <tr class="separator:gacc1d39414e26927ddeba64b8ce9d69b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1798e0d5f1981d31bd805acc6881dd7b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__nativeTypes.html#classsize__t">size_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Vertices.html#ga1798e0d5f1981d31bd805acc6881dd7b">SelectUnconnectedVertices</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classbool">bool</a> unconnected_to_edges, <a class="el" href="group__nativeTypes.html#classbool">bool</a> unconnected_to_faces, <a class="el" href="group__nativeTypes.html#classbool">bool</a> unconnected_to_volumes)</td></tr>
 <tr class="memdesc:ga1798e0d5f1981d31bd805acc6881dd7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects vertices which are not connected to the given element type.  <a href="#ga1798e0d5f1981d31bd805acc6881dd7b">More...</a><br /></td></tr>
 <tr class="separator:ga1798e0d5f1981d31bd805acc6881dd7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5c6edbe965b52f0239ae989b1c057cea"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__nativeTypes.html#classsize__t">size_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Vertices.html#ga5c6edbe965b52f0239ae989b1c057cea">SelectSelectionKinkVertices</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classdouble">double</a> threshold_angle, <a class="el" href="group__nativeTypes.html#classbool">bool</a> select_darts)</td></tr>
-<tr class="memdesc:ga5c6edbe965b52f0239ae989b1c057cea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects kink vertices in selected paths.  <a href="#ga5c6edbe965b52f0239ae989b1c057cea">More...</a><br /></td></tr>
-<tr class="separator:ga5c6edbe965b52f0239ae989b1c057cea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5947a4030792195ca064a790d69440f8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__nativeTypes.html#classsize__t">size_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Vertices.html#ga5947a4030792195ca064a790d69440f8">SelectSubsetKinkVertices</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classint">int</a> subset_index, <a class="el" href="group__nativeTypes.html#classdouble">double</a> threshold_angle, <a class="el" href="group__nativeTypes.html#classbool">bool</a> select_darts)</td></tr>
-<tr class="memdesc:ga5947a4030792195ca064a790d69440f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects kink vertices in subset-paths.  <a href="#ga5947a4030792195ca064a790d69440f8">More...</a><br /></td></tr>
-<tr class="separator:ga5947a4030792195ca064a790d69440f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab9e251f4621c7de69549dd3b423d1ea5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Vertices.html#gab9e251f4621c7de69549dd3b423d1ea5">SelectVerticesInBox</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *min, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *max)</td></tr>
-<tr class="memdesc:gab9e251f4621c7de69549dd3b423d1ea5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects all vertices in the given box.  <a href="#gab9e251f4621c7de69549dd3b423d1ea5">More...</a><br /></td></tr>
-<tr class="separator:gab9e251f4621c7de69549dd3b423d1ea5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2476ffe348d478c61e2e72c9b9c297bd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Vertices.html#ga2476ffe348d478c61e2e72c9b9c297bd">SelectVerticesInCylinder</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *base, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *top, <a class="el" href="group__nativeTypes.html#classdouble">double</a> radius)</td></tr>
-<tr class="memdesc:ga2476ffe348d478c61e2e72c9b9c297bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects all vertices in the given cylinder.  <a href="#ga2476ffe348d478c61e2e72c9b9c297bd">More...</a><br /></td></tr>
-<tr class="separator:ga2476ffe348d478c61e2e72c9b9c297bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf00764a13cd21c0ef47af02c32c94010"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Vertices.html#gaf00764a13cd21c0ef47af02c32c94010">SelectInterfaceVertices</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classbool">bool</a> regard_selected_neighbors_only)</td></tr>
-<tr class="memdesc:gaf00764a13cd21c0ef47af02c32c94010"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects elements which are adjacent to higher dimensional elements of different subsets.  <a href="#gaf00764a13cd21c0ef47af02c32c94010">More...</a><br /></td></tr>
-<tr class="separator:gaf00764a13cd21c0ef47af02c32c94010"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Selection tools for vertices. </p>
@@ -286,80 +276,6 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga5c6edbe965b52f0239ae989b1c057cea"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group__nativeTypes.html#classsize__t">size_t</a> SelectSelectionKinkVertices </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
-          <td class="paramname"><em>mesh</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classdouble">double</a>&#160;</td>
-          <td class="paramname"><em>threshold_angle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
-          <td class="paramname"><em>select_darts</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Selects kink vertices in selected paths. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga5947a4030792195ca064a790d69440f8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group__nativeTypes.html#classsize__t">size_t</a> SelectSubsetKinkVertices </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
-          <td class="paramname"><em>mesh</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classint">int</a>&#160;</td>
-          <td class="paramname"><em>subset_index</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classdouble">double</a>&#160;</td>
-          <td class="paramname"><em>threshold_angle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
-          <td class="paramname"><em>select_darts</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Selects kink vertices in subset-paths. </p>
-
-</div>
-</div>
 <a class="anchor" id="ga1798e0d5f1981d31bd805acc6881dd7b"></a>
 <div class="memitem">
 <div class="memproto">
@@ -400,74 +316,6 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gabf33d16547e9ba53bd0a17eafb3a6ed8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group__ugbase.html#classVertex">Vertex</a>* SelectVertexByCoordinate </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
-          <td class="paramname"><em>mesh</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
-          <td class="paramname"><em>coordinate</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Selects a vertex given a coordinate. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga7cfdf54d1bb55f05fd8c6314dac895f0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group__ugbase.html#classVertex">Vertex</a>* SelectVertexByCylindricalCoordinate </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
-          <td class="paramname"><em>mesh</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classdouble">double</a>&#160;</td>
-          <td class="paramname"><em>rho</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classdouble">double</a>&#160;</td>
-          <td class="paramname"><em>phi</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classdouble">double</a>&#160;</td>
-          <td class="paramname"><em>z</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Selects a vertex given a cylindrical coordinate. </p>
-
-</div>
-</div>
 <a class="anchor" id="gacc1d39414e26927ddeba64b8ce9d69b0"></a>
 <div class="memitem">
 <div class="memproto">
@@ -496,87 +344,13 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gab9e251f4621c7de69549dd3b423d1ea5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SelectVerticesInBox </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
-          <td class="paramname"><em>mesh</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
-          <td class="paramname"><em>min</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
-          <td class="paramname"><em>max</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Selects all vertices in the given box. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga2476ffe348d478c61e2e72c9b9c297bd"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SelectVerticesInCylinder </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
-          <td class="paramname"><em>mesh</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
-          <td class="paramname"><em>top</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classdouble">double</a>&#160;</td>
-          <td class="paramname"><em>radius</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Selects all vertices in the given cylinder. </p>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">(c) Sebastian Reiter. Generated on Thu Feb 23 2017 12:04:50 for ProMesh User Manual by
+    <li class="footer">(c) Sebastian Reiter. Generated on Tue Mar 14 2017 11:30:21 for ProMesh User Manual by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.11 </li>
   </ul>

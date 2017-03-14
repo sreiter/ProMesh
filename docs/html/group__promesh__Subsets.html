@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ProMesh User Manual
-   &#160;<span id="projectnumber">v4.3.7</span>
+   &#160;<span id="projectnumber">v4.3.8</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -107,6 +107,12 @@ Functions</h2></td></tr>
 <tr class="memitem:gaac30d949f9f00ec5e3d6fc31b0e2c484"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Subsets.html#gaac30d949f9f00ec5e3d6fc31b0e2c484">AssignSubset</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classint">int</a> subset_index, <a class="el" href="group__nativeTypes.html#classbool">bool</a> assign_vertices, <a class="el" href="group__nativeTypes.html#classbool">bool</a> assign_edges, <a class="el" href="group__nativeTypes.html#classbool">bool</a> assign_faces, <a class="el" href="group__nativeTypes.html#classbool">bool</a> assign_volumes)</td></tr>
 <tr class="memdesc:gaac30d949f9f00ec5e3d6fc31b0e2c484"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assigns the selected elements to a subset.  <a href="#gaac30d949f9f00ec5e3d6fc31b0e2c484">More...</a><br /></td></tr>
 <tr class="separator:gaac30d949f9f00ec5e3d6fc31b0e2c484"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad268e9cbe343f8cab2690f400f2f60cd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Subsets.html#gad268e9cbe343f8cab2690f400f2f60cd">AssignNewSubset</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__nativeTypes.html#classchar">char</a> *name, <a class="el" href="group__nativeTypes.html#classbool">bool</a> assign_vertices, <a class="el" href="group__nativeTypes.html#classbool">bool</a> assign_edges, <a class="el" href="group__nativeTypes.html#classbool">bool</a> assign_faces, <a class="el" href="group__nativeTypes.html#classbool">bool</a> assign_volumes)</td></tr>
+<tr class="memdesc:gad268e9cbe343f8cab2690f400f2f60cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assigns selected elements to a new subset.  <a href="#gad268e9cbe343f8cab2690f400f2f60cd">More...</a><br /></td></tr>
+<tr class="separator:gad268e9cbe343f8cab2690f400f2f60cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga360a02d95019462b31102aedfae6d6fb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Subsets.html#ga360a02d95019462b31102aedfae6d6fb">UnassignSubsets</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classbool">bool</a> unassign_vertices, <a class="el" href="group__nativeTypes.html#classbool">bool</a> unassign_edges, <a class="el" href="group__nativeTypes.html#classbool">bool</a> unassign_faces, <a class="el" href="group__nativeTypes.html#classbool">bool</a> unassign_volumes)</td></tr>
+<tr class="memdesc:ga360a02d95019462b31102aedfae6d6fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unassigns selected elements from any subset.  <a href="#ga360a02d95019462b31102aedfae6d6fb">More...</a><br /></td></tr>
+<tr class="separator:ga360a02d95019462b31102aedfae6d6fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga18e48220a913a26e8754c631566c7d08"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Subsets.html#ga18e48220a913a26e8754c631566c7d08">SetSubsetName</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classint">int</a> subset_index, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__nativeTypes.html#classchar">char</a> *name)</td></tr>
 <tr class="separator:ga18e48220a913a26e8754c631566c7d08"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaed9de321de99276bfc157ed2d392e027"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Subsets.html#gaed9de321de99276bfc157ed2d392e027">MoveSubset</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classint">int</a> old_subset_index, <a class="el" href="group__nativeTypes.html#classint">int</a> new_subset_index)</td></tr>
@@ -121,9 +127,6 @@ Functions</h2></td></tr>
 <tr class="memitem:ga3a303bf6d793389796d94f3492552038"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Subsets.html#ga3a303bf6d793389796d94f3492552038">EraseSubset</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classint">int</a> subset_index, <a class="el" href="group__nativeTypes.html#classbool">bool</a> erase_geometry)</td></tr>
 <tr class="memdesc:ga3a303bf6d793389796d94f3492552038"><td class="mdescLeft">&#160;</td><td class="mdescRight">Erases a subset, but not its associated geometry.  <a href="#ga3a303bf6d793389796d94f3492552038">More...</a><br /></td></tr>
 <tr class="separator:ga3a303bf6d793389796d94f3492552038"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaeeae183786891d592dfe961919ebdf7d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Subsets.html#gaeeae183786891d592dfe961919ebdf7d">EraseEmptySubsets</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
-<tr class="memdesc:gaeeae183786891d592dfe961919ebdf7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Erases Subsets, which do not contain any elements at all.  <a href="#gaeeae183786891d592dfe961919ebdf7d">More...</a><br /></td></tr>
-<tr class="separator:gaeeae183786891d592dfe961919ebdf7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7ffa87d0be60df81ee016df683d97650"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Subsets.html#ga7ffa87d0be60df81ee016df683d97650">AdjustSubsetsForUG3</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classbool">bool</a> keep_interface_subsets)</td></tr>
 <tr class="memdesc:ga7ffa87d0be60df81ee016df683d97650"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assigns face and edge indices so that the geometry can be used with ug3.  <a href="#ga7ffa87d0be60df81ee016df683d97650">More...</a><br /></td></tr>
 <tr class="separator:ga7ffa87d0be60df81ee016df683d97650"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -136,6 +139,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga6c3a8ad17b29180ab677241a9b55c4b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Subsets.html#ga6c3a8ad17b29180ab677241a9b55c4b0">CopySubsetIndicesToSides</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classbool">bool</a> selection_only, <a class="el" href="group__nativeTypes.html#classbool">bool</a> to_unassigned_elements_only)</td></tr>
 <tr class="memdesc:ga6c3a8ad17b29180ab677241a9b55c4b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies subset indices of selected elements to sides of those elements.  <a href="#ga6c3a8ad17b29180ab677241a9b55c4b0">More...</a><br /></td></tr>
 <tr class="separator:ga6c3a8ad17b29180ab677241a9b55c4b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeeae183786891d592dfe961919ebdf7d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Subsets.html#gaeeae183786891d592dfe961919ebdf7d">EraseEmptySubsets</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
+<tr class="memdesc:gaeeae183786891d592dfe961919ebdf7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Erases Subsets, which do not contain any elements at all.  <a href="#gaeeae183786891d592dfe961919ebdf7d">More...</a><br /></td></tr>
+<tr class="separator:gaeeae183786891d592dfe961919ebdf7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Tools to group elements in subsets and to manage those subsets. </p>
@@ -193,6 +199,58 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Adjusts subsets for simulation with ug4. </p>
+
+</div>
+</div>
+<a class="anchor" id="gad268e9cbe343f8cab2690f400f2f60cd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AssignNewSubset </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>mesh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__nativeTypes.html#classchar">char</a> *&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
+          <td class="paramname"><em>assign_vertices</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
+          <td class="paramname"><em>assign_edges</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
+          <td class="paramname"><em>assign_faces</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
+          <td class="paramname"><em>assign_volumes</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Assigns selected elements to a new subset. </p>
 
 </div>
 </div>
@@ -536,13 +594,59 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ga360a02d95019462b31102aedfae6d6fb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void UnassignSubsets </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>mesh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
+          <td class="paramname"><em>unassign_vertices</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
+          <td class="paramname"><em>unassign_edges</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
+          <td class="paramname"><em>unassign_faces</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
+          <td class="paramname"><em>unassign_volumes</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Unassigns selected elements from any subset. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">(c) Sebastian Reiter. Generated on Thu Feb 23 2017 12:04:50 for ProMesh User Manual by
+    <li class="footer">(c) Sebastian Reiter. Generated on Tue Mar 14 2017 11:30:21 for ProMesh User Manual by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.11 </li>
   </ul>

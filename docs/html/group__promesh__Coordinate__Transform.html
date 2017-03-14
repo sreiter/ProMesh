@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ProMesh User Manual
-   &#160;<span id="projectnumber">v4.3.7</span>
+   &#160;<span id="projectnumber">v4.3.8</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -123,6 +123,12 @@ Modules</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:gaddead25499fffd530dcdcc5e9be17d2e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Coordinate__Transform.html#gaddead25499fffd530dcdcc5e9be17d2e">Mirror</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *axis, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *origin)</td></tr>
+<tr class="memdesc:gaddead25499fffd530dcdcc5e9be17d2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mirrors the geometry at the given point along the given axis.  <a href="#gaddead25499fffd530dcdcc5e9be17d2e">More...</a><br /></td></tr>
+<tr class="separator:gaddead25499fffd530dcdcc5e9be17d2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab6cb570299f89abff41f8942f6d29d76"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Coordinate__Transform.html#gab6cb570299f89abff41f8942f6d29d76">ProjectToPlane</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *plane_point, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *plane_normal)</td></tr>
+<tr class="memdesc:gab6cb570299f89abff41f8942f6d29d76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Projects all selected elements to the specified plane.  <a href="#gab6cb570299f89abff41f8942f6d29d76">More...</a><br /></td></tr>
+<tr class="separator:gab6cb570299f89abff41f8942f6d29d76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf27f8a8b07b93be0411e7710883816e9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Coordinate__Transform.html#gaf27f8a8b07b93be0411e7710883816e9">ConeTransform</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *base, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *axis, <a class="el" href="group__nativeTypes.html#classdouble">double</a> scaleAtTip)</td></tr>
 <tr class="memdesc:gaf27f8a8b07b93be0411e7710883816e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transforms the vertices with the given cone transformation.  <a href="#gaf27f8a8b07b93be0411e7710883816e9">More...</a><br /></td></tr>
 <tr class="separator:gaf27f8a8b07b93be0411e7710883816e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -210,6 +216,74 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="gaddead25499fffd530dcdcc5e9be17d2e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Mirror </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>mesh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
+          <td class="paramname"><em>axis</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
+          <td class="paramname"><em>origin</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Mirrors the geometry at the given point along the given axis. </p>
+
+</div>
+</div>
+<a class="anchor" id="gab6cb570299f89abff41f8942f6d29d76"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ProjectToPlane </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>mesh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
+          <td class="paramname"><em>plane_point</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
+          <td class="paramname"><em>plane_normal</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Projects all selected elements to the specified plane. </p>
+
+</div>
+</div>
 <a class="anchor" id="ga93926f94781ad70c09d18dec660efd91"></a>
 <div class="memitem">
 <div class="memproto">
@@ -244,7 +318,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">(c) Sebastian Reiter. Generated on Thu Feb 23 2017 12:04:50 for ProMesh User Manual by
+    <li class="footer">(c) Sebastian Reiter. Generated on Tue Mar 14 2017 11:30:21 for ProMesh User Manual by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.11 </li>
   </ul>

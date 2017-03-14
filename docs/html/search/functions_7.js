@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['hangingnoderefine',['HangingNodeRefine',['../group__promesh__Remeshing__Refinement.html#ga21b108a9b6761ad12256efd7200d4d79',1,'script_reference.cpp']]],
+  ['hangingnoderefine',['HangingNodeRefine',['../group__promesh__Remeshing__Refinement.html#ga4023ee2e7b50e3323be07da6ffe29669',1,'HangingNodeRefine(Mesh *mesh, bool anisotropic):&#160;script_reference.cpp'],['../group__promesh__Remeshing__Refinement.html#ga21b108a9b6761ad12256efd7200d4d79',1,'HangingNodeRefine(Mesh *mesh, bool strict_subset_inheritance, bool anisotropic):&#160;script_reference.cpp']]],
   ['hexahedron_5fbegin',['hexahedron_begin',['../group__ugbase.html#a1e9123063e31f0ec913947c1a758cadf',1,'Mesh::hexahedron_begin()'],['../group__ugbase.html#a1e9123063e31f0ec913947c1a758cadf',1,'Mesh::hexahedron_begin()']]],
   ['hexahedron_5fend',['hexahedron_end',['../group__ugbase.html#a8e441c9b2636ceb5974571c69337720b',1,'Mesh::hexahedron_end()'],['../group__ugbase.html#a8e441c9b2636ceb5974571c69337720b',1,'Mesh::hexahedron_end()']]],
   ['hexahedron_5fselection_5fbegin',['hexahedron_selection_begin',['../group__ugbase.html#a4bd32cda3d0d4bddefaf6879ad5e7f65',1,'Mesh::hexahedron_selection_begin()'],['../group__ugbase.html#a4bd32cda3d0d4bddefaf6879ad5e7f65',1,'Mesh::hexahedron_selection_begin()']]],

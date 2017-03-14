@@ -74,7 +74,7 @@ using namespace ug;
 //	constructor
 MainWindow::MainWindow() :
 	m_activeModule (NULL),
-	m_settings("G-CSC", "ProMesh4.3.8+"),
+	m_settings("G-CSC", "ProMesh4.3.8.1"),
 	m_selectionElement(0),
 	m_selectionMode(0),
 	m_curSelectionMode(-1),

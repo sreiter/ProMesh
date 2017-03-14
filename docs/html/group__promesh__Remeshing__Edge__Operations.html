@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ProMesh User Manual
-   &#160;<span id="projectnumber">v4.3.7</span>
+   &#160;<span id="projectnumber">v4.3.8</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -89,8 +89,6 @@ $(document).ready(function(){initNavTree('group__promesh__Remeshing__Edge__Opera
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Edge Operations<div class="ingroups"><a class="el" href="group__promesh.html">ProMesh Tools</a> &raquo; <a class="el" href="group__promesh__Remeshing.html">Remeshing</a></div></div>  </div>
 </div><!--header-->
@@ -98,83 +96,14 @@ $(document).ready(function(){initNavTree('group__promesh__Remeshing__Edge__Opera
 
 <p>Various operations on selected edges (split, swap, collapse)  
 <a href="#details">More...</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gaac8d4a85b3b0d63e33cf5221d85f91e4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Remeshing__Edge__Operations.html#gaac8d4a85b3b0d63e33cf5221d85f91e4">CollapseEdge</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
-<tr class="memdesc:gaac8d4a85b3b0d63e33cf5221d85f91e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Collapses the edge and removes adjacent triangles.  <a href="#gaac8d4a85b3b0d63e33cf5221d85f91e4">More...</a><br /></td></tr>
-<tr class="separator:gaac8d4a85b3b0d63e33cf5221d85f91e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa93935618a41c01382eb1ad0c225e078"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Remeshing__Edge__Operations.html#gaa93935618a41c01382eb1ad0c225e078">SplitEdge</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
-<tr class="memdesc:gaa93935618a41c01382eb1ad0c225e078"><td class="mdescLeft">&#160;</td><td class="mdescRight">Splits the edge and inserts new triangles.  <a href="#gaa93935618a41c01382eb1ad0c225e078">More...</a><br /></td></tr>
-<tr class="separator:gaa93935618a41c01382eb1ad0c225e078"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac0a7128c11a2b334854bbad0c79fd9a3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Remeshing__Edge__Operations.html#gac0a7128c11a2b334854bbad0c79fd9a3">SwapEdge</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
-<tr class="memdesc:gac0a7128c11a2b334854bbad0c79fd9a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swaps selected edges that are adjacent to exactly two triangles.  <a href="#gac0a7128c11a2b334854bbad0c79fd9a3">More...</a><br /></td></tr>
-<tr class="separator:gac0a7128c11a2b334854bbad0c79fd9a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Various operations on selected edges (split, swap, collapse) </p>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gaac8d4a85b3b0d63e33cf5221d85f91e4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void CollapseEdge </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
-          <td class="paramname"><em>mesh</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Collapses the edge and removes adjacent triangles. </p>
-
-</div>
-</div>
-<a class="anchor" id="gaa93935618a41c01382eb1ad0c225e078"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SplitEdge </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
-          <td class="paramname"><em>mesh</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Splits the edge and inserts new triangles. </p>
-
-</div>
-</div>
-<a class="anchor" id="gac0a7128c11a2b334854bbad0c79fd9a3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SwapEdge </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
-          <td class="paramname"><em>mesh</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Swaps selected edges that are adjacent to exactly two triangles. </p>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">(c) Sebastian Reiter. Generated on Thu Feb 23 2017 12:04:50 for ProMesh User Manual by
+    <li class="footer">(c) Sebastian Reiter. Generated on Tue Mar 14 2017 11:30:21 for ProMesh User Manual by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.11 </li>
   </ul>

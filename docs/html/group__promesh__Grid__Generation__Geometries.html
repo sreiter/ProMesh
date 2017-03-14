@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ProMesh User Manual
-   &#160;<span id="projectnumber">v4.3.7</span>
+   &#160;<span id="projectnumber">v4.3.8</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -90,7 +90,7 @@ $(document).ready(function(){initNavTree('group__promesh__Grid__Generation__Geom
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#groups">Modules</a>  </div>
   <div class="headertitle">
 <div class="title">Geometries<div class="ingroups"><a class="el" href="group__promesh.html">ProMesh Tools</a> &raquo; <a class="el" href="group__promesh__Grid__Generation.html">Grid Generation</a></div></div>  </div>
 </div><!--header-->
@@ -99,344 +99,22 @@ $(document).ready(function(){initNavTree('group__promesh__Grid__Generation__Geom
 <p>Creation of basic geometries like cubes and spheres.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gafb03d92961aa843d12e0de3c825c122e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Grid__Generation__Geometries.html#gafb03d92961aa843d12e0de3c825c122e">CreatePlane</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *upLeft, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *upRight, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *lowLeft, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *lowRight, <a class="el" href="group__nativeTypes.html#classint">int</a> subset_index, <a class="el" href="group__nativeTypes.html#classbool">bool</a> fill)</td></tr>
-<tr class="memdesc:gafb03d92961aa843d12e0de3c825c122e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a plane.  <a href="#gafb03d92961aa843d12e0de3c825c122e">More...</a><br /></td></tr>
-<tr class="separator:gafb03d92961aa843d12e0de3c825c122e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5d6c7304a7adbce45b809d1be28514bb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Grid__Generation__Geometries.html#ga5d6c7304a7adbce45b809d1be28514bb">CreateCircle</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *center, <a class="el" href="group__nativeTypes.html#classdouble">double</a> radius, <a class="el" href="group__nativeTypes.html#classint">int</a> num_rim_vertices, <a class="el" href="group__nativeTypes.html#classint">int</a> subset_index, <a class="el" href="group__nativeTypes.html#classbool">bool</a> fill)</td></tr>
-<tr class="memdesc:ga5d6c7304a7adbce45b809d1be28514bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a circle.  <a href="#ga5d6c7304a7adbce45b809d1be28514bb">More...</a><br /></td></tr>
-<tr class="separator:ga5d6c7304a7adbce45b809d1be28514bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6262b0697ab5f6da4f57a0d94d7c41da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Grid__Generation__Geometries.html#ga6262b0697ab5f6da4f57a0d94d7c41da">CreateBox</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *boxMin, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *boxMax, <a class="el" href="group__nativeTypes.html#classint">int</a> subset_index, <a class="el" href="group__nativeTypes.html#classbool">bool</a> create_volume)</td></tr>
-<tr class="memdesc:ga6262b0697ab5f6da4f57a0d94d7c41da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a box.  <a href="#ga6262b0697ab5f6da4f57a0d94d7c41da">More...</a><br /></td></tr>
-<tr class="separator:ga6262b0697ab5f6da4f57a0d94d7c41da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga146fa9f25355313decff57a45f250b34"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Grid__Generation__Geometries.html#ga146fa9f25355313decff57a45f250b34">CreateSphere</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *center, <a class="el" href="group__nativeTypes.html#classdouble">double</a> radius, <a class="el" href="group__nativeTypes.html#classint">int</a> num_refinements, <a class="el" href="group__nativeTypes.html#classint">int</a> subset_index)</td></tr>
-<tr class="memdesc:ga146fa9f25355313decff57a45f250b34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a sphere.  <a href="#ga146fa9f25355313decff57a45f250b34">More...</a><br /></td></tr>
-<tr class="separator:ga146fa9f25355313decff57a45f250b34"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaeb9d3b28ffe7830576e07d9eff76aaf9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Grid__Generation__Geometries.html#gaeb9d3b28ffe7830576e07d9eff76aaf9">CreateTetrahedron</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classint">int</a> subset_index, <a class="el" href="group__nativeTypes.html#classbool">bool</a> create_volume)</td></tr>
-<tr class="memdesc:gaeb9d3b28ffe7830576e07d9eff76aaf9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a tetrahedron.  <a href="#gaeb9d3b28ffe7830576e07d9eff76aaf9">More...</a><br /></td></tr>
-<tr class="separator:gaeb9d3b28ffe7830576e07d9eff76aaf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab386a4eaa82ea533cd1589ad0aed57cd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Grid__Generation__Geometries.html#gab386a4eaa82ea533cd1589ad0aed57cd">CreatePyramid</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classint">int</a> subset_index, <a class="el" href="group__nativeTypes.html#classbool">bool</a> create_volume)</td></tr>
-<tr class="memdesc:gab386a4eaa82ea533cd1589ad0aed57cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a pyramid.  <a href="#gab386a4eaa82ea533cd1589ad0aed57cd">More...</a><br /></td></tr>
-<tr class="separator:gab386a4eaa82ea533cd1589ad0aed57cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3f515d6f44759bfdfe718221eaa2765d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Grid__Generation__Geometries.html#ga3f515d6f44759bfdfe718221eaa2765d">CreatePrism</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classint">int</a> subset_index, <a class="el" href="group__nativeTypes.html#classbool">bool</a> create_volume)</td></tr>
-<tr class="memdesc:ga3f515d6f44759bfdfe718221eaa2765d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a prism.  <a href="#ga3f515d6f44759bfdfe718221eaa2765d">More...</a><br /></td></tr>
-<tr class="separator:ga3f515d6f44759bfdfe718221eaa2765d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:group__promesh__Grid__Generation__Geometries__2D"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Grid__Generation__Geometries__2D.html">2D</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:group__promesh__Grid__Generation__Geometries__3D"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Grid__Generation__Geometries__3D.html">3D</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Creation of basic geometries like cubes and spheres. </p>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga6262b0697ab5f6da4f57a0d94d7c41da"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void CreateBox </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
-          <td class="paramname"><em>mesh</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
-          <td class="paramname"><em>boxMin</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
-          <td class="paramname"><em>boxMax</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classint">int</a>&#160;</td>
-          <td class="paramname"><em>subset_index</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
-          <td class="paramname"><em>create_volume</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Creates a box. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga5d6c7304a7adbce45b809d1be28514bb"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void CreateCircle </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
-          <td class="paramname"><em>mesh</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
-          <td class="paramname"><em>center</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classdouble">double</a>&#160;</td>
-          <td class="paramname"><em>radius</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classint">int</a>&#160;</td>
-          <td class="paramname"><em>num_rim_vertices</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classint">int</a>&#160;</td>
-          <td class="paramname"><em>subset_index</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
-          <td class="paramname"><em>fill</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Creates a circle. </p>
-
-</div>
-</div>
-<a class="anchor" id="gafb03d92961aa843d12e0de3c825c122e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void CreatePlane </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
-          <td class="paramname"><em>mesh</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
-          <td class="paramname"><em>upLeft</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
-          <td class="paramname"><em>upRight</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
-          <td class="paramname"><em>lowLeft</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
-          <td class="paramname"><em>lowRight</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classint">int</a>&#160;</td>
-          <td class="paramname"><em>subset_index</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
-          <td class="paramname"><em>fill</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Creates a plane. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga3f515d6f44759bfdfe718221eaa2765d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void CreatePrism </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
-          <td class="paramname"><em>mesh</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classint">int</a>&#160;</td>
-          <td class="paramname"><em>subset_index</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
-          <td class="paramname"><em>create_volume</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Creates a prism. </p>
-
-</div>
-</div>
-<a class="anchor" id="gab386a4eaa82ea533cd1589ad0aed57cd"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void CreatePyramid </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
-          <td class="paramname"><em>mesh</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classint">int</a>&#160;</td>
-          <td class="paramname"><em>subset_index</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
-          <td class="paramname"><em>create_volume</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Creates a pyramid. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga146fa9f25355313decff57a45f250b34"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void CreateSphere </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
-          <td class="paramname"><em>mesh</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
-          <td class="paramname"><em>center</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classdouble">double</a>&#160;</td>
-          <td class="paramname"><em>radius</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classint">int</a>&#160;</td>
-          <td class="paramname"><em>num_refinements</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classint">int</a>&#160;</td>
-          <td class="paramname"><em>subset_index</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Creates a sphere. </p>
-
-</div>
-</div>
-<a class="anchor" id="gaeb9d3b28ffe7830576e07d9eff76aaf9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void CreateTetrahedron </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
-          <td class="paramname"><em>mesh</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classint">int</a>&#160;</td>
-          <td class="paramname"><em>subset_index</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
-          <td class="paramname"><em>create_volume</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Creates a tetrahedron. </p>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">(c) Sebastian Reiter. Generated on Thu Feb 23 2017 12:04:50 for ProMesh User Manual by
+    <li class="footer">(c) Sebastian Reiter. Generated on Tue Mar 14 2017 11:30:21 for ProMesh User Manual by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.11 </li>
   </ul>

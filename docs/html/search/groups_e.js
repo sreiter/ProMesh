@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['tetrahedra',['Tetrahedra',['../group__promesh__Remeshing__Tetrahedra.html',1,'']]],
-  ['triangulation',['Triangulation',['../group__promesh__Remeshing__Triangulation.html',1,'']]]
+  ['quadrilaterals',['Quadrilaterals',['../group__promesh__Remeshing__Quadrilaterals.html',1,'']]]
 ];

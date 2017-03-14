@@ -30,6 +30,7 @@ project(P_PROMESH4)
 
 # Some options which allow to control makefile generation
 option(DEBUG "If enabled a debug build is performed - this slows down performance." OFF)
+option(DEBUG_LOGS "Enables debug output. Valid options are: ON, OFF" OFF)
 option(UG_ROOT_PATH "The path to ug4. Has to contain the ugbase and lib directories.")
 option(TETGEN_PATH "The path to tetgen. Has to contain the static tet library.")
 option(QT_CMAKE_PATH "Folder containing cmake-modules for the chosen architecture.")
@@ -184,6 +185,10 @@ else(DEBUG)
 	endif(GENERATE_DEBUG_SYMBOLS)
 	remove_definitions(-DUG_DEBUG)
 endif(DEBUG)
+
+if(DEBUG_LOGS)
+	add_definitions(-DUG_ENABLE_DEBUG_LOGS)
+endif(DEBUG_LOGS)
 
 if(NOT UG_ROOT_PATH)
 	message(FATAL_ERROR "ERROR: You have to specify UG_ROOT_PATH! Add an option -DUG_ROOT_PATH=path-to-ug4")

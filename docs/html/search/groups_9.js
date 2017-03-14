@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['orientation',['Orientation',['../group__promesh__Remeshing__Orientation.html',1,'']]]
+  ['kinks',['Kinks',['../group__promesh__Selection__Vertices__Kinks.html',1,'']]]
 ];

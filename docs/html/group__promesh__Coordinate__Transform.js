@@ -8,5 +8,7 @@ var group__promesh__Coordinate__Transform =
     [ "Subdivision Projection", "group__promesh__Coordinate__Transform__Subdivision__Projection.html", "group__promesh__Coordinate__Transform__Subdivision__Projection" ],
     [ "ConeTransform", "group__promesh__Coordinate__Transform.html#gaf27f8a8b07b93be0411e7710883816e9", null ],
     [ "FlattenBentQuadrilaterals", "group__promesh__Coordinate__Transform.html#ga4fde9783564ae6c26975d56ef788feb4", null ],
+    [ "Mirror", "group__promesh__Coordinate__Transform.html#gaddead25499fffd530dcdcc5e9be17d2e", null ],
+    [ "ProjectToPlane", "group__promesh__Coordinate__Transform.html#gab6cb570299f89abff41f8942f6d29d76", null ],
     [ "SnapVerticesToVertices", "group__promesh__Coordinate__Transform.html#ga93926f94781ad70c09d18dec660efd91", null ]
 ];

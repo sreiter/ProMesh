@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ProMesh User Manual
-   &#160;<span id="projectnumber">v4.3.7</span>
+   &#160;<span id="projectnumber">v4.3.8</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -90,6 +90,7 @@ $(document).ready(function(){initNavTree('group__promesh__Selection__Volumes.htm
 
 <div class="header">
   <div class="summary">
+<a href="#groups">Modules</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Volumes<div class="ingroups"><a class="el" href="group__promesh.html">ProMesh Tools</a> &raquo; <a class="el" href="group__promesh__Selection.html">Selection</a></div></div>  </div>
@@ -99,44 +100,37 @@ $(document).ready(function(){initNavTree('group__promesh__Selection__Volumes.htm
 <p>Selection tools for volumes.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:group__promesh__Selection__Volumes__Coordinate__Based"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Volumes__Coordinate__Based.html">Coordinate Based</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga1bd5200a77a7041dddba2ce38cf001f4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__ugbase.html#classVolume">Volume</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Volumes.html#ga1bd5200a77a7041dddba2ce38cf001f4">SelectVolumeByCoordinate</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *coordinate)</td></tr>
-<tr class="memdesc:ga1bd5200a77a7041dddba2ce38cf001f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects the volume whose center is closest to the specified coordinate.  <a href="#ga1bd5200a77a7041dddba2ce38cf001f4">More...</a><br /></td></tr>
-<tr class="separator:ga1bd5200a77a7041dddba2ce38cf001f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5c4b59990fd382894c59a022dabc2516"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__ugbase.html#classVolume">Volume</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Volumes.html#ga5c4b59990fd382894c59a022dabc2516">SelectVolumeByCylindricalCoordinate</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classdouble">double</a> rho, <a class="el" href="group__nativeTypes.html#classdouble">double</a> phi, <a class="el" href="group__nativeTypes.html#classdouble">double</a> z)</td></tr>
-<tr class="memdesc:ga5c4b59990fd382894c59a022dabc2516"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects the volume whose center is closest to the specified cylindrical coordinate.  <a href="#ga5c4b59990fd382894c59a022dabc2516">More...</a><br /></td></tr>
-<tr class="separator:ga5c4b59990fd382894c59a022dabc2516"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga562b30202029052b8fb83bcfc1183f13"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Volumes.html#ga562b30202029052b8fb83bcfc1183f13">SelectAllVolumes</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
 <tr class="memdesc:ga562b30202029052b8fb83bcfc1183f13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects all volumes of the current grid.  <a href="#ga562b30202029052b8fb83bcfc1183f13">More...</a><br /></td></tr>
 <tr class="separator:ga562b30202029052b8fb83bcfc1183f13"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae75f3bf21495bea205769dafba8c8a78"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Volumes.html#gae75f3bf21495bea205769dafba8c8a78">DeselectAllVolumes</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
 <tr class="memdesc:gae75f3bf21495bea205769dafba8c8a78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deselects all volumes of the current grid.  <a href="#gae75f3bf21495bea205769dafba8c8a78">More...</a><br /></td></tr>
 <tr class="separator:gae75f3bf21495bea205769dafba8c8a78"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa1108b51f0d37bf55e684c14008349f9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Volumes.html#gaa1108b51f0d37bf55e684c14008349f9">SelectLinkedVolumes</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
-<tr class="memdesc:gaa1108b51f0d37bf55e684c14008349f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Repeatedly selects all volumes which are face-neighbors of selected volumes.  <a href="#gaa1108b51f0d37bf55e684c14008349f9">More...</a><br /></td></tr>
-<tr class="separator:gaa1108b51f0d37bf55e684c14008349f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3b7b660bf7e42d2823e598a5cccafe2b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__nativeTypes.html#classint">int</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Volumes.html#ga3b7b660bf7e42d2823e598a5cccafe2b">SelectUnorientableVolumes</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
-<tr class="memdesc:ga3b7b660bf7e42d2823e598a5cccafe2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects all volumes whose orientation can not be determined.  <a href="#ga3b7b660bf7e42d2823e598a5cccafe2b">More...</a><br /></td></tr>
-<tr class="separator:ga3b7b660bf7e42d2823e598a5cccafe2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2dc32a200609a624e57baa43130279c6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__nativeTypes.html#classint">int</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Volumes.html#ga2dc32a200609a624e57baa43130279c6">SelectSlivers</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classdouble">double</a> threshold_ratio)</td></tr>
-<tr class="memdesc:ga2dc32a200609a624e57baa43130279c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects flat tetrahedrons. Threshold-ratio specifies the minimal ratio between the distance of two opposing edges to the length of the longest edge.  <a href="#ga2dc32a200609a624e57baa43130279c6">More...</a><br /></td></tr>
-<tr class="separator:ga2dc32a200609a624e57baa43130279c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga11f43f93021aff7b25f4cc9f02ebe679"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Volumes.html#ga11f43f93021aff7b25f4cc9f02ebe679">SelectVolumeByIndex</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classint">int</a> index)</td></tr>
-<tr class="memdesc:ga11f43f93021aff7b25f4cc9f02ebe679"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects a volume given its index.  <a href="#ga11f43f93021aff7b25f4cc9f02ebe679">More...</a><br /></td></tr>
-<tr class="separator:ga11f43f93021aff7b25f4cc9f02ebe679"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga43e4241a101fa6de007603de62dfaab4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Volumes.html#ga43e4241a101fa6de007603de62dfaab4">VolumeSelectionFill</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
 <tr class="memdesc:ga43e4241a101fa6de007603de62dfaab4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects neighbours of selected volumes over non-selected faces.  <a href="#ga43e4241a101fa6de007603de62dfaab4">More...</a><br /></td></tr>
 <tr class="separator:ga43e4241a101fa6de007603de62dfaab4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6a971820d9f98c3acdb690357bf3866c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Volumes.html#ga6a971820d9f98c3acdb690357bf3866c">SelectVolumesInBox</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *min, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *max)</td></tr>
-<tr class="memdesc:ga6a971820d9f98c3acdb690357bf3866c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects all volumes in the given box.  <a href="#ga6a971820d9f98c3acdb690357bf3866c">More...</a><br /></td></tr>
-<tr class="separator:ga6a971820d9f98c3acdb690357bf3866c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga97d586450195f41801439f2f665857ed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Volumes.html#ga97d586450195f41801439f2f665857ed">SelectVolumesInCylinder</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *base, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *top, <a class="el" href="group__nativeTypes.html#classdouble">double</a> radius)</td></tr>
-<tr class="memdesc:ga97d586450195f41801439f2f665857ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects all volumes in the given cylinder.  <a href="#ga97d586450195f41801439f2f665857ed">More...</a><br /></td></tr>
-<tr class="separator:ga97d586450195f41801439f2f665857ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf430943d3fdc6e41ffa674045b443244"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Volumes.html#gaf430943d3fdc6e41ffa674045b443244">SelectAnisotropicVolumes</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classdouble">double</a> minEdgeRation)</td></tr>
-<tr class="memdesc:gaf430943d3fdc6e41ffa674045b443244"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects elements and associated long edges wich have a shortest-to-longest edge ratio smaller than the specified one.  <a href="#gaf430943d3fdc6e41ffa674045b443244">More...</a><br /></td></tr>
-<tr class="separator:gaf430943d3fdc6e41ffa674045b443244"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa1108b51f0d37bf55e684c14008349f9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Volumes.html#gaa1108b51f0d37bf55e684c14008349f9">SelectLinkedVolumes</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
+<tr class="memdesc:gaa1108b51f0d37bf55e684c14008349f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Repeatedly selects all volumes which are face-neighbors of selected volumes.  <a href="#gaa1108b51f0d37bf55e684c14008349f9">More...</a><br /></td></tr>
+<tr class="separator:gaa1108b51f0d37bf55e684c14008349f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2dc32a200609a624e57baa43130279c6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__nativeTypes.html#classint">int</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Volumes.html#ga2dc32a200609a624e57baa43130279c6">SelectSlivers</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classdouble">double</a> threshold_ratio)</td></tr>
+<tr class="memdesc:ga2dc32a200609a624e57baa43130279c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects flat tetrahedrons. Threshold-ratio specifies the minimal ratio between the distance of two opposing edges to the length of the longest edge.  <a href="#ga2dc32a200609a624e57baa43130279c6">More...</a><br /></td></tr>
+<tr class="separator:ga2dc32a200609a624e57baa43130279c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9a2cb6b80379931f4993a55a372ce9f7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Volumes.html#ga9a2cb6b80379931f4993a55a372ce9f7">SelectAnisotropicVolumes</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classdouble">double</a> min_edge_ratio)</td></tr>
+<tr class="memdesc:ga9a2cb6b80379931f4993a55a372ce9f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects elements and associated long edges wich have a shortest-to-longest edge ratio smaller than the specified one.  <a href="#ga9a2cb6b80379931f4993a55a372ce9f7">More...</a><br /></td></tr>
+<tr class="separator:ga9a2cb6b80379931f4993a55a372ce9f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3b7b660bf7e42d2823e598a5cccafe2b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__nativeTypes.html#classint">int</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Volumes.html#ga3b7b660bf7e42d2823e598a5cccafe2b">SelectUnorientableVolumes</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
+<tr class="memdesc:ga3b7b660bf7e42d2823e598a5cccafe2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects all volumes whose orientation can not be determined.  <a href="#ga3b7b660bf7e42d2823e598a5cccafe2b">More...</a><br /></td></tr>
+<tr class="separator:ga3b7b660bf7e42d2823e598a5cccafe2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga11f43f93021aff7b25f4cc9f02ebe679"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Volumes.html#ga11f43f93021aff7b25f4cc9f02ebe679">SelectVolumeByIndex</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classint">int</a> index)</td></tr>
+<tr class="memdesc:ga11f43f93021aff7b25f4cc9f02ebe679"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects a volume given its index.  <a href="#ga11f43f93021aff7b25f4cc9f02ebe679">More...</a><br /></td></tr>
+<tr class="separator:ga11f43f93021aff7b25f4cc9f02ebe679"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Selection tools for volumes. </p>
@@ -177,7 +171,7 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gaf430943d3fdc6e41ffa674045b443244"></a>
+<a class="anchor" id="ga9a2cb6b80379931f4993a55a372ce9f7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -191,7 +185,7 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="group__nativeTypes.html#classdouble">double</a>&#160;</td>
-          <td class="paramname"><em>minEdgeRation</em>&#160;</td>
+          <td class="paramname"><em>min_edge_ratio</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -269,74 +263,6 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga1bd5200a77a7041dddba2ce38cf001f4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group__ugbase.html#classVolume">Volume</a>* SelectVolumeByCoordinate </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
-          <td class="paramname"><em>mesh</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
-          <td class="paramname"><em>coordinate</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Selects the volume whose center is closest to the specified coordinate. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga5c4b59990fd382894c59a022dabc2516"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group__ugbase.html#classVolume">Volume</a>* SelectVolumeByCylindricalCoordinate </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
-          <td class="paramname"><em>mesh</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classdouble">double</a>&#160;</td>
-          <td class="paramname"><em>rho</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classdouble">double</a>&#160;</td>
-          <td class="paramname"><em>phi</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classdouble">double</a>&#160;</td>
-          <td class="paramname"><em>z</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Selects the volume whose center is closest to the specified cylindrical coordinate. </p>
-
-</div>
-</div>
 <a class="anchor" id="ga11f43f93021aff7b25f4cc9f02ebe679"></a>
 <div class="memitem">
 <div class="memproto">
@@ -365,80 +291,6 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga6a971820d9f98c3acdb690357bf3866c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SelectVolumesInBox </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
-          <td class="paramname"><em>mesh</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
-          <td class="paramname"><em>min</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
-          <td class="paramname"><em>max</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Selects all volumes in the given box. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga97d586450195f41801439f2f665857ed"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SelectVolumesInCylinder </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
-          <td class="paramname"><em>mesh</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
-          <td class="paramname"><em>top</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classdouble">double</a>&#160;</td>
-          <td class="paramname"><em>radius</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Selects all volumes in the given cylinder. </p>
-
-</div>
-</div>
 <a class="anchor" id="ga43e4241a101fa6de007603de62dfaab4"></a>
 <div class="memitem">
 <div class="memproto">
@@ -463,7 +315,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">(c) Sebastian Reiter. Generated on Thu Feb 23 2017 12:04:50 for ProMesh User Manual by
+    <li class="footer">(c) Sebastian Reiter. Generated on Tue Mar 14 2017 11:30:21 for ProMesh User Manual by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.11 </li>
   </ul>

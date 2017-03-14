@@ -1,14 +1,13 @@
 var searchData=
 [
-  ['insertcenter',['InsertCenter',['../group__promesh__Remeshing__Refinement.html#ga4fe187f1cbef018c9489da7c7688dd12',1,'script_reference.cpp']]],
-  ['int',['int',['../group__nativeTypes.html#classint',1,'']]],
-  ['intersectcloseedges',['IntersectCloseEdges',['../group__promesh__Remeshing__Resolve__Intersections__Advanced.html#gaba47ffaf3dc1c72a710d926a9ab6264e',1,'script_reference.cpp']]],
-  ['invalidate_5fflat_5fcells',['invalidate_flat_cells',['../group__promesh__Raster__Layers.html#af8249460f68ed97f40943fe0b9ee25a0',1,'RasterLayers']]],
-  ['invalidate_5fsmall_5flenses',['invalidate_small_lenses',['../group__promesh__Raster__Layers.html#a80a6059c4562b3bae69a16b2b26d92cf',1,'RasterLayers']]],
-  ['invertfaceorientation',['InvertFaceOrientation',['../group__promesh__Remeshing__Orientation.html#gaedeb6248ac34be40d96891f8a2412429',1,'script_reference.cpp']]],
-  ['invertselection',['InvertSelection',['../group__promesh__Selection.html#ga8ffdb5b4e7b81e99074f5de8ff5e5d16',1,'script_reference.cpp']]],
-  ['is_5fselected',['is_selected',['../group__ugbase.html#a217abe535df34bf7ff0557031f8f8b85',1,'ISelector::is_selected(Vertex *param)'],['../group__ugbase.html#a090bb79236fc15502b4e56885b1d3464',1,'ISelector::is_selected(Edge *param)'],['../group__ugbase.html#a0140bbfb5ae4933888ec70f8a1d6f82f',1,'ISelector::is_selected(Face *param)'],['../group__ugbase.html#a1cfa5f8dd3a60d85cc5924d62a803de7',1,'ISelector::is_selected(Volume *param)']]],
-  ['iselector',['ISelector',['../group__ugbase.html#classISelector',1,'']]],
-  ['isubsethandler',['ISubsetHandler',['../group__ugbase.html#classISubsetHandler',1,'']]],
-  ['info',['Info',['../group__promesh__Info.html',1,'']]]
+  ['get_5fdefault_5fsubset_5findex',['get_default_subset_index',['../group__ugbase.html#a2a6232d7a7e18fa63528cae60de7897a',1,'ISubsetHandler']]],
+  ['get_5fsubset_5findex',['get_subset_index',['../group__ugbase.html#a4c41f1395cc461e1a800cf5bef3b9696',1,'ISubsetHandler::get_subset_index(Vertex *param)'],['../group__ugbase.html#a1424dd6764b8b4ed8fda417a4e0acc32',1,'ISubsetHandler::get_subset_index(Edge *param)'],['../group__ugbase.html#a6cb123047d91ebd51fff441bde1bdbfc',1,'ISubsetHandler::get_subset_index(Face *param)'],['../group__ugbase.html#a3c20773bd1e1eb7cf7d773ce55a6fad3',1,'ISubsetHandler::get_subset_index(Volume *param)'],['../group__ugbase.html#a8750b42c8810925766671a754e3a2094',1,'ISubsetHandler::get_subset_index(const char *subsetName)']]],
+  ['get_5fsubset_5fname',['get_subset_name',['../group__ugbase.html#a2b653ef40032f195ba9ae0094ee6d402',1,'ISubsetHandler']]],
+  ['getboundingbox',['GetBoundingBox',['../group__promesh__Util.html#gafcb8e1a08d847105c2ab0c1e074ea466',1,'script_reference.cpp']]],
+  ['getselectioncenter',['GetSelectionCenter',['../group__promesh__Coordinate__Transform__Move.html#ga467ffcba6bf6888535f6c47d7ba491cc',1,'script_reference.cpp']]],
+  ['global_5fto_5flocal',['global_to_local',['../group__promesh__Util.html#a091401ac9a4a09424628948c0083bd8c',1,'Box']]],
+  ['grid',['Grid',['../group__ugbase.html#classGrid',1,'Grid'],['../group__ugbase.html#ad65688d7239face3711e8ee8ba7e6896',1,'Mesh::grid()'],['../group__ugbase.html#ad65688d7239face3711e8ee8ba7e6896',1,'Mesh::grid()'],['../group__ugbase.html#a0a335d0339fe70071fcdf4cd5b1c7b5f',1,'Grid::Grid()']]],
+  ['gridobject',['GridObject',['../group__ugbase.html#classGridObject',1,'']]],
+  ['grid_20generation',['Grid Generation',['../group__promesh__Grid__Generation.html',1,'']]],
+  ['geometries',['Geometries',['../group__promesh__Grid__Generation__Geometries.html',1,'']]]
 ];

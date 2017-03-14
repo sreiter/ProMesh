@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ProMesh User Manual
-   &#160;<span id="projectnumber">v4.3.7</span>
+   &#160;<span id="projectnumber">v4.3.8</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -110,6 +110,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga8a05ca2f1e5ae9ae97189cb79cb2644a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Marks.html#ga8a05ca2f1e5ae9ae97189cb79cb2644a">UnmarkSelection</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
 <tr class="memdesc:ga8a05ca2f1e5ae9ae97189cb79cb2644a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unmarks selected elements.  <a href="#ga8a05ca2f1e5ae9ae97189cb79cb2644a">More...</a><br /></td></tr>
 <tr class="separator:ga8a05ca2f1e5ae9ae97189cb79cb2644a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0765230f93f198484ca954fd25c9319b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Marks.html#ga0765230f93f198484ca954fd25c9319b">MarkCreaseEdges</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classdouble">double</a> min_angle, <a class="el" href="group__nativeTypes.html#classbool">bool</a> clear_marks)</td></tr>
+<tr class="memdesc:ga0765230f93f198484ca954fd25c9319b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Marks edges whose associated faces have a certain angle as crease-edge.  <a href="#ga0765230f93f198484ca954fd25c9319b">More...</a><br /></td></tr>
+<tr class="separator:ga0765230f93f198484ca954fd25c9319b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae12575adf168d7ec341eeaa957012e68"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Marks.html#gae12575adf168d7ec341eeaa957012e68">MarkCornersOfMarkedEdges</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classdouble">double</a> min_angle)</td></tr>
 <tr class="memdesc:gae12575adf168d7ec341eeaa957012e68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Marks selected vertices as fixed, if they lie at a sharp corner of a marked path or if they are at endpoints or at junctions of marked edges.  <a href="#gae12575adf168d7ec341eeaa957012e68">More...</a><br /></td></tr>
 <tr class="separator:gae12575adf168d7ec341eeaa957012e68"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -163,6 +166,40 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ga0765230f93f198484ca954fd25c9319b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MarkCreaseEdges </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>mesh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classdouble">double</a>&#160;</td>
+          <td class="paramname"><em>min_angle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
+          <td class="paramname"><em>clear_marks</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Marks edges whose associated faces have a certain angle as crease-edge. </p>
+
+</div>
+</div>
 <a class="anchor" id="ga38a041fed5a89e0390afc27196973e4e"></a>
 <div class="memitem">
 <div class="memproto">
@@ -205,7 +242,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">(c) Sebastian Reiter. Generated on Thu Feb 23 2017 12:04:50 for ProMesh User Manual by
+    <li class="footer">(c) Sebastian Reiter. Generated on Tue Mar 14 2017 11:30:21 for ProMesh User Manual by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.11 </li>
   </ul>

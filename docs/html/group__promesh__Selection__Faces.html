@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ProMesh User Manual
-   &#160;<span id="projectnumber">v4.3.7</span>
+   &#160;<span id="projectnumber">v4.3.8</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -90,6 +90,7 @@ $(document).ready(function(){initNavTree('group__promesh__Selection__Faces.html'
 
 <div class="header">
   <div class="summary">
+<a href="#groups">Modules</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Faces<div class="ingroups"><a class="el" href="group__promesh.html">ProMesh Tools</a> &raquo; <a class="el" href="group__promesh__Selection.html">Selection</a></div></div>  </div>
@@ -99,14 +100,22 @@ $(document).ready(function(){initNavTree('group__promesh__Selection__Faces.html'
 <p>Selection tools for faces.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:group__promesh__Selection__Faces__Coordinate__Based"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Faces__Coordinate__Based.html">Coordinate Based</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga7d018e535d8e527039fa49434cc54a5a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__ugbase.html#classFace">Face</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Faces.html#ga7d018e535d8e527039fa49434cc54a5a">SelectFaceByCoordinate</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *coordinate)</td></tr>
-<tr class="memdesc:ga7d018e535d8e527039fa49434cc54a5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects the face whose center is closest to the specified coordinate.  <a href="#ga7d018e535d8e527039fa49434cc54a5a">More...</a><br /></td></tr>
-<tr class="separator:ga7d018e535d8e527039fa49434cc54a5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9ca88df8ac65f02cd3d97bcad9d70d3b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__ugbase.html#classFace">Face</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Faces.html#ga9ca88df8ac65f02cd3d97bcad9d70d3b">SelectFaceByCylindricalCoordinate</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classdouble">double</a> rho, <a class="el" href="group__nativeTypes.html#classdouble">double</a> phi, <a class="el" href="group__nativeTypes.html#classdouble">double</a> z)</td></tr>
-<tr class="memdesc:ga9ca88df8ac65f02cd3d97bcad9d70d3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects the face whose center is closest to the specified cylindrical coordinate.  <a href="#ga9ca88df8ac65f02cd3d97bcad9d70d3b">More...</a><br /></td></tr>
-<tr class="separator:ga9ca88df8ac65f02cd3d97bcad9d70d3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf01d3dfeb0f38cbce64dd674a77a6463"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Faces.html#gaf01d3dfeb0f38cbce64dd674a77a6463">SelectAllFaces</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
+<tr class="memdesc:gaf01d3dfeb0f38cbce64dd674a77a6463"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects all faces of the current grid.  <a href="#gaf01d3dfeb0f38cbce64dd674a77a6463">More...</a><br /></td></tr>
+<tr class="separator:gaf01d3dfeb0f38cbce64dd674a77a6463"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf662f3b2671ba9949c82171207ea82cf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Faces.html#gaf662f3b2671ba9949c82171207ea82cf">DeselectAllFaces</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
+<tr class="memdesc:gaf662f3b2671ba9949c82171207ea82cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deselects all faces of the current grid.  <a href="#gaf662f3b2671ba9949c82171207ea82cf">More...</a><br /></td></tr>
+<tr class="separator:gaf662f3b2671ba9949c82171207ea82cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga05e3d7932cf3ead46f21ebad0a1dbd6d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Faces.html#ga05e3d7932cf3ead46f21ebad0a1dbd6d">SelectAssociatedFaces</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
+<tr class="memdesc:ga05e3d7932cf3ead46f21ebad0a1dbd6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects faces that belong to selected volumes.  <a href="#ga05e3d7932cf3ead46f21ebad0a1dbd6d">More...</a><br /></td></tr>
+<tr class="separator:ga05e3d7932cf3ead46f21ebad0a1dbd6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9a0ce80098750f9ec04093ed28b0afae"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Faces.html#ga9a0ce80098750f9ec04093ed28b0afae">SelectBoundaryFaces</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
 <tr class="memdesc:ga9a0ce80098750f9ec04093ed28b0afae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects faces that lie on the boundary of the geometry.  <a href="#ga9a0ce80098750f9ec04093ed28b0afae">More...</a><br /></td></tr>
 <tr class="separator:ga9a0ce80098750f9ec04093ed28b0afae"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -116,6 +125,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga62ec03310f0b757bbdc24cad5d06d34f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Faces.html#ga62ec03310f0b757bbdc24cad5d06d34f">SelectMarkedFaces</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
 <tr class="memdesc:ga62ec03310f0b757bbdc24cad5d06d34f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects faces which are marked.  <a href="#ga62ec03310f0b757bbdc24cad5d06d34f">More...</a><br /></td></tr>
 <tr class="separator:ga62ec03310f0b757bbdc24cad5d06d34f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf0ff83b121c84b1f298dc23c7341a1af"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Faces.html#gaf0ff83b121c84b1f298dc23c7341a1af">FaceSelectionFill</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
+<tr class="memdesc:gaf0ff83b121c84b1f298dc23c7341a1af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects neighbours of selected faces over non-selected edges.  <a href="#gaf0ff83b121c84b1f298dc23c7341a1af">More...</a><br /></td></tr>
+<tr class="separator:gaf0ff83b121c84b1f298dc23c7341a1af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga812605ace0a27a34500f7c95a91c5694"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Faces.html#ga812605ace0a27a34500f7c95a91c5694">SelectLinkedFaces</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
 <tr class="memdesc:ga812605ace0a27a34500f7c95a91c5694"><td class="mdescLeft">&#160;</td><td class="mdescRight">Repeatedly selects all faces which are edge-neighbors of selected faces.  <a href="#ga812605ace0a27a34500f7c95a91c5694">More...</a><br /></td></tr>
 <tr class="separator:ga812605ace0a27a34500f7c95a91c5694"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -125,48 +137,30 @@ Functions</h2></td></tr>
 <tr class="memitem:ga34b6e585049df8b4f8c426eca2d7cd6a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Faces.html#ga34b6e585049df8b4f8c426eca2d7cd6a">SelectLinkedBoundaryFaces</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classbool">bool</a> stop_at_selected_edges)</td></tr>
 <tr class="memdesc:ga34b6e585049df8b4f8c426eca2d7cd6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects linked boundary faces of selected faces.  <a href="#ga34b6e585049df8b4f8c426eca2d7cd6a">More...</a><br /></td></tr>
 <tr class="separator:ga34b6e585049df8b4f8c426eca2d7cd6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaac67289f51f2d853a542a8577e563c7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Faces.html#gaaac67289f51f2d853a542a8577e563c7">SelectDegenerateFaces</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classdouble">double</a> max_height)</td></tr>
-<tr class="memdesc:gaaac67289f51f2d853a542a8577e563c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects faces that have a height shorter than a given threshold.  <a href="#gaaac67289f51f2d853a542a8577e563c7">More...</a><br /></td></tr>
-<tr class="separator:gaaac67289f51f2d853a542a8577e563c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae5020403a3db923424e814084de1aaed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Faces.html#gae5020403a3db923424e814084de1aaed">SelectLinkedFlatFaces</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classdouble">double</a> max_deviation_angle, <a class="el" href="group__nativeTypes.html#classbool">bool</a> traverse_flipped_faces, <a class="el" href="group__nativeTypes.html#classbool">bool</a> traverse_degenerated_faces, <a class="el" href="group__nativeTypes.html#classbool">bool</a> stop_at_selected_edges)</td></tr>
-<tr class="memdesc:gae5020403a3db923424e814084de1aaed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects linked faces of selected faces that have a similar normal.  <a href="#gae5020403a3db923424e814084de1aaed">More...</a><br /></td></tr>
-<tr class="separator:gae5020403a3db923424e814084de1aaed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0f727f19935635c3d58bbafc1a6e432b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Faces.html#ga0f727f19935635c3d58bbafc1a6e432b">SelectIntersectingTriangles</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
-<tr class="memdesc:ga0f727f19935635c3d58bbafc1a6e432b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects intersecting triangles. Neighbors are ignored.  <a href="#ga0f727f19935635c3d58bbafc1a6e432b">More...</a><br /></td></tr>
-<tr class="separator:ga0f727f19935635c3d58bbafc1a6e432b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga05e3d7932cf3ead46f21ebad0a1dbd6d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Faces.html#ga05e3d7932cf3ead46f21ebad0a1dbd6d">SelectAssociatedFaces</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
-<tr class="memdesc:ga05e3d7932cf3ead46f21ebad0a1dbd6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects faces that belong to selected volumes.  <a href="#ga05e3d7932cf3ead46f21ebad0a1dbd6d">More...</a><br /></td></tr>
-<tr class="separator:ga05e3d7932cf3ead46f21ebad0a1dbd6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf01d3dfeb0f38cbce64dd674a77a6463"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Faces.html#gaf01d3dfeb0f38cbce64dd674a77a6463">SelectAllFaces</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
-<tr class="memdesc:gaf01d3dfeb0f38cbce64dd674a77a6463"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects all faces of the current grid.  <a href="#gaf01d3dfeb0f38cbce64dd674a77a6463">More...</a><br /></td></tr>
-<tr class="separator:gaf01d3dfeb0f38cbce64dd674a77a6463"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf662f3b2671ba9949c82171207ea82cf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Faces.html#gaf662f3b2671ba9949c82171207ea82cf">DeselectAllFaces</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
-<tr class="memdesc:gaf662f3b2671ba9949c82171207ea82cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deselects all faces of the current grid.  <a href="#gaf662f3b2671ba9949c82171207ea82cf">More...</a><br /></td></tr>
-<tr class="separator:gaf662f3b2671ba9949c82171207ea82cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac5d5be12c5a983f45744412a9a79d36a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Faces.html#gac5d5be12c5a983f45744412a9a79d36a">SelectFaceByIndex</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classint">int</a> index)</td></tr>
-<tr class="memdesc:gac5d5be12c5a983f45744412a9a79d36a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects a face given its index.  <a href="#gac5d5be12c5a983f45744412a9a79d36a">More...</a><br /></td></tr>
-<tr class="separator:gac5d5be12c5a983f45744412a9a79d36a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8ce02e9bfdaaa3c5fbe7f914bf2094d3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Faces.html#ga8ce02e9bfdaaa3c5fbe7f914bf2094d3">SelectFacesByNormal</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *normal, <a class="el" href="group__nativeTypes.html#classdouble">double</a> max_deviation_angle)</td></tr>
-<tr class="memdesc:ga8ce02e9bfdaaa3c5fbe7f914bf2094d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects faces given a normal and a maximum deviation angle.  <a href="#ga8ce02e9bfdaaa3c5fbe7f914bf2094d3">More...</a><br /></td></tr>
-<tr class="separator:ga8ce02e9bfdaaa3c5fbe7f914bf2094d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf0ff83b121c84b1f298dc23c7341a1af"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Faces.html#gaf0ff83b121c84b1f298dc23c7341a1af">FaceSelectionFill</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
-<tr class="memdesc:gaf0ff83b121c84b1f298dc23c7341a1af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects neighbours of selected faces over non-selected edges.  <a href="#gaf0ff83b121c84b1f298dc23c7341a1af">More...</a><br /></td></tr>
-<tr class="separator:gaf0ff83b121c84b1f298dc23c7341a1af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa1f49e6468206e7142f5ce3dbb826601"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__nativeTypes.html#classsize__t">size_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Faces.html#gaa1f49e6468206e7142f5ce3dbb826601">SelectBentQuadrilaterals</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classdouble">double</a> dot_threshold)</td></tr>
-<tr class="memdesc:gaa1f49e6468206e7142f5ce3dbb826601"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects quadrilaterals which do not lie in a plane.  <a href="#gaa1f49e6468206e7142f5ce3dbb826601">More...</a><br /></td></tr>
-<tr class="separator:gaa1f49e6468206e7142f5ce3dbb826601"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadaf569309697892eeed5310c0a187ba4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Faces.html#gadaf569309697892eeed5310c0a187ba4">SelectFacesInBox</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *min, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *max)</td></tr>
-<tr class="memdesc:gadaf569309697892eeed5310c0a187ba4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects all faces in the given box.  <a href="#gadaf569309697892eeed5310c0a187ba4">More...</a><br /></td></tr>
-<tr class="separator:gadaf569309697892eeed5310c0a187ba4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9d18f34bc829a06ec5e819beaa830bf7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Faces.html#ga9d18f34bc829a06ec5e819beaa830bf7">SelectFacesInCylinder</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *base, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *top, <a class="el" href="group__nativeTypes.html#classdouble">double</a> radius)</td></tr>
-<tr class="memdesc:ga9d18f34bc829a06ec5e819beaa830bf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects all faces in the given cylinder.  <a href="#ga9d18f34bc829a06ec5e819beaa830bf7">More...</a><br /></td></tr>
-<tr class="separator:ga9d18f34bc829a06ec5e819beaa830bf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8f4320f0c19d3ff4aee4b438087dd1d1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Faces.html#ga8f4320f0c19d3ff4aee4b438087dd1d1">SelectLinkedFlatFaces</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classdouble">double</a> max_deviation_angle, <a class="el" href="group__nativeTypes.html#classbool">bool</a> ignore_orientation, <a class="el" href="group__nativeTypes.html#classbool">bool</a> traverse_degenerated_faces, <a class="el" href="group__nativeTypes.html#classbool">bool</a> stop_at_selected_edges)</td></tr>
+<tr class="memdesc:ga8f4320f0c19d3ff4aee4b438087dd1d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects linked faces of selected faces that have a similar normal.  <a href="#ga8f4320f0c19d3ff4aee4b438087dd1d1">More...</a><br /></td></tr>
+<tr class="separator:ga8f4320f0c19d3ff4aee4b438087dd1d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2ddfca973721305e8be5f255e8c796a2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Faces.html#ga2ddfca973721305e8be5f255e8c796a2">SelectInterfaceFaces</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classbool">bool</a> regard_selected_neighbors_only)</td></tr>
 <tr class="memdesc:ga2ddfca973721305e8be5f255e8c796a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects elements which are adjacent to higher dimensional elements of different subsets.  <a href="#ga2ddfca973721305e8be5f255e8c796a2">More...</a><br /></td></tr>
 <tr class="separator:ga2ddfca973721305e8be5f255e8c796a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab640f71cd18ca9f6ba4c309fc296c5a7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Faces.html#gab640f71cd18ca9f6ba4c309fc296c5a7">SelectAnisotropicFaces</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classdouble">double</a> minEdgeRation)</td></tr>
-<tr class="memdesc:gab640f71cd18ca9f6ba4c309fc296c5a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects elements and associated long edges wich have a shortest-to-longest edge ratio smaller than the specified one.  <a href="#gab640f71cd18ca9f6ba4c309fc296c5a7">More...</a><br /></td></tr>
-<tr class="separator:gab640f71cd18ca9f6ba4c309fc296c5a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8ce02e9bfdaaa3c5fbe7f914bf2094d3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Faces.html#ga8ce02e9bfdaaa3c5fbe7f914bf2094d3">SelectFacesByNormal</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *normal, <a class="el" href="group__nativeTypes.html#classdouble">double</a> max_deviation_angle)</td></tr>
+<tr class="memdesc:ga8ce02e9bfdaaa3c5fbe7f914bf2094d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects faces given a normal and a maximum deviation angle.  <a href="#ga8ce02e9bfdaaa3c5fbe7f914bf2094d3">More...</a><br /></td></tr>
+<tr class="separator:ga8ce02e9bfdaaa3c5fbe7f914bf2094d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae59a061c1e1a19e349a19deebb654119"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Faces.html#gae59a061c1e1a19e349a19deebb654119">SelectAnisotropicFaces</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classdouble">double</a> min_edge_ratio)</td></tr>
+<tr class="memdesc:gae59a061c1e1a19e349a19deebb654119"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects elements and associated long edges wich have a shortest-to-longest edge ratio smaller than the specified one.  <a href="#gae59a061c1e1a19e349a19deebb654119">More...</a><br /></td></tr>
+<tr class="separator:gae59a061c1e1a19e349a19deebb654119"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaac67289f51f2d853a542a8577e563c7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Faces.html#gaaac67289f51f2d853a542a8577e563c7">SelectDegenerateFaces</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classdouble">double</a> max_height)</td></tr>
+<tr class="memdesc:gaaac67289f51f2d853a542a8577e563c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects faces that have a height shorter than a given threshold.  <a href="#gaaac67289f51f2d853a542a8577e563c7">More...</a><br /></td></tr>
+<tr class="separator:gaaac67289f51f2d853a542a8577e563c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa1f49e6468206e7142f5ce3dbb826601"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__nativeTypes.html#classsize__t">size_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Faces.html#gaa1f49e6468206e7142f5ce3dbb826601">SelectBentQuadrilaterals</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classdouble">double</a> dot_threshold)</td></tr>
+<tr class="memdesc:gaa1f49e6468206e7142f5ce3dbb826601"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects quadrilaterals which do not lie in a plane.  <a href="#gaa1f49e6468206e7142f5ce3dbb826601">More...</a><br /></td></tr>
+<tr class="separator:gaa1f49e6468206e7142f5ce3dbb826601"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0f727f19935635c3d58bbafc1a6e432b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Faces.html#ga0f727f19935635c3d58bbafc1a6e432b">SelectIntersectingTriangles</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
+<tr class="memdesc:ga0f727f19935635c3d58bbafc1a6e432b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects intersecting triangles. Neighbors are ignored.  <a href="#ga0f727f19935635c3d58bbafc1a6e432b">More...</a><br /></td></tr>
+<tr class="separator:ga0f727f19935635c3d58bbafc1a6e432b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac5d5be12c5a983f45744412a9a79d36a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Faces.html#gac5d5be12c5a983f45744412a9a79d36a">SelectFaceByIndex</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classint">int</a> index)</td></tr>
+<tr class="memdesc:gac5d5be12c5a983f45744412a9a79d36a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects a face given its index.  <a href="#gac5d5be12c5a983f45744412a9a79d36a">More...</a><br /></td></tr>
+<tr class="separator:gac5d5be12c5a983f45744412a9a79d36a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Selection tools for faces. </p>
@@ -225,7 +219,7 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gab640f71cd18ca9f6ba4c309fc296c5a7"></a>
+<a class="anchor" id="gae59a061c1e1a19e349a19deebb654119"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -239,7 +233,7 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="group__nativeTypes.html#classdouble">double</a>&#160;</td>
-          <td class="paramname"><em>minEdgeRation</em>&#160;</td>
+          <td class="paramname"><em>min_edge_ratio</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -345,74 +339,6 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga7d018e535d8e527039fa49434cc54a5a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group__ugbase.html#classFace">Face</a>* SelectFaceByCoordinate </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
-          <td class="paramname"><em>mesh</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
-          <td class="paramname"><em>coordinate</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Selects the face whose center is closest to the specified coordinate. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga9ca88df8ac65f02cd3d97bcad9d70d3b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group__ugbase.html#classFace">Face</a>* SelectFaceByCylindricalCoordinate </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
-          <td class="paramname"><em>mesh</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classdouble">double</a>&#160;</td>
-          <td class="paramname"><em>rho</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classdouble">double</a>&#160;</td>
-          <td class="paramname"><em>phi</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classdouble">double</a>&#160;</td>
-          <td class="paramname"><em>z</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Selects the face whose center is closest to the specified cylindrical coordinate. </p>
-
-</div>
-</div>
 <a class="anchor" id="gac5d5be12c5a983f45744412a9a79d36a"></a>
 <div class="memitem">
 <div class="memproto">
@@ -472,80 +398,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Selects faces given a normal and a maximum deviation angle. </p>
-
-</div>
-</div>
-<a class="anchor" id="gadaf569309697892eeed5310c0a187ba4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SelectFacesInBox </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
-          <td class="paramname"><em>mesh</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
-          <td class="paramname"><em>min</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
-          <td class="paramname"><em>max</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Selects all faces in the given box. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga9d18f34bc829a06ec5e819beaa830bf7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SelectFacesInCylinder </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
-          <td class="paramname"><em>mesh</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
-          <td class="paramname"><em>top</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classdouble">double</a>&#160;</td>
-          <td class="paramname"><em>radius</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Selects all faces in the given cylinder. </p>
 
 </div>
 </div>
@@ -659,7 +511,7 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gae5020403a3db923424e814084de1aaed"></a>
+<a class="anchor" id="ga8f4320f0c19d3ff4aee4b438087dd1d1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -679,7 +531,7 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
-          <td class="paramname"><em>traverse_flipped_faces</em>, </td>
+          <td class="paramname"><em>ignore_orientation</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -747,7 +599,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">(c) Sebastian Reiter. Generated on Thu Feb 23 2017 12:04:50 for ProMesh User Manual by
+    <li class="footer">(c) Sebastian Reiter. Generated on Tue Mar 14 2017 11:30:21 for ProMesh User Manual by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.11 </li>
   </ul>

@@ -10,11 +10,13 @@ Recent changes:
 -------------------------------------------------------------------------------
 v 4.3.8
 Changes and additions:
+- Added a separate CoordinateWidget (formerly CoordinateTransform-Coordinates)
 - Added shortcuts for selection-element-type and selection-mode (keys 1-7)
 - If a tool is executed but no object exists yet, a new object will be created
   automatically before the tool is applied.
 - Added CoordinateTransform-Mirror
-- Changed registration procedure of tools
+- Changed registration procedure of tools. Tools ordering is now different to
+  previous versions.
 - All coordinate input boxes now have a coherent design and accept text input
 - New shortcuts for Collapse (Merge), SplitEdge, SwapEdge, Refine.
 - Remeshing-EdgeOperations and Remeshing-Polylines are now merged into
@@ -43,7 +45,7 @@ Fixes:
 -------------------------------------------------------------------------------
 v 4.3.6
 Changes and additions:
-- Added subset based boolean operations for CSG modelling
+- Added subset based boolean operations for CSG modeling
   (Union, Intersection, Difference)
 - Added 'AssignSubset' and 'AssignNewSubset' to the SceneInspectors R-Click Menu
 - Preparations for different Views

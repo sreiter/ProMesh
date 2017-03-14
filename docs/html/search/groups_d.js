@@ -1,9 +1,6 @@
 var searchData=
 [
-  ['scale',['Scale',['../group__promesh__Coordinate__Transform__Scale.html',1,'']]],
-  ['smoothing',['Smoothing',['../group__promesh__Coordinate__Transform__Smoothing.html',1,'']]],
-  ['subdivision_20projection',['Subdivision Projection',['../group__promesh__Coordinate__Transform__Subdivision__Projection.html',1,'']]],
-  ['selection',['Selection',['../group__promesh__Selection.html',1,'']]],
-  ['subsets',['Subsets',['../group__promesh__Subsets.html',1,'']]],
-  ['separate',['Separate',['../group__promesh__Subsets__Separate.html',1,'']]]
+  ['promesh_20tools',['ProMesh Tools',['../group__promesh.html',1,'']]],
+  ['pivot',['Pivot',['../group__promesh__Coordinate__Transform__Pivot.html',1,'']]],
+  ['polylines',['Polylines',['../group__promesh__Remeshing__Polylines.html',1,'']]]
 ];

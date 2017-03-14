@@ -810,10 +810,10 @@ void LGScene::update_visuals(LGObject* pObj)
 	}
 	//if(pObj->vertex_rendering_enabled()){
 	if(drawVertices){
-		UG_ASSERT(curDisplayListIndex + numSubsets < numDisplayLists,
-				  "curDisplayListIndex: " << curDisplayListIndex
-				  << ", numSubsets: " << numSubsets
-				  << ", numDisplayLists: " << numDisplayLists);
+		// UG_ASSERT(curDisplayListIndex + numSubsets < numDisplayLists,
+		// 		  "curDisplayListIndex: " << curDisplayListIndex
+		// 		  << ", numSubsets: " << numSubsets
+		// 		  << ", numDisplayLists: " << numDisplayLists);
 		render_point_subsets(pObj, curDisplayListIndex);
 		curDisplayListIndex += numSubsets;
 	}

@@ -129,7 +129,6 @@ int main(int argc, char *argv[])
 
 	MainWindow* pMainWindow = app::getMainWindow();
 
-
 	// try{
 	// 	SeraTest2 test;
 	// 	SeraBase* base = &test;
@@ -218,6 +217,15 @@ int main(int argc, char *argv[])
 	}
 
 	// dlg->show();
+
+	#ifdef UG_DEBUG
+		UG_LOG("DEBUG MODE\n");
+	#endif
+	#ifdef UG_ENABLE_DEBUG_LOGS
+		UG_LOG("DEBUG LOGS ACTIVE\n");
+		UG_SET_DEBUG_LEVEL(ug::LIB_GRID, 1);
+	#endif
+
 
 	return myApp.exec();
 }

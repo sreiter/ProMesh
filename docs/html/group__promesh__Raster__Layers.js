@@ -22,5 +22,6 @@ var group__promesh__Raster__Layers =
     [ "MeshLayerBoundaries", "group__promesh__Raster__Layers.html#gadec45fe7d6a84a31e81d170e77536e92", null ],
     [ "MeshLayers", "group__promesh__Raster__Layers.html#ga4eb2046a240360a310b532862197e90c", null ],
     [ "ProjectToLayer", "group__promesh__Raster__Layers.html#ga7170d71b014282647e97c9cb80e1de6f", null ],
-    [ "ProjectToTopLayer", "group__promesh__Raster__Layers.html#ga9ebb4aa2c1cd10e1ad23027cad084735", null ]
+    [ "ProjectToTopLayer", "group__promesh__Raster__Layers.html#ga9ebb4aa2c1cd10e1ad23027cad084735", null ],
+    [ "SnapToHorizontalRaster", "group__promesh__Raster__Layers.html#ga6d54e07107dcb21572ed6c88b86ce491", null ]
 ];

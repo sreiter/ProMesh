@@ -1,5 +1,10 @@
 var searchData=
 [
-  ['vertices',['Vertices',['../group__promesh__Selection__Vertices.html',1,'']]],
-  ['volumes',['Volumes',['../group__promesh__Selection__Volumes.html',1,'']]]
+  ['scale',['Scale',['../group__promesh__Coordinate__Transform__Scale.html',1,'']]],
+  ['smoothing',['Smoothing',['../group__promesh__Coordinate__Transform__Smoothing.html',1,'']]],
+  ['subdivision_20projection',['Subdivision Projection',['../group__promesh__Coordinate__Transform__Subdivision__Projection.html',1,'']]],
+  ['selection',['Selection',['../group__promesh__Selection.html',1,'']]],
+  ['subset_20based',['Subset Based',['../group__promesh__Selection__Subset__Based.html',1,'']]],
+  ['subsets',['Subsets',['../group__promesh__Subsets.html',1,'']]],
+  ['separate',['Separate',['../group__promesh__Subsets__Separate.html',1,'']]]
 ];

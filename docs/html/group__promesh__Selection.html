@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ProMesh User Manual
-   &#160;<span id="projectnumber">v4.3.7</span>
+   &#160;<span id="projectnumber">v4.3.8</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -113,6 +113,8 @@ Modules</h2></td></tr>
 <tr class="memitem:group__promesh__Selection__Marks"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Marks.html">Marks</a></td></tr>
 <tr class="memdesc:group__promesh__Selection__Marks"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tools to set and remove marks on a mesh. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:group__promesh__Selection__Subset__Based"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Subset__Based.html">Subset Based</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group__promesh__Selection__Vertices"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection__Vertices.html">Vertices</a></td></tr>
 <tr class="memdesc:group__promesh__Selection__Vertices"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selection tools for vertices. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -122,36 +124,24 @@ Modules</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga3b94c137a1d8ccdf79a0ba7778323d54"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection.html#ga3b94c137a1d8ccdf79a0ba7778323d54">ClearSelection</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
-<tr class="memdesc:ga3b94c137a1d8ccdf79a0ba7778323d54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the selection.  <a href="#ga3b94c137a1d8ccdf79a0ba7778323d54">More...</a><br /></td></tr>
-<tr class="separator:ga3b94c137a1d8ccdf79a0ba7778323d54"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4d27bb4097b15a15fb35065c3516d53b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection.html#ga4d27bb4097b15a15fb35065c3516d53b">SelectAll</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
 <tr class="memdesc:ga4d27bb4097b15a15fb35065c3516d53b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects all vertices, edges ,faces and volumes of the current grid.  <a href="#ga4d27bb4097b15a15fb35065c3516d53b">More...</a><br /></td></tr>
 <tr class="separator:ga4d27bb4097b15a15fb35065c3516d53b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac9142536d72912653a70194293850596"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection.html#gac9142536d72912653a70194293850596">ExtendSelection</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classint">int</a> neighborhood_size)</td></tr>
-<tr class="memdesc:gac9142536d72912653a70194293850596"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects neighbors of selected elements.  <a href="#gac9142536d72912653a70194293850596">More...</a><br /></td></tr>
-<tr class="separator:gac9142536d72912653a70194293850596"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad6fcd224f217f6289dc4c1b15d3b3ac9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection.html#gad6fcd224f217f6289dc4c1b15d3b3ac9">SelectSubset</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classint">int</a> subset_index, <a class="el" href="group__nativeTypes.html#classbool">bool</a> vertices, <a class="el" href="group__nativeTypes.html#classbool">bool</a> edges, <a class="el" href="group__nativeTypes.html#classbool">bool</a> faces, <a class="el" href="group__nativeTypes.html#classbool">bool</a> volumes)</td></tr>
-<tr class="memdesc:gad6fcd224f217f6289dc4c1b15d3b3ac9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects all elements of a subset.  <a href="#gad6fcd224f217f6289dc4c1b15d3b3ac9">More...</a><br /></td></tr>
-<tr class="separator:gad6fcd224f217f6289dc4c1b15d3b3ac9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga39eb91e4302622c6a214d77fc28b273c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection.html#ga39eb91e4302622c6a214d77fc28b273c">SelectSubsetBoundary</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classint">int</a> subset_index, <a class="el" href="group__nativeTypes.html#classbool">bool</a> boundaries_of_edges, <a class="el" href="group__nativeTypes.html#classbool">bool</a> boundaries_of_faces, <a class="el" href="group__nativeTypes.html#classbool">bool</a> boundaries_of_volumes)</td></tr>
-<tr class="memdesc:ga39eb91e4302622c6a214d77fc28b273c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects the boundary of a subset.  <a href="#ga39eb91e4302622c6a214d77fc28b273c">More...</a><br /></td></tr>
-<tr class="separator:ga39eb91e4302622c6a214d77fc28b273c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac7735080eff6a8981d2442877bad8133"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection.html#gac7735080eff6a8981d2442877bad8133">SelectUnassignedElements</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classbool">bool</a> subset_index, <a class="el" href="group__nativeTypes.html#classbool">bool</a> vertices, <a class="el" href="group__nativeTypes.html#classbool">bool</a> edges, <a class="el" href="group__nativeTypes.html#classbool">bool</a> faces)</td></tr>
-<tr class="memdesc:gac7735080eff6a8981d2442877bad8133"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects all elements not assigned to any subset.  <a href="#gac7735080eff6a8981d2442877bad8133">More...</a><br /></td></tr>
-<tr class="separator:gac7735080eff6a8981d2442877bad8133"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8ffdb5b4e7b81e99074f5de8ff5e5d16"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection.html#ga8ffdb5b4e7b81e99074f5de8ff5e5d16">InvertSelection</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classbool">bool</a> subset_index, <a class="el" href="group__nativeTypes.html#classbool">bool</a> vertices, <a class="el" href="group__nativeTypes.html#classbool">bool</a> edges, <a class="el" href="group__nativeTypes.html#classbool">bool</a> faces)</td></tr>
-<tr class="memdesc:ga8ffdb5b4e7b81e99074f5de8ff5e5d16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inverts current selection.  <a href="#ga8ffdb5b4e7b81e99074f5de8ff5e5d16">More...</a><br /></td></tr>
-<tr class="separator:ga8ffdb5b4e7b81e99074f5de8ff5e5d16"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0f2901d9788e64f61ad42be065a35856"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection.html#ga0f2901d9788e64f61ad42be065a35856">SelectSelectionBoundary</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
-<tr class="memdesc:ga0f2901d9788e64f61ad42be065a35856"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects the boundary of the current selection.  <a href="#ga0f2901d9788e64f61ad42be065a35856">More...</a><br /></td></tr>
-<tr class="separator:ga0f2901d9788e64f61ad42be065a35856"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3b94c137a1d8ccdf79a0ba7778323d54"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection.html#ga3b94c137a1d8ccdf79a0ba7778323d54">ClearSelection</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
+<tr class="memdesc:ga3b94c137a1d8ccdf79a0ba7778323d54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the selection.  <a href="#ga3b94c137a1d8ccdf79a0ba7778323d54">More...</a><br /></td></tr>
+<tr class="separator:ga3b94c137a1d8ccdf79a0ba7778323d54"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga07fb278b1c485844401a6e936d06e4f1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection.html#ga07fb278b1c485844401a6e936d06e4f1">CloseSelection</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
 <tr class="memdesc:ga07fb278b1c485844401a6e936d06e4f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects all associated elements of lower dimensions.  <a href="#ga07fb278b1c485844401a6e936d06e4f1">More...</a><br /></td></tr>
 <tr class="separator:ga07fb278b1c485844401a6e936d06e4f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga311fcd62aedd89a1302c84b16e2904f3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection.html#ga311fcd62aedd89a1302c84b16e2904f3">SelectElementsBySplitPlane</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classbool">bool</a> select_vrts, <a class="el" href="group__nativeTypes.html#classbool">bool</a> select_edges, <a class="el" href="group__nativeTypes.html#classbool">bool</a> select_faces, <a class="el" href="group__nativeTypes.html#classbool">bool</a> select_volumes, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *pivot, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *normal)</td></tr>
-<tr class="memdesc:ga311fcd62aedd89a1302c84b16e2904f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects elements whose center lies in front of the specified plane.  <a href="#ga311fcd62aedd89a1302c84b16e2904f3">More...</a><br /></td></tr>
-<tr class="separator:ga311fcd62aedd89a1302c84b16e2904f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0f2901d9788e64f61ad42be065a35856"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection.html#ga0f2901d9788e64f61ad42be065a35856">SelectSelectionBoundary</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
+<tr class="memdesc:ga0f2901d9788e64f61ad42be065a35856"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects the boundary of the current selection.  <a href="#ga0f2901d9788e64f61ad42be065a35856">More...</a><br /></td></tr>
+<tr class="separator:ga0f2901d9788e64f61ad42be065a35856"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8ffdb5b4e7b81e99074f5de8ff5e5d16"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection.html#ga8ffdb5b4e7b81e99074f5de8ff5e5d16">InvertSelection</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classbool">bool</a> subset_index, <a class="el" href="group__nativeTypes.html#classbool">bool</a> vertices, <a class="el" href="group__nativeTypes.html#classbool">bool</a> edges, <a class="el" href="group__nativeTypes.html#classbool">bool</a> faces)</td></tr>
+<tr class="memdesc:ga8ffdb5b4e7b81e99074f5de8ff5e5d16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inverts current selection.  <a href="#ga8ffdb5b4e7b81e99074f5de8ff5e5d16">More...</a><br /></td></tr>
+<tr class="separator:ga8ffdb5b4e7b81e99074f5de8ff5e5d16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac9142536d72912653a70194293850596"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__promesh__Selection.html#gac9142536d72912653a70194293850596">ExtendSelection</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classint">int</a> neighborhood_size)</td></tr>
+<tr class="memdesc:gac9142536d72912653a70194293850596"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects neighbors of selected elements.  <a href="#gac9142536d72912653a70194293850596">More...</a><br /></td></tr>
+<tr class="separator:gac9142536d72912653a70194293850596"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Tools to perform and to manipulate the current selection. </p>
@@ -284,64 +274,6 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga311fcd62aedd89a1302c84b16e2904f3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SelectElementsBySplitPlane </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
-          <td class="paramname"><em>mesh</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
-          <td class="paramname"><em>select_vrts</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
-          <td class="paramname"><em>select_edges</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
-          <td class="paramname"><em>select_faces</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
-          <td class="paramname"><em>select_volumes</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
-          <td class="paramname"><em>pivot</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
-          <td class="paramname"><em>normal</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Selects elements whose center lies in front of the specified plane. </p>
-
-</div>
-</div>
 <a class="anchor" id="ga0f2901d9788e64f61ad42be065a35856"></a>
 <div class="memitem">
 <div class="memproto">
@@ -360,157 +292,13 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gad6fcd224f217f6289dc4c1b15d3b3ac9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SelectSubset </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
-          <td class="paramname"><em>mesh</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classint">int</a>&#160;</td>
-          <td class="paramname"><em>subset_index</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
-          <td class="paramname"><em>vertices</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
-          <td class="paramname"><em>edges</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
-          <td class="paramname"><em>faces</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
-          <td class="paramname"><em>volumes</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Selects all elements of a subset. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga39eb91e4302622c6a214d77fc28b273c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SelectSubsetBoundary </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
-          <td class="paramname"><em>mesh</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classint">int</a>&#160;</td>
-          <td class="paramname"><em>subset_index</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
-          <td class="paramname"><em>boundaries_of_edges</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
-          <td class="paramname"><em>boundaries_of_faces</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
-          <td class="paramname"><em>boundaries_of_volumes</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Selects the boundary of a subset. </p>
-
-</div>
-</div>
-<a class="anchor" id="gac7735080eff6a8981d2442877bad8133"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SelectUnassignedElements </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
-          <td class="paramname"><em>mesh</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
-          <td class="paramname"><em>subset_index</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
-          <td class="paramname"><em>vertices</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
-          <td class="paramname"><em>edges</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
-          <td class="paramname"><em>faces</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Selects all elements not assigned to any subset. </p>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">(c) Sebastian Reiter. Generated on Thu Feb 23 2017 12:04:49 for ProMesh User Manual by
+    <li class="footer">(c) Sebastian Reiter. Generated on Tue Mar 14 2017 11:30:21 for ProMesh User Manual by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.11 </li>
   </ul>
