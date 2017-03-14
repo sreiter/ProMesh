@@ -168,8 +168,8 @@ valueChanged(double)
 
 	update_text();
 
-	m_bRefreshingCoords = false;
 	emit valueChanged();
+	m_bRefreshingCoords = false;
 }
 
 void MatrixWidget::
@@ -206,8 +206,8 @@ textEdited(const QString& newText)
 		++coordCounter;
 	}
 
-	m_bRefreshingCoords = false;
 	emit valueChanged();
+	m_bRefreshingCoords = false;
 }
 
 void MatrixWidget::
