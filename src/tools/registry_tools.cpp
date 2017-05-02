@@ -26,11 +26,11 @@
  */
 
 #include <locale>
+#include "../../plugins/ProMesh/promesh_plugin.h"
 #include "common/util/stringify.h"
 #include "common/util/string_util.h"
 #include "bridge/bridge.h"
 #include "standard_tools.h"
-#include "../../plugins/ProMesh/promesh_plugin.h"
 
 using namespace std;
 using namespace ug;
