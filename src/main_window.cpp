@@ -689,7 +689,7 @@ int MainWindow::openFile()
 								this,
 								tr("Load Geometry"),
 								path,
-								tr("geometry files (*.ugx *.vtu *.lgb *.obj *.txt *.art *.net *.dat *.lgm *.ng *.smesh *.ele *.msh *.stl *.asc *.ASC *.dump)"));
+								tr("geometry files (*.ugx *.vtu *.lgb *.obj *.txt *.art *.net *.dat *.lgm *.ng *.smesh *.ele *.msh *.stl *.asc *.ASC *.dump *.swc)"));
 
 	for(QStringList::iterator iter = fileNames.begin();
 		iter != fileNames.end(); ++iter)
@@ -749,7 +749,7 @@ bool MainWindow::saveToFile()
 									this,
 									tr("Save Geometry"),
 									path,
-									tr("geometry files (*.ugx *.vtu *.ncdf *.lgb *.obj *.txt *.ele *.smesh *.stl *.tex *.tikz)"));
+									tr("geometry files (*.ugx *.vtu *.ncdf *.lgb *.obj *.txt *.ele *.smesh *.stl *.tex *.tikz *.swc)"));
 
 		if(!fileName.isEmpty())
 		{
