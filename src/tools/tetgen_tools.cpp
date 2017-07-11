@@ -35,6 +35,7 @@
 #include "bridge/util.h"
 #include "tooltips.h"
 #include "tools/file_io_tools.h"
+#include "lib_grid/file_io/file_io_tetgen.h"
 
 using namespace ug;
 using namespace std;
@@ -44,7 +45,8 @@ using namespace app;
 
 
 static QString BuildTetgenArguments (
-        bool hasFaces,
+        bool meshPLC,
+        bool remesh,
 		number quality,
 		bool preserveOuter,
 		bool preserveAll,
@@ -58,20 +60,38 @@ static QString BuildTetgenArguments (
 	else if(verbosity >= 3)
 		args.append("VVV");
 
-	if(hasFaces){
+	if(meshPLC)
 		args.append("p");
-		if(quality > SMALL)
-			args.append("qq").append(QString::number(quality));
-		if(preserveOuter || preserveAll)
-			args.append("Y");
-		if(preserveAll)
-			args.append("Y");	// if inner bnds shall be preserved "YY" has to be passed to tetgen
-	}
+
+	if(remesh)
+		args.append("ar");
+
+	if(quality > SMALL)
+		args.append("qq").append(QString::number(quality));
+	if(preserveOuter || preserveAll)
+		args.append("Y");
+	if(preserveAll)
+		args.append("Y");	// if inner bnds shall be preserved "YY" has to be passed to tetgen
 
 	args.append("Q");
 	return args;
 }
 
+static void RemoveTetgenFiles (const QString& eleFileName)
+{
+	QString filename = eleFileName;
+	QFile::remove(filename);
+	filename.replace(QString(".ele"), QString(".node"));
+	QFile::remove(filename);
+	filename.replace(QString(".node"), QString(".edge"));
+	QFile::remove(filename);
+	filename.replace(QString(".edge"), QString(".face"));
+	QFile::remove(filename);
+	filename.replace(QString(".face"), QString(".vol"));
+	QFile::remove(filename);
+}
+
+static
 void TetrahedralizeEx (	Mesh* mesh,
                        	number quality,
 						bool preserveOuter,
@@ -90,6 +110,84 @@ void TetrahedralizeEx (	Mesh* mesh,
 
 	QString args;
 	args.append("-").append(BuildTetgenArguments(mesh->grid().num_faces() > 0,
+	                            false,
+                                quality,
+                                preserveOuter,
+                                preserveAll,
+                                verbosity));
+
+	args.append(" ").append(outFileName);
+
+
+	QString call = AppDir().path()	.append(QDir::separator())
+									.append("tools")
+									.append(QDir::separator())
+									.append("tetgen");
+	// UG_LOG("Calling: '" << call.toLocal8Bit().constData() << "'\n");
+
+	UG_LOG("Calling 'tetgen' by Hang Si (www.tetgen.org)\n");
+
+	QProcess proc;
+	proc.setProcessChannelMode(QProcess::MergedChannels);
+	proc.start(call, args.split(' '));
+
+	if(!proc.waitForFinished(-1)){
+		UG_LOG(proc.errorString().toLocal8Bit().constData() << "\n");
+		UG_LOG("Received error during execution of tetgen. Aborting.\n");
+	}
+	else{
+		QString output(proc.readAll());
+		output.replace(QString("\r\n"), QString("\n"));
+		output.replace(QString("\r"), QString("\n"));
+		UG_LOG(output.toLocal8Bit().constData() << "\n");
+	}
+
+	mesh->grid().clear_geometry();
+	QString inFileName(outFileName);
+	inFileName.replace(QString(".smesh"), QString(".1.ele"));
+	LoadMesh(mesh, inFileName.toLocal8Bit().constData());
+
+//	remove temporary files
+	QFile::remove(outFileName);
+	RemoveTetgenFiles(inFileName);
+
+	SubsetHandler& sh = mesh->subset_handler();
+	Grid& grid = mesh->grid();
+
+	int oldNumSubsets = sh.num_subsets();
+	if(separateVolumes){
+		SeparateSubsetsByLowerDimSubsets<Volume>(grid, sh, appendSubsetsAtEnd);
+	}
+	else if(appendSubsetsAtEnd){
+		sh.assign_subset(grid.begin<Tetrahedron>(),
+						 grid.end<Tetrahedron>(), sh.num_subsets());
+	}
+
+//	assign a subset name
+	for(int i = oldNumSubsets; i < sh.num_subsets(); ++i)
+		sh.subset_info(i).name = "tetrahedra";
+
+	UG_LOG("Done\n");
+}
+
+static
+void RetetrahedralizeEx (Mesh* mesh,
+                       	number quality,
+						bool preserveOuter,
+						bool preserveAll,
+						int verbosity)
+{
+
+	QString outFileName = TmpFileName("retet", ".ele");
+	// UG_LOG("Saving to file: " << outFileName.toLocal8Bit().constData() << std::endl);
+
+	if(!SaveGridToELE(mesh->grid(), outFileName.toLocal8Bit().constData(),
+	                  &mesh->subset_handler(), mesh->position_attachment(),
+	                  &mesh->volume_constraint_attachment())){
+		UG_THROW("SaveMesh failed with mesh '" << outFileName.toLocal8Bit().constData() << "' in Tetrahedral Fill\n");
+	}
+	QString args;
+	args.append("-").append(BuildTetgenArguments(false, true,
                                 quality,
                                 preserveOuter,
                                 preserveAll,
@@ -111,6 +209,8 @@ void TetrahedralizeEx (	Mesh* mesh,
 
 	if(!proc.waitForFinished(-1)){
 		UG_LOG(proc.errorString().toLocal8Bit().constData() << "\n");
+		UG_LOG("Received error during execution of tetgen. Aborting.\n");
+		return;
 	}
 	else{
 		QString output(proc.readAll());
@@ -121,34 +221,12 @@ void TetrahedralizeEx (	Mesh* mesh,
 
 	mesh->grid().clear_geometry();
 	QString inFileName(outFileName);
-	inFileName.replace(QString(".smesh"), QString(".1.ele"));
+	inFileName.replace(QString(".ele"), QString(".1.ele"));
 	LoadMesh(mesh, inFileName.toLocal8Bit().constData());
 
 //	remove temporary files
-	QFile::remove(outFileName);
-	QFile::remove(inFileName);
-	inFileName.replace(QString(".1.ele"), QString(".1.node"));
-	QFile::remove(inFileName);
-	inFileName.replace(QString(".1.node"), QString(".1.edge"));
-	QFile::remove(inFileName);
-	inFileName.replace(QString(".1.edge"), QString(".1.face"));
-	QFile::remove(inFileName);
-
-	SubsetHandler& sh = mesh->subset_handler();
-	Grid& grid = mesh->grid();
-
-	int oldNumSubsets = sh.num_subsets();
-	if(separateVolumes){
-		SeparateSubsetsByLowerDimSubsets<Volume>(grid, sh, appendSubsetsAtEnd);
-	}
-	else if(appendSubsetsAtEnd){
-		sh.assign_subset(grid.begin<Tetrahedron>(),
-						 grid.end<Tetrahedron>(), sh.num_subsets());
-	}
-
-//	assign a subset name
-	for(int i = oldNumSubsets; i < sh.num_subsets(); ++i)
-		sh.subset_info(i).name = "tetrahedra";
+	RemoveTetgenFiles(outFileName);
+	RemoveTetgenFiles(inFileName);
 
 	UG_LOG("Done\n");
 }
@@ -168,6 +246,15 @@ void RegisterTetgenTools ()
 				"append subsets at end || value=true#"
 				"verbosity || min=0; value=0; max=3; step=1",
 				"Fills a closed surface with tetrahedra using TetGen.");
+
+	reg.add_function("RemeshTetrahedra", &RetetrahedralizeEx, grp, "",
+				"mesh #"
+				"quality || value=5; min=0; max=18; step=1 #"
+				"preserve outer #"
+				"preserve all #"
+				"verbosity || min=0; value=0; max=3; step=1",
+				"Given a tetrahedralization and volume constraints, "
+					"this method adapts the tetrahedra using TetGen.");
 }
 
 #endif	//__H__UG_tetgen_tools
