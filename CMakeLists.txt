@@ -195,28 +195,8 @@ if(NOT UG_ROOT_PATH)
 	message(FATAL_ERROR "ERROR: You have to specify UG_ROOT_PATH! Add an option -DUG_ROOT_PATH=path-to-ug4")
 endif(NOT UG_ROOT_PATH)
 
-if(NOT TETGEN_PATH)
-	message(FATAL_ERROR "ERROR: You have to specify TETGEN_PATH! Add an option -DTETGEN_PATH=path-to-tetgen")
-endif(NOT TETGEN_PATH)
-
-message(STATUS "INFO: TETGEN_PATH was set to: " ${TETGEN_PATH})
-
 message(STATUS "INFO: USE_WEBKIT: " ${USE_WEBKIT})
 
-
-find_library(TETGEN_LIBS NAMES tet PATHS ${TETGEN_PATH})
-if(TETGEN_LIBS-NOTFOUND)
-	message(FATAL_ERROR "ERROR: TETGEN lib could not be found.")
-else(TETGEN_LIBS-NOTFOUND)
-	message(STATUS "INFO: Using TETGEN. Please check the TETGEN license!")
-# UG requires this define if tetgen is used
-	ADD_DEFINITIONS(-DUG_TETGEN)
-# Since we want to use tetgen as a library, we have to add the following definition
-	ADD_DEFINITIONS(-DTETLIBRARY)
-	include_directories(${TETGEN_PATH})
-	link_directories(${TETGEN_PATH})
-	set(PROMESH_LIBS ${PROMESH_LIBS} ${TETGEN_LIBS})
-endif(TETGEN_LIBS-NOTFOUND)
 
 include_directories(${UG_ROOT_PATH}/ugcore/ugbase)
 include_directories(${UG_ROOT_PATH}/plugins/ProMesh)
@@ -242,7 +222,6 @@ set(ProMeshRESOURCES	ProMesh.qrc
 QT5_ADD_RESOURCES(ProMeshRESOURCES_RCC ${ProMeshRESOURCES})
 
 SET(allSources ${ProMeshSRC} ${ProMeshRESOURCES_RCC})
-
 
 
 if(UNIX)
@@ -272,3 +251,17 @@ if(USE_WEBKIT)
 endif(USE_WEBKIT)
 
 TARGET_LINK_LIBRARIES(ProMesh4 ${PM_LIBS} ${Boost_LIBRARIES})
+
+if(WIN32)
+	set(tetgenFileName tetgen.exe)
+else()
+	set(tetgenFileName tetgen)
+endif()
+
+add_custom_command(TARGET ProMesh4 PRE_BUILD
+    COMMAND ${CMAKE_COMMAND} -E make_directory tools)
+
+add_custom_command(TARGET ProMesh4 PRE_BUILD
+                   COMMAND ${CMAKE_COMMAND} -E copy
+                   ${UG_ROOT_PATH}/bin/${tetgenFileName} $<TARGET_FILE_DIR:ProMesh4>/tools/${tetgenFileName})
+

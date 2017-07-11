@@ -28,7 +28,6 @@
 #include <vector>
 #include "app.h"
 #include "standard_tools.h"
-#include "tetgen.h"
 #include "tooltips.h"
 
 using namespace std;

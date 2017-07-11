@@ -17,17 +17,14 @@ Please install UG4 through its package manager [ughub](https://github/UG4/ughub)
     mkdir ug4
     cd ug4
     ughub init
-    ughub install ProMesh LuaShell
+    ughub install ProMesh LuaShell tetgen
     mkdir build
     cd build
     cmake -DTARGET=libgrid -DSTATIC_BUILD=ON -DCMAKE_BUILD_TYPE=Release -DProMesh=ON -DLuaShell=ON -DPARALLEL=OFF ..
 
-ProMesh and UG4 support [Tetgen](http://tetgen.org/). After downloading and (locally) installing tetgen you
-should enable Tetgen support for UG4. Execute the following command in ug4's build-folder:
 
-    cmake -DTETGEN=.../PathToTetgen ..
-
-Please have a look at Tetgen's licensing.
+Installing 'tetgen' (as proposed above) is optional.
+Please have a look at Tetgen's licensing (www.tetgen.org).
 
 
 Please install Qt5, e.g. for Linux from:
