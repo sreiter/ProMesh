@@ -8,6 +8,16 @@ Recent changes:
 
 
 -------------------------------------------------------------------------------
+v 4.3.9 (preview 1)
+Changes and additions:
+- Remeshing-Orientation-AdjustEdgeOrientation now only considers the set of
+  selected faces.
+
+Fixes:
+
+
+
+-------------------------------------------------------------------------------
 v 4.3.8
 Changes and additions:
 - Added a separate CoordinateWidget (formerly CoordinateTransform-Coordinates)

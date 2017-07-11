@@ -123,7 +123,7 @@ template <class TObject>
 int TScene<TObject>::
 num_objects() const
 {
-	return m_vObjects.size();
+	return (int)m_vObjects.size();
 }
 
 template <class TObject>

@@ -343,10 +343,7 @@ void MainWindow::init()
 	// statusBar()->show();
 
 //	init undo
-	QDir tmpPath(QDir::tempPath());
-	if(!tmpPath.exists("ProMesh"))
-		tmpPath.mkdir("ProMesh");
-	tmpPath.cd("ProMesh");
+	QDir tmpPath = app::ProMeshTmpDir();
 	if(!UndoHistoryProvider::inst().init(tmpPath.path().toLocal8Bit().constData())){
 		cout << "initialization of undo failed. couldn't create history path at "
 			 << tmpPath.path().toLocal8Bit().constData() << "\n";

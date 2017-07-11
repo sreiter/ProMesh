@@ -34,7 +34,7 @@
 namespace cam
 {
 
-const float SMALL = 1.e-12;
+const float SMALL = 1.e-12f;
 typedef ug::vector2 vector2;
 typedef ug::vector3 vector3;
 /*

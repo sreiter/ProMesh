@@ -419,25 +419,25 @@ void LGScene::get_clip_distance_estimate(float& nearOut, float& farOut,
 			if(clipPlaneIsEnabled(i))
 			{
 				if(nearOut < 0)
-					nearOut = PlanePointDistance(m_clipPlanes[i], from) * 0.1;
+					nearOut = (float) PlanePointDistance(m_clipPlanes[i], from) * 0.1;
 				else
 				{
-					float tDist = PlanePointDistance(m_clipPlanes[i], from) * 0.1;
+					float tDist = (float) PlanePointDistance(m_clipPlanes[i], from) * 0.1;
 					nearOut = min(nearOut, tDist);
 				}
 
 				correctDistX = false;
-				if(nearOut < 0.00001)
-					nearOut = 0.00001;
+				if(nearOut < 0.00001f)
+					nearOut = 0.00001f;
 			}
 		}
 	}
 
 	if(correctDistX)
 	{
-		float minBorder = bndSphere.get_radius() * 0.001;
-		if(minBorder < 0.00001)
-			minBorder = 0.00001;
+		number minBorder = bndSphere.get_radius() * 0.001f;
+		if(minBorder < 0.00001f)
+			minBorder = 0.00001f;
 		if(nearOut < minBorder)
 			nearOut = minBorder;
 	}
@@ -464,12 +464,12 @@ static QColor ColorAdjust(const QColor& c)
 
 void LGScene::draw()
 {
-	static GLfloat lightDirection[] = { 0, 0.0, 1.0, 0.0 };
-	static GLfloat lightDirectionInv[] = { 0, 0.0, -1.0, 0.0 };
-	static GLfloat lightAmbientLow[4] = { 0.2, 0.2, 0.2, 1.0 };
-	static GLfloat lightAmbientFull[4] = { 1.0, 1.0, 1.0, 1.0 };
-	static GLfloat lightDiffuse[4] = { 1.0, 1.0, 1.0, 1.0 };
-	static GLfloat lightDiffuseInv[4] = { 1.0, 1.0, 1.0, 1.0 };
+	static GLfloat lightDirection[] = { 0, 0.0f, 1.0f, 0.0f };
+	static GLfloat lightDirectionInv[] = { 0, 0.0f, -1.0f, 0.0f };
+	static GLfloat lightAmbientLow[4] = { 0.2f, 0.2f, 0.2f, 1.0f };
+	static GLfloat lightAmbientFull[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	static GLfloat lightDiffuse[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	static GLfloat lightDiffuseInv[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 	for(int i = 0; i < num_objects(); ++i)
 	{
@@ -564,7 +564,7 @@ void LGScene::draw()
 							{
 							//	draw wire
 							//	check whether we have to use the z-buffer or not.
-								GLfloat wireColor[4] = {0.4, 0.4, 0.4, 1.0};
+								GLfloat wireColor[4] = {0.4f, 0.4f, 0.4f, 1.0f};
 								if(drawMode[iPass] & DM_SOLID)
 								{
 									glDepthMask(false);

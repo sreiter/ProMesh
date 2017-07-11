@@ -70,6 +70,7 @@ void RegisterStandardTools(ToolManager* toolMgr)
 	RegisterGridGenerationTools(toolMgr);
 	RegisterInfoTools(toolMgr);
 
+	RegisterTetgenTools();
 	RegisterRegistryTools(toolMgr);
 	
 	RegisterCoordinateTransformTools(toolMgr);

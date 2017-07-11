@@ -38,6 +38,8 @@ void RegisterCoordinateTransformTools(ToolManager* toolMgr);
 void RegisterInfoTools(ToolManager* toolMgr);
 void RegisterFracToLayerTools(ToolManager* toolMgr);
 
+void RegisterTetgenTools();
+
 void RegisterRegistryTools(ToolManager* toolMgr);
 
 void RegisterScriptTools(ToolManager* toolMgr);

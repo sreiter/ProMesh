@@ -43,17 +43,17 @@ void CalculateBoundingSphere(Sphere3& sphereOut, Face* f,
 //	calculate center
 	vector3 center(0, 0, 0);
 
-	uint numVrts = f->num_vertices();
+	size_t numVrts = f->num_vertices();
 	assert(numVrts > 0 && "face does not contain any vertex!");
 
-	for(uint i = 0; i < numVrts; ++i)
+	for(size_t i = 0; i < numVrts; ++i)
 		VecAdd(center, center, aaPos[f->vertex(i)]);
 
 	VecScale(center, center, 1./(number)numVrts);
 
 //	find the point that is the farthest away from center.
 	number maxDistSq = VecDistanceSq(center, aaPos[f->vertex(0)]);
-	for(uint i = 1; i < numVrts; ++i)
+	for(size_t i = 1; i < numVrts; ++i)
 	{
 		number nDistSq = VecDistanceSq(center, aaPos[f->vertex(i)]);
 		if(nDistSq > maxDistSq)
@@ -72,17 +72,17 @@ void CalculateBoundingSphere(Sphere3& sphereOut, Volume* v,
 //	calculate center
 	vector3 center(0, 0, 0);
 
-	uint numVrts = v->num_vertices();
+	size_t numVrts = v->num_vertices();
 	assert(numVrts > 0 && "face does not contain any vertex!");
 
-	for(uint i = 0; i < numVrts; ++i)
+	for(size_t i = 0; i < numVrts; ++i)
 		VecAdd(center, center, aaPos[v->vertex(i)]);
 
 	VecScale(center, center, 1./(number)numVrts);
 
 //	find the point that is the farthest away from center.
 	number maxDistSq = VecDistanceSq(center, aaPos[v->vertex(0)]);
-	for(uint i = 1; i < numVrts; ++i)
+	for(size_t i = 1; i < numVrts; ++i)
 	{
 		number nDistSq = VecDistanceSq(center, aaPos[v->vertex(i)]);
 		if(nDistSq > maxDistSq)
@@ -127,9 +127,9 @@ bool ClipFace(Face* f, const Sphere3& boundingSphere, Plane& clipPlane,
 	{
 	//	check whether one of the vertices lies outside of the plane.
 	//	if so, the whole face will be clipped.
-		uint numVrts = f->num_vertices();
+		size_t numVrts = f->num_vertices();
 		Face::ConstVertexArray vrts = f->vertices();
-		for(uint i = 0; i < numVrts; ++i)
+		for(size_t i = 0; i < numVrts; ++i)
 		{
 			if(PlanePointTest(clipPlane, aaPos[vrts[i]]) == RPI_OUTSIDE)
 				return true;
@@ -157,8 +157,8 @@ bool ClipVolume(Volume* v, const ug::Sphere3& boundingSphere, ug::Plane& clipPla
 	{
 	//	check whether one of the vertices lies outside of the plane.
 	//	if so, the whole face will be clipped.
-		uint numVrts = v->num_vertices();
-		for(uint i = 0; i < numVrts; ++i)
+		size_t numVrts = v->num_vertices();
+		for(size_t i = 0; i < numVrts; ++i)
 		{
 			if(PlanePointTest(clipPlane, aaPos[v->vertex(i)]) == RPI_OUTSIDE)
 				return true;

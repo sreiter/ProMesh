@@ -85,6 +85,9 @@ inline LGObject* createEmptyObject(const char* name, SceneObjectType sot)
 }
 
 
+/// returns the path in which the application resides
+QDir AppDir();
+
 ///	returns the path in which user-data is placed (e.g. $HOME/.promesh)
 QDir UserDataDir();
 
@@ -96,6 +99,15 @@ QDir UserTmpDir();
 
 ///	returns the path in which the help may be placed (e.g. $HOME/.promesh/help)
 QDir UserHelpDir();
+
+/// returns the system-temporary path in which ProMesh temporary files may be placed
+QDir ProMeshTmpDir();
+
+/// returns a unique temporary file name placed in ProMeshTmpDir
+QString TmpFileName(const QString& prefix, const QString& suffix);
+
+/// returns a unique temporary file name placed in the given directory
+QString TmpFileName(const QDir& dir, const QString& prefix, const QString& suffix);
 
 void PerformClickSelection(float x, float y, bool extendSelection = false);
 

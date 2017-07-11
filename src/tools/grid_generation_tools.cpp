@@ -185,7 +185,7 @@ class ToolMergeMeshes : public ITool
 
 			for(size_t i_obj = 0; i_obj < selObjInds.size(); ++i_obj){
 				int objInd = selObjInds[i_obj];
-				if(objInd >= scene->num_objects()){
+				if(objInd >= (int)scene->num_objects()){
 					UG_LOG("Bad selection during MergeMeshes. Aborting\n");
 					return;
 				}
@@ -235,9 +235,9 @@ class ToolMergeMeshes : public ITool
 					iter != grid.end<Face>(); ++iter)
 				{
 					Face* fSrc = *iter;
-					fd.set_num_vertices(fSrc->num_vertices());
+					fd.set_num_vertices((uint)fSrc->num_vertices());
 					for(size_t i = 0; i < fd.num_vertices(); ++i)
-						fd.set_vertex(i, aaVrt[fSrc->vertex(i)]);
+						fd.set_vertex((uint)i, aaVrt[fSrc->vertex(i)]);
 
 					Face* f = *mrgGrid.create_by_cloning(fSrc, fd);
 					mrgSH.assign_subset(f, subsetBaseInd + sh.get_subset_index(fSrc));
@@ -249,9 +249,9 @@ class ToolMergeMeshes : public ITool
 					iter != grid.end<Volume>(); ++iter)
 				{
 					Volume* vSrc = *iter;
-					vd.set_num_vertices(vSrc->num_vertices());
+					vd.set_num_vertices((uint)vSrc->num_vertices());
 					for(size_t i = 0; i < vd.num_vertices(); ++i)
-						vd.set_vertex(i, aaVrt[vSrc->vertex(i)]);
+						vd.set_vertex((uint)i, aaVrt[vSrc->vertex(i)]);
 
 					Volume* v = *mrgGrid.create_by_cloning(vSrc, vd);
 					mrgSH.assign_subset(v, subsetBaseInd + sh.get_subset_index(vSrc));

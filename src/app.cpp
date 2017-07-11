@@ -25,9 +25,11 @@
  * GNU Lesser General Public License for more details.
  */
 
+#include <QApplication>
 #include <QFileInfo>
 #include "app.h"
 #include "util/file_util.h"
+#include "common/math/ugmath.h"
 
 namespace app{
 
@@ -50,6 +52,10 @@ static void CheckPathPermissions(const QDir& dir, QString path)
 				  << path.toLocal8Bit().constData());
 }
 
+QDir AppDir()
+{
+	return QDir(QApplication::applicationDirPath());
+}
 
 QDir UserDataDir()
 {
@@ -115,6 +121,39 @@ QDir UserHelpDir()
 
 	return userPath;
 }
+
+QDir ProMeshTmpDir()
+{
+	QDir tmpPath(QDir::tempPath());
+	if(!tmpPath.exists("ProMesh"))
+		tmpPath.mkdir("ProMesh");
+	tmpPath.cd("ProMesh");
+	return tmpPath;
+}
+
+/// returns a unique temporary file name placed in ProMeshTmpDir
+QString TmpFileName(const QString& prefix, const QString& suffix)
+{
+	return TmpFileName(ProMeshTmpDir(), prefix, suffix);
+}
+
+/// returns a unique temporary file name placed in the given directory
+QString TmpFileName(const QDir& dir, const QString& prefix, const QString& suffix)
+{
+	for(int i = 0; i < 1000; ++i){
+		QString filename = dir.path();
+		filename.append(QDir::separator())
+				.append(prefix)
+				.append(QString::number(ug::urand<int>(100000, 999999)))
+				.append(suffix);
+		if(!QFile::exists(filename))
+			return filename;
+	}
+
+	UG_THROW("No temporary file could be created.");
+	return QString("");
+}
+
 
 QString GetVersionString()
 {
