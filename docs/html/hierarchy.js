@@ -1,12 +1,12 @@
 var hierarchy =
 [
     [ "bool", "group__nativeTypes.html#classbool", null ],
-    [ "Box", "group__promesh__Util.html#classBox", null ],
+    [ "Box", "group__ug4__promesh__Util.html#classBox", null ],
     [ "char", "group__nativeTypes.html#classchar", null ],
     [ "const", "group__nativeTypes.html#classconst", null ],
     [ "double", "group__nativeTypes.html#classdouble", null ],
-    [ "EdgeIterator", "group__promesh.html#classEdgeIterator", null ],
-    [ "FaceIterator", "group__promesh.html#classFaceIterator", null ],
+    [ "EdgeIterator", "group__ug4__promesh.html#classEdgeIterator", null ],
+    [ "FaceIterator", "group__ug4__promesh.html#classFaceIterator", null ],
     [ "float", "group__nativeTypes.html#classfloat", null ],
     [ "Grid", "group__ugbase.html#classGrid", null ],
     [ "GridObject", "group__ugbase.html#classGridObject", [
@@ -24,8 +24,8 @@ var hierarchy =
     ] ],
     [ "Mesh", "group__ugbase.html#classMesh", null ],
     [ "number", "group__nativeTypes.html#classnumber", null ],
-    [ "RasterLayerDesc", "group__promesh__Raster__Layers.html#classRasterLayerDesc", null ],
-    [ "RasterLayers", "group__promesh__Raster__Layers.html#classRasterLayers", null ],
+    [ "RasterLayerDesc", "group__ug4__promesh__Raster__Layers.html#classRasterLayerDesc", null ],
+    [ "RasterLayers", "group__ug4__promesh__Raster__Layers.html#classRasterLayers", null ],
     [ "size_t", "group__nativeTypes.html#classsize__t", null ],
     [ "string", "group__nativeTypes.html#classstring", null ],
     [ "Vec1d", "group__ugbase.html#classVec1d", null ],
@@ -33,6 +33,6 @@ var hierarchy =
     [ "Vec3d", "group__ugbase.html#classVec3d", null ],
     [ "Vec4d", "group__ugbase.html#classVec4d", null ],
     [ "vector", "group__nativeTypes.html#classvector", null ],
-    [ "VertexIterator", "group__promesh.html#classVertexIterator", null ],
-    [ "VolumeIterator", "group__promesh.html#classVolumeIterator", null ]
+    [ "VertexIterator", "group__ug4__promesh.html#classVertexIterator", null ],
+    [ "VolumeIterator", "group__ug4__promesh.html#classVolumeIterator", null ]
 ];

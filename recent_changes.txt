@@ -8,10 +8,12 @@ Recent changes:
 
 
 -------------------------------------------------------------------------------
-v 4.3.9 (preview 1)
+v 4.3.9
 Changes and additions:
 - Remeshing-Orientation-AdjustEdgeOrientation now only considers the set of
   selected faces.
+- Tetgen is now used as a separate process through a file-interface
+- Support for *.swc files added
 
 Fixes:
 

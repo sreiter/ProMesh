@@ -109,6 +109,8 @@ class MainWindow : public QMainWindow
 		
 		void check_options() const;
 		
+		const char* log_text();
+		
 	signals:
 		void activeObjectChanged();
 		void refreshToolDialogs();
@@ -218,9 +220,10 @@ class MainWindow : public QMainWindow
 	//	dialogs
 		QFileDialog*				m_dlgGeometryFiles;
 		SceneInspector*				m_sceneInspector;
-		QDockWidget*				m_pLog;
 		QDialog*					m_dlgAbout;
 		PropertyWidget*				m_optWidget;
+		QDockWidget*				m_pLog;
+		QTextEdit*					m_pLogText;
 		QTextEdit*					m_actionLog;
 		QMenu*						m_sceneInspectorRClickMenu;
 

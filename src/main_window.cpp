@@ -125,13 +125,13 @@ void MainWindow::init()
 	QFont logFont("unknown");
 	logFont.setStyleHint(QFont::Monospace);
 	logFont.setPointSize(10);
-	QTextEdit* pLogText = new QTextEdit(m_pLog);
-	pLogText->setReadOnly(true);
-	pLogText->setAcceptRichText(false);
-	pLogText->setUndoRedoEnabled(false);
-	pLogText->setWordWrapMode(QTextOption::NoWrap);
-	pLogText->setCurrentFont(logFont);
-	m_pLog->setWidget(pLogText);
+	m_pLogText = new QTextEdit(m_pLog);
+	m_pLogText->setReadOnly(true);
+	m_pLogText->setAcceptRichText(false);
+	m_pLogText->setUndoRedoEnabled(false);
+	m_pLogText->setWordWrapMode(QTextOption::NoWrap);
+	m_pLogText->setCurrentFont(logFont);
+	m_pLog->setWidget(m_pLogText);
 
 	addDockWidget(Qt::BottomDockWidgetArea, m_pLog);
 
@@ -161,7 +161,7 @@ void MainWindow::init()
 	tabifyDockWidget(actionLogDock, optionDock);
 
 //	redirect cout
-	Q_DebugStream* pDebugStream = new Q_DebugStream(GetLogAssistant().logger(), pLogText);
+	Q_DebugStream* pDebugStream = new Q_DebugStream(GetLogAssistant().logger(), m_pLogText);
 	pDebugStream->enable_file_output(app::UserDataDir().path() + QString("/log.txt"));
 
 	UG_LOG(GetFileContent(":/resources/greetings.txt").toStdString() << endl);
@@ -1272,3 +1272,7 @@ actionLogChanged(const QString& newContent)
 	}
 }
 
+const char* MainWindow::log_text()
+{
+	return m_pLogText->toPlainText().toLocal8Bit().constData();
+}

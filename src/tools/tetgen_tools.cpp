@@ -47,7 +47,8 @@ using namespace app;
 static QString BuildTetgenArguments (
         bool meshPLC,
         bool remesh,
-		number quality,
+		number maxRadiusEdgeRatio,
+       	number minDihedralAngle,
 		bool preserveOuter,
 		bool preserveAll,
 		int verbosity)
@@ -66,8 +67,8 @@ static QString BuildTetgenArguments (
 	if(remesh)
 		args.append("ar");
 
-	if(quality > SMALL)
-		args.append("qq").append(QString::number(quality));
+	args.append("q").append(QString::number(maxRadiusEdgeRatio))
+	    .append("/").append(QString::number(minDihedralAngle));
 	if(preserveOuter || preserveAll)
 		args.append("Y");
 	if(preserveAll)
@@ -93,7 +94,8 @@ static void RemoveTetgenFiles (const QString& eleFileName)
 
 static
 void TetrahedralizeEx (	Mesh* mesh,
-                       	number quality,
+                        number maxRadiusEdgeRatio,
+                       	number minDihedralAngle,
 						bool preserveOuter,
 						bool preserveAll,
 						bool separateVolumes,
@@ -111,7 +113,8 @@ void TetrahedralizeEx (	Mesh* mesh,
 	QString args;
 	args.append("-").append(BuildTetgenArguments(mesh->grid().num_faces() > 0,
 	                            false,
-                                quality,
+	                            maxRadiusEdgeRatio,
+                                minDihedralAngle,
                                 preserveOuter,
                                 preserveAll,
                                 verbosity));
@@ -172,7 +175,8 @@ void TetrahedralizeEx (	Mesh* mesh,
 
 static
 void RetetrahedralizeEx (Mesh* mesh,
-                       	number quality,
+                       	number maxRadiusEdgeRatio,
+                       	number minDihedralAngle,
 						bool preserveOuter,
 						bool preserveAll,
 						int verbosity)
@@ -188,7 +192,8 @@ void RetetrahedralizeEx (Mesh* mesh,
 	}
 	QString args;
 	args.append("-").append(BuildTetgenArguments(false, true,
-                                quality,
+                                maxRadiusEdgeRatio,
+                                minDihedralAngle,
                                 preserveOuter,
                                 preserveAll,
                                 verbosity));
@@ -236,10 +241,11 @@ void RegisterTetgenTools ()
 {
 	ProMeshRegistry& reg = GetProMeshRegistry();
 
-	string grp = "Remeshing/Tetrahedra";
+	string grp = "ug4/promesh/Remeshing/Tetrahedra";
 	reg.add_function("TetrahedralFill", &TetrahedralizeEx, grp, "",
 				"mesh #"
-				"quality || value=5; min=0; max=18; step=1 #"
+				"max radius edge ratio || value=2; min=1; step=0.1D #"
+				"min dihedral angle || value=5; min=0; max=18; step=1 #"
 				"preserve outer #"
 				"preserve all #"
 				"separate volumes || value=true #"
@@ -249,7 +255,8 @@ void RegisterTetgenTools ()
 
 	reg.add_function("RemeshTetrahedra", &RetetrahedralizeEx, grp, "",
 				"mesh #"
-				"quality || value=5; min=0; max=18; step=1 #"
+				"max radius edge ratio || value=2; min=1; step=0.1D #"
+				"min dihedral angle || value=5; min=0; max=18; step=1 #"
 				"preserve outer #"
 				"preserve all #"
 				"verbosity || min=0; value=0; max=3; step=1",

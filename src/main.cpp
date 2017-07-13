@@ -28,8 +28,10 @@
 #include <QApplication>
 #include <iostream>
 #include <clocale>
+#include <cstring>
 #include <QFileOpenEvent>
 #include "app.h"
+#include "docugen.h"
 #include "util/file_util.h"
 
 //TESTING
@@ -129,77 +131,6 @@ int main(int argc, char *argv[])
 
 	MainWindow* pMainWindow = app::getMainWindow();
 
-	// try{
-	// 	SeraTest2 test;
-	// 	SeraBase* base = &test;
-	// 	test.m_properties.m_pos = ug::vector3(2.2, 1.1, 3.3);
-	// 	test.m_int = 1;
-
-	// 	QDialog* dlg = new QDialog(pMainWindow);
-	// 	QVBoxLayout* layout = new QVBoxLayout(dlg);
-	// 	dlg->setLayout(layout);
-
-	// 	PropertyWidget* pw = new PropertyWidget(dlg);
-	// 	layout->addWidget(pw);
-
-	// 	pw->populate(base, "SeraTest");
-
-	// 	dlg->resize(QSize(400, 800));
-	// 	dlg->show();
-
-
-	// 	SeraTest2 testOut;
-	// 	pw->retrieve_values(testOut);
-	// 	UG_LOG("Retrieved vector " << testOut.m_properties.m_pos << std::endl);
-	// 	UG_LOG("Retrieved int " << testOut.m_int << std::endl);
-	// }
-	// catch(ug::UGError& err){
-	// 	UG_LOG("ERROR received during widget serialization:\n");
-	// 	for(size_t i = 0; i < err.num_msg(); ++i)
-	// 		UG_LOG("  " << err.get_file(i) << ": " << err.get_line(i)
-	// 			   << ": " << err.get_msg(i) << "\n");
-	// }
-	// catch(...){
-	// 	UG_LOG("  Unknown error...\n");
-	// }
-
-
-	// try{
-	// 	QDialog* dlg = new QDialog(pMainWindow);
-	// 	QVBoxLayout* layout = new QVBoxLayout(dlg);
-	// 	dlg->setLayout(layout);
-
-	// 	PropertyWidget* pw = new PropertyWidget(dlg);
-	// 	layout->addWidget(pw);
-
-	// 	ug::CylinderProjectorNew cylProj;
-	// 	ug::RefinementProjector& base = cylProj;
-	// 	pw->populate(base, "Projector");
-
-	// 	dlg->resize(QSize(400, 800));
-	// 	dlg->show();
-
-	// }
-	// catch(ug::UGError& err){
-	// 	UG_LOG("ERROR received during widget serialization:\n");
-	// 	for(size_t i = 0; i < err.num_msg(); ++i)
-	// 		UG_LOG("  " << err.get_file(i) << ": " << err.get_line(i)
-	// 			   << ": " << err.get_msg(i) << "\n");
-	// }
-	// catch(...){
-	// 	UG_LOG("  Unknown error...\n");
-	// }
-
-
-//	testing...
-	// QDialog* dlg = new QDialog(pMainWindow);
-	// ProjectorWidget* pw = new ProjectorWidget(dlg);
-	// QVBoxLayout* layout = new QVBoxLayout(dlg);
-	// dlg->setLayout(layout);
-	// layout->addWidget(pw);
-	// dlg->resize(QSize(400, 800));
-
-
 	pMainWindow->init();
 
 	myApp.setMainWindow(pMainWindow);
@@ -226,6 +157,19 @@ int main(int argc, char *argv[])
 		UG_SET_DEBUG_LEVEL(ug::LIB_GRID, 1);
 	#endif
 
+	if((argc > 1) && (strcmp(argv[1], "-docugen") == 0)){
+		UG_LOG("Executing docugen...\n");
+		const int retVal = RunDocugen();
+		ofstream out("docugen.log");
+		out << pMainWindow->log_text() << endl;
+		out.close();
+		if(!retVal){
+			return 0;
+		}
+		else{
+			UG_LOG("\nAN ERROR OCCURRED DURING DOCUGEN.\n");
+		}
+	}
 
 	return myApp.exec();
 }

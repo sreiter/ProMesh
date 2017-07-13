@@ -6,5 +6,5 @@ var searchData=
   ['octahedron_5fselection_5fend',['octahedron_selection_end',['../group__ugbase.html#a0450364f4a34fda1ca918258d68deee9',1,'Mesh::octahedron_selection_end()'],['../group__ugbase.html#a0450364f4a34fda1ca918258d68deee9',1,'Mesh::octahedron_selection_end()']]],
   ['octahedron_5fsubset_5fbegin',['octahedron_subset_begin',['../group__ugbase.html#a32257c3f7854ac5340a09005a9a9b640',1,'Mesh::octahedron_subset_begin(int param)'],['../group__ugbase.html#a32257c3f7854ac5340a09005a9a9b640',1,'Mesh::octahedron_subset_begin(int param)']]],
   ['octahedron_5fsubset_5fend',['octahedron_subset_end',['../group__ugbase.html#a7a5c53bd7b9d8ff7d260c9a4d150c009',1,'Mesh::octahedron_subset_end(int param)'],['../group__ugbase.html#a7a5c53bd7b9d8ff7d260c9a4d150c009',1,'Mesh::octahedron_subset_end(int param)']]],
-  ['orientation',['Orientation',['../group__promesh__Remeshing__Orientation.html',1,'']]]
+  ['orientation',['Orientation',['../group__ug4__promesh__Remeshing__Orientation.html',1,'']]]
 ];
