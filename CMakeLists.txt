@@ -120,6 +120,7 @@ set(ProMeshSRC	src/app.cpp
 				src/widgets/coordinates_widget.cpp
 				src/widgets/double_slider.cpp
 				src/widgets/extendible_widget.cpp
+				src/widgets/live_script_dialog.cpp
 				src/widgets/file_widget.cpp
 				src/widgets/icon_tab_widget.cpp
 				src/widgets/matrix_widget.cpp

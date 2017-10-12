@@ -44,6 +44,7 @@
 #include "widgets/widget_list.h"
 #include "widgets/matrix_widget.h"
 #include "tools/coordinate_transform_tools.h"
+#include "widgets/live_script_dialog.h"
 
 using namespace std;
 using namespace ug;
@@ -144,8 +145,18 @@ activate(SceneInspector* sceneInspector, LGScene* scene)
 		coordinatesDock->setWidget(m_coordsWidget);
 		m_dockWidgets.push_back(make_pair(Qt::LeftDockWidgetArea, coordinatesDock));
 
+	//	script editor
+		m_scriptEditor = new QScriptEditor(parentWidget());
+		m_scriptEditor->setWindowFlags(Qt::Window |
+		                               Qt::CustomizeWindowHint |
+		                               Qt::WindowCloseButtonHint |
+		                               Qt::WindowMaximizeButtonHint);
 
 	//	script menu
+		QAction* actScriptEditor = new QAction(tr("Script Editor"), parentWidget());
+		actScriptEditor->setStatusTip("Opens the script editor");
+		connect(actScriptEditor, SIGNAL(triggered()), this, SLOT(showScriptEditor()));
+
 		QAction* actNewScript = new QAction(tr("New Script"), parentWidget());
 		actNewScript->setStatusTip("Creates a new script and opens it for editing");
 		connect(actNewScript, SIGNAL(triggered()), this, SLOT(newScript()));
@@ -164,6 +175,7 @@ activate(SceneInspector* sceneInspector, LGScene* scene)
 		connect(actRefreshToolDialogs, SIGNAL(triggered()), this, SLOT(refreshToolDialogsClicked()));
 
 		QMenu* sceneMenu = new QMenu("&Scripts", parentWidget());
+		sceneMenu->addAction(actScriptEditor);
 		sceneMenu->addAction(actNewScript);
 		sceneMenu->addAction(actEditScript);
 		sceneMenu->addSeparator();
@@ -255,6 +267,12 @@ keyPressEvent(QKeyEvent* event)
 	m_toolManager->execute_shortcut(event->key(), mods);
 }
 
+void MeshModule::showScriptEditor()
+{
+	m_scriptEditor->show();
+	m_scriptEditor->raise();
+	m_scriptEditor->activateWindow();
+}
 
 void MeshModule::refreshToolDialogsClicked()
 {

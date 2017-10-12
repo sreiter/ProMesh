@@ -34,6 +34,7 @@
 #include <cstdlib>
 #include <sstream>
 
+#include "script_tools.h"
 #include "standard_tools.h"
 #include "common/error.h"
 #include "common/util/string_util.h"
@@ -49,6 +50,7 @@ typedef SmartPtr<ug::luashell::LuaShell> SPLuaShell;
 
 class ScriptTool;
 static vector<ScriptTool*>	g_scriptTools;
+static SPLuaShell			g_luaShell;
 
 struct ScriptParamter{
 	string varName;
@@ -69,6 +71,15 @@ static T ToNumber(const std::string& str){
 	T num = 0;
 	istr >> num;
 	return num;
+}
+
+
+SPLuaShell GetDefaultLuaShell ()
+{
+	if(!g_luaShell.valid()){
+		g_luaShell = make_sp(new luashell::LuaShell());
+	}
+	return g_luaShell;
 }
 
 ScriptDeclarations ParseScriptForDeclarations(const QByteArray& scriptContent,
@@ -140,16 +151,16 @@ class ScriptTool : public ITool
 				for(size_t i = 0; i < m_scriptDecls.inputs.size(); ++i){
 					ScriptParamter& param = m_scriptDecls.inputs[i];
 					if((param.typeName == "double") || (param.typeName == "float")){
-						m_luaShell->set(param.varName.c_str(), dlg->to_double(i));
+						m_luaShell->set(param.varName.c_str(), dlg->to_double((int)i));
 					}
 					else if((param.typeName == "int") || (param.typeName == "integer")){
-						m_luaShell->set(param.varName.c_str(), dlg->to_int(i));
+						m_luaShell->set(param.varName.c_str(), dlg->to_int((int)i));
 					}
 					else if((param.typeName == "bool") || (param.typeName == "boolean")){
-						m_luaShell->set(param.varName.c_str(), dlg->to_bool(i));
+						m_luaShell->set(param.varName.c_str(), dlg->to_bool((int)i));
 					}
 					else if(param.typeName == "string"){
-						m_luaShell->set(param.varName.c_str(), dlg->to_string(i).toLocal8Bit().constData());
+						m_luaShell->set(param.varName.c_str(), dlg->to_string((int)i).toLocal8Bit().constData());
 					}
 					else{
 						UG_THROW("type " << param.typeName << " currently unsupported by script interpreter.");
@@ -445,11 +456,7 @@ int RefreshScriptTools(ToolManager* toolMgr)
 	lastNumScriptTools = g_scriptTools.size();
 
 	SPLuaShell luaShell;
-	if(!g_scriptTools.empty())
-		luaShell = g_scriptTools.front()->lua_shell();
-	else
-		luaShell = make_sp(new luashell::LuaShell());
-
+	luaShell = GetDefaultLuaShell();
 
 	ParseDirAndCreateTools(toolMgr, QDir(":/scripts"), "Scripts", luaShell, true);
 	ParseDirAndCreateTools(toolMgr, app::UserScriptDir(), "Scripts", luaShell, true);

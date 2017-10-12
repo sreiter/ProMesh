@@ -7,6 +7,13 @@ QWidget {
 	color: @text;
 }
 
+QDialog {
+	border: 0px solid @dark;
+	border-radius: 0px;
+	background-color: @dark;
+	color: @text;
+}
+
 
 ExtendibleWidget > QToolButton {
 	image: url(:images/arrow-right.png);
@@ -28,6 +35,11 @@ QTreeView::branch:open:has-children:!has-siblings,
 QTreeView::branch:open:has-children:has-siblings  {
         border-image: none;
         image: url(:images/arrow-down.png);
+}
+
+QTreeView::item:selected {
+    border: 1px solid transparent;
+    background:@veryLight;
 }
 
 QComboBox{

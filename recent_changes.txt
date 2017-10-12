@@ -8,13 +8,24 @@ Recent changes:
 
 
 -------------------------------------------------------------------------------
+v 4.3.10*
+Changes and additions:
+- Added 'Selection-ExtendSelectionInDirection'
+- Added 'Selection-SelectElementsByIndexRange'
+- Indices of selected elements are now printed to the Action-Log
+
+Fixes:
+
+
+
+-------------------------------------------------------------------------------
 v 4.3.9
 Changes and additions:
 - Remeshing-Orientation-AdjustEdgeOrientation now only considers the set of
   selected faces.
 - Tetgen is now used as a separate process through a file-interface
 - Support for *.swc files added
-
+- Action-Log added
 Fixes:
 
 

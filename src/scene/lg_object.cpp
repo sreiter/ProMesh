@@ -49,6 +49,17 @@
 using namespace std;
 using namespace ug;
 
+const char* LG_SUPPORTED_FILE_FORMATS_OPEN =
+				"*.ugx *.vtu *.lgb *.obj *.txt *.art *.net "
+				"*.dat *.lgm *.ng *.smesh *.ele *.msh *.stl "
+				"*.asc *.ASC *.dump *.swc";
+
+
+const char* LG_SUPPORTED_FILE_FORMATS_SAVE =
+				"*.ugx *.vtu *.ncdf *.lgb *.obj *.txt *.ele "
+				"*.smesh *.stl *.tex *.tikz *.swc";
+
+
 LGObject* CreateLGObjectFromFile(const char* filename)
 {
 	LGObject* pObj = new LGObject;
@@ -69,7 +80,8 @@ LGObject* CreateEmptyLGObject(const char* name)
     return obj;
 }
 
-bool LoadLGObjectFromFile(LGObject* pObjOut, const char* filename)
+bool LoadLGObjectFromFile(LGObject* pObjOut, const char* filename,
+                          bool performLoadPostprocessing)
 {
 	LOG("loading " << filename << " ...\n");
 
@@ -152,24 +164,32 @@ bool LoadLGObjectFromFile(LGObject* pObjOut, const char* filename)
 		if(bSetDefaultSubsetColors)
 			AssignSubsetColors(pObjOut->subset_handler());
 
-		pObjOut->init_subsets();
-
-		pObjOut->geometry_changed();
-	}
-
-	if(bLoadSuccessful){
-		LOG("loading done\n");
-		LOG("  num vertices:\t" << grid.num_vertices() << endl);
-		LOG("  num edges: \t" << grid.num_edges() << endl);
-		LOG("  num faces: \t" << grid.num_faces() << endl);
-		LOG("  num volumes:\t" << grid.num_volumes() << endl);
-		LOG(endl);
+		if(performLoadPostprocessing) {
+			PerformLoadPostprocessing(pObjOut);
+		}
 	}
 	else{
 		LOG("loading failed\n");
 	}
 	return bLoadSuccessful;
 }
+
+
+void PerformLoadPostprocessing(LGObject* obj)
+{
+	obj->init_subsets();
+	obj->geometry_changed();
+
+	Grid& grid = obj->grid();
+	
+	LOG("loading done\n");
+	LOG("  num vertices:\t" << grid.num_vertices() << endl);
+	LOG("  num edges: \t" << grid.num_edges() << endl);
+	LOG("  num faces: \t" << grid.num_faces() << endl);
+	LOG("  num volumes:\t" << grid.num_volumes() << endl);
+	LOG(endl);
+}
+
 
 bool ReloadLGObject(LGObject* obj)
 {

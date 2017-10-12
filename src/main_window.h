@@ -58,6 +58,8 @@ class PropertyWidget;
 class SceneInspector;
 class ToolManager;
 class ToolBrowser;
+class QScriptEditor;
+
 
 enum SceneObjectType {
 	SOT_LG,
@@ -119,6 +121,7 @@ class MainWindow : public QMainWindow
 		void setActiveObject(int index);
 		void newGeometry();
 		int openFile();///< returns the number of successfully opened files.
+		int loadIntoMesh();
 		bool reloadActiveGeometry();
 		bool reloadAllGeometries();
 		bool saveToFile();
@@ -238,6 +241,7 @@ class MainWindow : public QMainWindow
 	//	actions
 		QAction*	m_actNew;
 		QAction*	m_actOpen;
+		QAction*	m_actLoadIntoMesh;
 		QAction*	m_actSave;
 		QAction*	m_actReload;
 		QAction*	m_actReloadAll;

@@ -76,10 +76,16 @@ enum TransformType{
 };
 
 ////////////////////////////////////////////////////////////////////////
+//	global constants
+extern const char* LG_SUPPORTED_FILE_FORMATS_OPEN;
+extern const char* LG_SUPPORTED_FILE_FORMATS_SAVE;
+
+////////////////////////////////////////////////////////////////////////
 //	methods
 LGObject* CreateLGObjectFromFile(const char* filename);
 LGObject* CreateEmptyLGObject(const char* name);
-bool LoadLGObjectFromFile(LGObject* pObjOut, const char* filename);
+bool LoadLGObjectFromFile(LGObject* pObjOut, const char* filename, bool performLoadPostprocessing = true);
+void PerformLoadPostprocessing(LGObject* obj);
 bool SaveLGObjectToFile(LGObject* pObj, const char* filename);
 bool ReloadLGObject(LGObject* obj);
 

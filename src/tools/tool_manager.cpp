@@ -147,7 +147,7 @@ void ToolManager::execute_shortcut(int key, uint modifiers)
 		if((m_registeredTools[i].m_shortcutKey == key)
 		   && (m_registeredTools[i].m_shortcutModifiers == modifiers))
 		{
-			launchTool(i);
+			launchTool((int)i);
 			break;
 		}
 	}

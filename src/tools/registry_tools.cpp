@@ -27,10 +27,12 @@
 
 #include <locale>
 #include "../../plugins/ProMesh/promesh_plugin.h"
+#include "common/util/index_list_util.h"
 #include "common/util/stringify.h"
 #include "common/util/string_util.h"
 #include "bridge/bridge.h"
 #include "standard_tools.h"
+#include "lib_grid/algorithms/selection_util.h"
 
 using namespace std;
 using namespace ug;
@@ -85,12 +87,24 @@ class RegistryTool : public ITool{
 		virtual void execute(LGObject* obj,
 							 QWidget* widget)
 		{
+		//	log selection
+			if(obj && obj->grid().num_vertices() > 0) {
+				vector<size_t> vrtInds, edgeInds, faceInds, volInds;
+				GetSelectedElementIndices (obj->selector(), vrtInds, edgeInds, faceInds, volInds);
+				QString selCmd = "SelectElementsByIndexRange (mesh, \"";
+				selCmd.append(IndexListToRangeString (vrtInds).c_str()).append("\", \"");
+				selCmd.append(IndexListToRangeString (edgeInds).c_str()).append("\", \"");
+				selCmd.append(IndexListToRangeString (faceInds).c_str()).append("\", \"");
+				selCmd.append(IndexListToRangeString (volInds).c_str()).append("\", true)");
+				obj->log_action (selCmd);
+			}
+
 		//	log signature
 			QString actionLog = "--> ";
 			actionLog.append(m_group.c_str())
 					 .append("|")
 					 .append(m_func->name().c_str())
-					 .append("(");
+					 .append(" (");
 
 			for(size_t iparam = 0; iparam < m_func->num_parameter(); ++iparam){
 				if(iparam > 0)
@@ -105,7 +119,7 @@ class RegistryTool : public ITool{
 			
 			vector<ConstSmartPtr<void> > tmpSmartPtrs;
 
-			actionLog.append(m_func->name().c_str()).append("(");
+			actionLog.append(m_func->name().c_str()).append(" (");
 			actionLog.append("mesh");
 
 			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);

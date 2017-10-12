@@ -94,7 +94,7 @@ void MainWindow::init()
 { 
 	setObjectName(tr("main_window"));
 	setAcceptDrops(true);
-	setGeometry(0, 0, 1024, 600);
+	// setGeometry(0, 0, 1024, 600);
 
 
 //	create view and scene
@@ -195,6 +195,12 @@ void MainWindow::init()
 	m_actOpen->setStatusTip(tr("Load a geometry from file."));
 	connect(m_actOpen, SIGNAL(triggered()), this, SLOT(openFile()));
 
+	m_actLoadIntoMesh = new QAction(tr("&Load Into Mesh"), this);
+	m_actLoadIntoMesh->setIcon(QIcon(":images/fileopen.png"));
+	m_actLoadIntoMesh->setShortcut(tr("Ctrl+L"));
+	m_actLoadIntoMesh->setStatusTip(tr("Load geometries from file and add it to the current mesh."));
+	connect(m_actLoadIntoMesh, SIGNAL(triggered()), this, SLOT(loadIntoMesh()));
+
 	m_actReload = new QAction(tr("&Reload"), this);
 	//m_actReload->setIcon(QIcon(":images/fileopen.png"));
 	m_actReload->setShortcut(tr("F5"));
@@ -229,6 +235,7 @@ void MainWindow::init()
 	m_fileMenu = new QMenu("&File", menuBar());
 	m_fileMenu->addAction(m_actNew);
 	m_fileMenu->addAction(m_actOpen);
+	m_fileMenu->addAction(m_actLoadIntoMesh);
 	m_fileMenu->addAction(m_actReload);
 	m_fileMenu->addAction(m_actReloadAll);
 	m_fileMenu->addAction(m_actSave);
@@ -332,7 +339,6 @@ void MainWindow::init()
 
 	populateMenuBar ();
 	activateModule(new MeshModule(this));
-
 
 	restoreGeometry(settings().value("mainWindow/geometry").toByteArray());
 	restoreState(settings().value("mainWindow/windowState").toByteArray());
@@ -588,14 +594,13 @@ uint MainWindow::getLGElementMode()
 
 bool MainWindow::load_grid_from_file(const char* filename)
 {
-	static bool bFirstLoad = true;
-
 	try{
 		LGObject* pObj = CreateLGObjectFromFile(filename);
 
 	//	add it to the scene
 		if(pObj)
 		{
+			const bool bFirstLoad = m_scene->num_objects() == 0;
 			pObj->set_element_mode(getLGElementMode());
 			int index = m_scene->add_object(pObj);
 			if(index != -1)
@@ -605,7 +610,6 @@ bool MainWindow::load_grid_from_file(const char* filename)
 			//	if this is the first object loaded, we will focus it.
 				if(bFirstLoad)
 				{
-					bFirstLoad = false;
 					ug::Sphere3 s = pObj->get_bounding_sphere();
 					m_pView->fly_to(cam::vector3(s.get_center().x(),
 													s.get_center().y(),
@@ -686,7 +690,7 @@ int MainWindow::openFile()
 								this,
 								tr("Load Geometry"),
 								path,
-								tr("geometry files (*.ugx *.vtu *.lgb *.obj *.txt *.art *.net *.dat *.lgm *.ng *.smesh *.ele *.msh *.stl *.asc *.ASC *.dump *.swc)"));
+								tr("geometry files (").append(LG_SUPPORTED_FILE_FORMATS_OPEN).append(")"));
 
 	for(QStringList::iterator iter = fileNames.begin();
 		iter != fileNames.end(); ++iter)
@@ -707,6 +711,73 @@ int MainWindow::openFile()
 
 	return numOpened;
 }
+
+
+int MainWindow::loadIntoMesh()
+{
+	int numOpened = 0;
+
+	QString path = settings().value("file-path", ".").toString();
+
+	QStringList fileNames = QFileDialog::getOpenFileNames(
+								this,
+								tr("Load Geometry"),
+								path,
+								tr("geometry files (").append(LG_SUPPORTED_FILE_FORMATS_OPEN).append(")"));
+
+	LGObject* pObj = getActiveObject();
+	if(!pObj)
+		pObj = create_empty_object("newObject", SOT_LG);
+
+	for(QStringList::iterator iter = fileNames.begin();
+		iter != fileNames.end(); ++iter)
+	{
+		settings().setValue("file-path", QFileInfo(*iter).absolutePath());
+	//	load the object
+		try{
+			LoadLGObjectFromFile(pObj, (*iter).toLocal8Bit().constData(), false);
+			++numOpened;
+		}
+		catch(UGError err){
+			delete pObj;
+			pObj = NULL;
+			QMessageBox msg(this);
+			QString str = tr("Load failed: ");
+			str.append(err.get_msg().c_str());
+			msg.setText(str);
+			msg.exec();
+			break;
+		}
+	}
+
+//	add it to the scene
+	if(pObj)
+	{
+		PerformLoadPostprocessing(pObj);
+		const bool bFirstLoad = m_scene->num_objects() == 0;
+		pObj->set_element_mode(getLGElementMode());
+		int index = m_scene->add_object(pObj);
+		if(index != -1)
+		{
+			setActiveObject(index);
+
+		//	if this is the first object loaded, we will focus it.
+			if(bFirstLoad)
+			{
+				ug::Sphere3 s = pObj->get_bounding_sphere();
+				m_pView->fly_to(cam::vector3(s.get_center().x(),
+												s.get_center().y(),
+												s.get_center().z()),
+								s.get_radius() * 3.f);
+			}
+
+			pObj->set_save_required(false);
+		}
+	}
+
+	return numOpened;
+}
+
 
 bool MainWindow::reloadActiveGeometry()
 {
@@ -746,7 +817,7 @@ bool MainWindow::saveToFile()
 									this,
 									tr("Save Geometry"),
 									path,
-									tr("geometry files (*.ugx *.vtu *.ncdf *.lgb *.obj *.txt *.ele *.smesh *.stl *.tex *.tikz *.swc)"));
+									tr("geometry files (").append(LG_SUPPORTED_FILE_FORMATS_SAVE).append(")"));
 
 		if(!fileName.isEmpty())
 		{

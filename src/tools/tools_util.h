@@ -53,7 +53,7 @@ inline void ToolDialog_AddElementChooser(ToolWidget* dlg,
 	entries.push_back("volumes");
 	if(defInd > 3)
 		defInd = 3;
-	dlg->addComboBox(caption, entries, defInd);
+	dlg->addComboBox(caption, entries, (int)defInd);
 }
 
 /**
