@@ -4,6 +4,7 @@ QWidget {
 	border: 0px solid @dark;
 	border-radius: 0px;
 	background-color: @default;
+	border-color: @veryDark;
 	color: @text;
 }
 
@@ -11,6 +12,7 @@ QDialog {
 	border: 0px solid @dark;
 	border-radius: 0px;
 	background-color: @dark;
+	border-color: @veryDark;
 	color: @text;
 }
 
@@ -125,6 +127,7 @@ QTabBar::tab:!selected {
 
 QMenuBar {
 	/*border-bottom: 2px solid @dark;*/
+	background-color: @veryDark;
 }
 
 QMenu {

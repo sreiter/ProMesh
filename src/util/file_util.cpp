@@ -43,6 +43,15 @@ QString GetFileContent(QString filename)
 	return in.readAll();
 }
 
+
+void SetFileContent(const QString& filename, const QString& content)
+{
+	QFile outFile(filename);
+	outFile.open(QIODevice::WriteOnly | QIODevice::Text);
+	outFile.write(content.toLocal8Bit());
+}
+
+
 bool FileExists(const QString& dirname)
 {
 	QFileInfo dir(dirname);

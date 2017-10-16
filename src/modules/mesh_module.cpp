@@ -44,7 +44,7 @@
 #include "widgets/widget_list.h"
 #include "widgets/matrix_widget.h"
 #include "tools/coordinate_transform_tools.h"
-#include "widgets/live_script_dialog.h"
+#include "widgets/script_editor.h"
 
 using namespace std;
 using namespace ug;
@@ -153,10 +153,10 @@ activate(SceneInspector* sceneInspector, LGScene* scene)
 		                               Qt::WindowMaximizeButtonHint);
 
 	//	script menu
-		QAction* actScriptEditor = new QAction(tr("Script Editor"), parentWidget());
-		actScriptEditor->setStatusTip("Opens the script editor");
+		QAction* actScriptEditor = new QAction(tr("Live Script Editor"), parentWidget());
+		actScriptEditor->setStatusTip("Opens the live script editor");
 		connect(actScriptEditor, SIGNAL(triggered()), this, SLOT(showScriptEditor()));
-
+		
 		QAction* actNewScript = new QAction(tr("New Script"), parentWidget());
 		actNewScript->setStatusTip("Creates a new script and opens it for editing");
 		connect(actNewScript, SIGNAL(triggered()), this, SLOT(newScript()));
@@ -175,13 +175,14 @@ activate(SceneInspector* sceneInspector, LGScene* scene)
 		connect(actRefreshToolDialogs, SIGNAL(triggered()), this, SLOT(refreshToolDialogsClicked()));
 
 		QMenu* sceneMenu = new QMenu("&Scripts", parentWidget());
-		sceneMenu->addAction(actScriptEditor);
 		sceneMenu->addAction(actNewScript);
 		sceneMenu->addAction(actEditScript);
 		sceneMenu->addSeparator();
 		sceneMenu->addAction(actBrowseUserScripts);
 		sceneMenu->addSeparator();
 		sceneMenu->addAction(actRefreshToolDialogs);
+		sceneMenu->addSeparator();
+		sceneMenu->addAction(actScriptEditor);
 
 		m_menus.push_back(sceneMenu);
 	}

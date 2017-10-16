@@ -88,6 +88,10 @@ int main(int argc, char *argv[])
 {
 	cout.sync_with_stdio(true);
 
+	QCoreApplication::setOrganizationName("ProMesh");
+    QCoreApplication::setOrganizationDomain("promesh3d.com");
+    QCoreApplication::setApplicationName("ProMesh4.3.10");
+
 	//QApplication app(argc, argv);
 	MyApplication myApp(argc, argv);
 	myApp.setQuitOnLastWindowClosed(true);

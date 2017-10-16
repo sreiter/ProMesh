@@ -23,10 +23,11 @@
  * GNU Lesser General Public License for more details.
  */
 
-#ifndef __H__PROMESH_live_script_dialog
-#define __H__PROMESH_live_script_dialog
+#ifndef __H__PROMESH_script_editor
+#define __H__PROMESH_script_editor
 
 #include <QDialog>
+#include <QString>
 
 class QTextEdit;
 
@@ -38,10 +39,17 @@ class QScriptEditor : public QDialog{
 
 	private slots:
 		void apply();
+		void openFile();
+		void saveToFile();
+
+	protected:
+		void resizeEvent (QResizeEvent* evt);
+		void moveEvent(QMoveEvent *event);
 
 	private:
 		QTextEdit*	m_textEdit;
+		QString		m_filename;
 };
 
 
-#endif	//__H__UG_live_script_dialog
+#endif	//__H__UG_script_editor

@@ -37,6 +37,9 @@
  *\endcode*/
 QString GetFileContent(QString filename);
 
+/// writes the specified content to a file
+void SetFileContent(const QString& filename, const QString& content);
+
 bool FileExists(const QString& dirname);
 
 bool EraseDirectory(QString dirName);

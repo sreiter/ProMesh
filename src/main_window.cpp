@@ -74,7 +74,7 @@ using namespace ug;
 //	constructor
 MainWindow::MainWindow() :
 	m_activeModule (NULL),
-	m_settings("G-CSC", "ProMesh4.3.8.1"),
+	m_settings(),
 	m_selectionElement(0),
 	m_selectionMode(0),
 	m_curSelectionMode(-1),
@@ -186,47 +186,47 @@ void MainWindow::init()
 	m_actNew = new QAction(tr("&New"), this);
 	m_actNew->setIcon(QIcon(":images/filenew.png"));
 	m_actNew->setShortcut(tr("Ctrl+N"));
-	m_actNew->setStatusTip(tr("Create a new empty geometry-object."));
+	m_actNew->setToolTip(tr("Create a new empty geometry-object."));
 	connect(m_actNew, SIGNAL(triggered()), this, SLOT(newGeometry()));
 
 	m_actOpen = new QAction(tr("&Open"), this);
 	m_actOpen->setIcon(QIcon(":images/fileopen.png"));
 	m_actOpen->setShortcut(tr("Ctrl+O"));
-	m_actOpen->setStatusTip(tr("Load a geometry from file."));
+	m_actOpen->setToolTip(tr("Load a geometry from file."));
 	connect(m_actOpen, SIGNAL(triggered()), this, SLOT(openFile()));
 
 	m_actLoadIntoMesh = new QAction(tr("&Load Into Mesh"), this);
 	m_actLoadIntoMesh->setIcon(QIcon(":images/fileopen.png"));
 	m_actLoadIntoMesh->setShortcut(tr("Ctrl+L"));
-	m_actLoadIntoMesh->setStatusTip(tr("Load geometries from file and add it to the current mesh."));
+	m_actLoadIntoMesh->setToolTip(tr("Load geometries from file and add it to the current mesh."));
 	connect(m_actLoadIntoMesh, SIGNAL(triggered()), this, SLOT(loadIntoMesh()));
 
 	m_actReload = new QAction(tr("&Reload"), this);
 	//m_actReload->setIcon(QIcon(":images/fileopen.png"));
 	m_actReload->setShortcut(tr("F5"));
-	m_actReload->setStatusTip(tr("Reloads the active geometry."));
+	m_actReload->setToolTip(tr("Reloads the active geometry."));
 	connect(m_actReload, SIGNAL(triggered()), this, SLOT(reloadActiveGeometry()));
 
 	m_actReloadAll = new QAction(tr("Reload &All"), this);
 	//m_actReloadAll->setIcon(QIcon(":images/fileopen.png"));
 	m_actReloadAll->setShortcut(tr("Ctrl+F5"));
-	m_actReloadAll->setStatusTip(tr("Reloads all geometries."));
+	m_actReloadAll->setToolTip(tr("Reloads all geometries."));
 	connect(m_actReloadAll, SIGNAL(triggered()), this, SLOT(reloadAllGeometries()));
 
 	m_actSave = new QAction(tr("&Save"), this);
 	m_actSave->setIcon(QIcon(":images/filesave.png"));
 	m_actSave->setShortcut(tr("Ctrl+S"));
-	m_actSave->setStatusTip(tr("Saves a geometry to a file."));
+	m_actSave->setToolTip(tr("Saves a geometry to a file."));
 	connect(m_actSave, SIGNAL(triggered()), this, SLOT(saveToFile()));
 
 	m_actErase = new QAction(tr("&Erase"), this);
 	m_actErase->setIcon(QIcon(":images/erase.png"));
 	m_actErase->setShortcut(tr("Ctrl+E"));
-	m_actErase->setStatusTip(tr("erases the selected geometry from the scene."));
+	m_actErase->setToolTip(tr("erases the selected geometry from the scene."));
 	connect(m_actErase, SIGNAL(triggered()), this, SLOT(eraseActiveSceneObject()));
 
 	m_actExportUG3 = new QAction(tr("Export to ug3"), this);
-	m_actExportUG3->setStatusTip(tr("Exports the geometry to ug3 lgm / ng format."));
+	m_actExportUG3->setToolTip(tr("Exports the geometry to ug3 lgm / ng format."));
 	connect(m_actExportUG3, SIGNAL(triggered()), this, SLOT(exportToUG3()));
 
 	m_actQuit = new QAction(tr("Quit"), this);
@@ -340,7 +340,8 @@ void MainWindow::init()
 	populateMenuBar ();
 	activateModule(new MeshModule(this));
 
-	restoreGeometry(settings().value("mainWindow/geometry").toByteArray());
+	resize(settings().value("mainWindow/size", QSize(1024, 768)).toSize());
+	move(settings().value("mainWindow/pos", QPoint(10, 10)).toPoint());
 	restoreState(settings().value("mainWindow/windowState").toByteArray());
 
 	m_pLog->raise();
@@ -1144,7 +1145,9 @@ void MainWindow::closeEvent(QCloseEvent *event)
 	}
 
 	if(event->isAccepted()){
-		settings().setValue("mainWindow/geometry", saveGeometry());
+		// settings().setValue("mainWindow/geometry", saveGeometry());
+		settings().setValue("mainWindow/size", size());
+    	settings().setValue("mainWindow/pos", pos());
 		settings().setValue("mainWindow/windowState", saveState());
 	}
 }
