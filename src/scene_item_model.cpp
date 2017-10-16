@@ -78,7 +78,7 @@ void SceneItemModel::refreshSubsets()
 //	first we'll clear the subset-entries of all objects
 	for(size_t i = 0; i < m_itemInfos.size(); ++i){
 	//	the model-index of the i-th scene object
-		QModelIndex objModelIndex = index(i, 0, QModelIndex());
+		QModelIndex objModelIndex = index((int)i, 0, QModelIndex());
 		SceneItemInfo* psii = m_itemInfos[i];
 		ISceneObject* obj = psii->obj;
 
@@ -95,7 +95,7 @@ void SceneItemModel::refreshSubsets()
 		}
 		else if((int)psii->children.size() < obj->num_subsets()){
 		//	notify base class
-			beginInsertRows(objModelIndex, psii->children.size(),
+			beginInsertRows(objModelIndex, (int)psii->children.size(),
 							obj->num_subsets()-1);
 
 		//	call update to adjust children
@@ -155,9 +155,9 @@ int SceneItemModel::rowCount ( const QModelIndex & parent) const
 	{
 		SceneItemInfo* itemInfo = itemInfoFromIndex(parent);
 		if(itemInfo)
-			return itemInfo->children.size();
+			return (int)itemInfo->children.size();
 		else
-			return m_itemInfos.size();
+			return (int)m_itemInfos.size();
 	}
 
 	return 0;
@@ -438,7 +438,7 @@ QModelIndex SceneItemModel::indexFromItemInfo(SceneItemInfo* itemInfo,
 		for(size_t i = 0; i < parentInfo->children.size(); ++i)
 		{
 			if(parentInfo->children[i] == itemInfo)
-				return createIndex(i, column, itemInfo);
+				return createIndex((int)i, column, itemInfo);
 		}
 	}
 	else
@@ -448,7 +448,7 @@ QModelIndex SceneItemModel::indexFromItemInfo(SceneItemInfo* itemInfo,
 		for(size_t i = 0; i < m_itemInfos.size(); ++i)
 		{
 			if(m_itemInfos[i] == itemInfo)
-				return createIndex(i, column, itemInfo);
+				return createIndex((int)i, column, itemInfo);
 		}
 	}
 

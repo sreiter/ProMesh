@@ -26,6 +26,60 @@
 cmake_minimum_required(VERSION 2.8.11)
 project(P_PROMESH4)
 
+set(ProMeshSRC	src/app.cpp
+				src/clip_plane_widget.cpp
+				src/color_widget.cpp
+				src/delegates.cpp
+				src/docugen.cpp
+				src/main.cpp
+				src/main_window.cpp
+				src/main_window_input.cpp
+				src/scene_inspector.cpp
+				src/scene_item_model.cpp
+				src/scripting.cpp
+				src/undo.cpp
+				src/rclick_menu_scene_inspector.cpp
+				src/view3d/view3d.cpp
+				src/view3d/camera/quaternion.cpp
+				src/view3d/camera/model_viewer_camera.cpp
+				src/view3d/camera/matrix44.cpp
+				src/view3d/camera/basic_camera.cpp
+				src/view3d/camera/arc_ball.cpp
+				src/scene/csg_object.cpp
+				src/scene/lg_object.cpp
+				src/scene/lg_scene.cpp
+				src/scene/lg_tmp_methods.cpp
+				src/scene/plane_sphere.cpp
+				src/scene/scene_interface.cpp
+				src/tools/camera_tools.cpp
+				src/tools/coordinate_transform_tools.cpp
+				src/tools/grid_generation_tools.cpp
+				src/tools/info_tools.cpp
+				src/tools/fracture_tools.cpp
+				src/tools/registry_tools.cpp
+				src/tools/script_tools.cpp
+				src/tools/standard_tools.cpp
+				src/tools/tetgen_tools.cpp
+				src/tools/tool_dialog.cpp
+				src/tools/tool_frac_to_layer.cpp
+				src/tools/tool_manager.cpp
+				src/util/file_util.cpp
+				src/modules/module_interface.cpp
+				src/modules/mesh_module.cpp
+				src/widgets/coordinates_widget.cpp
+				src/widgets/double_slider.cpp
+				src/widgets/extendible_widget.cpp
+				src/widgets/file_widget.cpp
+				src/widgets/icon_tab_widget.cpp
+				src/widgets/matrix_widget.cpp
+				src/widgets/projector_widget.cpp
+				src/widgets/property_widget.cpp
+				src/widgets/script_editor.cpp
+				src/widgets/tool_browser_widget.cpp
+				src/widgets/truncated_double_spin_box.cpp
+				src/widgets/widget_container.cpp
+				src/widgets/widget_list.cpp)
+
 # set (CMAKE_CXX_STANDARD 11)
 
 # Some options which allow to control makefile generation
@@ -76,60 +130,6 @@ elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 	add_cxx_flag(-Wno-unused-local-typedef)
 	add_cxx_flag(-Wno-unknown-warning-option)
 endif()
-
-
-set(ProMeshSRC	src/app.cpp
-				src/docugen.cpp
-				src/main.cpp
-				src/main_window.cpp
-				src/main_window_input.cpp
-				src/scene_inspector.cpp
-				src/scene_item_model.cpp
-				src/delegates.cpp
-				src/clip_plane_widget.cpp
-				src/color_widget.cpp
-				src/undo.cpp
-				src/rclick_menu_scene_inspector.cpp
-				src/view3d/view3d.cpp
-				src/view3d/camera/quaternion.cpp
-				src/view3d/camera/model_viewer_camera.cpp
-				src/view3d/camera/matrix44.cpp
-				src/view3d/camera/basic_camera.cpp
-				src/view3d/camera/arc_ball.cpp
-				src/scene/csg_object.cpp
-				src/scene/lg_object.cpp
-				src/scene/lg_scene.cpp
-				src/scene/lg_tmp_methods.cpp
-				src/scene/plane_sphere.cpp
-				src/scene/scene_interface.cpp
-				src/tools/camera_tools.cpp
-				src/tools/coordinate_transform_tools.cpp
-				src/tools/grid_generation_tools.cpp
-				src/tools/info_tools.cpp
-				src/tools/fracture_tools.cpp
-				src/tools/registry_tools.cpp
-				src/tools/script_tools.cpp
-				src/tools/standard_tools.cpp
-				src/tools/tetgen_tools.cpp
-				src/tools/tool_dialog.cpp
-				src/tools/tool_frac_to_layer.cpp
-				src/tools/tool_manager.cpp
-				src/util/file_util.cpp
-				src/modules/module_interface.cpp
-				src/modules/mesh_module.cpp
-				src/widgets/coordinates_widget.cpp
-				src/widgets/double_slider.cpp
-				src/widgets/extendible_widget.cpp
-				src/widgets/file_widget.cpp
-				src/widgets/icon_tab_widget.cpp
-				src/widgets/matrix_widget.cpp
-				src/widgets/projector_widget.cpp
-				src/widgets/property_widget.cpp
-				src/widgets/script_editor.cpp
-				src/widgets/tool_browser_widget.cpp
-				src/widgets/truncated_double_spin_box.cpp
-				src/widgets/widget_container.cpp
-				src/widgets/widget_list.cpp)
 
 
 if(USE_WEBKIT)

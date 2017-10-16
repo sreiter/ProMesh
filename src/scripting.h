@@ -20,14 +20,44 @@
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
+ * GNU Lesser General Publi^c License for more details.
  */
 
-#ifndef __H__PROMESH_script_tools
-#define __H__PROMESH_script_tools
+#ifndef __H__PROMESH_scripting
+#define __H__PROMESH_scripting
 
+#include <string>
+#include <vector>
+#include "common/util/variant.h"
 #include "../../plugins/LuaShell/lua_shell.h"
 
-SmartPtr<ug::luashell::LuaShell> GetDefaultLuaShell ();
+typedef SmartPtr<ug::luashell::LuaShell> SPLuaShell;
 
-#endif	//__H__UG_script_tools
+SPLuaShell GetDefaultLuaShell ();
+
+void SetScriptDefaultVariables (SPLuaShell luaShell, const char* scriptContent);
+
+
+struct ScriptParameter{
+	std::string varName;
+	std::string argName;
+	std::string typeName;
+	std::string options;
+
+	ug::Variant	val;
+	ug::Variant min;
+	ug::Variant max;
+	ug::Variant step;
+	ug::Variant digits;
+};
+
+struct ScriptDeclarations{
+	std::string					name;
+	std::vector<ScriptParameter>	inputs;
+};
+
+
+void ParseScriptDeclarations (ScriptDeclarations& declsOut,
+                              const char* scriptContent);
+
+#endif	//__H__PROMESH_scripting

@@ -95,7 +95,7 @@ class RegistryTool : public ITool{
 				selCmd.append(IndexListToRangeString (vrtInds).c_str()).append("\", \"");
 				selCmd.append(IndexListToRangeString (edgeInds).c_str()).append("\", \"");
 				selCmd.append(IndexListToRangeString (faceInds).c_str()).append("\", \"");
-				selCmd.append(IndexListToRangeString (volInds).c_str()).append("\", true)");
+				selCmd.append(IndexListToRangeString (volInds).c_str()).append("\", true)\n");
 				obj->log_action (selCmd);
 			}
 

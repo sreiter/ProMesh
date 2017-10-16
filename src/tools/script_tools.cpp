@@ -34,7 +34,7 @@
 #include <cstdlib>
 #include <sstream>
 
-#include "script_tools.h"
+#include "../scripting.h"
 #include "standard_tools.h"
 #include "common/error.h"
 #include "common/util/string_util.h"
@@ -46,23 +46,8 @@
 using namespace ug;
 using namespace std;
 
-typedef SmartPtr<ug::luashell::LuaShell> SPLuaShell;
-
 class ScriptTool;
 static vector<ScriptTool*>	g_scriptTools;
-static SPLuaShell			g_luaShell;
-
-struct ScriptParamter{
-	string varName;
-	string argName;
-	string typeName;
-	string options;
-};
-
-struct ScriptDeclarations{
-	string					name;
-	vector<ScriptParamter>	inputs;
-};
 
 template <class T>
 static T ToNumber(const std::string& str){
@@ -74,63 +59,6 @@ static T ToNumber(const std::string& str){
 }
 
 
-SPLuaShell GetDefaultLuaShell ()
-{
-	if(!g_luaShell.valid()){
-		g_luaShell = make_sp(new luashell::LuaShell());
-	}
-	return g_luaShell;
-}
-
-ScriptDeclarations ParseScriptForDeclarations(const QByteArray& scriptContent,
-											  const std::string& scriptName)
-{
-	ScriptDeclarations decls;
-	std::stringstream in(scriptContent.constData());
-
-	char buf[256];
-	string line;
-	vector<string> tokens;
-	int curLineNumber = 0;
-	while(!in.eof()){
-		++curLineNumber;
-
-		in.getline(buf, 256);
-		line = buf;
-		while(in.rdstate() == ios::failbit){
-			in.clear();
-			in.getline(buf, 256);
-			line.append(buf);
-		}
-
-		if(line.find("pm-declare-") == string::npos)
-			continue;
-
-		tokens = TokenizeTrimString(line, ':');
-		if(tokens.size() != 2){
-			continue;
-		}
-
-		RemoveWhitespaceFromString(tokens[0]);
-		
-		if(tokens[0].compare("--pm-declare-name") == 0){
-			decls.name = tokens[1];
-		}
-		else if(tokens[0].compare("--pm-declare-input") == 0){
-			tokens = TokenizeTrimString(tokens[1], '|');
-			ScriptParamter param;
-			if(tokens.size() >= 3){
-				param.varName = tokens[0];
-				param.argName = tokens[1];
-				param.typeName = ToLower(tokens[2]);
-				if(tokens.size() > 3)
-					param.options = tokens[3];
-				decls.inputs.push_back(param);
-			}
-		}
-	}
-	return decls;
-}
 
 class ScriptTool : public ITool
 {
@@ -149,7 +77,7 @@ class ScriptTool : public ITool
 			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
 			if(dlg){
 				for(size_t i = 0; i < m_scriptDecls.inputs.size(); ++i){
-					ScriptParamter& param = m_scriptDecls.inputs[i];
+					ScriptParameter& param = m_scriptDecls.inputs[i];
 					if((param.typeName == "double") || (param.typeName == "float")){
 						m_luaShell->set(param.varName.c_str(), dlg->to_double((int)i));
 					}
@@ -202,7 +130,7 @@ class ScriptTool : public ITool
 		{
 			parse_script_decls(true);
 			
-			vector<ScriptParamter>& inputs = m_scriptDecls.inputs;
+			vector<ScriptParameter>& inputs = m_scriptDecls.inputs;
 
 			if(inputs.empty())
 				return NULL;
@@ -231,114 +159,38 @@ class ScriptTool : public ITool
 			parse_script_decls(true);
 			dlg->clear();
 			
-			vector<ScriptParamter>& inputs = m_scriptDecls.inputs;
+			vector<ScriptParameter>& inputs = m_scriptDecls.inputs;
 
 			if(inputs.empty())
 				return;
 
-			std::vector<string> options;
-			std::vector<string> tokens;
 			for(size_t iinput = 0; iinput < inputs.size(); ++iinput){
-				ScriptParamter& param = inputs[iinput];
-				options.clear();
-				if(!param.options.empty()){
-					options = TokenizeTrimString(param.options, ';');
-				}
+				ScriptParameter& param = inputs[iinput];
 				if((param.typeName == "double") || (param.typeName == "float")){
-					double val = 0;
-					double min = -1.e32;
-					double max = 1.e32;
-					double step = 1;
-					double digits = 9;
-					if(!options.empty()){
-						for(size_t iopt = 0; iopt < options.size(); ++iopt){
-							tokens = TokenizeTrimString(options[iopt], '=');
-							if(tokens.size() == 2){
-								if(tokens[0] == "min")
-									min = ToNumber<double>(tokens[1]);
-								else if(tokens[0] == "max")
-									max = ToNumber<double>(tokens[1]);
-								else if(tokens[0] == "val")
-									val = ToNumber<double>(tokens[1]);
-								else if(tokens[0] == "step")
-									step = ToNumber<double>(tokens[1]);
-								else if(tokens[0] == "digits")
-									digits = ToNumber<double>(tokens[1]);
-							}
-							else{
-								UG_LOG("Invalid option '" << options[iopt] << "' in paramter '"
-									   << param.argName << "' of script " << m_scriptPath << std::endl);
-							}
-						}
-					}
-					dlg->addSpinBox(QString(param.argName.c_str()), min, max, val, step, digits);
+					dlg->addSpinBox (QString(param.argName.c_str()),
+					                 param.min.to_double(),
+					                 param.max.to_double(),
+					                 param.val.to_double(),
+					                 param.step.to_double(),
+					                 param.digits.to_double());
 				}
 
 				else if((param.typeName == "int") || (param.typeName == "integer")){
-					double val = 0;
-					double min = -1.e32;
-					double max = 1.e32;
-					double step = 1;
-					if(!options.empty()){
-						for(size_t iopt = 0; iopt < options.size(); ++iopt){
-							tokens = TokenizeTrimString(options[iopt], '=');
-							if(tokens.size() == 2){
-								if(tokens[0] == "min")
-									min = ToNumber<double>(tokens[1]);
-								else if(tokens[0] == "max")
-									max = ToNumber<double>(tokens[1]);
-								else if(tokens[0] == "val")
-									val = ToNumber<double>(tokens[1]);
-								else if(tokens[0] == "step")
-									step = ToNumber<double>(tokens[1]);
-							}
-							else{
-								UG_LOG("Invalid option '" << options[iopt] << "' in paramter '"
-									   << param.argName << "' of script " << m_scriptPath << std::endl);
-							}
-						}
-					}
-					dlg->addSpinBox(QString(param.argName.c_str()), min, max, val, step, 0);
+					dlg->addSpinBox (QString(param.argName.c_str()),
+					                 param.min.to_int(),
+									 param.max.to_int(),
+									 param.val.to_int(),
+									 param.step.to_int(),
+									 0);
 				}
 
 				else if((param.typeName == "bool") || (param.typeName == "boolean")){
-					bool val = false;
-					if(!options.empty()){
-						for(size_t iopt = 0; iopt < options.size(); ++iopt){
-							tokens = TokenizeTrimString(options[iopt], '=');
-							if(tokens.size() == 2){
-								if(tokens[0] == "val"){
-									string tmp = ToLower(tokens[1]);
-									if((tmp == "true") || (tmp == "1"))
-										val = true;
-								}
-							}
-							else{
-								UG_LOG("Invalid option '" << options[iopt] << "' in paramter '"
-									   << param.argName << "' of script " << m_scriptPath << std::endl);
-							}
-						}
-					}
-					dlg->addCheckBox(QString(param.argName.c_str()), val);
+					dlg->addCheckBox(QString(param.argName.c_str()), param.val.to_bool());
 				}
 
 				else if(param.typeName == "string"){
-					std::string val;
-					if(!options.empty()){
-						for(size_t iopt = 0; iopt < options.size(); ++iopt){
-							tokens = TokenizeTrimString(options[iopt], '=');
-							if(tokens.size() == 2){
-								if(tokens[0] == "val"){
-									val = tokens[1];
-								}
-							}
-							else{
-								UG_LOG("Invalid option '" << options[iopt] << "' in paramter '"
-									   << param.argName << "' of script " << m_scriptPath << std::endl);
-							}
-						}
-					}
-					dlg->addTextBox(QString(param.argName.c_str()), QString(val.c_str()));
+					dlg->addTextBox(QString(param.argName.c_str()),
+					                QString(param.val.to_c_string()));
 				}
 			}
 		}
@@ -353,8 +205,8 @@ class ScriptTool : public ITool
 				else{
 					m_scriptContent = file.readAll();
 					file.close();
-					m_scriptDecls = ParseScriptForDeclarations(m_scriptContent,
-															   m_scriptName);
+					ParseScriptDeclarations(m_scriptDecls,
+					                        m_scriptContent.constData());
 				}
 				if(m_scriptDecls.name.empty())
 					m_scriptDecls.name = m_scriptName;

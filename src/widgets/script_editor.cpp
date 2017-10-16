@@ -30,7 +30,7 @@
 #include <QFileDialog>
 #include "script_editor.h"
 #include "../app.h"
-#include "../tools/script_tools.h"
+#include "../scripting.h"
 #include "../util/file_util.h"
 
 
@@ -142,11 +142,14 @@ void QScriptEditor::apply ()
 	}
 
 	try{
-		GetDefaultLuaShell()->set(	"mesh", 
-					                static_cast<ug::promesh::Mesh*>(obj),
-					                "Mesh");
+		SPLuaShell luaShell = GetDefaultLuaShell();
+		
+		const char* scriptContent = m_textEdit->toPlainText().toLocal8Bit().constData();
+		SetScriptDefaultVariables (luaShell, scriptContent);
 
-		GetDefaultLuaShell()->run(m_textEdit->toPlainText().toLocal8Bit().constData());
+		luaShell->set(	"mesh", static_cast<ug::promesh::Mesh*>(obj), "Mesh");
+
+		luaShell->run(scriptContent);
 	}
 	catch(ug::script::LuaError& err) {
 		ug::PathProvider::clear_current_path_stack();
