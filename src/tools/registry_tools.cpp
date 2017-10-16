@@ -160,11 +160,11 @@ class RegistryTool : public ITool{
 							break;
 						case Variant::VT_CSTRING:
 							paramsIn.push(dlg->to_string(toolParam).toStdString().c_str());
-							actionLog.append(dlg->to_string(toolParam));
+							actionLog.append("\"").append(dlg->to_string(toolParam)).append("\"");
 							break;
 						case Variant::VT_STDSTRING:
 							paramsIn.push(dlg->to_string(toolParam).toStdString());
-							actionLog.append(dlg->to_string(toolParam));
+							actionLog.append("\"").append(dlg->to_string(toolParam)).append("\"");
 							break;
 						case Variant::VT_POINTER:
 						case Variant::VT_CONST_POINTER:
@@ -547,8 +547,15 @@ void RegisterRegistryTools(ToolManager* toolMgr)
 		for(string::const_iterator i = funcName.begin(); i != funcName.end(); ++i)
 		{
 			if(isupper(*i)){
-				if(!lastWasUpper)
+				if(!lastWasUpper){
 					toolName.push_back(' ');
+				}
+				else{
+				//	handle names with uppercase acronyms
+					string::const_iterator next = i; ++next;
+					if(next != funcName.end() && !isupper(*next))
+						toolName.push_back(' ');
+				}
 				lastWasUpper = true;
 			}
 			else
