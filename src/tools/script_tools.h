@@ -1,9 +1,7 @@
 /*
- * Copyright (c) 2008-2015:  G-CSC, Goethe University Frankfurt
- * Copyright (c) 2006-2008:  Steinbeis Forschungszentrum (STZ Ölbronn)
- * Copyright (c) 2006-2015:  Sebastian Reiter
+ * Copyright (c) 2017:  G-CSC, Goethe University Frankfurt
  * Author: Sebastian Reiter
- *
+ * 
  * This file is part of ProMesh.
  * 
  * ProMesh is free software: you can redistribute it and/or modify it under the
@@ -25,27 +23,47 @@
  * GNU Lesser General Public License for more details.
  */
 
-#ifndef STANDARD_TOOLS_H
-#define STANDARD_TOOLS_H
+#ifndef __H__PROMESH_script_tools
+#define __H__PROMESH_script_tools
 
+#include "../scripting.h"
 #include "tool_manager.h"
 
-void RegisterStandardTools(ToolManager* toolMgr);
 
-void RegisterCameraTools(ToolManager* toolMgr);
+class ScriptTool : public ITool
+{
+	public:
+		ScriptTool(std::string path, std::string group, SPLuaShell luaShell);
 
-void PreRegisterGridGenerationTools(ToolManager* toolMgr);
-void PostRegisterGridGenerationTools(ToolManager* toolMgr);
+		virtual void execute(LGObject* obj, QWidget* widget);
 
-void RegisterCoordinateTransformTools(ToolManager* toolMgr);
-void RegisterInfoTools(ToolManager* toolMgr);
-void RegisterFracToLayerTools(ToolManager* toolMgr);
+		virtual const char* get_name();
 
-void RegisterTetgenTools();
+		virtual const char* get_tooltip();
+		virtual const char* get_group();
+		virtual const char* get_shortcut();
 
-void RegisterRegistryTools(ToolManager* toolMgr);
+		virtual bool accepts_null_object_ptr();
 
-void RegisterScriptTools(ToolManager* toolMgr);
-int RefreshScriptTools(ToolManager* toolMgr);
+		virtual QWidget* get_dialog(QWidget* parent);
 
-#endif // STANDARD_TOOLS_H
+		virtual bool dialog_changed(QWidget* dlg);
+
+		virtual void refresh_dialog(QWidget* dialog);
+
+		void parse_script_decls(bool force);
+
+		std::string path();
+		SPLuaShell lua_shell();
+
+	private:
+		ScriptDeclarations	m_scriptDecls;
+		std::string m_scriptName;
+		std::string m_scriptPath;
+		std::string m_group;
+		QByteArray	m_scriptContent;
+		SPLuaShell	m_luaShell;
+};
+
+
+#endif	//__H__PROMESH_script_tools

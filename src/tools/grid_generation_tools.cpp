@@ -34,6 +34,7 @@
 #include "tools/grid_generation_tools.h"
 #include "tooltips.h"
 #include "../scene/csg_object.h"
+#include "script_tools.h"
 
 //#include "lib_discretization/spatial_discretization/disc_util/finite_volume_output.h"
 
@@ -594,12 +595,19 @@ public:
  };
 */
 
-void RegisterGridGenerationTools(ToolManager* toolMgr)
+void PreRegisterGridGenerationTools(ToolManager* toolMgr)
 {
 	toolMgr->register_tool(new ToolNewMesh);
 	// toolMgr->register_tool(new ToolNewCSGObject);
 	toolMgr->register_tool(new ToolNewMeshFromSelection);
 	toolMgr->register_tool(new ToolMergeMeshes);
+}
 
-    //toolMgr->register_tool(new ToolCreateDualGrid);
+void PostRegisterGridGenerationTools(ToolManager* toolMgr)
+{
+
+    toolMgr->register_tool(new ScriptTool(":/scripts/Grid Generation/Geometries/3D/Create TKD/"
+                                          "remeshed-tkd-with-outer-layer.lua",
+                                          "Grid Generation | Geometries | 3D | Create TKD",
+                                          GetDefaultLuaShell ()));
 }

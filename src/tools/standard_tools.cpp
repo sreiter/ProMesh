@@ -67,7 +67,7 @@ void RegisterStandardTools(ToolManager* toolMgr)
 
 //	camera
 	RegisterCameraTools(toolMgr);
-	RegisterGridGenerationTools(toolMgr);
+	PreRegisterGridGenerationTools(toolMgr);
 	RegisterInfoTools(toolMgr);
 
 	RegisterTetgenTools();
@@ -80,4 +80,5 @@ void RegisterStandardTools(ToolManager* toolMgr)
 // //	remeshing | topology
 // 	RegisterTopologyTools(toolMgr);
 
+	PostRegisterGridGenerationTools(toolMgr);
 }

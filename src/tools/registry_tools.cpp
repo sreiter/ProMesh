@@ -547,14 +547,16 @@ void RegisterRegistryTools(ToolManager* toolMgr)
 		for(string::const_iterator i = funcName.begin(); i != funcName.end(); ++i)
 		{
 			if(isupper(*i)){
-				if(!lastWasUpper){
-					toolName.push_back(' ');
-				}
-				else{
-				//	handle names with uppercase acronyms
-					string::const_iterator next = i; ++next;
-					if(next != funcName.end() && !isupper(*next))
+				if(i != funcName.begin()){
+					if(!lastWasUpper){
 						toolName.push_back(' ');
+					}
+					else{
+					//	handle names with uppercase acronyms
+						string::const_iterator next = i; ++next;
+						if(next != funcName.end() && !isupper(*next))
+							toolName.push_back(' ');
+					}
 				}
 				lastWasUpper = true;
 			}

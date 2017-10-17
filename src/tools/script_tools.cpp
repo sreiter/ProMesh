@@ -34,7 +34,7 @@
 #include <cstdlib>
 #include <sstream>
 
-#include "../scripting.h"
+#include "script_tools.h"
 #include "standard_tools.h"
 #include "common/error.h"
 #include "common/util/string_util.h"
@@ -59,172 +59,179 @@ static T ToNumber(const std::string& str){
 }
 
 
-
-class ScriptTool : public ITool
+ScriptTool::
+ScriptTool(string path, string group, SPLuaShell luaShell) :
+	m_scriptName(path),
+	m_scriptPath(path),
+	m_group(group),
+	m_luaShell(luaShell)
 {
-	public:
-		ScriptTool(string scriptName, string path, string group, SPLuaShell luaShell) :
-			m_scriptName(scriptName),
-			m_scriptPath(path),
-			m_group(group),
-			m_luaShell(luaShell)
-		{
-		}
+}
 
-		virtual void execute(LGObject* obj,
-							 QWidget* widget)
-		{
-			ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
-			if(dlg){
-				for(size_t i = 0; i < m_scriptDecls.inputs.size(); ++i){
-					ScriptParameter& param = m_scriptDecls.inputs[i];
-					if((param.typeName == "double") || (param.typeName == "float")){
-						m_luaShell->set(param.varName.c_str(), dlg->to_double((int)i));
-					}
-					else if((param.typeName == "int") || (param.typeName == "integer")){
-						m_luaShell->set(param.varName.c_str(), dlg->to_int((int)i));
-					}
-					else if((param.typeName == "bool") || (param.typeName == "boolean")){
-						m_luaShell->set(param.varName.c_str(), dlg->to_bool((int)i));
-					}
-					else if(param.typeName == "string"){
-						m_luaShell->set(param.varName.c_str(), dlg->to_string((int)i).toLocal8Bit().constData());
-					}
-					else{
-						UG_THROW("type " << param.typeName << " currently unsupported by script interpreter.");
-					}
-				}
+void ScriptTool::
+execute(LGObject* obj, QWidget* widget)
+{
+	ToolWidget* dlg = dynamic_cast<ToolWidget*>(widget);
+	if(dlg){
+		for(size_t i = 0; i < m_scriptDecls.inputs.size(); ++i){
+			ScriptParameter& param = m_scriptDecls.inputs[i];
+			if((param.typeName == "double") || (param.typeName == "float")){
+				m_luaShell->set(param.varName.c_str(), dlg->to_double((int)i));
 			}
-
-			try{
-				m_luaShell->set("mesh", static_cast<ug::promesh::Mesh*>(obj), "Mesh");
-				m_luaShell->run(m_scriptContent.constData());
+			else if((param.typeName == "int") || (param.typeName == "integer")){
+				m_luaShell->set(param.varName.c_str(), dlg->to_int((int)i));
 			}
-			catch(ug::script::LuaError& err) {
-				ug::PathProvider::clear_current_path_stack();
-				if(err.show_msg()){
-					if(!err.get_msg().empty()){
-						UG_LOG("error in script " << m_scriptName << "(file: " << m_scriptPath << "):\n");
-						for(size_t i=0;i<err.num_msg();++i)
-							UG_LOG(err.get_msg(i)<<endl);
-					}
-				}
+			else if((param.typeName == "bool") || (param.typeName == "boolean")){
+				m_luaShell->set(param.varName.c_str(), dlg->to_bool((int)i));
 			}
-
-			obj->geometry_changed();
-		}
-
-		virtual const char* get_name()	
-		{
-			parse_script_decls(false);
-			return m_scriptDecls.name.c_str();
-		}
-
-		virtual const char* get_tooltip()	{return "";}
-		virtual const char* get_group()		{return m_group.c_str();}
-		virtual const char* get_shortcut()	{return "";}
-
-		virtual bool accepts_null_object_ptr()	{return false;}
-
-		virtual QWidget* get_dialog(QWidget* parent)
-		{
-			parse_script_decls(true);
-			
-			vector<ScriptParameter>& inputs = m_scriptDecls.inputs;
-
-			if(inputs.empty())
-				return NULL;
-
-			ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
-											IDB_APPLY | IDB_OK | IDB_CLOSE);
-
-			refresh_dialog(dlg);
-
-			// MainWindow* mw = app::getMainWindow();
-			// connect(mw, SIGNAL(refreshToolDialogs()), dlg, SLOT(refreshContents()));
-
-			return dlg;
-		}
-
-	/** \todo: this method should check whether there were indeed any changes
-	*		   to the parameters of the script.*/
-		virtual bool dialog_changed(QWidget* dlg)		{return true;}
-
-		virtual void refresh_dialog(QWidget* dialog)
-		{
-			ToolWidget* dlg = dynamic_cast<ToolWidget*>(dialog);
-			if(!dlg)
-				return;
-
-			parse_script_decls(true);
-			dlg->clear();
-			
-			vector<ScriptParameter>& inputs = m_scriptDecls.inputs;
-
-			if(inputs.empty())
-				return;
-
-			for(size_t iinput = 0; iinput < inputs.size(); ++iinput){
-				ScriptParameter& param = inputs[iinput];
-				if((param.typeName == "double") || (param.typeName == "float")){
-					dlg->addSpinBox (QString(param.argName.c_str()),
-					                 param.min.to_double(),
-					                 param.max.to_double(),
-					                 param.val.to_double(),
-					                 param.step.to_double(),
-					                 param.digits.to_double());
-				}
-
-				else if((param.typeName == "int") || (param.typeName == "integer")){
-					dlg->addSpinBox (QString(param.argName.c_str()),
-					                 param.min.to_int(),
-									 param.max.to_int(),
-									 param.val.to_int(),
-									 param.step.to_int(),
-									 0);
-				}
-
-				else if((param.typeName == "bool") || (param.typeName == "boolean")){
-					dlg->addCheckBox(QString(param.argName.c_str()), param.val.to_bool());
-				}
-
-				else if(param.typeName == "string"){
-					dlg->addTextBox(QString(param.argName.c_str()),
-					                QString(param.val.to_c_string()));
-				}
+			else if(param.typeName == "string"){
+				m_luaShell->set(param.varName.c_str(), dlg->to_string((int)i).toLocal8Bit().constData());
+			}
+			else{
+				UG_THROW("type " << param.typeName << " currently unsupported by script interpreter.");
 			}
 		}
+	}
 
-		void parse_script_decls(bool force){
-			if(force || m_scriptDecls.name.empty()){
-				QFile file(QString(m_scriptPath.c_str()));
-				if(!file.open(QIODevice::ReadOnly | QIODevice::Text)){
-					m_scriptContent = QByteArray();
-					m_scriptDecls = ScriptDeclarations();
-				}
-				else{
-					m_scriptContent = file.readAll();
-					file.close();
-					ParseScriptDeclarations(m_scriptDecls,
-					                        m_scriptContent.constData());
-				}
-				if(m_scriptDecls.name.empty())
-					m_scriptDecls.name = m_scriptName;
+	try{
+		m_luaShell->set("mesh", static_cast<ug::promesh::Mesh*>(obj), "Mesh");
+		m_luaShell->run(m_scriptContent.constData());
+	}
+	catch(ug::script::LuaError& err) {
+		ug::PathProvider::clear_current_path_stack();
+		if(err.show_msg()){
+			if(!err.get_msg().empty()){
+				UG_LOG("error in script " << m_scriptName << "(file: " << m_scriptPath << "):\n");
+				for(size_t i=0;i<err.num_msg();++i)
+					UG_LOG(err.get_msg(i)<<endl);
 			}
 		}
+	}
 
-		string path()			{return m_scriptPath;}
+	obj->geometry_changed();
+}
 
-		SPLuaShell lua_shell()	{return m_luaShell;}
+const char* ScriptTool::
+get_name()	
+{
+	parse_script_decls(false);
+	return m_scriptDecls.name.c_str();
+}
 
-	private:
-		ScriptDeclarations	m_scriptDecls;
-		string m_scriptName;
-		string m_scriptPath;
-		string m_group;
-		QByteArray	m_scriptContent;
-		SPLuaShell	m_luaShell;
-};
+const char* ScriptTool::
+get_tooltip()
+{return "";}
+
+const char* ScriptTool::
+get_group()
+{return m_group.c_str();}
+
+const char* ScriptTool::
+get_shortcut()
+{return "";}
+
+
+bool ScriptTool::
+accepts_null_object_ptr()	{return false;}
+
+QWidget* ScriptTool::
+get_dialog(QWidget* parent)
+{
+	parse_script_decls(true);
+	
+	vector<ScriptParameter>& inputs = m_scriptDecls.inputs;
+
+	if(inputs.empty())
+		return NULL;
+
+	ToolWidget *dlg = new ToolWidget(get_name(), parent, this,
+									IDB_APPLY | IDB_OK | IDB_CLOSE);
+
+	refresh_dialog(dlg);
+
+	// MainWindow* mw = app::getMainWindow();
+	// connect(mw, SIGNAL(refreshToolDialogs()), dlg, SLOT(refreshContents()));
+
+	return dlg;
+}
+
+/** \todo: this method should check whether there were indeed any changes
+*		   to the parameters of the script.*/
+bool ScriptTool::
+dialog_changed(QWidget* dlg)		{return true;}
+
+void ScriptTool::
+refresh_dialog(QWidget* dialog)
+{
+	ToolWidget* dlg = dynamic_cast<ToolWidget*>(dialog);
+	if(!dlg)
+		return;
+
+	parse_script_decls(true);
+	dlg->clear();
+	
+	vector<ScriptParameter>& inputs = m_scriptDecls.inputs;
+
+	if(inputs.empty())
+		return;
+
+	for(size_t iinput = 0; iinput < inputs.size(); ++iinput){
+		ScriptParameter& param = inputs[iinput];
+		if((param.typeName == "double") || (param.typeName == "float")){
+			dlg->addSpinBox (QString(param.argName.c_str()),
+			                 param.min.to_double(),
+			                 param.max.to_double(),
+			                 param.val.to_double(),
+			                 param.step.to_double(),
+			                 param.digits.to_double());
+		}
+
+		else if((param.typeName == "int") || (param.typeName == "integer")){
+			dlg->addSpinBox (QString(param.argName.c_str()),
+			                 param.min.to_int(),
+							 param.max.to_int(),
+							 param.val.to_int(),
+							 param.step.to_int(),
+							 0);
+		}
+
+		else if((param.typeName == "bool") || (param.typeName == "boolean")){
+			dlg->addCheckBox(QString(param.argName.c_str()), param.val.to_bool());
+		}
+
+		else if(param.typeName == "string"){
+			dlg->addTextBox(QString(param.argName.c_str()),
+			                QString(param.val.to_c_string()));
+		}
+	}
+}
+
+void ScriptTool::
+parse_script_decls(bool force){
+	if(force || m_scriptDecls.name.empty()){
+		QFile file(QString(m_scriptPath.c_str()));
+		if(!file.open(QIODevice::ReadOnly | QIODevice::Text)){
+			m_scriptContent = QByteArray();
+			m_scriptDecls = ScriptDeclarations();
+			UG_LOG("ERROR: Failed to read script " << m_scriptPath << endl);
+		}
+		else{
+			m_scriptContent = file.readAll();
+			file.close();
+			ParseScriptDeclarations(m_scriptDecls,
+			                        m_scriptContent.constData());
+		}
+		if(m_scriptDecls.name.empty())
+			m_scriptDecls.name = m_scriptName;
+	}
+}
+
+string ScriptTool::
+path()			{return m_scriptPath;}
+
+SPLuaShell ScriptTool::
+lua_shell()	{return m_luaShell;}
+
 
 
 
@@ -266,10 +273,7 @@ void ParseDirAndCreateTools(ToolManager* toolMgr, QDir dir, string group,
 				continue;
 		}
 
-		ScriptTool* tool = new ScriptTool(scripts.at(iscript).toStdString(),
-							   absPath,
-							   group,
-							   luaShell);
+		ScriptTool* tool = new ScriptTool(absPath, group, luaShell);
 
 		toolMgr->register_tool(tool);
 		g_scriptTools.push_back(tool);

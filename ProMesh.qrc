@@ -38,6 +38,7 @@
     
     <qresource prefix="/">
         <file>scripts/Smoothing/crease-smoothing.lua</file>
+        <file>scripts/Grid Generation/Geometries/3D/Create TKD/remeshed-tkd-with-outer-layer.lua</file>
     </qresource>
 
     <qresource prefix="/">

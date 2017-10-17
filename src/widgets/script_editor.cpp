@@ -122,7 +122,7 @@ void QScriptEditor::saveToFile()
 
 	QString filename = QFileDialog::getSaveFileName(
 								this,
-								tr("Load Script"),
+								tr("Save Script"),
 								path,
 								tr("script files (*.psc)"));
 
@@ -144,7 +144,9 @@ void QScriptEditor::apply ()
 	try{
 		SPLuaShell luaShell = GetDefaultLuaShell();
 		
-		const char* scriptContent = m_textEdit->toPlainText().toLocal8Bit().constData();
+		QString script = m_textEdit->toPlainText();
+		script.replace(15, ' ');
+		const char* scriptContent = script.toLocal8Bit().constData();
 		SetScriptDefaultVariables (luaShell, scriptContent);
 
 		luaShell->set(	"mesh", static_cast<ug::promesh::Mesh*>(obj), "Mesh");
