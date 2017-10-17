@@ -28,5 +28,6 @@ var searchData=
   ['moveselectionto',['MoveSelectionTo',['../group__ug4__promesh__Coordinate__Transform__Move.html#gafc45eb57cb201691539159a98fc7d47c',1,'script_reference.cpp']]],
   ['movesubset',['MoveSubset',['../group__ug4__promesh__Subsets.html#gaed9de321de99276bfc157ed2d392e027',1,'script_reference.cpp']]],
   ['moveverticesalongedges',['MoveVerticesAlongEdges',['../group__ug4__promesh__Coordinate__Transform__Move.html#ga73308fcef4c9c90b0b2eff1377bd994a',1,'script_reference.cpp']]],
-  ['moveverticestoedgelength',['MoveVerticesToEdgeLength',['../group__ug4__promesh__Coordinate__Transform__Move.html#ga5c94addba656e4ca1a8ced1e1b0710f9',1,'script_reference.cpp']]]
+  ['moveverticestoedgelength',['MoveVerticesToEdgeLength',['../group__ug4__promesh__Coordinate__Transform__Move.html#ga5c94addba656e4ca1a8ced1e1b0710f9',1,'script_reference.cpp']]],
+  ['moveverticestoprojectededgelength',['MoveVerticesToProjectedEdgeLength',['../group__ug4__promesh__Coordinate__Transform__Move.html#ga05c3e597bc588fa36ff780d17810bbd2',1,'script_reference.cpp']]]
 ];

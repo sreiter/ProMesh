@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ProMesh User Manual
-   &#160;<span id="projectnumber">v4.3.9</span>
+   &#160;<span id="projectnumber">v4.3.10</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -107,9 +107,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga39eb91e4302622c6a214d77fc28b273c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ug4__promesh__Selection__Subset__Based.html#ga39eb91e4302622c6a214d77fc28b273c">SelectSubsetBoundary</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classint">int</a> subset_index, <a class="el" href="group__nativeTypes.html#classbool">bool</a> boundaries_of_edges, <a class="el" href="group__nativeTypes.html#classbool">bool</a> boundaries_of_faces, <a class="el" href="group__nativeTypes.html#classbool">bool</a> boundaries_of_volumes)</td></tr>
 <tr class="memdesc:ga39eb91e4302622c6a214d77fc28b273c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects the boundary of a subset.  <a href="#ga39eb91e4302622c6a214d77fc28b273c">More...</a><br /></td></tr>
 <tr class="separator:ga39eb91e4302622c6a214d77fc28b273c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac7735080eff6a8981d2442877bad8133"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ug4__promesh__Selection__Subset__Based.html#gac7735080eff6a8981d2442877bad8133">SelectUnassignedElements</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classbool">bool</a> subset_index, <a class="el" href="group__nativeTypes.html#classbool">bool</a> vertices, <a class="el" href="group__nativeTypes.html#classbool">bool</a> edges, <a class="el" href="group__nativeTypes.html#classbool">bool</a> faces)</td></tr>
-<tr class="memdesc:gac7735080eff6a8981d2442877bad8133"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects all elements not assigned to any subset.  <a href="#gac7735080eff6a8981d2442877bad8133">More...</a><br /></td></tr>
-<tr class="separator:gac7735080eff6a8981d2442877bad8133"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4d87f86750404954e18150aa2dfc4122"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ug4__promesh__Selection__Subset__Based.html#ga4d87f86750404954e18150aa2dfc4122">SelectUnassignedElements</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classbool">bool</a> vertices, <a class="el" href="group__nativeTypes.html#classbool">bool</a> edges, <a class="el" href="group__nativeTypes.html#classbool">bool</a> faces, <a class="el" href="group__nativeTypes.html#classbool">bool</a> volumes)</td></tr>
+<tr class="memdesc:ga4d87f86750404954e18150aa2dfc4122"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects all elements not assigned to any subset.  <a href="#ga4d87f86750404954e18150aa2dfc4122">More...</a><br /></td></tr>
+<tr class="separator:ga4d87f86750404954e18150aa2dfc4122"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Selection by subsets. </p>
@@ -216,8 +216,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="gac7735080eff6a8981d2442877bad8133"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gac7735080eff6a8981d2442877bad8133">&#9670;&nbsp;</a></span>SelectUnassignedElements()</h2>
+<a id="ga4d87f86750404954e18150aa2dfc4122"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4d87f86750404954e18150aa2dfc4122">&#9670;&nbsp;</a></span>SelectUnassignedElements()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -227,12 +227,6 @@ Functions</h2></td></tr>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
           <td class="paramname"><em>mesh</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
-          <td class="paramname"><em>subset_index</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -250,7 +244,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
-          <td class="paramname"><em>faces</em>&#160;</td>
+          <td class="paramname"><em>faces</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
+          <td class="paramname"><em>volumes</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -270,7 +270,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">(c) Sebastian Reiter. Generated on Thu Jul 13 2017 13:08:02 for ProMesh User Manual by
+    <li class="footer">(c) Sebastian Reiter. Generated on Tue Oct 17 2017 15:38:47 for ProMesh User Manual by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

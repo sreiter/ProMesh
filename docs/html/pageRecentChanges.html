@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ProMesh User Manual
-   &#160;<span id="projectnumber">v4.3.9</span>
+   &#160;<span id="projectnumber">v4.3.10</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -103,13 +103,27 @@ $(document).ready(function(){initNavTree('pageRecentChanges.html','');});
 
 
 -------------------------------------------------------------------------------
+v 4.3.10*
+Changes and additions:
+- Added 'Selection-ExtendSelectionInDirection'
+- Added 'Selection-SelectElementsByIndexRange'
+- Indices of selected elements are now printed to the Action-Log
+- Added a very rudimentary script editor
+- Added GridGeneration-Geometries-3D-CreateTKD
+- Added GridGeneration-Geometries-3D-CreateTKDWithOuterLayer
+
+Fixes:
+
+
+
+-------------------------------------------------------------------------------
 v 4.3.9
 Changes and additions:
 - Remeshing-Orientation-AdjustEdgeOrientation now only considers the set of
   selected faces.
 - Tetgen is now used as a separate process through a file-interface
 - Support for *.swc files added
-
+- Action-Log added
 Fixes:
 
 
@@ -1214,7 +1228,7 @@ Fixes:
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">(c) Sebastian Reiter. Generated on Thu Jul 13 2017 13:08:02 for ProMesh User Manual by
+    <li class="footer">(c) Sebastian Reiter. Generated on Tue Oct 17 2017 15:38:46 for ProMesh User Manual by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

@@ -11,6 +11,7 @@ var searchData=
   ['prism_5fselection_5fend',['prism_selection_end',['../group__ugbase.html#a87270542d60a8db55200f2d15f0e7491',1,'Mesh::prism_selection_end()'],['../group__ugbase.html#a87270542d60a8db55200f2d15f0e7491',1,'Mesh::prism_selection_end()']]],
   ['prism_5fsubset_5fbegin',['prism_subset_begin',['../group__ugbase.html#a00ab673dc8ba4f26ad58ebdded7af939',1,'Mesh::prism_subset_begin(int param)'],['../group__ugbase.html#a00ab673dc8ba4f26ad58ebdded7af939',1,'Mesh::prism_subset_begin(int param)']]],
   ['prism_5fsubset_5fend',['prism_subset_end',['../group__ugbase.html#a1b449bd0333dd22640c20a2a3ce6ccc2',1,'Mesh::prism_subset_end(int param)'],['../group__ugbase.html#a1b449bd0333dd22640c20a2a3ce6ccc2',1,'Mesh::prism_subset_end(int param)']]],
+  ['projecteddistance',['ProjectedDistance',['../group__ug4__promesh__Info.html#gaa47b78a0279963122e4705343c71db7b',1,'script_reference.cpp']]],
   ['projecttolayer',['ProjectToLayer',['../group__ug4__promesh__Raster__Layers.html#ga7170d71b014282647e97c9cb80e1de6f',1,'script_reference.cpp']]],
   ['projecttolimitpiecewiseloop',['ProjectToLimitPiecewiseLoop',['../group__ug4__promesh__Coordinate__Transform__Subdivision__Projection.html#gaadd497f414a7982434b73154c01de88a',1,'script_reference.cpp']]],
   ['projecttolimitsmoothboundary',['ProjectToLimitSmoothBoundary',['../group__ug4__promesh__Coordinate__Transform__Subdivision__Projection.html#ga544b75f59d63be243b7e5441f1a1cf8f',1,'script_reference.cpp']]],

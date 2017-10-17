@@ -29,6 +29,7 @@ var searchData=
   ['movesubset',['MoveSubset',['../group__ug4__promesh__Subsets.html#gaed9de321de99276bfc157ed2d392e027',1,'script_reference.cpp']]],
   ['moveverticesalongedges',['MoveVerticesAlongEdges',['../group__ug4__promesh__Coordinate__Transform__Move.html#ga73308fcef4c9c90b0b2eff1377bd994a',1,'script_reference.cpp']]],
   ['moveverticestoedgelength',['MoveVerticesToEdgeLength',['../group__ug4__promesh__Coordinate__Transform__Move.html#ga5c94addba656e4ca1a8ced1e1b0710f9',1,'script_reference.cpp']]],
+  ['moveverticestoprojectededgelength',['MoveVerticesToProjectedEdgeLength',['../group__ug4__promesh__Coordinate__Transform__Move.html#ga05c3e597bc588fa36ff780d17810bbd2',1,'script_reference.cpp']]],
   ['move',['Move',['../group__ug4__promesh__Coordinate__Transform__Move.html',1,'']]],
   ['measure_20length_2c_20area_2c_20volume',['Measure length, area, volume',['../group__ug4__promesh__Info__Measure__length____area____volume.html',1,'']]],
   ['merge_20vertices',['Merge Vertices',['../group__ug4__promesh__Remeshing__Merge__Vertices.html',1,'']]],

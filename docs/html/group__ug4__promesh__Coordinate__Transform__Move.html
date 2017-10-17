@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ProMesh User Manual
-   &#160;<span id="projectnumber">v4.3.9</span>
+   &#160;<span id="projectnumber">v4.3.10</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -119,6 +119,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga5c94addba656e4ca1a8ced1e1b0710f9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ug4__promesh__Coordinate__Transform__Move.html#ga5c94addba656e4ca1a8ced1e1b0710f9">MoveVerticesToEdgeLength</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classdouble">double</a> edge_length)</td></tr>
 <tr class="memdesc:ga5c94addba656e4ca1a8ced1e1b0710f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves selected vertices along selected edges so that those edges obtain the specified length. If a selected vertex is connected to multiple selected edges, the new position will be averaged between the individual new positions.  <a href="#ga5c94addba656e4ca1a8ced1e1b0710f9">More...</a><br /></td></tr>
 <tr class="separator:ga5c94addba656e4ca1a8ced1e1b0710f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga05c3e597bc588fa36ff780d17810bbd2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ug4__promesh__Coordinate__Transform__Move.html#ga05c3e597bc588fa36ff780d17810bbd2">MoveVerticesToProjectedEdgeLength</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classdouble">double</a> projcted_edge_length, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *projection_normal)</td></tr>
+<tr class="memdesc:ga05c3e597bc588fa36ff780d17810bbd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves selected vertices along selected edges so that the projection of those edges into the plain with the specified normal obtain the specified length. If a selected vertex is connected to multiple selected edges, the new position will be averaged between the individual new positions.  <a href="#ga05c3e597bc588fa36ff780d17810bbd2">More...</a><br /></td></tr>
+<tr class="separator:ga05c3e597bc588fa36ff780d17810bbd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Tools to move the current selection or the current mesh. </p>
@@ -303,13 +306,49 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ga05c3e597bc588fa36ff780d17810bbd2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga05c3e597bc588fa36ff780d17810bbd2">&#9670;&nbsp;</a></span>MoveVerticesToProjectedEdgeLength()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MoveVerticesToProjectedEdgeLength </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>mesh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classdouble">double</a>&#160;</td>
+          <td class="paramname"><em>projcted_edge_length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
+          <td class="paramname"><em>projection_normal</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Moves selected vertices along selected edges so that the projection of those edges into the plain with the specified normal obtain the specified length. If a selected vertex is connected to multiple selected edges, the new position will be averaged between the individual new positions. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">(c) Sebastian Reiter. Generated on Thu Jul 13 2017 13:08:03 for ProMesh User Manual by
+    <li class="footer">(c) Sebastian Reiter. Generated on Tue Oct 17 2017 15:38:47 for ProMesh User Manual by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

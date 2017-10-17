@@ -16,6 +16,7 @@ var searchData=
   ['erasesubset',['EraseSubset',['../group__ug4__promesh__Subsets.html#ga3a303bf6d793389796d94f3492552038',1,'script_reference.cpp']]],
   ['exporttoug3',['ExportToUG3',['../group__ug4__promesh__File__IO.html#ga46eb0ade32431752cae290264786272b',1,'script_reference.cpp']]],
   ['extendselection',['ExtendSelection',['../group__ug4__promesh__Selection.html#gac9142536d72912653a70194293850596',1,'script_reference.cpp']]],
+  ['extendselectionindirection',['ExtendSelectionInDirection',['../group__ug4__promesh__Selection.html#gae2e8eab65dc2b04fc2598aa969b59037',1,'script_reference.cpp']]],
   ['extrude',['Extrude',['../group__ug4__promesh__Remeshing__Extrusion.html#ga0e89765cc34a60d7cab664e68125754e',1,'script_reference.cpp']]],
   ['extrudealongnormal',['ExtrudeAlongNormal',['../group__ug4__promesh__Remeshing__Extrusion.html#ga538eefbeb97870e9f849e032bfbf24f2',1,'script_reference.cpp']]],
   ['extrudeandmove',['ExtrudeAndMove',['../group__ug4__promesh__Remeshing__Extrusion.html#ga21ec5b1cc2398fbd91e218bfddbac12a',1,'script_reference.cpp']]],
