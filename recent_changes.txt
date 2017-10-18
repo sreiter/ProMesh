@@ -8,7 +8,7 @@ Recent changes:
 
 
 -------------------------------------------------------------------------------
-v 4.3.10*
+v 4.3.10
 Changes and additions:
 - Added 'Selection-ExtendSelectionInDirection'
 - Added 'Selection-SelectElementsByIndexRange'
@@ -18,7 +18,10 @@ Changes and additions:
 - Added GridGeneration-Geometries-3D-CreateTKDWithOuterLayer
 
 Fixes:
+- Autoassigning accidentally unassigned elements after, e.g., TriangleFill,
+  Retriangulate, AdjustEdgeLenght, Tetrahedralize, etc.
 
+  
 
 
 -------------------------------------------------------------------------------
