@@ -10,6 +10,15 @@ Recent changes:
 -------------------------------------------------------------------------------
 v 4.3.10
 Changes and additions:
+- Added tool 'Remeshing-Extrusion-ExtrudeToThickness'
+
+Fixes:
+
+
+
+-------------------------------------------------------------------------------
+v 4.3.10
+Changes and additions:
 - Added 'Selection-ExtendSelectionInDirection'
 - Added 'Selection-SelectElementsByIndexRange'
 - Indices of selected elements are now printed to the Action-Log
