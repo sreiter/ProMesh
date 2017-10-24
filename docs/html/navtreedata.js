@@ -22,8 +22,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"group__ug4__promesh__Selection__Edges__Coordinate__Based.html#ga28863aa083cd44b0e6a539a4242b04f6",
-"group__ugbase.html#a501fa4833ffb0a1d532bfa89765e0729",
+"group__ug4__promesh__Selection__Edges__Coordinate__Based.html",
+"group__ugbase.html#a4f8c4f94df9a0b3bf9ae4534119b0d50",
 "group__ugbase.html#ad9316719bde89a43324f194ae83def1b"
 ];
 

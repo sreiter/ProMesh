@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ProMesh User Manual
-   &#160;<span id="projectnumber">v4.3.10</span>
+   &#160;<span id="projectnumber">v4.3.11</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -113,6 +113,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga538eefbeb97870e9f849e032bfbf24f2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ug4__promesh__Remeshing__Extrusion.html#ga538eefbeb97870e9f849e032bfbf24f2">ExtrudeAlongNormal</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classdouble">double</a> total_length, <a class="el" href="group__nativeTypes.html#classint">int</a> num_steps, <a class="el" href="group__nativeTypes.html#classbool">bool</a> create_faces, <a class="el" href="group__nativeTypes.html#classbool">bool</a> create_volumes)</td></tr>
 <tr class="memdesc:ga538eefbeb97870e9f849e032bfbf24f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extrudes selected geometry (vertices, edges, faces) and moves new vertices along their normal.  <a href="#ga538eefbeb97870e9f849e032bfbf24f2">More...</a><br /></td></tr>
 <tr class="separator:ga538eefbeb97870e9f849e032bfbf24f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac11cdfd59b466b803ae21ce21bf20541"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ug4__promesh__Remeshing__Extrusion.html#gac11cdfd59b466b803ae21ce21bf20541">ExtrudeToThickness</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classdouble">double</a> thickness, <a class="el" href="group__nativeTypes.html#classint">int</a> num_steps, <a class="el" href="group__nativeTypes.html#classbool">bool</a> create_faces, <a class="el" href="group__nativeTypes.html#classbool">bool</a> create_volumes)</td></tr>
+<tr class="memdesc:gac11cdfd59b466b803ae21ce21bf20541"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extrudes selected geometry (vertices, edges, faces) and moves new vertices so that created elements have the specified thickness.  <a href="#gac11cdfd59b466b803ae21ce21bf20541">More...</a><br /></td></tr>
+<tr class="separator:gac11cdfd59b466b803ae21ce21bf20541"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga30f1901f48eeee80556248951f4a2081"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ug4__promesh__Remeshing__Extrusion.html#ga30f1901f48eeee80556248951f4a2081">ExtrudeCylinders</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classdouble">double</a> height, <a class="el" href="group__nativeTypes.html#classdouble">double</a> radius, <a class="el" href="group__nativeTypes.html#classdouble">double</a> snap_threshold)</td></tr>
 <tr class="memdesc:ga30f1901f48eeee80556248951f4a2081"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extrudes cylinders around selected points of a 2d manifold.  <a href="#ga30f1901f48eeee80556248951f4a2081">More...</a><br /></td></tr>
 <tr class="separator:ga30f1901f48eeee80556248951f4a2081"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -360,13 +363,61 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="gac11cdfd59b466b803ae21ce21bf20541"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac11cdfd59b466b803ae21ce21bf20541">&#9670;&nbsp;</a></span>ExtrudeToThickness()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ExtrudeToThickness </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>mesh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classdouble">double</a>&#160;</td>
+          <td class="paramname"><em>thickness</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classint">int</a>&#160;</td>
+          <td class="paramname"><em>num_steps</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
+          <td class="paramname"><em>create_faces</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
+          <td class="paramname"><em>create_volumes</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Extrudes selected geometry (vertices, edges, faces) and moves new vertices so that created elements have the specified thickness. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">(c) Sebastian Reiter. Generated on Wed Oct 18 2017 13:05:28 for ProMesh User Manual by
+    <li class="footer">(c) Sebastian Reiter. Generated on Tue Oct 24 2017 11:37:58 for ProMesh User Manual by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

@@ -155,6 +155,7 @@ var NAVTREEINDEX0 =
 "group__ug4__promesh__Remeshing__Extrusion.html#ga21ec5b1cc2398fbd91e218bfddbac12a":[1,0,0,4,2,2],
 "group__ug4__promesh__Remeshing__Extrusion.html#ga30f1901f48eeee80556248951f4a2081":[1,0,0,4,2,4],
 "group__ug4__promesh__Remeshing__Extrusion.html#ga538eefbeb97870e9f849e032bfbf24f2":[1,0,0,4,2,1],
+"group__ug4__promesh__Remeshing__Extrusion.html#gac11cdfd59b466b803ae21ce21bf20541":[1,0,0,4,2,5],
 "group__ug4__promesh__Remeshing__Hexahedra.html":[1,0,0,4,3],
 "group__ug4__promesh__Remeshing__Hexahedra.html#ga25837fcde027f0154859f99c5989db07":[1,0,0,4,3,0],
 "group__ug4__promesh__Remeshing__Merge__Vertices.html":[1,0,0,4,4],
@@ -248,6 +249,5 @@ var NAVTREEINDEX0 =
 "group__ug4__promesh__Selection__Edges.html#gabb136b5f5b8f1d4812eda9de2214a7ce":[1,0,0,5,1,4],
 "group__ug4__promesh__Selection__Edges.html#gabcd9badcc5b8adce345328ff7c811b64":[1,0,0,5,1,14],
 "group__ug4__promesh__Selection__Edges.html#gadbad6866dd8a2b4201f197e85784941d":[1,0,0,5,1,15],
-"group__ug4__promesh__Selection__Edges.html#gaff35bd4aaddb3996963581d55691c219":[1,0,0,5,1,6],
-"group__ug4__promesh__Selection__Edges__Coordinate__Based.html":[1,0,0,5,1,0]
+"group__ug4__promesh__Selection__Edges.html#gaff35bd4aaddb3996963581d55691c219":[1,0,0,5,1,6]
 };

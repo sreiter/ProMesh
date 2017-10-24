@@ -4,5 +4,6 @@ var group__ug4__promesh__Remeshing__Extrusion =
     [ "ExtrudeAlongNormal", "group__ug4__promesh__Remeshing__Extrusion.html#ga538eefbeb97870e9f849e032bfbf24f2", null ],
     [ "ExtrudeAndMove", "group__ug4__promesh__Remeshing__Extrusion.html#ga21ec5b1cc2398fbd91e218bfddbac12a", null ],
     [ "ExtrudeAndScale", "group__ug4__promesh__Remeshing__Extrusion.html#ga06eed732c655552ab77614841122aa84", null ],
-    [ "ExtrudeCylinders", "group__ug4__promesh__Remeshing__Extrusion.html#ga30f1901f48eeee80556248951f4a2081", null ]
+    [ "ExtrudeCylinders", "group__ug4__promesh__Remeshing__Extrusion.html#ga30f1901f48eeee80556248951f4a2081", null ],
+    [ "ExtrudeToThickness", "group__ug4__promesh__Remeshing__Extrusion.html#gac11cdfd59b466b803ae21ce21bf20541", null ]
 ];
