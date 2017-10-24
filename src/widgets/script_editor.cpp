@@ -145,13 +145,12 @@ void QScriptEditor::apply ()
 		SPLuaShell luaShell = GetDefaultLuaShell();
 		
 		QString script = m_textEdit->toPlainText();
-		script.replace(15, ' ');
-		const char* scriptContent = script.toLocal8Bit().constData();
-		SetScriptDefaultVariables (luaShell, scriptContent);
+		std::string scriptContent = script.toStdString();
+		SetScriptDefaultVariables (luaShell, scriptContent.c_str());
 
 		luaShell->set(	"mesh", static_cast<ug::promesh::Mesh*>(obj), "Mesh");
 
-		luaShell->run(scriptContent);
+		luaShell->run(scriptContent.c_str());
 	}
 	catch(ug::script::LuaError& err) {
 		ug::PathProvider::clear_current_path_stack();
