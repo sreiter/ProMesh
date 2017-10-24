@@ -46,6 +46,9 @@
 #include "lib_grid/file_io/file_io_ugx.h"
 #include "lib_grid/file_io/file_io_vtu.h"
 
+#include "common/util/index_list_util.h"
+#include "lib_grid/algorithms/selection_util.h"
+
 using namespace std;
 using namespace ug;
 
@@ -183,10 +186,10 @@ void PerformLoadPostprocessing(LGObject* obj)
 	Grid& grid = obj->grid();
 	
 	LOG("loading done\n");
-	LOG("  num vertices:\t" << grid.num_vertices() << endl);
-	LOG("  num edges: \t" << grid.num_edges() << endl);
-	LOG("  num faces: \t" << grid.num_faces() << endl);
-	LOG("  num volumes:\t" << grid.num_volumes() << endl);
+	LOG("  num vertices: " << grid.num_vertices() << endl);
+	LOG("  num edges:    " << grid.num_edges() << endl);
+	LOG("  num faces:    " << grid.num_faces() << endl);
+	LOG("  num volumes:  " << grid.num_volumes() << endl);
 	LOG(endl);
 }
 
@@ -195,6 +198,7 @@ bool ReloadLGObject(LGObject* obj)
 {
 	obj->grid().clear_geometry();
 	obj->subset_handler().clear();
+	obj->clear_action_log();
 	if(!LoadLGObjectFromFile(obj, obj->m_fileName.c_str())){
 		UG_LOG("Reload Failed!" << std::endl);
 		return false;
@@ -398,6 +402,7 @@ void LGObject::create_undo_point()
 {
 	m_selectionChangedSinceLastUndoPoint = false;
 	if(GetOptions().undo.enabled){
+		log_action ("-- >>> UNDO POINT <<< --\n");
 		const char* filename = m_undoHistory.create_history_entry();
 		SaveLGObjectToFile(this, filename);
 	}
@@ -414,6 +419,8 @@ bool LGObject::undo()
 
 	if(!m_undoHistory.can_undo())
 		return false;
+
+	log_action("-- <<< UNDO <<< --\n");
 
 	if(m_selectionChangedSinceLastUndoPoint)
 		create_undo_point();
@@ -452,6 +459,8 @@ bool LGObject::redo()
 
 	CalculateFaceNormals(m_grid, m_grid.faces_begin(), m_grid.faces_end(), aPosition, aNormal);
 	update_bounding_shapes();
+
+	log_action("-- >>> REDO >>> --\n");
 
 	emit sig_geometry_changed();
 	emit sig_visuals_changed();
@@ -598,6 +607,7 @@ void LGObject::init_transform()
 	m_transformStart = CalculateBarycenter(m_transformVertices.begin(),
 										   m_transformVertices.end(), aaPos);
 	m_transformCur = m_transformStart;
+	m_transformCurScales = vector3(1.f, 1.f, 1.f);
 }
 
 void LGObject::begin_transform(TransformType tt)
@@ -652,6 +662,8 @@ void LGObject::scale(const ug::vector3& scaleFacs)
 		VecAdd(aaPos[m_transformVertices[i]], m_transformCur, d);
 	}
 
+	m_transformCurScales = scaleFacs;
+
 //	the geometry has changed. We thus have to update them
 	geometry_changed();
 }
@@ -666,6 +678,31 @@ void LGObject::end_transform(bool bApply)
 		Grid::VertexAttachmentAccessor<APosition> aaPos(m_grid, aPosition);
 		for(size_t i = 0; i < m_transformVertices.size(); ++i)
 			aaPos[m_transformVertices[i]] = m_transformInitialPositions[i];
+	}
+	else{
+		switch (m_transformType) {
+			case TT_GRAB: {
+				vector3 o;
+				VecSubtract (o, m_transformCur, m_transformStart);
+				write_selection_to_action_log();
+				QString log = QString("Move (mesh, Vec3d(%1,%2,%3))\n")
+										.arg(o[0], 0, 'g', 12)
+										.arg(o[1], 0, 'g', 12)
+										.arg(o[2], 0, 'g', 12);
+				log_action (log);
+			} break;
+			case TT_SCALE: {
+				const vector3& s = m_transformCurScales;
+				write_selection_to_action_log();
+				QString log = QString("ScaleAroundCenter (mesh, Vec3d(%1,%2,%3))\n")
+										.arg(s[0], 0, 'g', 12)
+										.arg(s[1], 0, 'g', 12)
+										.arg(s[2], 0, 'g', 12);
+				log_action (log);
+			} break;
+			case TT_ROTATE:	UG_THROW ("Mouse rotation is not fully implemented!\n"); break;
+			default: break;
+		}
 	}
 
 	m_transformType = TT_NONE;
@@ -716,3 +753,22 @@ log_action(const QString& str)
 	emit actionLogChanged(str);
 }
 
+void LGObject::
+write_selection_to_action_log()
+{
+	vector<size_t> vrtInds, edgeInds, faceInds, volInds;
+	GetSelectedElementIndices (selector(), vrtInds, edgeInds, faceInds, volInds);
+	QString selCmd = "SelectElementsByIndexRange (mesh, \"";
+	selCmd.append(IndexListToRangeString (vrtInds).c_str()).append("\", \"");
+	selCmd.append(IndexListToRangeString (edgeInds).c_str()).append("\", \"");
+	selCmd.append(IndexListToRangeString (faceInds).c_str()).append("\", \"");
+	selCmd.append(IndexListToRangeString (volInds).c_str()).append("\", true)\n");
+	log_action (selCmd);
+}
+
+void LGObject::
+clear_action_log()
+{
+	m_actionLog = "";
+	emit actionLogCleared();
+}

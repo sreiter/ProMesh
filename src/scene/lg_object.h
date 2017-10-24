@@ -230,8 +230,15 @@ class LGObject : public ISceneObject, public ug::promesh::Mesh
 	///	Adds text to the action log and emits 'actionLogChanged(str)'.
 		void log_action(const QString& str);
 
+	///	Writes a command to the action log which selects all currently selected elements
+		void write_selection_to_action_log();
+
+	///	clears the action log and emits 'actionLogCleared()'.
+		void clear_action_log();
+
 	signals:
 		void actionLogChanged(const QString& newContent);
+		void actionLogCleared();
 
 	protected:
 		void init();
@@ -287,6 +294,7 @@ class LGObject : public ISceneObject, public ug::promesh::Mesh
 		TransformType		m_transformType;
 		ug::vector3			m_transformStart;	// center where transform started
 		ug::vector3			m_transformCur;		// center of the current selection
+		ug::vector3			m_transformCurScales;
 		std::vector<ug::Vertex*>	m_transformVertices;
 		std::vector<ug::vector3>	m_transformInitialPositions;
 		std::vector<ug::vector3>	m_vertexCoordinateBuffer;///< used in calls to 'buffer_current_vertex_coordinates' and 'restore_vertex_coordinates_from_buffer'

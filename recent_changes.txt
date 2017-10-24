@@ -8,11 +8,15 @@ Recent changes:
 
 
 -------------------------------------------------------------------------------
-v 4.3.10
+v 4.3.11
 Changes and additions:
 - Added tool 'Remeshing-Extrusion-ExtrudeToThickness'
+- Added undo/redo logs to action-log
 
 Fixes:
+- Action-Log now also contains mouse 'grab' and 'scale' transformations,
+  actions from the r-click menu in the SceneInspector and inputs from the
+  Coordinates window.
 
 
 

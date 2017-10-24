@@ -1326,10 +1326,14 @@ refreshActionLog(ISceneObject* iobj)
 		if(m_actionLogSender){
 			disconnect(m_actionLogSender, SIGNAL(actionLogChanged(const QString&)),
 					   this, SLOT(actionLogChanged(const QString&)));
+			disconnect(m_actionLogSender, SIGNAL(actionLogCleared()),
+					   this, SLOT(actionLogCleared()));
 		}
 		m_actionLogSender = obj;
 		connect(obj, SIGNAL(actionLogChanged(const QString&)),
 				this, SLOT(actionLogChanged(const QString&)));
+		connect(obj, SIGNAL(actionLogCleared(const QString&)),
+				this, SLOT(actionLogCleared(const QString&)));
 	}
 }
 
@@ -1344,6 +1348,12 @@ actionLogChanged(const QString& newContent)
 		else
 			m_actionLog->append(newContent);
 	}
+}
+
+void MainWindow::
+actionLogCleared()
+{
+	m_actionLog->setPlainText("");
 }
 
 const char* MainWindow::log_text()

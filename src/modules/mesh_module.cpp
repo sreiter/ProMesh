@@ -345,6 +345,11 @@ void MeshModule::coordinatesChanged()
 		for(int i = 0; i < 3; ++i)
 			c[i] = m_coordsWidget->value(i, 0);
 		promesh::MoveSelectionTo(obj, c);
+		obj->write_selection_to_action_log ();
+		obj->log_action(QString("MoveSelectionTo (mesh, Vec3d(%1,%2,%3))\n")
+								.arg(c[0], 0, 'g', 12)
+								.arg(c[1], 0, 'g', 12)
+								.arg(c[2], 0, 'g', 12));
 		obj->geometry_changed();
 	}
 }

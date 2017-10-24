@@ -87,6 +87,9 @@ void RClickMenu_SceneInspector::assignSubset()
 	if(obj){
 		int si = m_sceneInspector->getActiveSubsetIndex();
 		if(si != -1){
+			obj->write_selection_to_action_log();
+			obj->log_action (QString("AssignSubset (mesh, %1, true, true, true, true)\n").
+								arg(si));
 			promesh::AssignSubset(obj, si, true, true, true, true);
 			obj->geometry_changed();
 		}
@@ -98,6 +101,9 @@ void RClickMenu_SceneInspector::assignNewSubset()
 	LGObject* obj = app::getActiveObject();
 	if(obj){
 		int si = obj->subset_handler().num_subsets();
+		obj->write_selection_to_action_log();
+		obj->log_action (QString("AssignSubset (mesh, %1, true, true, true, true)\n").
+								arg(si));
 		promesh::AssignSubset(obj, si, true, true, true, true);
 
 		obj->geometry_changed();
@@ -162,8 +168,11 @@ void RClickMenu_SceneInspector::rename()
 
 		if(dlg->exec()){
 			curName = text->text().toLocal8Bit().constData();
-			if(si != -1)
+			if(si != -1){
 				obj->set_subset_name(si, curName.c_str());
+				obj->log_action (QString("SetSubsetName (mesh, %1, \"%2\")\n").
+									arg(si).arg(curName.c_str()));
+			}
 			else
 				obj->set_name(curName.c_str());
 			obj->set_save_required(true);

@@ -158,6 +158,7 @@ class MainWindow : public QMainWindow
 		void optionsChanged();
 		void refreshActionLog(ISceneObject* obj);
 		void actionLogChanged(const QString& newContent);
+		void actionLogCleared();
 
 	protected:
 		void closeEvent(QCloseEvent *event);
