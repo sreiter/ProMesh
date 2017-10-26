@@ -61,7 +61,7 @@ class QScriptEditor : public QDialog{
 		QTimer*					m_timer;
 
 		LGObject*			m_replayTarget;
-		std::stringstream	m_replayStream;
+		std::istringstream	m_replayStream;
 
 };
 

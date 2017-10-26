@@ -194,7 +194,7 @@ void QScriptEditor::apply ()
 			luaShell->run(scriptContent.constData());
 		else{
 			m_replayTarget = obj;
-			m_replayStream = stringstream (scriptContent.constData());
+			m_replayStream.str(scriptContent.constData());
 			m_applyBtn->setText(tr("Cancel"));
 			m_timer->setInterval (int (ri * 1000));
 			m_timer->start ();
