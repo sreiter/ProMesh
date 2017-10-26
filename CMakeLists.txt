@@ -64,6 +64,7 @@ set(ProMeshSRC	src/app.cpp
 				src/tools/tool_frac_to_layer.cpp
 				src/tools/tool_manager.cpp
 				src/util/file_util.cpp
+				src/util/qstring_util.cpp
 				src/modules/module_interface.cpp
 				src/modules/mesh_module.cpp
 				src/widgets/coordinates_widget.cpp

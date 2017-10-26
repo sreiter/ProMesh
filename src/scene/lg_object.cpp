@@ -402,7 +402,7 @@ void LGObject::create_undo_point()
 {
 	m_selectionChangedSinceLastUndoPoint = false;
 	if(GetOptions().undo.enabled){
-		log_action ("-- >>> UNDO POINT <<< --\n");
+		log_action ("-- >>> HISTORY ENTRY <<< --\n");
 		const char* filename = m_undoHistory.create_history_entry();
 		SaveLGObjectToFile(this, filename);
 	}
@@ -420,7 +420,7 @@ bool LGObject::undo()
 	if(!m_undoHistory.can_undo())
 		return false;
 
-	log_action("-- <<< UNDO <<< --\n");
+	log_action("-- <<< UNDO (restore last history entry)<<< --\n");
 
 	if(m_selectionChangedSinceLastUndoPoint)
 		create_undo_point();

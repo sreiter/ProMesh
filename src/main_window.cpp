@@ -125,12 +125,11 @@ void MainWindow::init()
 	QFont logFont("unknown");
 	logFont.setStyleHint(QFont::Monospace);
 	logFont.setPointSize(10);
-	m_pLogText = new QTextEdit(m_pLog);
+	m_pLogText = new QPlainTextEdit(m_pLog);
 	m_pLogText->setReadOnly(true);
-	m_pLogText->setAcceptRichText(false);
 	m_pLogText->setUndoRedoEnabled(false);
 	m_pLogText->setWordWrapMode(QTextOption::NoWrap);
-	m_pLogText->setCurrentFont(logFont);
+	m_pLogText->setFont(logFont);
 	m_pLog->setWidget(m_pLogText);
 
 	addDockWidget(Qt::BottomDockWidgetArea, m_pLog);
@@ -140,12 +139,11 @@ void MainWindow::init()
 	actionLogDock->setFeatures(QDockWidget::NoDockWidgetFeatures);
 	actionLogDock->setObjectName(tr("actionLog"));
 
-	m_actionLog = new QTextEdit(actionLogDock);
+	m_actionLog = new QPlainTextEdit(actionLogDock);
 	m_actionLog->setReadOnly(true);
-	m_actionLog->setAcceptRichText(false);
 	m_actionLog->setUndoRedoEnabled(false);
 	m_actionLog->setWordWrapMode(QTextOption::NoWrap);
-	m_actionLog->setCurrentFont(logFont);
+	m_actionLog->setFont(logFont);
 	actionLogDock->setWidget(m_actionLog);
 	addDockWidget(Qt::BottomDockWidgetArea, actionLogDock);
 	tabifyDockWidget(m_pLog, actionLogDock);
@@ -1322,7 +1320,7 @@ refreshActionLog(ISceneObject* iobj)
 {
 	LGObject* obj = dynamic_cast<LGObject*>(iobj);
 	if(obj){
-		m_actionLog->setText(obj->action_log());
+		m_actionLog->setPlainText(obj->action_log());
 		if(m_actionLogSender){
 			disconnect(m_actionLogSender, SIGNAL(actionLogChanged(const QString&)),
 					   this, SLOT(actionLogChanged(const QString&)));
@@ -1343,10 +1341,16 @@ actionLogChanged(const QString& newContent)
 {
 	LGObject* obj = dynamic_cast<LGObject*>(sender());
 	if(obj == m_actionLogSender){
-		if(newContent.endsWith('\n'))
-			m_actionLog->append(newContent.left(newContent.size() - 1));
-		else
-			m_actionLog->append(newContent);
+		// if(newContent.endsWith('\n')){
+		// 	m_actionLog->moveCursor (QTextCursor::End);
+		// 	m_actionLog->insertPlainText (newContent.left(newContent.size() - 1));
+		// 	m_actionLog->moveCursor (QTextCursor::End);
+		// }
+		// else{
+			m_actionLog->moveCursor (QTextCursor::End);
+			m_actionLog->insertPlainText (newContent);
+			m_actionLog->moveCursor (QTextCursor::End);
+		// }
 	}
 }
 

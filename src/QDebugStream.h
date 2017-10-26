@@ -32,12 +32,12 @@
 #include <streambuf>
 #include <string>
 
-#include <QTextEdit>
+#include <QPlainTextEdit>
 
 class Q_DebugStream : public std::basic_streambuf<char>
 {
 public:
-	Q_DebugStream(std::ostream &stream, QTextEdit* text_edit) : m_stream(stream)
+	Q_DebugStream(std::ostream &stream, QPlainTextEdit* text_edit) : m_stream(stream)
 	{
 		log_window = text_edit;
 		m_old_buf = stream.rdbuf();
@@ -46,8 +46,12 @@ public:
 	~Q_DebugStream()
 	{
 		// output anything that is left
-		if (!m_string.empty())
-			log_window->append(m_string.c_str());
+		if (!m_string.empty()){
+			log_window->moveCursor (QTextCursor::End);
+			log_window->insertPlainText (m_string.c_str());
+			log_window->insertPlainText("\n");
+			log_window->moveCursor (QTextCursor::End);
+		}
 
 		m_stream.rdbuf(m_old_buf);
 	}
@@ -63,7 +67,10 @@ protected:
 		{
 			if(m_file)
 				m_file << m_string << std::endl;
-			log_window->append(m_string.c_str());
+			log_window->moveCursor (QTextCursor::End);
+			log_window->insertPlainText (m_string.c_str());
+			log_window->insertPlainText("\n");
+			log_window->moveCursor (QTextCursor::End);
 			log_window->repaint();
 			m_string.erase(m_string.begin(), m_string.end());
 		}
@@ -86,7 +93,11 @@ protected:
 				std::string tmp(m_string.begin(), m_string.begin() + pos);
 				if(m_file)
 					m_file << tmp << std::endl;
-				log_window->append(QString::fromUtf8(tmp.c_str()));
+
+				log_window->moveCursor (QTextCursor::End);
+				log_window->insertPlainText (QString::fromUtf8(tmp.c_str()));
+				log_window->insertPlainText("\n");
+				log_window->moveCursor (QTextCursor::End);
 				log_window->repaint();
 				m_string.erase(m_string.begin(), m_string.begin() + pos + 1);
 			}
@@ -100,7 +111,7 @@ private:
 	std::streambuf *m_old_buf;
 	std::string m_string;
 	std::ofstream m_file;
-	QTextEdit* log_window;
+	QPlainTextEdit* log_window;
 };
 
 

@@ -150,6 +150,7 @@ activate(SceneInspector* sceneInspector, LGScene* scene)
 		m_scriptEditor->setWindowFlags(Qt::Window |
 		                               Qt::CustomizeWindowHint |
 		                               Qt::WindowCloseButtonHint |
+		                               Qt::WindowMinimizeButtonHint |
 		                               Qt::WindowMaximizeButtonHint);
 
 	//	script menu

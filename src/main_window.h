@@ -50,7 +50,7 @@ class QFileDialog;
 class QHelpBrowser;
 class QPushButton;
 class QPoint;
-class QTextEdit;
+class QPlainTextEdit;
 class QTreeView;
 class QToolBar;
 class QToolButton;
@@ -227,8 +227,8 @@ class MainWindow : public QMainWindow
 		QDialog*					m_dlgAbout;
 		PropertyWidget*				m_optWidget;
 		QDockWidget*				m_pLog;
-		QTextEdit*					m_pLogText;
-		QTextEdit*					m_actionLog;
+		QPlainTextEdit*				m_pLogText;
+		QPlainTextEdit*				m_actionLog;
 		QMenu*						m_sceneInspectorRClickMenu;
 
 		#ifdef PROMESH_USE_WEBKIT

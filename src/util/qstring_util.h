@@ -23,47 +23,12 @@
  * GNU Lesser General Public License for more details.
  */
 
-#ifndef __H__PROMESH_script_editor
-#define __H__PROMESH_script_editor
+#ifndef __H__PROMESH_qstring_util
+#define __H__PROMESH_qstring_util
 
-#include <QDialog>
 #include <QString>
-#include <sstream>
 
-class LGObject;
-class QPushButton;
-class QPlainTextEdit;
-class QTimer;
-class TruncatedDoubleSpinBox;
+///	Returns a 7bit ascii string where all non ascii characters are replaced by ' '
+QByteArray To7BitAscii (const QString& qs);
 
-class QScriptEditor : public QDialog{
-	Q_OBJECT
-
-	public:
-		QScriptEditor(QWidget* parent = 0);
-
-	private slots:
-		void apply();
-		void openFile();
-		void saveToFile();
-		void timeout();
-
-	protected:
-		void resizeEvent (QResizeEvent* evt);
-		void moveEvent(QMoveEvent *event);
-		void stopReplay();
-
-	private:
-		QString					m_filename;
-		QPlainTextEdit*			m_textEdit;
-		TruncatedDoubleSpinBox*	m_intervalWidget;
-		QPushButton*			m_applyBtn;
-		QTimer*					m_timer;
-
-		LGObject*			m_replayTarget;
-		std::stringstream	m_replayStream;
-
-};
-
-
-#endif	//__H__UG_script_editor
+#endif	//__H__PROMESH_qstring_util
