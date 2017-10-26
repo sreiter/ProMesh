@@ -25,8 +25,8 @@ var NAVTREEINDEX0 =
 "group__ug4__promesh.html#a6c83a406353122f77d51dd51505abc6d":[1,0,0,12,3],
 "group__ug4__promesh.html#a78a0478c136ea9816f5cbe7ad6efdc81":[1,0,0,12,4],
 "group__ug4__promesh.html#a7f6d49d98c4f4b04467134dbdbfabf45":[1,0,0,9,2],
-"group__ug4__promesh.html#a8903a4e9f3d5fb42d0faa9d53e21d85c":[1,0,0,9,0],
 "group__ug4__promesh.html#a8903a4e9f3d5fb42d0faa9d53e21d85c":[1,0,0,10,0],
+"group__ug4__promesh.html#a8903a4e9f3d5fb42d0faa9d53e21d85c":[1,0,0,9,0],
 "group__ug4__promesh.html#a8903a4e9f3d5fb42d0faa9d53e21d85c":[1,0,0,11,0],
 "group__ug4__promesh.html#a8903a4e9f3d5fb42d0faa9d53e21d85c":[1,0,0,12,0],
 "group__ug4__promesh.html#a8da973688d45b86b031bc262cd2c5714":[1,0,0,9,4],
@@ -178,7 +178,8 @@ var NAVTREEINDEX0 =
 "group__ug4__promesh__Remeshing__Refinement.html#ga24355f1ffa2c7921197fb85a192647a7":[1,0,0,4,9,3],
 "group__ug4__promesh__Remeshing__Refinement.html#ga4023ee2e7b50e3323be07da6ffe29669":[1,0,0,4,9,0],
 "group__ug4__promesh__Remeshing__Refinement.html#ga70c60574a7375f4fff10efe0548d04a7":[1,0,0,4,9,4],
-"group__ug4__promesh__Remeshing__Refinement.html#gab6ca5eb460113f440fd9b41121c283f6":[1,0,0,4,9,10],
+"group__ug4__promesh__Remeshing__Refinement.html#gab6ca5eb460113f440fd9b41121c283f6":[1,0,0,4,9,11],
+"group__ug4__promesh__Remeshing__Refinement.html#gabcb4c610a6fc84185af7daf9918a7ed6":[1,0,0,4,9,10],
 "group__ug4__promesh__Remeshing__Refinement.html#gac056b6b87a9084f1ef29f79a7e144adf":[1,0,0,4,9,9],
 "group__ug4__promesh__Remeshing__Refinement.html#gac4a52bc947b5bad6b65ce4ceeb86e900":[1,0,0,4,9,2],
 "group__ug4__promesh__Remeshing__Refinement.html#gad3449d705a9ce2959ea8a2e54525ae6c":[1,0,0,4,9,8],
@@ -248,6 +249,5 @@ var NAVTREEINDEX0 =
 "group__ug4__promesh__Selection__Edges.html#ga9f11a22948b7f69221a36f9167a408b2":[1,0,0,5,1,5],
 "group__ug4__promesh__Selection__Edges.html#gabb136b5f5b8f1d4812eda9de2214a7ce":[1,0,0,5,1,4],
 "group__ug4__promesh__Selection__Edges.html#gabcd9badcc5b8adce345328ff7c811b64":[1,0,0,5,1,14],
-"group__ug4__promesh__Selection__Edges.html#gadbad6866dd8a2b4201f197e85784941d":[1,0,0,5,1,15],
-"group__ug4__promesh__Selection__Edges.html#gaff35bd4aaddb3996963581d55691c219":[1,0,0,5,1,6]
+"group__ug4__promesh__Selection__Edges.html#gadbad6866dd8a2b4201f197e85784941d":[1,0,0,5,1,15]
 };

@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ProMesh User Manual
-   &#160;<span id="projectnumber">v4.3.11</span>
+   &#160;<span id="projectnumber">v4.3.12</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -110,6 +110,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gac056b6b87a9084f1ef29f79a7e144adf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ug4__promesh__Remeshing__Refinement.html#gac056b6b87a9084f1ef29f79a7e144adf">RefineWithSnapPoints</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
 <tr class="memdesc:gac056b6b87a9084f1ef29f79a7e144adf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Refines selected elements so that new edges are built between midpoints of selected edges and selected vertices, if possible.  <a href="#gac056b6b87a9084f1ef29f79a7e144adf">More...</a><br /></td></tr>
 <tr class="separator:gac056b6b87a9084f1ef29f79a7e144adf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabcb4c610a6fc84185af7daf9918a7ed6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ug4__promesh__Remeshing__Refinement.html#gabcb4c610a6fc84185af7daf9918a7ed6">RefineWithSnapPointsOrtho</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
+<tr class="memdesc:gabcb4c610a6fc84185af7daf9918a7ed6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Refines selected elements so that new edges are built between midpoints of selected edges and selected vertices, if possible. New vertices are placed so that their connecting edge to the snap point is orthogonal to their parent edge.  <a href="#gabcb4c610a6fc84185af7daf9918a7ed6">More...</a><br /></td></tr>
+<tr class="separator:gabcb4c610a6fc84185af7daf9918a7ed6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0090797bd08d554d6a08029995f9df9e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ug4__promesh__Remeshing__Refinement.html#ga0090797bd08d554d6a08029995f9df9e">RefineSmooth</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
 <tr class="memdesc:ga0090797bd08d554d6a08029995f9df9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Refines selected elements using piecewise smooth refinement.  <a href="#ga0090797bd08d554d6a08029995f9df9e">More...</a><br /></td></tr>
 <tr class="separator:ga0090797bd08d554d6a08029995f9df9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -416,6 +419,26 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="gabcb4c610a6fc84185af7daf9918a7ed6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabcb4c610a6fc84185af7daf9918a7ed6">&#9670;&nbsp;</a></span>RefineWithSnapPointsOrtho()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RefineWithSnapPointsOrtho </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>mesh</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Refines selected elements so that new edges are built between midpoints of selected edges and selected vertices, if possible. New vertices are placed so that their connecting edge to the snap point is orthogonal to their parent edge. </p>
+
+</div>
+</div>
 <a id="gab6ca5eb460113f440fd9b41121c283f6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gab6ca5eb460113f440fd9b41121c283f6">&#9670;&nbsp;</a></span>RegularizingRefinement()</h2>
 
@@ -452,7 +475,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">(c) Sebastian Reiter. Generated on Tue Oct 24 2017 11:37:58 for ProMesh User Manual by
+    <li class="footer">(c) Sebastian Reiter. Generated on Thu Oct 26 2017 21:57:59 for ProMesh User Manual by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

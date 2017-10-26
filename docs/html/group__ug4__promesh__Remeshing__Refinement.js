@@ -10,5 +10,6 @@ var group__ug4__promesh__Remeshing__Refinement =
     [ "RefineSmooth", "group__ug4__promesh__Remeshing__Refinement.html#ga0090797bd08d554d6a08029995f9df9e", null ],
     [ "RefineSmooth", "group__ug4__promesh__Remeshing__Refinement.html#gad3449d705a9ce2959ea8a2e54525ae6c", null ],
     [ "RefineWithSnapPoints", "group__ug4__promesh__Remeshing__Refinement.html#gac056b6b87a9084f1ef29f79a7e144adf", null ],
+    [ "RefineWithSnapPointsOrtho", "group__ug4__promesh__Remeshing__Refinement.html#gabcb4c610a6fc84185af7daf9918a7ed6", null ],
     [ "RegularizingRefinement", "group__ug4__promesh__Remeshing__Refinement.html#gab6ca5eb460113f440fd9b41121c283f6", null ]
 ];

@@ -7,6 +7,17 @@ Recent changes:
 -------------------------------------------------------------------------------
 
 
+
+-------------------------------------------------------------------------------
+v 4.3.11
+Changes and additions:
+- Added Remeshing-Refinement-RefineWithSnapPointsOrtho
+
+Fixes:
+- Fixed problems with Unicode->Ascii conversion in LiveScriptEditor
+
+
+
 -------------------------------------------------------------------------------
 v 4.3.11
 Changes and additions:
