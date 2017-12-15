@@ -9,7 +9,19 @@ Recent changes:
 
 
 -------------------------------------------------------------------------------
-v 4.3.11
+v 4.3.13
+Changes and additions:
+- Added Subsets-AssignSubsetsByAspectRatio
+- Added Info-PrintFaceAspectRatios
+- Added Info-PrintFaceAspectRatioHistogram
+- Added SelectSubset to RClick-Menu in Scene-Inspector
+
+Fixes:
+
+
+
+-------------------------------------------------------------------------------
+v 4.3.12
 Changes and additions:
 - Added Remeshing-Refinement-RefineWithSnapPointsOrtho
 

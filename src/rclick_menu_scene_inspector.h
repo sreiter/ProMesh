@@ -46,6 +46,7 @@ class RClickMenu_SceneInspector : public QWidget
 		void assignSubset();
 		void assignNewSubset();
 		void rename();
+		void selectSubset();
 		void showAllSubsets();
 		void hideAllSubsets();
 		void toggleAllSubsetVisibilities();
@@ -59,6 +60,7 @@ class RClickMenu_SceneInspector : public QWidget
 		QAction*	m_actAssignSubset;
 		QAction*	m_actAssignNewSubset;
 		QAction*	m_actRename;
+		QAction*	m_actSelectSubset;
 		QAction*	m_actShowAllSubsets;
 		QAction*	m_actHideAllSubsets;
 		QAction*	m_actPrintSubsetContents;

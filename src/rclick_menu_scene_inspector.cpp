@@ -30,6 +30,7 @@
 #include "app.h"
 #include "tools/tool_dialog.h"
 #include "tools/subset_tools.h"
+#include "tools/selection_tools.h"
 
 using namespace std;
 using namespace ug;
@@ -52,6 +53,10 @@ RClickMenu_SceneInspector(SceneInspector * sceneInspector) :
 	m_actRename = new QAction(tr("Rename"), this);
 	connect(m_actRename, SIGNAL(triggered()), this, SLOT(rename()));
 	m_menu->addAction(m_actRename);
+
+	m_actSelectSubset = new QAction(tr("Select Subset"), this);
+	connect(m_actSelectSubset, SIGNAL(triggered()), this, SLOT(selectSubset()));
+	m_menu->addAction(m_actSelectSubset);
 	
 	m_actShowAllSubsets = new QAction(tr("Show All Subsets"), this);
 	connect(m_actShowAllSubsets, SIGNAL(triggered()), this, SLOT(showAllSubsets()));
@@ -179,6 +184,21 @@ void RClickMenu_SceneInspector::rename()
 			m_sceneInspector->refreshView();
 		}
 		delete dlg;
+	}
+}
+
+void RClickMenu_SceneInspector::selectSubset()
+{
+	LGObject* obj = app::getActiveObject();
+	if(obj){
+		int si = m_sceneInspector->getActiveSubsetIndex();
+		if(si != -1){
+			obj->write_selection_to_action_log();
+			obj->log_action (QString("SelectSubset (mesh, %1, true, true, true, true)\n").
+								arg(si));
+			promesh::SelectSubset(obj, si, true, true, true, true);
+			obj->selection_changed();
+		}
 	}
 }
 
