@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ProMesh User Manual
-   &#160;<span id="projectnumber">v4.3.12</span>
+   &#160;<span id="projectnumber">v4.3.13</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -142,6 +142,12 @@ Functions</h2></td></tr>
 <tr class="memitem:gaeeae183786891d592dfe961919ebdf7d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ug4__promesh__Subsets.html#gaeeae183786891d592dfe961919ebdf7d">EraseEmptySubsets</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
 <tr class="memdesc:gaeeae183786891d592dfe961919ebdf7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Erases Subsets, which do not contain any elements at all.  <a href="#gaeeae183786891d592dfe961919ebdf7d">More...</a><br /></td></tr>
 <tr class="separator:gaeeae183786891d592dfe961919ebdf7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3d637cd17e526f0273a6d4dc877f5904"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ug4__promesh__Subsets.html#ga3d637cd17e526f0273a6d4dc877f5904">AssignSubsetsByAspectRatio</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classint">int</a> histogram_sections, <a class="el" href="group__nativeTypes.html#classbool">bool</a> erase_old_subsets)</td></tr>
+<tr class="memdesc:ga3d637cd17e526f0273a6d4dc877f5904"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assigns subsets according to a aspect ratio histogram.  <a href="#ga3d637cd17e526f0273a6d4dc877f5904">More...</a><br /></td></tr>
+<tr class="separator:ga3d637cd17e526f0273a6d4dc877f5904"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0de3c172f4e418b1e25f9f9b104fad73"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ug4__promesh__Subsets.html#ga0de3c172f4e418b1e25f9f9b104fad73">AssignSubsetsFromRaster</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__nativeTypes.html#classchar">char</a> *raster_filename, <a class="el" href="group__nativeTypes.html#classint">int</a> raster_dimension, <a class="el" href="group__nativeTypes.html#classbool">bool</a> vertices, <a class="el" href="group__nativeTypes.html#classbool">bool</a> edges, <a class="el" href="group__nativeTypes.html#classbool">bool</a> faces, <a class="el" href="group__nativeTypes.html#classbool">bool</a> volumes)</td></tr>
+<tr class="memdesc:ga0de3c172f4e418b1e25f9f9b104fad73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assigns the subset index for each element from the raster-cell in which the center of the element lies.  <a href="#ga0de3c172f4e418b1e25f9f9b104fad73">More...</a><br /></td></tr>
+<tr class="separator:ga0de3c172f4e418b1e25f9f9b104fad73"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Tools to group elements in subsets and to manage those subsets. </p>
@@ -344,6 +350,42 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ga3d637cd17e526f0273a6d4dc877f5904"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3d637cd17e526f0273a6d4dc877f5904">&#9670;&nbsp;</a></span>AssignSubsetsByAspectRatio()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AssignSubsetsByAspectRatio </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>mesh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classint">int</a>&#160;</td>
+          <td class="paramname"><em>histogram_sections</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
+          <td class="paramname"><em>erase_old_subsets</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Assigns subsets according to a aspect ratio histogram. </p>
+
+</div>
+</div>
 <a id="ga42daf262e6cb3e95c5a69d59ae957060"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga42daf262e6cb3e95c5a69d59ae957060">&#9670;&nbsp;</a></span>AssignSubsetsByQuality()</h2>
 
@@ -371,6 +413,66 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Assigns the selected to a subset depending on their quality. </p>
+
+</div>
+</div>
+<a id="ga0de3c172f4e418b1e25f9f9b104fad73"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0de3c172f4e418b1e25f9f9b104fad73">&#9670;&nbsp;</a></span>AssignSubsetsFromRaster()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AssignSubsetsFromRaster </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>mesh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__nativeTypes.html#classchar">char</a> *&#160;</td>
+          <td class="paramname"><em>raster_filename</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classint">int</a>&#160;</td>
+          <td class="paramname"><em>raster_dimension</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
+          <td class="paramname"><em>vertices</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
+          <td class="paramname"><em>edges</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
+          <td class="paramname"><em>faces</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
+          <td class="paramname"><em>volumes</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Assigns the subset index for each element from the raster-cell in which the center of the element lies. </p>
 
 </div>
 </div>
@@ -674,7 +776,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">(c) Sebastian Reiter. Generated on Thu Oct 26 2017 21:57:59 for ProMesh User Manual by
+    <li class="footer">(c) Sebastian Reiter. Generated on Wed Jan 24 2018 14:32:18 for ProMesh User Manual by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

@@ -4,6 +4,8 @@ var searchData=
   ['planecut',['PlaneCut',['../group__ug4__promesh__Remeshing__Refinement.html#ga70c60574a7375f4fff10efe0548d04a7',1,'script_reference.cpp']]],
   ['position',['position',['../group__ugbase.html#a068f2c437ae426fcf561b5e837d42875',1,'Mesh::position(Vertex *param)'],['../group__ugbase.html#a068f2c437ae426fcf561b5e837d42875',1,'Mesh::position(Vertex *param)']]],
   ['position_5fattachment',['position_attachment',['../group__ugbase.html#ab5477ff1e0d6ca787f679288da0a7273',1,'Mesh::position_attachment()'],['../group__ugbase.html#ab5477ff1e0d6ca787f679288da0a7273',1,'Mesh::position_attachment()']]],
+  ['printfaceaspectratiohistogram',['PrintFaceAspectRatioHistogram',['../group__ug4__promesh__Info__Qualities.html#gaa25901017599289cbf5171fef36b5e16',1,'script_reference.cpp']]],
+  ['printfaceaspectratios',['PrintFaceAspectRatios',['../group__ug4__promesh__Info__Qualities.html#ga1fb4d188d70d6a1f50ca5cdc6f095d8a',1,'script_reference.cpp']]],
   ['prism_5fbegin',['prism_begin',['../group__ugbase.html#a7f8a38f1a313a8e8c059e7409378b824',1,'Mesh::prism_begin()'],['../group__ugbase.html#a7f8a38f1a313a8e8c059e7409378b824',1,'Mesh::prism_begin()']]],
   ['prism_5fend',['prism_end',['../group__ugbase.html#a5527e5e534bfc764eeb7aac8030781fa',1,'Mesh::prism_end()'],['../group__ugbase.html#a5527e5e534bfc764eeb7aac8030781fa',1,'Mesh::prism_end()']]],
   ['prism_5fselection_5fbegin',['prism_selection_begin',['../group__ugbase.html#ad48b59f1c7cd4aa52aa75865387d1ad4',1,'Mesh::prism_selection_begin()'],['../group__ugbase.html#ad48b59f1c7cd4aa52aa75865387d1ad4',1,'Mesh::prism_selection_begin()']]],

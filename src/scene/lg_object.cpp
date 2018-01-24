@@ -59,7 +59,7 @@ const char* LG_SUPPORTED_FILE_FORMATS_OPEN =
 
 
 const char* LG_SUPPORTED_FILE_FORMATS_SAVE =
-				"*.ugx *.vtu *.ncdf *.lgb *.obj *.txt *.ele "
+				"*.ugx *.vtu *.2df *.ncdf *.lgb *.obj *.txt *.ele "
 				"*.smesh *.stl *.tex *.tikz *.swc";
 
 

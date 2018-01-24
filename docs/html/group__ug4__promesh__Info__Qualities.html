@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ProMesh User Manual: Quadrilaterals</title>
+<title>ProMesh User Manual: Qualities</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -71,7 +71,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('group__ug4__promesh__Remeshing__Quadrilaterals.html','');});
+$(document).ready(function(){initNavTree('group__ug4__promesh__Info__Qualities.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -92,30 +92,59 @@ $(document).ready(function(){initNavTree('group__ug4__promesh__Remeshing__Quadri
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Quadrilaterals<div class="ingroups"><a class="el" href="group__ug4__promesh.html">ProMesh Tools</a> &raquo; <a class="el" href="group__ug4__promesh__Remeshing.html">Remeshing</a></div></div>  </div>
+<div class="title">Qualities<div class="ingroups"><a class="el" href="group__ug4__promesh.html">ProMesh Tools</a> &raquo; <a class="el" href="group__ug4__promesh__Info.html">Info</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Various operations for quadrilateral meshes.  
-<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaea70863044eff54cec0751d37e5f4271"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ug4__promesh__Remeshing__Quadrilaterals.html#gaea70863044eff54cec0751d37e5f4271">ConvertToQuadrilaterals</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
-<tr class="memdesc:gaea70863044eff54cec0751d37e5f4271"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts selected triangles or triangles connected by selected edges to quadrilaterals.  <a href="#gaea70863044eff54cec0751d37e5f4271">More...</a><br /></td></tr>
-<tr class="separator:gaea70863044eff54cec0751d37e5f4271"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1fb4d188d70d6a1f50ca5cdc6f095d8a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ug4__promesh__Info__Qualities.html#ga1fb4d188d70d6a1f50ca5cdc6f095d8a">PrintFaceAspectRatios</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh)</td></tr>
+<tr class="memdesc:ga1fb4d188d70d6a1f50ca5cdc6f095d8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints information on aspect ratios of faces.  <a href="#ga1fb4d188d70d6a1f50ca5cdc6f095d8a">More...</a><br /></td></tr>
+<tr class="separator:ga1fb4d188d70d6a1f50ca5cdc6f095d8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa25901017599289cbf5171fef36b5e16"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ug4__promesh__Info__Qualities.html#gaa25901017599289cbf5171fef36b5e16">PrintFaceAspectRatioHistogram</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classint">int</a> histogram_sections)</td></tr>
+<tr class="memdesc:gaa25901017599289cbf5171fef36b5e16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints a histogram of face aspect ratios.  <a href="#gaa25901017599289cbf5171fef36b5e16">More...</a><br /></td></tr>
+<tr class="separator:gaa25901017599289cbf5171fef36b5e16"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Various operations for quadrilateral meshes. </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="gaea70863044eff54cec0751d37e5f4271"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaea70863044eff54cec0751d37e5f4271">&#9670;&nbsp;</a></span>ConvertToQuadrilaterals()</h2>
+<a id="gaa25901017599289cbf5171fef36b5e16"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa25901017599289cbf5171fef36b5e16">&#9670;&nbsp;</a></span>PrintFaceAspectRatioHistogram()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void ConvertToQuadrilaterals </td>
+          <td class="memname">void PrintFaceAspectRatioHistogram </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>mesh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classint">int</a>&#160;</td>
+          <td class="paramname"><em>histogram_sections</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Prints a histogram of face aspect ratios. </p>
+
+</div>
+</div>
+<a id="ga1fb4d188d70d6a1f50ca5cdc6f095d8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1fb4d188d70d6a1f50ca5cdc6f095d8a">&#9670;&nbsp;</a></span>PrintFaceAspectRatios()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PrintFaceAspectRatios </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
           <td class="paramname"><em>mesh</em></td><td>)</td>
@@ -124,7 +153,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Converts selected triangles or triangles connected by selected edges to quadrilaterals. </p>
+<p>Prints information on aspect ratios of faces. </p>
 
 </div>
 </div>

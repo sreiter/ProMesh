@@ -12,7 +12,9 @@ var searchData=
   ['assign_5fsubset',['assign_subset',['../group__ugbase.html#a15bb106bbfaa4b3a4213a3206625bfad',1,'ISubsetHandler::assign_subset(Vertex *param, int param)'],['../group__ugbase.html#af0a5fa4f3d6968e0baae6247a344e9f4',1,'ISubsetHandler::assign_subset(Edge *param, int param)'],['../group__ugbase.html#abcc785126df22cb378f88ed786163493',1,'ISubsetHandler::assign_subset(Face *param, int param)'],['../group__ugbase.html#a0717c4eeac6e3b429d609e96b0144c36',1,'ISubsetHandler::assign_subset(Volume *param, int param)']]],
   ['assignnewsubset',['AssignNewSubset',['../group__ug4__promesh__Subsets.html#gad268e9cbe343f8cab2690f400f2f60cd',1,'script_reference.cpp']]],
   ['assignsubset',['AssignSubset',['../group__ug4__promesh__Subsets.html#gaf5905470cc69657d8e12bbb41404f935',1,'AssignSubset(Mesh *mesh, int subset_index):&#160;script_reference.cpp'],['../group__ug4__promesh__Subsets.html#gaac30d949f9f00ec5e3d6fc31b0e2c484',1,'AssignSubset(Mesh *mesh, int subset_index, bool assign_vertices, bool assign_edges, bool assign_faces, bool assign_volumes):&#160;script_reference.cpp']]],
+  ['assignsubsetsbyaspectratio',['AssignSubsetsByAspectRatio',['../group__ug4__promesh__Subsets.html#ga3d637cd17e526f0273a6d4dc877f5904',1,'script_reference.cpp']]],
   ['assignsubsetsbyquality',['AssignSubsetsByQuality',['../group__ug4__promesh__Subsets.html#ga42daf262e6cb3e95c5a69d59ae957060',1,'script_reference.cpp']]],
+  ['assignsubsetsfromraster',['AssignSubsetsFromRaster',['../group__ug4__promesh__Subsets.html#ga0de3c172f4e418b1e25f9f9b104fad73',1,'script_reference.cpp']]],
   ['assignvolumeconstraints',['AssignVolumeConstraints',['../group__ug4__promesh__Remeshing__Tetrahedra.html#ga133950850f45c164f660cd79e9283935',1,'script_reference.cpp']]],
   ['about',['About',['../pageAbout.html',1,'']]],
   ['advanced',['Advanced',['../group__ug4__promesh__Remeshing__Resolve__Intersections__Advanced.html',1,'']]]

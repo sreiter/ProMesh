@@ -12,6 +12,7 @@ Recent changes:
 v 4.3.13
 Changes and additions:
 - Added Subsets-AssignSubsetsByAspectRatio
+- Added Subsets-AssignSubsetsFromRaster
 - Added Info-PrintFaceAspectRatios
 - Added Info-PrintFaceAspectRatioHistogram
 - Added SelectSubset to RClick-Menu in Scene-Inspector
