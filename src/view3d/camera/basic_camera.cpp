@@ -42,6 +42,7 @@ void CBasicCamera::reset()
 	m_vX = vector3(1.f, 0, 0);
 	m_vY = vector3(0, 1.f, 0);
 	m_vZ = vector3(0, 0, 1.f);
+	m_worldScale = vector3(1, 1, 1);
 	m_fDistance = 5.f;
 }
 
@@ -74,6 +75,22 @@ void CBasicCamera::set_camera_state(SCameraState& CameraState)
 	get_camera_transform();
 }
 
+void CBasicCamera::set_world_scale(const vector3& ws)
+{
+	m_worldScale = ws;
+	for(int i = 0; i < 3; ++i){
+		if(m_worldScale[i] >= 0 && m_worldScale[i] < SMALL)
+			m_worldScale[i] = SMALL;
+		if(m_worldScale[i] < 0 && m_worldScale[i] > -SMALL)
+			m_worldScale[i] = -SMALL;
+	}
+}
+
+const vector3& CBasicCamera::world_scale() const
+{
+	return m_worldScale;
+}
+
 void CBasicCamera::move_object_space(float dx, float dy, float dz)
 {
 	vector3 vT, vTmp;
@@ -82,6 +99,9 @@ void CBasicCamera::move_object_space(float dx, float dy, float dz)
 	Vec3Add(vT, vT, vTmp);
 	Vec3Scale(vTmp, m_vZ, dz);
 	Vec3Add(vT, vT, vTmp);
+
+	for(int i = 0; i < 3; ++i)
+		vT[i] /= m_worldScale[i];
 
 	Vec3Add(m_vFrom, m_vFrom, vT);
 	Vec3Add(m_vTo, m_vTo, vT);
@@ -224,8 +244,18 @@ matrix44* CBasicCamera::get_camera_transform()
 					m_vX.z(), m_vY.z(), m_vZ.z(), 0,
 					0, 0, 0, 1.f);
 
-	MatTranslation(m_matTransform, -m_vFrom.x(), -m_vFrom.y(), -m_vFrom.z());
-	MatMultiply(m_matTransform, matRot, m_matTransform);
+	matrix44 matTrans;
+	MatTranslation(matTrans, -m_vFrom.x(), -m_vFrom.y(), -m_vFrom.z());
+
+	matrix44 matTmp;
+	MatMultiply(matTmp, matRot, matTrans);
+
+	matrix44 matScale(	m_worldScale.x(),	0,	0,	0,
+	                  	0,	m_worldScale.y(),	0,	0,
+	                  	0,	0,	m_worldScale.z(),	0,
+	                  	0,	0,	0,	1);
+
+	MatMultiply(m_matTransform, matScale, matTmp);
 	return &m_matTransform;
 }
 
@@ -281,7 +311,7 @@ SCameraState calculate_camera_state(SCameraState& OldState, vector3* vFrom, vect
 	return cs;
 }*/
 
-SCameraState calculate_camera_state(SCameraState& OldState, vector3* vFrom, vector3* vTo)
+SCameraState CBasicCamera::calculate_camera_state(SCameraState& OldState, vector3* vFrom, vector3* vTo)
 {//	calculates the rotation-transformation.
 	SCameraState cs;
 
@@ -323,14 +353,17 @@ SCameraState calculate_camera_state(SCameraState& OldState, vector3* vFrom, vect
 */
 	cs.vTo = *vTo;
 	cs.vFrom = *vFrom;
-	cs.fDistance = Vec3Distance(*vTo, *vFrom);
+	vector3 tto;
+	for(int i = 0; i < 3; ++i)
+		tto[i] = (*vTo)[i] * m_worldScale[i];
+	cs.fDistance = Vec3Distance(tto, *vFrom);
 	cs.quatOrientation = OldState.quatOrientation * q1;
 	cs.quatOrientation.normalize();
 
 	return cs;
 }
 
-SCameraState interpolate_camera_states(SCameraState& state1, SCameraState& state2, float IA)
+SCameraState CBasicCamera::interpolate_camera_states(SCameraState& state1, SCameraState& state2, float IA)
 {
 	SCameraState cs;
 	float w1 = 1.f - IA;

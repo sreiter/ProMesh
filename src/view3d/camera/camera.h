@@ -59,9 +59,6 @@ enum ECameraDragFlags
 };
 
 
-SCameraState calculate_camera_state(SCameraState& OldState, vector3* vFrom, vector3* vTo);
-SCameraState interpolate_camera_states(SCameraState& state1, SCameraState& state2, float IA);
-
 class CBasicCamera
 {
 	public:
@@ -76,6 +73,9 @@ class CBasicCamera
 		virtual void scroll(float scrollAmount, unsigned int cdf)	{}
 		virtual SCameraState get_camera_state();
 		virtual void set_camera_state(SCameraState& CameraState);
+
+		void set_world_scale(const vector3& ws);
+		const vector3& world_scale() const;
 
 		void move_object_space(float dx, float dy, float dz);
 		void move_world_space(float dx, float dy, float dz);
@@ -99,7 +99,12 @@ class CBasicCamera
 		const vector3& get_up_dir()		{return m_vY;}
 		const vector3& get_right_dir()	{return m_vX;}
 		const vector3& get_to_dir()		{return m_vZ;}
+
+		SCameraState calculate_camera_state(SCameraState& OldState, vector3* vFrom, vector3* vTo);
+		SCameraState interpolate_camera_states(SCameraState& state1, SCameraState& state2, float IA);
+		
 	protected:
+
 		matrix44	m_matTransform;
 		CQuaternion	m_quatOrientation;
 
@@ -111,6 +116,7 @@ class CBasicCamera
 		vector3 m_vX;	//strafe dir
 		vector3 m_vY;	//up dir
 		vector3 m_vZ;	//look dir
+		vector3 m_worldScale;
 };
 
 class CModelViewerCamera : public CBasicCamera

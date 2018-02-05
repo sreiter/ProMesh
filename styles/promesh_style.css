@@ -315,7 +315,7 @@ QLineEdit {
 QDoubleSpinBox {
     border: 1px solid @dark;
     background-color: @light;
-    min-width: 100px;
+    min-width: 32px;
     max-width: 100px;
 }
 

@@ -148,6 +148,8 @@ class LGScene : public TScene<LGObject>
 										   float dirX, float dirY, float dirZ,
 										   float upX, float upY, float upZ);
 
+		virtual void set_world_scale(float x, float y, float z);
+		
 	///	the perspective transform
 		virtual void set_perspective(float fovy, int viewWidth, int viewHeight,
 									float zNear, float zFar);
@@ -287,6 +289,7 @@ class LGScene : public TScene<LGObject>
 		ug::vector3		m_camFrom;
 		ug::vector3		m_camDir;
 		ug::vector3		m_camUp;
+		ug::vector3		m_worldScale;
 		
 	//	attachments
 		ug::ASphere		m_aSphere;

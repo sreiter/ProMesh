@@ -53,14 +53,14 @@ using namespace std;
 using namespace ug;
 
 const char* LG_SUPPORTED_FILE_FORMATS_OPEN =
-				"*.ugx *.vtu *.lgb *.obj *.txt *.art *.net "
-				"*.dat *.lgm *.ng *.smesh *.ele *.msh *.stl "
+				"*.ugx *.vtu *.obj *.smesh *.ele *.msh *.stl *.2df "
+				"*.dat *.lgm *.ng *.lgb *.txt *.art *.net "
 				"*.asc *.ASC *.dump *.swc";
 
 
 const char* LG_SUPPORTED_FILE_FORMATS_SAVE =
-				"*.ugx *.vtu *.2df *.ncdf *.lgb *.obj *.txt *.ele "
-				"*.smesh *.stl *.tex *.tikz *.swc";
+				"*.ugx *.vtu *.obj *.smesh *.stl *.ele *.ncdf *.2df "
+				"*.tex *.tikz *.swc *.lgb *.txt";
 
 
 LGObject* CreateLGObjectFromFile(const char* filename)

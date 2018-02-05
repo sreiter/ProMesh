@@ -9,6 +9,17 @@ Recent changes:
 
 
 -------------------------------------------------------------------------------
+v 4.3.14
+Changes and additions:
+- Added View-Scale to Toolbar. Allows to scale the world along the different exis
+  without changing the actual coordinates.
+- Added 2df file export and import
+
+Fixes:
+
+
+
+-------------------------------------------------------------------------------
 v 4.3.13
 Changes and additions:
 - Added Subsets-AssignSubsetsByAspectRatio

@@ -174,12 +174,30 @@ matrix44* CModelViewerCamera::get_camera_transform()
 	Vec3Normalize(m_vY, m_vY);
 	Vec3Normalize(m_vZ, m_vZ);
 
+	vector3 to;
+	for(int i = 0; i < 3; ++i)
+		to[i] = m_vTo[i] * m_worldScale[i];
+
 	Vec3Scale(m_vFrom, m_vZ, -m_fDistance);
-	Vec3Add(m_vFrom, m_vFrom, m_vTo);
+	Vec3Add(m_vFrom, m_vFrom, to);
 
-	MatTranslation(m_matTransform, -m_vFrom.x(), -m_vFrom.y(), -m_vFrom.z());
+	// MatTranslation(m_matTransform, -m_vFrom.x(), -m_vFrom.y(), -m_vFrom.z());
 
-	MatMultiply(m_matTransform, m_matTransform, *matRot);
+	// MatMultiply(m_matTransform, m_matTransform, *matRot);
+
+	matrix44 matTrans;
+	MatTranslation(matTrans, -m_vFrom.x(), -m_vFrom.y(), -m_vFrom.z());
+
+	matrix44 matTmp;
+	MatMultiply(matTmp, matTrans, *matRot);
+
+	matrix44 matScale(	m_worldScale.x(),	0,	0,	0,
+	                  	0,	m_worldScale.y(),	0,	0,
+	                  	0,	0,	m_worldScale.z(),	0,
+	                  	0,	0,	0,	1);
+
+	MatMultiply(m_matTransform, matScale, matTmp);
+
 
 	return &m_matTransform;
 }

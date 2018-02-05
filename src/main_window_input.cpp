@@ -82,6 +82,7 @@ void MainWindow::updateMouseMoveAction()
 //	the camera.
 	vector3 from = *cam.get_from();
 	vector3 grabCenter = obj->transform_center();
+	vector3 ws = cam.world_scale();
 
 	number camDist = VecDistance(from, grabCenter);
 
@@ -99,6 +100,8 @@ void MainWindow::updateMouseMoveAction()
 				dir.x() = dir.y() = 0;
 
 			VecScale(dir, dir, camDist / 1000.f);
+			for(int i = 0; i < 3; ++i)
+				dir[i] /= ws[i];
 			obj->grab(dir);
 		}break;
 
@@ -114,6 +117,8 @@ void MainWindow::updateMouseMoveAction()
 			if(m_activeAxis & Z_AXIS)
 				scaleFacs.z() = scale;
 
+			for(int i = 0; i < 3; ++i)
+				scaleFacs[i] /= ws[i];
 			obj->scale(scaleFacs);
 		}break;
 

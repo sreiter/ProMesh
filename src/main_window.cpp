@@ -52,6 +52,7 @@
 #include "util/file_util.h"
 #include "modules/mesh_module.h"
 #include "widgets/property_widget.h"
+#include "widgets/truncated_double_spin_box.h"
 #include "widgets/widget_list.h"
 
 #ifdef PROMESH_USE_WEBKIT
@@ -576,6 +577,43 @@ QToolBar* MainWindow::createVisibilityToolbar()
 	}
 	else
 		m_bgColor->setColor(QColor(strDefColor));
+
+
+	//	world scale
+	visToolBar->addSeparator();
+	visToolBar->addWidget(new QLabel(tr(" View-scale")));
+	visToolBar->addWidget(new QLabel(tr(" x:")));
+	m_viewScaleX = new TruncatedDoubleSpinBox(visToolBar);
+	m_viewScaleX->setValue(1);
+	m_viewScaleX->setSingleStep(0.1);
+	m_viewScaleX->setMinimum(-1.e6);
+	m_viewScaleX->setMaximum(1.e6);
+	m_viewScaleX->setFixedWidth(32);
+	connect(m_viewScaleX, SIGNAL(valueChanged(double)),
+	        this, SLOT(viewScaleXChanged(double)));
+	visToolBar->addWidget(m_viewScaleX);
+
+	visToolBar->addWidget(new QLabel(tr(" y:")));
+	m_viewScaleY = new TruncatedDoubleSpinBox(visToolBar);
+	m_viewScaleY->setValue(1);
+	m_viewScaleY->setSingleStep(0.1);
+	m_viewScaleY->setMinimum(-1.e6);
+	m_viewScaleY->setMaximum(1.e6);
+	m_viewScaleY->setFixedWidth(32);
+	connect(m_viewScaleY, SIGNAL(valueChanged(double)),
+	        this, SLOT(viewScaleYChanged(double)));
+	visToolBar->addWidget(m_viewScaleY);
+
+	visToolBar->addWidget(new QLabel(tr(" z:")));
+	m_viewScaleZ = new TruncatedDoubleSpinBox(visToolBar);
+	m_viewScaleZ->setValue(1);
+	m_viewScaleZ->setSingleStep(0.1);
+	m_viewScaleZ->setMinimum(-1.e6);
+	m_viewScaleZ->setMaximum(1.e6);
+	m_viewScaleZ->setFixedWidth(32);
+	connect(m_viewScaleZ, SIGNAL(valueChanged(double)),
+	        this, SLOT(viewScaleZChanged(double)));
+	visToolBar->addWidget(m_viewScaleZ);
 
 	return visToolBar;
 }
@@ -1214,6 +1252,34 @@ void MainWindow::quit()
 {
 	this->close();
 }
+
+void MainWindow::
+viewScaleXChanged(double value)
+{
+	vector3 ws = m_pView->camera().world_scale();
+	ws.x() = value;
+	m_pView->camera().set_world_scale(ws);
+	m_scene->update_visuals();
+}
+
+void MainWindow::
+viewScaleYChanged(double value)
+{
+	vector3 ws = m_pView->camera().world_scale();
+	ws.y() = value;
+	m_pView->camera().set_world_scale(ws);
+	m_scene->update_visuals();
+}
+
+void MainWindow::
+viewScaleZChanged(double value)
+{
+	vector3 ws = m_pView->camera().world_scale();
+	ws.z() = value;
+	m_pView->camera().set_world_scale(ws);
+	m_scene->update_visuals();
+}
+
 
 void MainWindow::
 refreshOptions()

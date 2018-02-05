@@ -142,6 +142,9 @@ void View3D::paintGL()
 										   camDir.x(), camDir.y(), camDir.z(),
 										   camUp.x(), camUp.y(), camUp.z());
 
+		const cam::vector3& ws = m_camera.world_scale();
+		m_pRenderer->set_world_scale(ws.x(), ws.y(), ws.z());
+
 		m_pRenderer->get_clip_distance_estimate(m_zNear, m_zFar,
 												vFrom->x(), vFrom->y(), vFrom->z(),
 												vTo->x(), vTo->y(), vTo->z());
@@ -419,10 +422,16 @@ void View3D::refocus_by_screen_coords(int screenX, int screenY)
 	//	set new camera state:
 		//m_csFrom = m_camera.get_camera_state();
 		cam::vector3 nvTo(vx, vy, vz);
+		// cam::vector3 nvTo(vx * m_camera.world_scale().x(),
+		//                   vy * m_camera.world_scale().y(),
+		//                   vz * m_camera.world_scale().z());
+		// UG_LOG(">>>\n");
+		// UG_LOG("old from at: " << *m_camera.get_from() << endl);
+		// UG_LOG("old to at: " << *m_camera.get_to() << endl);
 		UG_LOG("new focus at: " << nvTo << endl);
 
 		m_csOld = m_camera.get_camera_state();
-		m_csNew = calculate_camera_state(m_csOld, m_camera.get_from(), &nvTo);
+		m_csNew = m_camera.calculate_camera_state(m_csOld, m_camera.get_from(), &nvTo);
 		start_interpolation();
 	}
 }
@@ -443,7 +452,7 @@ void View3D::interpolate_cam_states()
 		m_pTimer->stop();
 	}
 
-	cam::SCameraState cs =interpolate_camera_states(m_csOld, m_csNew, ia);
+	cam::SCameraState cs = m_camera.interpolate_camera_states(m_csOld, m_csNew, ia);
 	m_camera.set_camera_state(cs);
 	updateGL();
 }

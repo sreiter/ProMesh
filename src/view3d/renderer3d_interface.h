@@ -60,6 +60,9 @@ class IRenderer3D
 										   float dirX, float dirY, float dirZ,
 										   float upX, float upY, float upZ) = 0;
 
+	///	sets the scaling of the world. Default is (1, 1, 1).
+		virtual void set_world_scale(float x, float y, float z) = 0;
+
 	///	the perspective transform
 		virtual void set_perspective(float fovy, int viewWidth, int viewHeight,
 									 float zNear, float zFar) = 0;

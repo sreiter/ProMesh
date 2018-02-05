@@ -37,6 +37,7 @@ LGScene::LGScene() :
 	m_camFrom(0, 0, 0),
 	m_camDir(0, 0, -1),
 	m_camUp(0, 1, 0),
+	m_worldScale(1, 1, 1),
 	m_aHidden(true),
 	m_drawVertices(true),
 	m_drawEdges(true),
@@ -84,6 +85,11 @@ void LGScene::set_camera_parameters(float fromX, float fromY, float fromZ,
 	m_camFrom = vector3(fromX, fromY, fromZ);
 	m_camDir = vector3(dirX, dirY, dirZ);
 	m_camUp = vector3(upX, upY, upZ);
+}
+
+void LGScene::set_world_scale(float x, float y, float z)
+{
+	m_worldScale = vector3(x, y, z);
 }
 
 void LGScene::set_perspective(float fovy, int viewWidth, int viewHeight,
@@ -235,6 +241,11 @@ void LGScene::get_bounding_box(ug::vector3& vMinOut, ug::vector3& vMaxOut)
 				VecCompMax(vMaxOut, vMaxOut, tMax);
 			}
 		}
+	}
+
+	for(int i = 0; i < 3; ++i){
+		vMinOut[i] *= m_worldScale[i];
+		vMaxOut[i] *= m_worldScale[i];
 	}
 }
 
@@ -478,6 +489,7 @@ void LGScene::draw()
 		glEnable(GL_LIGHT0);
 		glEnable(GL_POLYGON_OFFSET_FILL);
 		glEnable(GL_CULL_FACE);
+		glEnable(GL_RESCALE_NORMAL);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		LGObject* obj = get_object(i);

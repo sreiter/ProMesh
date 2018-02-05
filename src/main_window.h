@@ -59,6 +59,7 @@ class SceneInspector;
 class ToolManager;
 class ToolBrowser;
 class QScriptEditor;
+class TruncatedDoubleSpinBox;
 
 
 enum SceneObjectType {
@@ -159,6 +160,9 @@ class MainWindow : public QMainWindow
 		void refreshActionLog(ISceneObject* obj);
 		void actionLogChanged(const QString& newContent);
 		void actionLogCleared();
+		void viewScaleXChanged(double value);
+		void viewScaleYChanged(double value);
+		void viewScaleZChanged(double value);
 
 	protected:
 		void closeEvent(QCloseEvent *event);
@@ -230,6 +234,9 @@ class MainWindow : public QMainWindow
 		QPlainTextEdit*				m_pLogText;
 		QPlainTextEdit*				m_actionLog;
 		QMenu*						m_sceneInspectorRClickMenu;
+		TruncatedDoubleSpinBox*		m_viewScaleX;
+		TruncatedDoubleSpinBox*		m_viewScaleY;
+		TruncatedDoubleSpinBox*		m_viewScaleZ;
 
 		#ifdef PROMESH_USE_WEBKIT
 			QHelpBrowser*			m_helpBrowser;
