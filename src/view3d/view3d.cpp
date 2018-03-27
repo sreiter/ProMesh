@@ -53,7 +53,7 @@ View3D::View3D(QWidget *parent) :
 
 	this->setFocusPolicy(Qt::StrongFocus);
 
-	m_camInterpDur = 500.f;
+	m_camInterpDur = 250.f;
 	//m_drawMode = DM_SOLID;
 	m_bgColor = Qt::black;
 
@@ -431,7 +431,9 @@ void View3D::refocus_by_screen_coords(int screenX, int screenY)
 		UG_LOG("new focus at: " << nvTo << endl);
 
 		m_csOld = m_camera.get_camera_state();
-		m_csNew = m_camera.calculate_camera_state(m_csOld, m_camera.get_from(), &nvTo);
+		m_csNew = m_csOld;
+		m_csNew.vTo = nvTo;
+		// m_csNew = m_camera.calculate_camera_state(m_csOld, m_camera.get_from(), &nvTo);
 		start_interpolation();
 	}
 }
