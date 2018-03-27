@@ -7,7 +7,7 @@ var group__ug4__promesh__Subsets =
     [ "AssignSubset", "group__ug4__promesh__Subsets.html#gaac30d949f9f00ec5e3d6fc31b0e2c484", null ],
     [ "AssignSubsetsByAspectRatio", "group__ug4__promesh__Subsets.html#ga3d637cd17e526f0273a6d4dc877f5904", null ],
     [ "AssignSubsetsByQuality", "group__ug4__promesh__Subsets.html#ga42daf262e6cb3e95c5a69d59ae957060", null ],
-    [ "AssignSubsetsFromRaster", "group__ug4__promesh__Subsets.html#ga0de3c172f4e418b1e25f9f9b104fad73", null ],
+    [ "AssignSubsetsFromRaster", "group__ug4__promesh__Subsets.html#ga9e31255b755febd5511bee6645ae1afc", null ],
     [ "CopySubsetIndicesToSides", "group__ug4__promesh__Subsets.html#ga6c3a8ad17b29180ab677241a9b55c4b0", null ],
     [ "EraseEmptySubsets", "group__ug4__promesh__Subsets.html#gaeeae183786891d592dfe961919ebdf7d", null ],
     [ "EraseSubset", "group__ug4__promesh__Subsets.html#ga3a303bf6d793389796d94f3492552038", null ],

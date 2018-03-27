@@ -9,7 +9,7 @@ Recent changes:
 
 
 -------------------------------------------------------------------------------
-v 4.3.15*
+v 4.3.15
 Changes and additions:
 - Added support for File-Browsers in Registry tools.
   Used e.g. in Subsets-AssignSubsetFromRaster
@@ -17,6 +17,7 @@ Changes and additions:
   Better suited for 2d editing.
   
 Fixes:
+- TETGEN import fixed for index ranges starting from 1 or higher.
 
 
 
