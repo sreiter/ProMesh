@@ -149,11 +149,11 @@ class RegistryTool : public ITool{
 									dlg->to_double(toolParam), 'g', 12));
 							break;
 						case Variant::VT_CSTRING:
-							paramsIn.push(dlg->to_string(toolParam).toStdString().c_str());
+							paramsIn.push(dlg->to_string(toolParam).toLocal8Bit().constData());
 							actionLog.append("\"").append(dlg->to_string(toolParam)).append("\"");
 							break;
 						case Variant::VT_STDSTRING:
-							paramsIn.push(dlg->to_string(toolParam).toStdString());
+							paramsIn.push(string(dlg->to_string(toolParam).toLocal8Bit().constData()));
 							actionLog.append("\"").append(dlg->to_string(toolParam)).append("\"");
 							break;
 						case Variant::VT_POINTER:
@@ -266,6 +266,8 @@ class RegistryTool : public ITool{
 			
 			vector<string> tokens;
 			vector<string> options;
+			string style;
+
 			bool annotationErrors = false;;
 
 			for(int iparam = 1; iparam < params.size(); ++iparam){
@@ -273,8 +275,11 @@ class RegistryTool : public ITool{
 				if(!m_func->parameter_name(iparam).empty())
 					paramName = m_func->parameter_name(iparam);
 
+				style = "";
 				options.clear();
 				const std::vector<std::string>& paramInfos = m_func->parameter_info_vec(iparam);
+				if(paramInfos.size() >= 2)
+					style = paramInfos[1];
 				if(paramInfos.size() >= 3){
 					options = TokenizeTrimString(paramInfos[2], ';');
 				}
@@ -397,6 +402,7 @@ class RegistryTool : public ITool{
 					case Variant::VT_STDSTRING:
 					{
 						QString val;
+						QString filter;
 						if(!options.empty()){
 							for(size_t iopt = 0; iopt < options.size(); ++iopt){
 								tokens = TokenizeTrimString(options[iopt], '=');
@@ -405,6 +411,14 @@ class RegistryTool : public ITool{
 										tokens[1] = ReplaceAll(tokens[1], string("\""), string(""));
 										val = QString(tokens[1].c_str());
 									}
+									else if(tokens[0] == "endings"){
+										filter = tokens[1].c_str();
+										filter.replace(' ', "");
+										filter.replace('\"', "");
+										filter.replace('[', "*.");
+										filter.replace(',', " *.");
+										filter.replace(']', "");
+									}
 									else
 										annotationErrors = true;
 								}
@@ -412,7 +426,11 @@ class RegistryTool : public ITool{
 									annotationErrors = true;
 							}
 						}
-						dlg->addTextBox(qParamName, val);
+						if(style == "load-dialog")
+							dlg->addFileBrowser(qParamName, FWT_OPEN, filter);
+						else
+							dlg->addTextBox(qParamName, val);
+
 					}break;
 
 					case Variant::VT_POINTER:
