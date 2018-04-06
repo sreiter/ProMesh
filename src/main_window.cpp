@@ -1217,14 +1217,14 @@ void MainWindow::dropEvent(QDropEvent* event)
 
 void MainWindow::sceneInspectorClicked(QMouseEvent* event)
 {
-	if(event->button() == Qt::RightButton){
-		if(m_sceneInspectorRClickMenu)
-			m_sceneInspectorRClickMenu->exec(QCursor::pos());
-	}
-
 	if(getActiveObject() != m_activeObject){
 		m_activeObject = getActiveObject();
 		emit activeObjectChanged();
+	}
+
+	if(event->button() == Qt::RightButton){
+		if(m_sceneInspectorRClickMenu)
+			m_sceneInspectorRClickMenu->exec(QCursor::pos());
 	}
 }
 
@@ -1397,8 +1397,8 @@ refreshActionLog(ISceneObject* iobj)
 		m_actionLogSender = obj;
 		connect(obj, SIGNAL(actionLogChanged(const QString&)),
 				this, SLOT(actionLogChanged(const QString&)));
-		connect(obj, SIGNAL(actionLogCleared(const QString&)),
-				this, SLOT(actionLogCleared(const QString&)));
+		connect(obj, SIGNAL(actionLogCleared()),
+				this, SLOT(actionLogCleared()));
 	}
 }
 

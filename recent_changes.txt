@@ -19,6 +19,8 @@ Changes and additions:
 Fixes:
 - ProjectorWidget updates on undo/redo now
 - undo/redo: selection state is now restored more accurately after undo
+- osx version now built against Qt 5.10. This solves some issues with
+  unregistered mouse clicks in the SceneInspector.
 
 
 

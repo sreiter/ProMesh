@@ -72,7 +72,6 @@ QScriptEditor::QScriptEditor (QWidget* parent) :
 //	widgets
 	layout->setSpacing(5);
 	layout->setContentsMargins(0, 0, 0, 0);
-	this->setLayout(layout);
 
 	QFont editorFont("unknown");
 	editorFont.setStyleHint(QFont::Monospace);
@@ -84,7 +83,7 @@ QScriptEditor::QScriptEditor (QWidget* parent) :
 	m_textEdit->setTabStopWidth(40);
 	layout->addWidget (m_textEdit);
 
-	QHBoxLayout* hlayout = new QHBoxLayout(this);
+	QHBoxLayout* hlayout = new QHBoxLayout();
 	hlayout->setContentsMargins(4, 4, 4, 4);
 
 	QLabel* lblReplayInterval = new QLabel (tr("replay interval:"), this);
