@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ProMesh User Manual
-   &#160;<span id="projectnumber">v4.3.15</span>
+   &#160;<span id="projectnumber">v4.3.16</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -100,6 +100,20 @@ $(document).ready(function(){initNavTree('pageRecentChanges.html','');});
 -- VERSION 4.3
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
+
+
+
+-------------------------------------------------------------------------------
+v 4.3.16
+Changes and additions:
+- undo/redo: massive speedup (now using binary .lgb format)
+- ProMesh can now be used as a script interpreter without GUI frontend.
+  Start it from command line with the -script option. Call 'ProMesh4 -help'
+  for more information.
+  
+Fixes:
+- ProjectorWidget updates on undo/redo now
+- undo/redo: selection state is now restored more accurately after undo
 
 
 
@@ -1292,7 +1306,7 @@ Fixes:
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">(c) Sebastian Reiter. Generated on Tue Mar 27 2018 09:41:57 for ProMesh User Manual by
+    <li class="footer">(c) Sebastian Reiter. Generated on Thu Apr 5 2018 23:05:45 for ProMesh User Manual by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>
