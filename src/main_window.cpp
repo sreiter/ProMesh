@@ -632,6 +632,7 @@ uint MainWindow::getLGElementMode()
 bool MainWindow::load_grid_from_file(const char* filename)
 {
 	try{
+		LOG("loading " << filename << " ...\n");
 		LGObject* pObj = CreateLGObjectFromFile(filename);
 
 	//	add it to the scene

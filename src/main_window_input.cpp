@@ -33,6 +33,11 @@
 #include "tools/tool_manager.h"
 #include "options/options.h"
 #include "modules/module_interface.h"
+#include "common/profiler/profiler.h"
+
+#ifdef UG_PROFILER_SHINY
+	#include "common/profiler/src/ShinyMacros.h"
+#endif
 
 using namespace std;
 using namespace ug;
@@ -200,6 +205,16 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
 
 		case Qt::Key_G:
 			beginMouseMoveAction(MMA_GRAB);
+			break;
+
+		case Qt::Key_P:
+			#ifdef UG_PROFILER_SHINY
+				PROFILER_UPDATE(1.0);
+				UG_LOG("PROFILES:\n");
+				UG_LOG(PROFILER_OUTPUT_TREE_STRING() << endl);
+			#endif
+
+			UG_LOG("\n");
 			break;
 
 		case Qt::Key_S:

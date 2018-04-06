@@ -106,12 +106,6 @@ changeEvent(QEvent* evt)
 void ProjectorWidget::
 setActiveSubset(ISceneObject* obj, int subsetIndex)
 {
-	if (m_activeObject == dynamic_cast<LGObject*>(obj) &&
-		m_activeSubsetIndex == subsetIndex)
-	{
-		return;
-	}
-
 	m_activeObject = dynamic_cast<LGObject*>(obj);
 	m_activeSubsetIndex = subsetIndex;
 	if(m_activeObject && m_activeSubsetIndex >= 0){

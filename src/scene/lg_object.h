@@ -178,6 +178,13 @@ class LGObject : public ISceneObject, public ug::promesh::Mesh
 		bool undo();
 		bool redo();
 
+	///	call this method to create an undo point if the selection changed since the last point
+		void create_undo_point_if_selection_changed();
+
+	///	creates an undo-point
+	/** \note This method is automatically invoked from 'visuals_changed(true)'*/
+		void create_undo_point();
+
 	////////////////////////////////////////////////////////////////////////////
 	//	TRANSFORMS
 	///	Begins a new transform as indicated in the specified transform-type.
@@ -249,9 +256,6 @@ class LGObject : public ISceneObject, public ug::promesh::Mesh
 
 	///	loads a file from ugx without emitting signals
 		bool load_ugx(const char* filename);
-
-	///	creates an undo-point
-		void create_undo_point();
 
 	protected:
 		typedef std::vector<GLuint>	DisplayListVec;

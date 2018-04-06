@@ -101,6 +101,7 @@ void ToolManager::add_known_group(const std::string& grpName)
 
 void ToolManager::launchTool(int toolID)
 {
+	PROFILE_FUNC();
 	if(toolID >= 0 && toolID < (int)m_registeredTools.size()){
 		ITool* tool = m_registeredTools[toolID].m_tool;
 
@@ -123,6 +124,7 @@ void ToolManager::launchTool(int toolID)
 
 			if(obj || tool->accepts_null_object_ptr()){
 				try{
+					obj->create_undo_point_if_selection_changed();
 					tool->execute(obj, NULL);
 				}
 				catch(UGError& err){

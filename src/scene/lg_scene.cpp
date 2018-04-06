@@ -1259,6 +1259,7 @@ void LGScene::rerender_volumes(LGObject* pObj,
 void LGScene::render_faces(LGObject* pObj, Grid& grid,
 						   SubsetHandler& sh, bool renderAll)
 {
+	PROFILE_FUNC();
 //	this method allows to fill the contents of the display lists
 //	with differing grids and subsets.
 	Grid::VertexAttachmentAccessor<APosition> aaPos(grid, aPosition);
@@ -1469,6 +1470,7 @@ void LGScene::render_faces_without_clip_plane(LGObject* pObj)
 
 void LGScene::render_volumes(LGObject* pObj)
 {
+	PROFILE_FUNC();
 //	renders the volumes of an object.
 //	clip planes are used.
 	Grid& grid = pObj->grid();

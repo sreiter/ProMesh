@@ -85,6 +85,7 @@ set(ProMeshSRC	src/app.cpp
 
 # Some options which allow to control makefile generation
 option(DEBUG "If enabled a debug build is performed - this slows down performance." OFF)
+option(PROFILER "If enabled, profiling is performed - this slows down performance." OFF)
 option(DEBUG_LOGS "Enables debug output. Valid options are: ON, OFF" OFF)
 option(UG_ROOT_PATH "The path to ug4. Has to contain the ugbase and lib directories.")
 option(QT_CMAKE_PATH "Folder containing cmake-modules for the chosen architecture.")
@@ -192,6 +193,13 @@ endif(DEBUG)
 if(DEBUG_LOGS)
 	add_definitions(-DUG_ENABLE_DEBUG_LOGS)
 endif(DEBUG_LOGS)
+
+if(PROFILER)
+	add_definitions(-DUG_PROFILER)
+	add_definitions(-DUG_PROFILER_SHINY)
+	set(UG_PROFILER ON)
+	set(UG_PROFILER_SHINY ON)
+endif(PROFILER)
 
 if(NOT UG_ROOT_PATH)
 	message(FATAL_ERROR "ERROR: You have to specify UG_ROOT_PATH! Add an option -DUG_ROOT_PATH=path-to-ug4")

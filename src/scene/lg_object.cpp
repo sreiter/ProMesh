@@ -86,7 +86,7 @@ LGObject* CreateEmptyLGObject(const char* name)
 bool LoadLGObjectFromFile(LGObject* pObjOut, const char* filename,
                           bool performLoadPostprocessing)
 {
-	LOG("loading " << filename << " ...\n");
+	PROFILE_FUNC();
 
 	Grid& grid = pObjOut->grid();
 	SubsetHandler& sh = pObjOut->subset_handler();
@@ -141,7 +141,9 @@ bool LoadLGObjectFromFile(LGObject* pObjOut, const char* filename,
 		ISubsetHandler* ppSH[2];
 		ppSH[0] = &pObjOut->subset_handler();
 		ppSH[1] = &pObjOut->crease_handler();
-		bLoadSuccessful = LoadGridFromLGB(grid, filename, ppSH, 2);
+		ISelector* ppSel[1] = {&pObjOut->selector()};
+		bLoadSuccessful = LoadGridFromLGB(grid, filename, ppSH, 2, ppSel, 1,
+		                                  &pObjOut->projection_handler());
 	}
 	else{
 		bLoadSuccessful = LoadGridFromFile(grid, sh, filename, aPosition);
@@ -180,6 +182,7 @@ bool LoadLGObjectFromFile(LGObject* pObjOut, const char* filename,
 
 void PerformLoadPostprocessing(LGObject* obj)
 {
+	PROFILE_FUNC();
 	obj->init_subsets();
 	obj->geometry_changed();
 
@@ -196,6 +199,7 @@ void PerformLoadPostprocessing(LGObject* obj)
 
 bool ReloadLGObject(LGObject* obj)
 {
+	PROFILE_FUNC();
 	obj->grid().clear_geometry();
 	obj->subset_handler().clear();
 	obj->clear_action_log();
@@ -208,6 +212,7 @@ bool ReloadLGObject(LGObject* obj)
 
 bool SaveLGObjectToFile(LGObject* pObj, const char* filename)
 {
+	PROFILE_FUNC();
 //	extract the suffix
 	if(pObj){
 		const char* pSuffix = strrchr(filename, '.');
@@ -229,7 +234,9 @@ bool SaveLGObjectToFile(LGObject* pObj, const char* filename)
 			ISubsetHandler* ppSH[2];
 			ppSH[0] = &pObj->subset_handler();
 			ppSH[1] = &pObj->crease_handler();
-			return SaveGridToLGB(pObj->grid(), filename, ppSH, 2);
+			ISelector* ppSel[1] = {&pObj->selector()};
+			return SaveGridToLGB(pObj->grid(), filename, ppSH, 2, ppSel, 1,
+                                 &pObj->projection_handler());
 		}
 		else
 			return SaveGridToFile(pObj->grid(), pObj->subset_handler(), filename);
@@ -281,7 +288,7 @@ void LGObject::init()
 	m_subsetHandler.set_default_subset_info(defSI);
 
 	m_undoHistory = UndoHistoryProvider::inst().create_undo_history();
-	m_undoHistory.set_suffix(".ugx");
+	m_undoHistory.set_suffix(".lgb");
 
 	m_transformType = TT_NONE;
 	m_selectionDisplayListIndex = -1;
@@ -400,6 +407,7 @@ bool LGObject::load_ugx(const char* filename)
 
 void LGObject::create_undo_point()
 {
+	PROFILE_FUNC();
 	m_selectionChangedSinceLastUndoPoint = false;
 	if(GetOptions().undo.enabled){
 		log_action ("-- >>> HISTORY ENTRY <<< --\n");
@@ -409,8 +417,16 @@ void LGObject::create_undo_point()
 	// UG_LOG("WARNING: NO UNDO POINT CREATED! THIS IS A DEBUG VERSION OF PROMESH!\n");
 }
 
+void LGObject::create_undo_point_if_selection_changed()
+{
+	if(m_selectionChangedSinceLastUndoPoint)
+		create_undo_point();
+	m_selectionChangedSinceLastUndoPoint = false;
+}
+
 bool LGObject::undo()
 {
+	PROFILE_FUNC();
 	if(!GetOptions().undo.enabled){
 		UG_LOG("UNDO DISABLED!\n"
 			"If you want to activate them please do so in the Options panel (Options-undo)\n");
@@ -422,16 +438,16 @@ bool LGObject::undo()
 
 	log_action("-- <<< UNDO (restore last history entry)<<< --\n");
 
-	if(m_selectionChangedSinceLastUndoPoint)
-		create_undo_point();
+	create_undo_point_if_selection_changed();
 
 	const char* filename = m_undoHistory.undo();
 
-//	ISubsetHandler* ppSH[2];
-//	ppSH[0] = &subset_handler();
-//	ppSH[1] = &crease_handler();
-//	bool bLoadSuccessful = LoadGridFromLGB(m_grid, filename, ppSH, 2);
-	bool bLoadSuccessful = load_ugx(filename);
+	m_subsetHandler.clear();
+	m_creaseHandler.clear();
+	m_selector.clear();
+	m_grid.clear_geometry();
+	bool bLoadSuccessful = LoadLGObjectFromFile(this, filename, false);
+	// bool bLoadSuccessful = load_ugx(filename);
 
 	CalculateFaceNormals(m_grid, m_grid.faces_begin(), m_grid.faces_end(), aPosition, aNormal);
 	update_bounding_shapes();
@@ -444,6 +460,7 @@ bool LGObject::undo()
 
 bool LGObject::redo()
 {
+	PROFILE_FUNC();
 	if(!m_undoHistory.can_redo())
 		return false;
 
@@ -451,11 +468,12 @@ bool LGObject::redo()
 
 	const char* filename = m_undoHistory.redo();
 
-//	ISubsetHandler* ppSH[2];
-//	ppSH[0] = &subset_handler();
-//	ppSH[1] = &crease_handler();
-//	bool bLoadSuccessful = LoadGridFromLGB(m_grid, filename, ppSH, 2);
-	bool bLoadSuccessful = load_ugx(filename);
+	m_subsetHandler.clear();
+	m_creaseHandler.clear();
+	m_selector.clear();
+	m_grid.clear_geometry();
+	bool bLoadSuccessful = LoadLGObjectFromFile(this, filename, false);
+	// bool bLoadSuccessful = load_ugx(filename);
 
 	CalculateFaceNormals(m_grid, m_grid.faces_begin(), m_grid.faces_end(), aPosition, aNormal);
 	update_bounding_shapes();
@@ -616,6 +634,8 @@ void LGObject::begin_transform(TransformType tt)
 	if(m_transformType != TT_NONE)
 		end_transform(false);
 
+	create_undo_point_if_selection_changed();
+	
 //	set the transform type and initialize the transform
 	m_transformType = tt;
 	init_transform();

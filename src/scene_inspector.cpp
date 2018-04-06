@@ -165,6 +165,7 @@ void SceneInspector::refreshView()
 {
 	m_model->refreshSubsets();
 	dataChanged(QModelIndex(), QModelIndex());
+	emit subsetChanged(getActiveObject(), getActiveSubsetIndex());
 }
 
 void SceneInspector::hideSubset(int objIndex, int subsetIndex)
