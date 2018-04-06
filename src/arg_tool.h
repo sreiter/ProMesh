@@ -100,7 +100,7 @@ private:
 	int m_argc;
 	const char** m_argv;
 	std::stringstream	m_help;
-	static constexpr size_t m_leftColWidth = 12;
+	static const size_t m_leftColWidth = 12;
 };
 
 #endif	//__H__PROMESH_arg_tool
