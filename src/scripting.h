@@ -60,4 +60,11 @@ struct ScriptDeclarations{
 void ParseScriptDeclarations (ScriptDeclarations& declsOut,
                               const char* scriptContent);
 
+
+namespace ug{ namespace promesh{ class Mesh; }}
+
+void ExecuteScript (const char* scriptContent, ug::promesh::Mesh* mesh);
+void ExecuteScriptFromFile (const char* filename, ug::promesh::Mesh* mesh);
+
+
 #endif	//__H__PROMESH_scripting

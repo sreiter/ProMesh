@@ -24,6 +24,9 @@
  */
 
 #include <limits>
+#include <QFile>
+#include <QByteArray>
+#include "util/file_util.h"
 #include "scripting.h"
 
 using namespace std;
@@ -236,4 +239,25 @@ void ParseScriptDeclarations (ScriptDeclarations& declsOut,
 			}
 		}
 	}
+}
+
+void ExecuteScript (const char* scriptContent, ug::promesh::Mesh* mesh)
+{
+	// cout << "SCRIPT CONTENT >>>>>\n";
+	// cout << scriptContent << endl;
+	// cout << "<<<<< SCRIPT CONTENT\n";
+
+	SPLuaShell luaShell = GetDefaultLuaShell();
+		
+	SetScriptDefaultVariables (luaShell, scriptContent);
+
+	luaShell->set(	"mesh", mesh, "Mesh");
+
+	luaShell->run(scriptContent);
+}
+
+void ExecuteScriptFromFile (const char* filename, ug::promesh::Mesh* mesh)
+{
+	QString content = GetFileContent(filename);
+	ExecuteScript (content.toLocal8Bit().constData(), mesh);
 }
