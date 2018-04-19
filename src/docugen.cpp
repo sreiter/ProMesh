@@ -60,7 +60,7 @@ static string ParamToString(const ParameterInfo& info, int i);
 static string NameToVarName(const string& str);
 static string GroupNameToID(const string& str);
 
-static void GenerateResourceFile(const string& filename, const string& contentPath);
+static void GenerateResourceFile(const string& filename, const string& searchPath, const string& targetPath);
 
 #define mkpath(s)	(AdjustPathSeparators(mkstr(s)))
 
@@ -331,18 +331,16 @@ int RunDocugen()
 	//	set up the docs/html folder in PROMESH_ROOT_PATH.
 	//	If the html path already exists we'll delete it. We'll use some os-specific
 	//	functions here...
-		if(!DirectoryExists(mkpath(pmPath << "docs")))
-			CreateDirectoryTMP(mkpath(pmPath << "docs").c_str());
-		if(DirectoryExists(mkpath(pmPath << "docs/html")))
-			DeleteDirectory(mkpath(pmPath << "docs/html"));
-		CopyDirectory(mkpath("./html"), mkpath(pmPath << "docs/html/"));
+		if(DirectoryExists(mkpath(pmPath << "docs")))
+			DeleteDirectory(mkpath(pmPath << "docs"));
+		CopyDirectory(mkpath("./html"), mkpath(pmPath << "docs/"));
 
 	//	copy the version information into the html folder
-		CopyFile(mkpath(pmPath << "version.txt"), mkpath(pmPath << "docs/html/version.txt"));
+		CopyFile(mkpath(pmPath << "version.txt"), mkpath(pmPath << "docs/version.txt"));
 
 	//	now we'll create the qt-resource file containing all the help files
 		UG_LOG("Generating qt resource file...\n");
-		GenerateResourceFile(mkpath(pmPath << "docs/html-resources.qrc"), "html");
+		GenerateResourceFile(mkpath(pmPath << "docs/html-resources.qrc"), "html", "");
 
 		UG_LOG("done\n");
 	}
@@ -623,35 +621,48 @@ string ParamToString(const ParameterInfo& info, int i)
 }
 
 static
-void AddPathContentToResourceFile(ofstream& out, const string& path)
+void AddPathContentToResourceFile(ofstream& out, const string& searchPath, const string& targetPath)
 {
 	vector<string> files;
-	GetFilesInDirectory(files, path.c_str());
+	GetFilesInDirectory(files, searchPath.c_str());
 
 	for(size_t i = 0; i < files.size(); ++i){
 		out << "<file>";
-		if(!path.empty())
-			 out << path << "/";
+		if(!targetPath.empty())
+			out << targetPath << "/";
 		out << files[i] << "</file>" << endl;
 	}
 
 	vector<string> dirs;
-	GetDirectoriesInDirectory(dirs, path.c_str());
+	GetDirectoriesInDirectory(dirs, searchPath.c_str());
 
 	for(size_t i = 0; i < dirs.size(); ++i){
 		if((dirs[i].compare(".") == 0) || (dirs[i].compare("..") == 0))
 			continue;
-		AddPathContentToResourceFile(out, mkstr(path << "/" << dirs[i]));
+
+		string newSearchPath;
+		if(searchPath.empty())
+			newSearchPath = mkstr(dirs[i]);
+		else
+			newSearchPath = mkstr(searchPath << "/" << dirs[i]);
+
+		string newTargetPath;
+		if(targetPath.empty())
+			newTargetPath = mkstr(dirs[i]);
+		else
+			newTargetPath = mkstr(targetPath << "/" << dirs[i]);
+
+		AddPathContentToResourceFile(out, newSearchPath, newTargetPath);
 	}
 }
 
 static
-void GenerateResourceFile(const string& filename, const string& contentPath)
+void GenerateResourceFile(const string& filename, const string& searchPath, const string& targetPath)
 {
 	ofstream out(filename.c_str());
 	out << "<RCC>" << endl;
 	out << "<qresource prefix=\"docs\">" << endl;
-	AddPathContentToResourceFile(out, contentPath);
+	AddPathContentToResourceFile(out, searchPath, targetPath);
 	out << "</qresource>" << endl;
 	out << "</RCC>" << endl;
 }

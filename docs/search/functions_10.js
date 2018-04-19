@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['rasterlayerdesc',['RasterLayerDesc',['../group__ug4__promesh__Raster__Layers.html#a9c39bc576e54c99382da27a829593e10',1,'RasterLayerDesc']]],
+  ['rasterlayers',['RasterLayers',['../group__ug4__promesh__Raster__Layers.html#a5abef069e63ed52c4725da57240311e5',1,'RasterLayers']]],
+  ['refine',['Refine',['../group__ug4__promesh__Remeshing__Refinement.html#ga0bb3edcab61d1cdab15f5f3f9155df4b',1,'Refine(Mesh *mesh):&#160;script_reference.cpp'],['../group__ug4__promesh__Remeshing__Refinement.html#gae96592a4817070651de24a977ca9a4ff',1,'Refine(Mesh *mesh, bool strict_subset_inheritance, bool use_snap_points):&#160;script_reference.cpp']]],
+  ['refinesmooth',['RefineSmooth',['../group__ug4__promesh__Remeshing__Refinement.html#ga0090797bd08d554d6a08029995f9df9e',1,'RefineSmooth(Mesh *mesh):&#160;script_reference.cpp'],['../group__ug4__promesh__Remeshing__Refinement.html#gad3449d705a9ce2959ea8a2e54525ae6c',1,'RefineSmooth(Mesh *mesh, bool strict_subset_inheritance):&#160;script_reference.cpp']]],
+  ['refinewithsnappoints',['RefineWithSnapPoints',['../group__ug4__promesh__Remeshing__Refinement.html#gac056b6b87a9084f1ef29f79a7e144adf',1,'script_reference.cpp']]],
+  ['refinewithsnappointsortho',['RefineWithSnapPointsOrtho',['../group__ug4__promesh__Remeshing__Refinement.html#gabcb4c610a6fc84185af7daf9918a7ed6',1,'script_reference.cpp']]],
+  ['regularizingrefinement',['RegularizingRefinement',['../group__ug4__promesh__Remeshing__Refinement.html#gab6ca5eb460113f440fd9b41121c283f6',1,'script_reference.cpp']]],
+  ['remeshtetrahedra',['RemeshTetrahedra',['../group__ug4__promesh__Remeshing__Tetrahedra.html#gaec2a9eed3e9c3aac6414684dfa00c191',1,'script_reference.cpp']]],
+  ['remove_5fsmall_5fholes',['remove_small_holes',['../group__ug4__promesh__Raster__Layers.html#a7493341a35e16d5029232a60af5bf489',1,'RasterLayers']]],
+  ['removedoubleedges',['RemoveDoubleEdges',['../group__ug4__promesh__Remeshing__Remove__Doubles.html#ga946cb7a4b145e8d83b78a64fed4b1d55',1,'script_reference.cpp']]],
+  ['removedoublefaces',['RemoveDoubleFaces',['../group__ug4__promesh__Remeshing__Remove__Doubles.html#ga82c10289608d6a881019604c59bc9875',1,'script_reference.cpp']]],
+  ['removedoubles',['RemoveDoubles',['../group__ug4__promesh__Remeshing__Remove__Doubles.html#ga41fd43216491328a3e426a6d080a1b1c',1,'script_reference.cpp']]],
+  ['replacelowvalencevertices',['ReplaceLowValenceVertices',['../group__ug4__promesh__Remeshing__Triangles.html#gaa5d5908537ab0d256f2776a4e597724f',1,'script_reference.cpp']]],
+  ['replacevalence3vertices',['ReplaceValence3Vertices',['../group__ug4__promesh__Remeshing__Triangles.html#ga88d5ad0d615ef8180b1623a9fea53e95',1,'script_reference.cpp']]],
+  ['reserve_5fedges',['reserve_edges',['../group__ugbase.html#ae130e1c745cfdf33b75244a559c1ff87',1,'Grid']]],
+  ['reserve_5ffaces',['reserve_faces',['../group__ugbase.html#a6e3e304ca334f9756e8e2fc9acfca105',1,'Grid']]],
+  ['reserve_5fvertices',['reserve_vertices',['../group__ugbase.html#a4c80d62e5d81fd2fea31956734ae1c31',1,'Grid']]],
+  ['reserve_5fvolumes',['reserve_volumes',['../group__ugbase.html#ae2ac1c410fce3e48045a5e99bc4702a2',1,'Grid']]],
+  ['resolveedgeintersection',['ResolveEdgeIntersection',['../group__ug4__promesh__Remeshing__Resolve__Intersections__Advanced.html#gadeb49d723cf03e9aff2e630c76891723',1,'script_reference.cpp']]],
+  ['resolveselfintersections',['ResolveSelfIntersections',['../group__ug4__promesh__Remeshing__Resolve__Intersections.html#gab478cb8a07b9b2c01328a15130530bf2',1,'script_reference.cpp']]],
+  ['resolvetriangleintersections',['ResolveTriangleIntersections',['../group__ug4__promesh__Remeshing__Resolve__Intersections__Advanced.html#ga07bb54d9c2131ee0947dc9d6167d9b8c',1,'script_reference.cpp']]],
+  ['retetrahedralize',['Retetrahedralize',['../group__ug4__promesh__Remeshing__Tetrahedra.html#gac08492910c32fca0ba9320797963ed04',1,'script_reference.cpp']]],
+  ['retriangulate',['Retriangulate',['../group__ug4__promesh__Remeshing__Triangles.html#gafb5980d29bf477b771ad6a6e5112779a',1,'script_reference.cpp']]],
+  ['rotatearoundcenter',['RotateAroundCenter',['../group__ug4__promesh__Coordinate__Transform__Rotate.html#ga4276f80cfeca42f4c6f09c8b765dfb18',1,'script_reference.cpp']]],
+  ['rotatearoundpivot',['RotateAroundPivot',['../group__ug4__promesh__Coordinate__Transform__Rotate.html#ga0a56558a0140777cb7ef741c394e212c',1,'script_reference.cpp']]]
+];

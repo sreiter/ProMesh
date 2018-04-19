@@ -1032,7 +1032,7 @@ void MainWindow::launchHelpBrowser(const QString& pageName)
 	#ifdef PROMESH_USE_WEBKIT
 		if(!m_helpBrowser)
 			m_helpBrowser = new QHelpBrowser(this);
-		m_helpBrowser->browse(QUrl(QString("qrc:///docs/html/").append(pageName)));
+		m_helpBrowser->browse(QUrl(QString("qrc:///docs/").append(pageName)));
 		QRect geom = this->geometry();
 		geom.adjust(50, 50, -50, -50);
 		m_helpBrowser->setGeometry(geom);
@@ -1041,14 +1041,14 @@ void MainWindow::launchHelpBrowser(const QString& pageName)
 		try{
 		//todo:	one could compare the version.txt files in the resource and the target
 		//		folder and only copy if they do not match.
-			QString helpHtmlPath = app::UserHelpDir().path().append("/html");
+			QString helpHtmlPath = app::UserHelpDir().path().append("/docs");
 			static bool firstRun = true;
 			if(firstRun){
 				firstRun = false;
 				// try{
 					if(FileExists(helpHtmlPath))
 						EraseDirectory(helpHtmlPath);
-					CopyDirectory(":/docs/html", app::UserHelpDir().path());
+					CopyDirectory(":/docs", app::UserHelpDir().path());
 				// }
 				// catch(const UGError& err){
 				// 	UG_LOG("ERROR: " << err.get_msg() << endl);
