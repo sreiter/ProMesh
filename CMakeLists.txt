@@ -23,8 +23,10 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Lesser General Public License for more details.
 
-cmake_minimum_required(VERSION 2.8.11)
+cmake_minimum_required(VERSION 3.1)
 project(P_PROMESH4)
+
+set (CMAKE_CXX_STANDARD 11)
 
 set(ProMeshSRC	src/app.cpp
 				src/clip_plane_widget.cpp
