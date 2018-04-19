@@ -90,11 +90,27 @@ class MyApplication : public QApplication
 };
 
 
+static void WriteToFileInUserDataDir(const char* filename, const QString& content)
+{
+	SetFileContent (app::UserDataDir().absoluteFilePath(filename),
+	                content);
+}
+
+
 int main(int argc, char *argv[])
 {
+	MyApplication myApp(argc, argv);
+	myApp.setQuitOnLastWindowClosed(true);
+	
 	QCoreApplication::setOrganizationName("ProMesh");
     QCoreApplication::setOrganizationDomain("promesh3d.com");
     QCoreApplication::setApplicationName("ProMesh4.3.10");
+
+    {
+    //	write the absolute path of the application to .promesh/promesh_home
+    	WriteToFileInUserDataDir ("promesh_home", app::AppDir().path());
+    	WriteToFileInUserDataDir ("promesh_version", app::GetVersionString());
+    }
 
     {
     //	no-gui script processing
@@ -147,11 +163,13 @@ int main(int argc, char *argv[])
 		    	LGObject* obj = new LGObject();
 		    	if(!inFile.empty()){
 		    		cout << "loading mesh from '" << inFile.c_str() << "'\n";
-		    		LoadLGObjectFromFile(obj, inFile.c_str(), false);
+		    		UG_COND_THROW(!LoadLGObjectFromFile(obj, inFile.c_str(), false),
+		    		              	"Failed to load file " << inFile);
 		    	}
 		    	else if(argv[1][0] != '-'){
 		    		cout << "loading mesh from '" << argv[1] << "'\n";
-		    		LoadLGObjectFromFile(obj, argv[1], false);
+		    		UG_COND_THROW(!LoadLGObjectFromFile(obj, argv[1], false),
+		    		              	"Failed to load file " << argv[1]);
 		    	}
 
 		    	cout << "Executing script '" << scriptName << "'\n";
@@ -159,7 +177,8 @@ int main(int argc, char *argv[])
 		    	
 		    	if(!outFile.empty()){
 		    		cout << "saving mesh to '" << outFile << "'\n";
-		    		SaveLGObjectToFile(obj, outFile.c_str());
+		    		UG_COND_THROW(!SaveLGObjectToFile(obj, outFile.c_str()),
+		    		              "Failed to save file " << outFile);
 		    	}
 
 		    	delete obj;
@@ -184,9 +203,6 @@ int main(int argc, char *argv[])
     cout.sync_with_stdio(true);
 
 	//QApplication app(argc, argv);
-	MyApplication myApp(argc, argv);
-	myApp.setQuitOnLastWindowClosed(true);
-
 
 	QString qss = GetFileContent(":/styles/promesh_style.css");
 	QString varsStr = GetFileContent(":/styles/dark_theme_variables.txt");
