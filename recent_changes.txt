@@ -9,6 +9,23 @@ Recent changes:
 
 
 -------------------------------------------------------------------------------
+v 4.3.17
+Changes and additions:
+- stl import now automatically removes double vertices during file load
+- added quality measures for tetrahedral geometries. E.g.:
+    * Subsets-AssignVolumeSubsetsByAspectRatios
+    * Info-Qualities-PrintVolumeAspectRatioHistogram
+- added a time out to tetgen operations (TetrahedralFill and Retetrahedralize)
+- FixFaceOrientation now also considers boundary faces and orients them
+  so that their normal points outwards of the geometry.
+- ProMesh can now be invoked as a command line tool.
+  Call 'ProMesh4 -help' for more information.
+  
+Fixes:
+
+
+
+-------------------------------------------------------------------------------
 v 4.3.16
 Changes and additions:
 - undo/redo: massive speedup (now using binary .lgb format)
