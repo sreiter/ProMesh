@@ -152,19 +152,6 @@ bool LoadLGObjectFromFile(LGObject* pObjOut, const char* filename,
 
 	if(bLoadSuccessful)
 	{
-	//	assign the name
-		std::string name = filename;
-		size_t slashPos = name.find_last_of('/');
-		if(slashPos == std::string::npos)
-			slashPos = name.find_last_of('\\');
-		if(slashPos == std::string::npos)
-			slashPos = 0;
-
-		size_t pointPos = name.find_last_of('.');
-		if(pointPos == std::string::npos)
-			pointPos = name.size() - 1;
-		pObjOut->set_name(name.substr(slashPos + 1, pointPos - slashPos - 1).c_str());
-
 	//	initialize the subset-colors
 		if(bSetDefaultSubsetColors)
 			AssignSubsetColors(pObjOut->subset_handler());
@@ -183,6 +170,19 @@ bool LoadLGObjectFromFile(LGObject* pObjOut, const char* filename,
 void PerformLoadPostprocessing(LGObject* obj)
 {
 	PROFILE_FUNC();
+//	assign the name
+	std::string name = obj->m_fileName;
+	size_t slashPos = name.find_last_of('/');
+	if(slashPos == std::string::npos)
+		slashPos = name.find_last_of('\\');
+	if(slashPos == std::string::npos)
+		slashPos = 0;
+
+	size_t pointPos = name.find_last_of('.');
+	if(pointPos == std::string::npos)
+		pointPos = name.size() - 1;
+	obj->set_name(name.substr(slashPos + 1, pointPos - slashPos - 1).c_str());
+
 	obj->init_subsets();
 	obj->geometry_changed();
 
@@ -446,7 +446,9 @@ bool LGObject::undo()
 	m_creaseHandler.clear();
 	m_selector.clear();
 	m_grid.clear_geometry();
+	string oldFileName = m_fileName;
 	bool bLoadSuccessful = LoadLGObjectFromFile(this, filename, false);
+	m_fileName = oldFileName;
 	// bool bLoadSuccessful = load_ugx(filename);
 
 	CalculateFaceNormals(m_grid, m_grid.faces_begin(), m_grid.faces_end(), aPosition, aNormal);
@@ -472,8 +474,9 @@ bool LGObject::redo()
 	m_creaseHandler.clear();
 	m_selector.clear();
 	m_grid.clear_geometry();
+	string oldFileName = m_fileName;
 	bool bLoadSuccessful = LoadLGObjectFromFile(this, filename, false);
-	// bool bLoadSuccessful = load_ugx(filename);
+	m_fileName = oldFileName;
 
 	CalculateFaceNormals(m_grid, m_grid.faces_begin(), m_grid.faces_end(), aPosition, aNormal);
 	update_bounding_shapes();
