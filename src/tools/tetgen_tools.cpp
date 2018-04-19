@@ -100,7 +100,8 @@ void TetrahedralizeEx (	Mesh* mesh,
 						bool preserveAll,
 						bool separateVolumes,
 						bool appendSubsetsAtEnd,
-						int verbosity)
+						int verbosity,
+						double timeOut)
 {
 
 	QString outFileName = TmpFileName("plc", ".smesh");
@@ -134,9 +135,11 @@ void TetrahedralizeEx (	Mesh* mesh,
 	proc.setProcessChannelMode(QProcess::MergedChannels);
 	proc.start(call, args.split(' '));
 
-	if(!proc.waitForFinished(-1)){
-		UG_LOG(proc.errorString().toLocal8Bit().constData() << "\n");
-		UG_LOG("Received error during execution of tetgen. Aborting.\n");
+	if(!proc.waitForFinished(timeOut * 1000)){
+		if(proc.state() == QProcess::Running)
+			proc.kill();
+		UG_THROW("Received error during execution of tetgen: "
+		         << proc.errorString().toLocal8Bit().constData());
 	}
 	else{
 		QString output(proc.readAll());
@@ -179,7 +182,8 @@ void RetetrahedralizeEx (Mesh* mesh,
                        	number minDihedralAngle,
 						bool preserveOuter,
 						bool preserveAll,
-						int verbosity)
+						int verbosity,
+						double timeOut)
 {
 
 	QString outFileName = TmpFileName("retet", ".ele");
@@ -212,9 +216,11 @@ void RetetrahedralizeEx (Mesh* mesh,
 	proc.setProcessChannelMode(QProcess::MergedChannels);
 	proc.start(call, args.split(' '));
 
-	if(!proc.waitForFinished(-1)){
-		UG_LOG(proc.errorString().toLocal8Bit().constData() << "\n");
-		UG_LOG("Received error during execution of tetgen. Aborting.\n");
+	if(!proc.waitForFinished(timeOut * 1000)){
+		if(proc.state() == QProcess::Running)
+			proc.kill();
+		UG_THROW("Received error during execution of tetgen: "
+		         << proc.errorString().toLocal8Bit().constData());
 		return;
 	}
 	else{
@@ -250,8 +256,10 @@ void RegisterTetgenTools ()
 				"preserve all #"
 				"separate volumes || value=true #"
 				"append subsets at end || value=true#"
-				"verbosity || min=0; value=0; max=3; step=1",
-				"Fills a closed surface with tetrahedra using TetGen.");
+				"verbosity || min=0; value=0; max=3; step=1#"
+				"time out (s) || min= -1; value=10; step=1",
+				"Fills a closed surface with tetrahedra using TetGen. "
+					"Aborts if no result was computet after 'time out' elapsed.");
 
 	reg.add_function("RemeshTetrahedra", &RetetrahedralizeEx, grp, "",
 				"mesh #"
@@ -259,9 +267,11 @@ void RegisterTetgenTools ()
 				"min dihedral angle || value=5; min=0; max=18; step=1 #"
 				"preserve outer #"
 				"preserve all #"
-				"verbosity || min=0; value=0; max=3; step=1",
+				"verbosity || min=0; value=0; max=3; step=1#"
+				"time out (s) || min= -1; value=10; step=1",
 				"Given a tetrahedralization and volume constraints, "
-					"this method adapts the tetrahedra using TetGen.");
+					"this method adapts the tetrahedra using TetGen. "
+					"Aborts if no result was computet after 'time out' elapsed.");
 }
 
 #endif	//__H__UG_tetgen_tools
