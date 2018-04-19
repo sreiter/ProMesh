@@ -35,10 +35,6 @@
 #include "modules/module_interface.h"
 #include "common/profiler/profiler.h"
 
-#ifdef UG_PROFILER_SHINY
-	#include "common/profiler/src/ShinyMacros.h"
-#endif
-
 using namespace std;
 using namespace ug;
 
@@ -211,7 +207,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
 			#ifdef UG_PROFILER_SHINY
 				PROFILER_UPDATE(1.0);
 				UG_LOG("PROFILES:\n");
-				UG_LOG(PROFILER_OUTPUT_TREE_STRING() << endl);
+				UG_LOG(Shiny::ProfileManager::instance.outputNodesAsString() << endl);
 			#endif
 
 			UG_LOG("\n");
