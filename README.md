@@ -36,6 +36,6 @@ Development of ProMesh was partially supported by the
 German Ministry of Economics and Technology (BMWi) under the contract numbers
 02E10326, 02E10568, and 02E11062.
 
-Copyright (c) 2008-2015:  G-CSC, Goethe University Frankfurt<br>
+Copyright (c) 2008-2018:  G-CSC, Goethe University Frankfurt<br>
 Copyright (c) 2006-2008:  Steinbeis Forschungszentrum (STZ Ölbronn)<br>
-Copyright (c) 2006-2015:  Sebastian Reiter
+Copyright (c) 2006-2018:  Sebastian Reiter
