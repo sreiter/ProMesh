@@ -26,6 +26,7 @@
  */
 
 #include <QApplication>
+#include <QSurfaceFormat>
 #include <iostream>
 #include <clocale>
 #include <cstring>
@@ -101,6 +102,7 @@ int main(int argc, char *argv[])
 {
 	MyApplication myApp(argc, argv);
 	myApp.setQuitOnLastWindowClosed(true);
+	myApp.setAttribute (Qt::AA_UseDesktopOpenGL);
 	
 	QCoreApplication::setOrganizationName("ProMesh");
     QCoreApplication::setOrganizationDomain("promesh3d.com");
@@ -202,7 +204,11 @@ int main(int argc, char *argv[])
 
     cout.sync_with_stdio(true);
 
-	//QApplication app(argc, argv);
+    QSurfaceFormat surfaceFormat = QSurfaceFormat::defaultFormat();
+    surfaceFormat.setMajorVersion (2);
+    surfaceFormat.setMinorVersion (0);
+    QSurfaceFormat::setDefaultFormat (surfaceFormat);
+
 
 	QString qss = GetFileContent(":/styles/promesh_style.css");
 	QString varsStr = GetFileContent(":/styles/dark_theme_variables.txt");
