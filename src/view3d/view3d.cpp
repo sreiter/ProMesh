@@ -481,11 +481,11 @@ void View3D::mousePressEvent(QMouseEvent *event)
 //	}
 
 	if(scaledEvent->button() == Qt::LeftButton){
-		m_camera.begin_drag(event->x(), event->y(),
+		m_camera.begin_drag(scaledEvent->x(), scaledEvent->y(),
 							get_camera_drag_flags());
 	}
 	else if(scaledEvent->button() == Qt::MidButton){
-		m_camera.begin_drag(event->x(), event->y(), cam::CDF_MOVE);
+		m_camera.begin_drag(scaledEvent->x(), scaledEvent->y(), cam::CDF_MOVE);
 	}
 
 //	emit mousePress
