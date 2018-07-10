@@ -307,7 +307,6 @@ void  View3D::
 get_ray(cam::vector3& vFromOut, cam::vector3& vToOut,
 		float screenX, float screenY)
 {
-	//QSize winSize = size();
 	QSize winSize = size()*this->windowHandle()->devicePixelRatio();
 	cam::matrix44 tMat = *m_camera.get_camera_transform();
 	GLdouble modelMat[16];
@@ -342,7 +341,6 @@ get_ray_to_geometry(cam::vector3& vFromOut,
 					 cam::vector3& vToOut,
 					 float screenX, float screenY)
 {
-	//QSize winSize = size();
 	QSize winSize = size()*this->windowHandle()->devicePixelRatio();
 
 	GLfloat depthVal;
@@ -395,7 +393,6 @@ get_ray_to_geometry(cam::vector3& vFromOut,
 
 void View3D::refocus_by_screen_coords(int screenX, int screenY)
 {
-	//QSize winSize = size();
 	QSize winSize = size()*this->windowHandle()->devicePixelRatio();
 
 	GLfloat depthVal;
@@ -472,14 +469,6 @@ void View3D::mousePressEvent(QMouseEvent *event)
 
 //	if alt is pressed, we'll refocus the clicked geometry.
 //	if not, we'll start dragging.
-//	if(event->button() == Qt::LeftButton){
-//		m_camera.begin_drag(event->x(), event->y(),
-//							get_camera_drag_flags());
-//	}
-//	else if(event->button() == Qt::MidButton){
-//		m_camera.begin_drag(event->x(), event->y(), cam::CDF_MOVE);
-//	}
-
 	if(scaledEvent->button() == Qt::LeftButton){
 		m_camera.begin_drag(scaledEvent->x(), scaledEvent->y(),
 							get_camera_drag_flags());
@@ -489,7 +478,6 @@ void View3D::mousePressEvent(QMouseEvent *event)
 	}
 
 //	emit mousePress
-	//emit View3D::mousePressed(event);
 	emit View3D::mousePressed(scaledEvent);
 }
 
@@ -500,7 +488,6 @@ void View3D::mouseMoveEvent(QMouseEvent *event)
 									event->button(), event->buttons(), event->modifiers());
 
 	unsigned int cdf;
-	//if(event->buttons().testFlag(Qt::MidButton))
 	if(scaledEvent->buttons().testFlag(Qt::MidButton))
 		cdf = cam::CDF_MOVE;
 	else
@@ -522,7 +509,6 @@ void View3D::mouseReleaseEvent(QMouseEvent *event)
 									event->button(), event->buttons(), event->modifiers());
 
 	unsigned int cdf;
-	//if(event->button() == Qt::MidButton)
 	if(scaledEvent->button() == Qt::MidButton)
 		cdf = cam::CDF_MOVE;
 	else
@@ -551,7 +537,6 @@ void View3D::mouseDoubleClickEvent(QMouseEvent *event)
 									QPoint(event->x()*this->windowHandle()->devicePixelRatio(),event->y()*this->windowHandle()->devicePixelRatio()),
 									event->button(), event->buttons(), event->modifiers());
 
-	//refocus_by_screen_coords(event->x(), event->y());
 	refocus_by_screen_coords(scaledEvent->x(), scaledEvent->y());
 }
 
