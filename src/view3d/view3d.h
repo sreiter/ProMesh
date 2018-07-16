@@ -61,6 +61,7 @@ class View3D : public QGLWidget
 		inline const cam::CModelViewerCamera& camera() const	{return m_camera;}
 
 		void fly_to(const cam::vector3& destTo, float distance);
+		void fly_to(const cam::vector3& destTo);
 
 	///	calculated the ray from the screen-position to the back-plane.
 		void get_ray(cam::vector3& vFromOut, cam::vector3& vToOut,

@@ -100,6 +100,16 @@ static void WriteToFileInUserDataDir(const char* filename, const QString& conten
 
 int main(int argc, char *argv[])
 {
+	// {
+	// 	QSurfaceFormat surfaceFormat = QSurfaceFormat::defaultFormat();
+	// 	surfaceFormat.setDepthBufferSize (24);
+	// 	surfaceFormat.setStencilBufferSize (8);
+	//     surfaceFormat.setMajorVersion (2);
+	//     surfaceFormat.setMinorVersion (0);
+	//     surfaceFormat.setSamples (0);
+	//     QSurfaceFormat::setDefaultFormat (surfaceFormat);
+	// }
+
 	MyApplication myApp(argc, argv);
 	myApp.setQuitOnLastWindowClosed(true);
 	myApp.setAttribute (Qt::AA_UseDesktopOpenGL);
@@ -203,11 +213,6 @@ int main(int argc, char *argv[])
 	}
 
     cout.sync_with_stdio(true);
-
-    QSurfaceFormat surfaceFormat = QSurfaceFormat::defaultFormat();
-    surfaceFormat.setMajorVersion (2);
-    surfaceFormat.setMinorVersion (0);
-    QSurfaceFormat::setDefaultFormat (surfaceFormat);
 
 
 	QString qss = GetFileContent(":/styles/promesh_style.css");

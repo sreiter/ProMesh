@@ -25,9 +25,16 @@
  * GNU Lesser General Public License for more details.
  */
 
+#include <string>
+#include "promesh_plugin.h"
 #include "app.h"
 #include "standard_tools.h"
 #include "tooltips.h"
+
+using namespace std;
+using namespace ug;
+using namespace ug::promesh;
+using namespace ug::bridge;
 
 class ToolCenterObject : public ITool
 {
@@ -141,6 +148,12 @@ class ToolSideView : public ITool
 };
 */
 
+void FlyTo (Mesh* msh, const vector3& to)
+{
+	app::getMainWindow()->getView3D()->fly_to (to);
+}
+
+
 class ToolHideSelectedElements : public ITool
 {
 	public:
@@ -185,4 +198,13 @@ void RegisterCameraTools(ToolManager* toolMgr)
 	//toolMgr->register_tool(new ToolSideView);
 	toolMgr->register_tool(new ToolHideSelectedElements);
 	toolMgr->register_tool(new ToolUnhideElements);
+
+	ProMeshRegistry& reg = GetProMeshRegistry();
+
+	string grp = "ug4/promesh/Camera";
+	reg.add_function("FlyTo", &FlyTo, grp, "",
+				"mesh # target position",
+				"Flies to the specified point. The specified point will be the "
+				"new focus point of the camera. ");
+
 }

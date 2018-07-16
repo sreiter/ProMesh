@@ -303,6 +303,11 @@ void View3D::fly_to(const cam::vector3& destTo, float distance)
 	start_interpolation();
 }
 
+void View3D::fly_to(const cam::vector3& destTo)
+{
+	fly_to (destTo, m_camera.get_camera_state().fDistance);
+}
+
 void  View3D::
 get_ray(cam::vector3& vFromOut, cam::vector3& vToOut,
 		float screenX, float screenY)
