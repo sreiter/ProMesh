@@ -20,7 +20,7 @@ Please install UG4 through its package manager [ughub](https://github/UG4/ughub)
     ughub install ProMesh LuaShell tetgen
     mkdir build
     cd build
-    cmake -DTARGET=libgrid -DSTATIC_BUILD=ON -DCMAKE_BUILD_TYPE=Release -DProMesh=ON -DLuaShell=ON -DPARALLEL=OFF ..
+    cmake -DTARGET=libgrid -DSTATIC_BUILD=ON -DCMAKE_BUILD_TYPE=Release -DProMesh=ON -DLuaShell=ON -DPARALLEL=OFF -Dtetgen=ON ..
 
 
 Installing 'tetgen' (as proposed above) is optional.
