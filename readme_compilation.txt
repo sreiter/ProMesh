@@ -34,7 +34,9 @@ Once ProMesh has been built (e.g. on Windows), please run the following command 
 
     ProMesh4.exe -docugen
 
-ProMesh has to be linked again with the new documentation. To force linking, please remove the old executable before calling make (or corresponding build tools).
+(`doxygen` is required in your commandline environment for this to work)
+
+ProMesh has to be linked again with the new documentation. To force linking, please remove the old executable before calling `make` (or corresponding build tools).
 
 
 DEPLOY PROMESH ON OSX
