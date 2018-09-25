@@ -25,8 +25,8 @@ You may then proceed with the compilation of ProMesh, execute e.g. in ProMesh's 
 Please specify all the required paths. If you experience any problems please
 have a look at ProMesh/CMakeLists.txt and parse the comments. Required are at least the following options:
 
-    UG_ROOT_PATH: "The path to ug4. Has to contain the ugbase and lib directories."
-    QT_CMAKE_PATH: "Folder containing cmake-modules for the chosen architecture."
+- `UG_ROOT_PATH`: The path to ug4, i.e. to the directory containing the ugcore and lib subdirectories
+- `QT_CMAKE_PATH`: Folder containing cmake-modules for the chosen architecture, e.g., "...pathToQt/5.9/gcc_64/lib/cmake""
 
 
 GENERATION OF UP-TO-DATE DOCUMENTATION
@@ -36,7 +36,7 @@ Once ProMesh has been built (e.g. on Windows), please run the following command 
 
 (`doxygen` is required in your commandline environment for this to work)
 
-ProMesh has to be linked again with the new documentation. To force linking, please remove the old executable before calling `make` (or corresponding build tools).
+This will update the scripting documentation in ProMesh's *docs* folder. ProMesh has to be linked again to reflect the changes (e.g., by calling `make` again).
 
 
 DEPLOY PROMESH ON OSX
