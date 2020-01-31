@@ -9,16 +9,10 @@ Recent changes:
 
 
 -------------------------------------------------------------------------------
-v 4.3.19
-Changes and additions:
-- added Selection-SelectVolumesByType
-
-
-
--------------------------------------------------------------------------------
 v 4.3.18
 Changes and additions:
 - added Camera-FlyTo (coordinate based)
+- added Selection-SelectVolumesByType
 
 Fixes:
 - stl reader now ignores degenerated triangles.
