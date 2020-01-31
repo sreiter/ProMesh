@@ -107,10 +107,9 @@ void CopyDirectory(string from, string to){
 static
 void ReplaceInFile(string filename, string searchStr, string newStr){
 	#ifdef UNIX
-		// string cmdline = mkstr("sed -i '/" << searchStr << "/c\\" << newStr
-		// 					   << "' " << filename);
-		// system(cmdline.c_str());
-		UG_THROW("ReplaceInFile not yet implemented for UNIX");
+	//	https://www.geeksforgeeks.org/sed-command-in-linux-unix-with-examples/
+		string cmdline = mkstr("sed -i '' 's/" << searchStr << "/" << newStr << "/g' " << filename);
+		system(cmdline.c_str());
 	#elif WINDOWS
 		string cmdline = mkstr(
 				"powershell -Command \"(gc "
@@ -313,7 +312,7 @@ int RunDocugen()
 
 	//	adjust the doxygen script by adding the current version number
 		string version = ReadFile(mkpath(pmPath << "version.txt"));
-		ReplaceInFile(mkpath(mkpath("./docugen/DoxygenConfig.txt")),
+		ReplaceInFile(mkpath(mkpath("docugen/DoxygenConfig.txt")),
 						"vx.y.z", mkstr("v" << version));
 
 	//	'clear' old documentation
