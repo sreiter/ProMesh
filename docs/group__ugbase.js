@@ -3,22 +3,26 @@ var group__ugbase =
     [ "Vec1d", "group__ugbase.html#classVec1d", [
       [ "Vec1d", "group__ugbase.html#a7db629d47d92f681c14d95d55d64e5ff", null ],
       [ "Vec1d", "group__ugbase.html#aa3bf80162027c872dc4935023d854c2a", null ],
-      [ "coord", "group__ugbase.html#a0954bad0cb48d765742ec7b00eb50bf5", null ]
+      [ "coord", "group__ugbase.html#a0954bad0cb48d765742ec7b00eb50bf5", null ],
+      [ "set_coord", "group__ugbase.html#ae6a47085d2daff6aacde51f6f90e54b2", null ]
     ] ],
     [ "Vec2d", "group__ugbase.html#classVec2d", [
       [ "Vec2d", "group__ugbase.html#a9f65dbe7f734157ab6467dc9530a4e3a", null ],
       [ "Vec2d", "group__ugbase.html#ac2444a30b08385da925093ea6f15b814", null ],
-      [ "coord", "group__ugbase.html#a0954bad0cb48d765742ec7b00eb50bf5", null ]
+      [ "coord", "group__ugbase.html#a0954bad0cb48d765742ec7b00eb50bf5", null ],
+      [ "set_coord", "group__ugbase.html#ae6a47085d2daff6aacde51f6f90e54b2", null ]
     ] ],
     [ "Vec3d", "group__ugbase.html#classVec3d", [
       [ "Vec3d", "group__ugbase.html#aa238670904802947104ab22a2f25c081", null ],
       [ "Vec3d", "group__ugbase.html#ac236924d808546365ca8efb1b517860e", null ],
-      [ "coord", "group__ugbase.html#a0954bad0cb48d765742ec7b00eb50bf5", null ]
+      [ "coord", "group__ugbase.html#a0954bad0cb48d765742ec7b00eb50bf5", null ],
+      [ "set_coord", "group__ugbase.html#ae6a47085d2daff6aacde51f6f90e54b2", null ]
     ] ],
     [ "Vec4d", "group__ugbase.html#classVec4d", [
       [ "Vec4d", "group__ugbase.html#abcc7040c9f3492390746ae2078b8e270", null ],
       [ "Vec4d", "group__ugbase.html#a145712aa522ea1739f152bf395d41e2f", null ],
-      [ "coord", "group__ugbase.html#a0954bad0cb48d765742ec7b00eb50bf5", null ]
+      [ "coord", "group__ugbase.html#a0954bad0cb48d765742ec7b00eb50bf5", null ],
+      [ "set_coord", "group__ugbase.html#ae6a47085d2daff6aacde51f6f90e54b2", null ]
     ] ],
     [ "Mesh", "group__ugbase.html#classMesh", [
       [ "Mesh", "group__ugbase.html#a2a23c7c0c4e0da252b7bc0e13b6f81d8", null ],

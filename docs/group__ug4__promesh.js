@@ -1,5 +1,6 @@
 var group__ug4__promesh =
 [
+    [ "Camera", "group__ug4__promesh__Camera.html", "group__ug4__promesh__Camera" ],
     [ "Coordinate Transform", "group__ug4__promesh__Coordinate__Transform.html", "group__ug4__promesh__Coordinate__Transform" ],
     [ "File IO", "group__ug4__promesh__File__IO.html", "group__ug4__promesh__File__IO" ],
     [ "Grid Generation", "group__ug4__promesh__Grid__Generation.html", "group__ug4__promesh__Grid__Generation" ],

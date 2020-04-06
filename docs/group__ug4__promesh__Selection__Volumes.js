@@ -8,5 +8,6 @@ var group__ug4__promesh__Selection__Volumes =
     [ "SelectSlivers", "group__ug4__promesh__Selection__Volumes.html#ga2dc32a200609a624e57baa43130279c6", null ],
     [ "SelectUnorientableVolumes", "group__ug4__promesh__Selection__Volumes.html#ga3b7b660bf7e42d2823e598a5cccafe2b", null ],
     [ "SelectVolumeByIndex", "group__ug4__promesh__Selection__Volumes.html#ga11f43f93021aff7b25f4cc9f02ebe679", null ],
+    [ "SelectVolumesByType", "group__ug4__promesh__Selection__Volumes.html#ga7973e1f95edf1aa422416f31d11e078f", null ],
     [ "VolumeSelectionFill", "group__ug4__promesh__Selection__Volumes.html#ga43e4241a101fa6de007603de62dfaab4", null ]
 ];

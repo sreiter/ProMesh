@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ProMesh User Manual
-   &#160;<span id="projectnumber">v4.3.17</span>
+   &#160;<span id="projectnumber">v4.3.18</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -132,6 +132,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga11f43f93021aff7b25f4cc9f02ebe679"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ug4__promesh__Selection__Volumes.html#ga11f43f93021aff7b25f4cc9f02ebe679">SelectVolumeByIndex</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classint">int</a> index)</td></tr>
 <tr class="memdesc:ga11f43f93021aff7b25f4cc9f02ebe679"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects a volume given its index.  <a href="#ga11f43f93021aff7b25f4cc9f02ebe679">More...</a><br /></td></tr>
 <tr class="separator:ga11f43f93021aff7b25f4cc9f02ebe679"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7973e1f95edf1aa422416f31d11e078f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ug4__promesh__Selection__Volumes.html#ga7973e1f95edf1aa422416f31d11e078f">SelectVolumesByType</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classbool">bool</a> Hexahedra, <a class="el" href="group__nativeTypes.html#classbool">bool</a> Octahedra, <a class="el" href="group__nativeTypes.html#classbool">bool</a> Prisms, <a class="el" href="group__nativeTypes.html#classbool">bool</a> Pyramids, <a class="el" href="group__nativeTypes.html#classbool">bool</a> Tetrahedra)</td></tr>
+<tr class="memdesc:ga7973e1f95edf1aa422416f31d11e078f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects all volumes of a given type.  <a href="#ga7973e1f95edf1aa422416f31d11e078f">More...</a><br /></td></tr>
+<tr class="separator:ga7973e1f95edf1aa422416f31d11e078f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Selection tools for volumes. </p>
@@ -306,6 +309,60 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ga7973e1f95edf1aa422416f31d11e078f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7973e1f95edf1aa422416f31d11e078f">&#9670;&nbsp;</a></span>SelectVolumesByType()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SelectVolumesByType </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>mesh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
+          <td class="paramname"><em>Hexahedra</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
+          <td class="paramname"><em>Octahedra</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
+          <td class="paramname"><em>Prisms</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
+          <td class="paramname"><em>Pyramids</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
+          <td class="paramname"><em>Tetrahedra</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Selects all volumes of a given type. </p>
+
+</div>
+</div>
 <a id="ga43e4241a101fa6de007603de62dfaab4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga43e4241a101fa6de007603de62dfaab4">&#9670;&nbsp;</a></span>VolumeSelectionFill()</h2>
 
@@ -332,7 +389,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">(c) Sebastian Reiter. Generated on Sat Apr 21 2018 13:32:29 for ProMesh User Manual by
+    <li class="footer">(c) Sebastian Reiter. Generated on Mon Apr 6 2020 22:02:49 for ProMesh User Manual by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>
