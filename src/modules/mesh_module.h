@@ -72,6 +72,8 @@ public:
 protected slots:
 	void refreshToolDialogsClicked();
 	void browseUserScripts();
+	void addCustomUserScriptFolder();
+	void removeCustomUserScriptFolder();
 	void newScript();
 	void editScript();
 	void refreshCoordinates();

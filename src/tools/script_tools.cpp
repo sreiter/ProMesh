@@ -285,6 +285,10 @@ void RegisterScriptTools(ToolManager* toolMgr)
 	SmartPtr<luashell::LuaShell> shell = make_sp(new luashell::LuaShell());
 	ParseDirAndCreateTools(toolMgr, QDir(":/scripts"), "Scripts", shell);
 	ParseDirAndCreateTools(toolMgr, app::UserScriptDir(), "Scripts", shell);
+
+	if(app::UserDataDir().exists("custom_user_script_path")){
+		ParseDirAndCreateTools(toolMgr, app::CustomUserScriptDir(), "Scripts | Custom User Scripts", shell);
+	}
 }
 
 int RefreshScriptTools(ToolManager* toolMgr)
@@ -316,6 +320,10 @@ int RefreshScriptTools(ToolManager* toolMgr)
 
 	ParseDirAndCreateTools(toolMgr, QDir(":/scripts"), "Scripts", luaShell, true);
 	ParseDirAndCreateTools(toolMgr, app::UserScriptDir(), "Scripts", luaShell, true);
+
+	if(app::UserDataDir().exists("custom_user_script_path")){
+		ParseDirAndCreateTools(toolMgr, app::CustomUserScriptDir(), "Scripts | Custom User Scripts", luaShell, true);
+	}
 
 	if(lastNumScriptTools != g_scriptTools.size())
 		retVal = 1;

@@ -70,7 +70,6 @@ QDir UserDataDir()
 
 	homeDir.cd(pathName);
 
-
 	return homeDir;
 }
 
@@ -88,6 +87,25 @@ QDir UserScriptDir()
 	userPath.cd(pathName);
 
 	return userPath;
+}
+
+QDir CustomUserScriptDir()
+{
+	QDir customUserPath = UserScriptDir();
+
+	if(UserDataDir().exists("custom_user_script_path")){
+		customUserPath.setPath(GetFileContent(app::UserDataDir().absoluteFilePath("custom_user_script_path")));
+	}
+
+	QString pathName(customUserPath.dirName());
+
+	customUserPath.cdUp();
+
+	CheckPathPermissions(customUserPath, pathName);
+
+	customUserPath.cd(pathName);
+
+	return customUserPath;
 }
 
 QDir UserTmpDir()
