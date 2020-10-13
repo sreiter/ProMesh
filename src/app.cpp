@@ -27,6 +27,7 @@
 
 #include <QApplication>
 #include <QFileInfo>
+#include <QTextStream>
 #include "app.h"
 #include "util/file_util.h"
 #include "common/math/ugmath.h"
@@ -89,23 +90,40 @@ QDir UserScriptDir()
 	return userPath;
 }
 
-QDir CustomUserScriptDir()
+std::vector<QDir> CustomUserScriptDirs()
 {
-	QDir customUserPath = UserScriptDir();
+	std::vector<QDir> vCustomUserScriptDirs;
 
-	if(UserDataDir().exists("custom_user_script_path")){
-		customUserPath.setPath(GetFileContent(app::UserDataDir().absoluteFilePath("custom_user_script_path")));
+	if(UserDataDir().exists("custom_user_script_dirs")){
+		QFile inFile((app::UserDataDir().absoluteFilePath("custom_user_script_dirs")));
+
+		if (inFile.open(QIODevice::ReadOnly | QIODevice::Text))
+		{
+		   QTextStream inStr(&inFile);
+
+		   while(!inStr.atEnd())
+		   {
+			   QString line = inStr.readLine();
+			   if(!line.isEmpty()){
+				   QDir currentCustomUserScriptDir;
+				   currentCustomUserScriptDir.setPath(line);
+
+			   //  Path permission check
+				   QString pathName(currentCustomUserScriptDir.dirName());
+				   currentCustomUserScriptDir.cdUp();
+				   CheckPathPermissions(currentCustomUserScriptDir, pathName);
+
+				   currentCustomUserScriptDir.cd(pathName);
+
+				   vCustomUserScriptDirs.push_back(currentCustomUserScriptDir);
+			   }
+		   }
+
+		   inFile.close();
+		}
 	}
 
-	QString pathName(customUserPath.dirName());
-
-	customUserPath.cdUp();
-
-	CheckPathPermissions(customUserPath, pathName);
-
-	customUserPath.cd(pathName);
-
-	return customUserPath;
+	return vCustomUserScriptDirs;
 }
 
 QDir UserTmpDir()

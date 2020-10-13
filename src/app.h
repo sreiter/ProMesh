@@ -94,8 +94,8 @@ QDir UserDataDir();
 ///	returns the path in which user-scripts are placed (e.g. $HOME/.promesh/scripts)
 QDir UserScriptDir();
 
-///	returns the user specified path in which custom user scripts are placed
-QDir CustomUserScriptDir();
+///	returns the user specified paths in which custom user scripts are placed
+std::vector<QDir> CustomUserScriptDirs();
 
 ///	returns the path in which temporary data may be placed (e.g. $HOME/.promesh/tmp)
 QDir UserTmpDir();
