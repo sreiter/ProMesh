@@ -116,7 +116,7 @@ int main(int argc, char *argv[])
 	
 	QCoreApplication::setOrganizationName("ProMesh");
     QCoreApplication::setOrganizationDomain("promesh3d.com");
-    QCoreApplication::setApplicationName("ProMesh4.3.18");
+    QCoreApplication::setApplicationName("ProMesh");
 
     {
     //	write the absolute path of the application to .promesh/promesh_home

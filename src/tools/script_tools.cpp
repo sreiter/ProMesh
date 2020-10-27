@@ -286,14 +286,12 @@ void RegisterScriptTools(ToolManager* toolMgr)
 	ParseDirAndCreateTools(toolMgr, QDir(":/scripts"), "Scripts", shell);
 	ParseDirAndCreateTools(toolMgr, app::UserScriptDir(), "Scripts", shell);
 
-	if(app::UserDataDir().exists("custom_user_script_dirs")){
-		std::vector<QDir> vDirs = app::CustomUserScriptDirs();
+	std::vector<QDir> vDirs = app::CustomUserScriptDirs();
 
-		for(int i = 0; i < vDirs.size(); ++i){
-			QString scriptGroupName = "Scripts | " + vDirs[i].dirName();
-			ParseDirAndCreateTools(toolMgr, vDirs[i],
-					scriptGroupName.toLocal8Bit().constData(), shell);
-		}
+	for(int i = 0; i < vDirs.size(); ++i){
+		QString scriptGroupName = "Scripts | " + vDirs[i].dirName();
+		ParseDirAndCreateTools(toolMgr, vDirs[i],
+				scriptGroupName.toLocal8Bit().constData(), shell);
 	}
 }
 
@@ -327,14 +325,12 @@ int RefreshScriptTools(ToolManager* toolMgr)
 	ParseDirAndCreateTools(toolMgr, QDir(":/scripts"), "Scripts", luaShell, true);
 	ParseDirAndCreateTools(toolMgr, app::UserScriptDir(), "Scripts", luaShell, true);
 
-	if(app::UserDataDir().exists("custom_user_script_dirs")){
-		std::vector<QDir> vDirs = app::CustomUserScriptDirs();
+	std::vector<QDir> vDirs = app::CustomUserScriptDirs();
 
-		for(int i = 0; i < vDirs.size(); ++i){
-			QString scriptGroupName = "Scripts | " + vDirs[i].dirName();
-			ParseDirAndCreateTools(toolMgr, vDirs[i],
-					scriptGroupName.toLocal8Bit().constData(), luaShell, true);
-		}
+	for(int i = 0; i < vDirs.size(); ++i){
+		QString scriptGroupName = "Scripts | " + vDirs[i].dirName();
+		ParseDirAndCreateTools(toolMgr, vDirs[i],
+				scriptGroupName.toLocal8Bit().constData(), luaShell, true);
 	}
 
 	if(lastNumScriptTools != g_scriptTools.size())

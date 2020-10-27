@@ -92,35 +92,22 @@ QDir UserScriptDir()
 
 std::vector<QDir> CustomUserScriptDirs()
 {
+	QSettings settings;
+	QStringList userPaths = settings.value("customUserScriptPaths").toStringList();
+
 	std::vector<QDir> vCustomUserScriptDirs;
 
-	if(UserDataDir().exists("custom_user_script_dirs")){
-		QFile inFile((app::UserDataDir().absoluteFilePath("custom_user_script_dirs")));
+	for(int i = 0; i < userPaths.size(); ++i){
+		QDir customUserScriptDir;
+		customUserScriptDir.setPath(userPaths[i]);
 
-		if (inFile.open(QIODevice::ReadOnly | QIODevice::Text))
-		{
-		   QTextStream inStr(&inFile);
+   	// 	Path permission check
+		QString pathName(customUserScriptDir.dirName());
+		customUserScriptDir.cdUp();
+		CheckPathPermissions(customUserScriptDir, pathName);
 
-		   while(!inStr.atEnd())
-		   {
-			   QString line = inStr.readLine();
-			   if(!line.isEmpty()){
-				   QDir currentCustomUserScriptDir;
-				   currentCustomUserScriptDir.setPath(line);
-
-			   //  Path permission check
-				   QString pathName(currentCustomUserScriptDir.dirName());
-				   currentCustomUserScriptDir.cdUp();
-				   CheckPathPermissions(currentCustomUserScriptDir, pathName);
-
-				   currentCustomUserScriptDir.cd(pathName);
-
-				   vCustomUserScriptDirs.push_back(currentCustomUserScriptDir);
-			   }
-		   }
-
-		   inFile.close();
-		}
+		customUserScriptDir.cd(pathName);
+		vCustomUserScriptDirs.push_back(customUserScriptDir);
 	}
 
 	return vCustomUserScriptDirs;

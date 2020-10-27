@@ -303,18 +303,17 @@ void MeshModule::browseUserScripts()
 
 void MeshModule::addCustomUserScriptDir()
 {
-	QString customUserScriptDir = QFileDialog::getExistingDirectory(parentWidget(),
+	QString customUserScriptDirPath = QFileDialog::getExistingDirectory(parentWidget(),
 													tr("Open Directory"),
 													QDir::toNativeSeparators(QDir::home().path()),
 	                                                QFileDialog::ShowDirsOnly
 	                                                | QFileDialog::DontResolveSymlinks);
 
-	if(!customUserScriptDir.isEmpty()){
-		QFile outFile(app::UserDataDir().absoluteFilePath("custom_user_script_dirs"));
-		outFile.open(QIODevice::Append | QIODevice::Text);
-		outFile.write(customUserScriptDir.toLocal8Bit());
-		outFile.write("\n");
-		outFile.close();
+	if(!customUserScriptDirPath.isEmpty()){
+		QSettings settings;
+		QStringList customUserPaths = settings.value("customUserScriptPaths").toStringList();
+		customUserPaths.push_back(customUserScriptDirPath);
+		settings.setValue("customUserScriptPaths", customUserPaths);
 	}
 
 	refreshToolDialogsClicked();
@@ -322,10 +321,8 @@ void MeshModule::addCustomUserScriptDir()
 
 void MeshModule::removeCustomUserScriptDirs()
 {
-	if(app::UserDataDir().exists("custom_user_script_dirs")){
-		QFile file(app::UserDataDir().absoluteFilePath("custom_user_script_dirs"));
-		file.remove();
-	}
+	QSettings settings;
+	settings.remove("customUserScriptPaths");
 
 	QMessageBox msgBox;
 	msgBox.setText("Changes will take effect after restart.");
