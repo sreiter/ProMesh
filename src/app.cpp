@@ -27,6 +27,7 @@
 
 #include <QApplication>
 #include <QFileInfo>
+#include <QTextStream>
 #include "app.h"
 #include "util/file_util.h"
 #include "common/math/ugmath.h"
@@ -70,7 +71,6 @@ QDir UserDataDir()
 
 	homeDir.cd(pathName);
 
-
 	return homeDir;
 }
 
@@ -88,6 +88,29 @@ QDir UserScriptDir()
 	userPath.cd(pathName);
 
 	return userPath;
+}
+
+std::vector<QDir> CustomUserScriptDirs()
+{
+	QSettings settings;
+	QStringList userPaths = settings.value("customUserScriptPaths").toStringList();
+
+	std::vector<QDir> vCustomUserScriptDirs;
+
+	for(int i = 0; i < userPaths.size(); ++i){
+		QDir customUserScriptDir;
+		customUserScriptDir.setPath(userPaths[i]);
+
+   	// 	Path permission check
+		QString pathName(customUserScriptDir.dirName());
+		customUserScriptDir.cdUp();
+		CheckPathPermissions(customUserScriptDir, pathName);
+
+		customUserScriptDir.cd(pathName);
+		vCustomUserScriptDirs.push_back(customUserScriptDir);
+	}
+
+	return vCustomUserScriptDirs;
 }
 
 QDir UserTmpDir()

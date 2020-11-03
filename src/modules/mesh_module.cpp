@@ -28,6 +28,7 @@
 #include <QDockWidget>
 #include <QFileDialog>
 #include <QKeyEvent>
+#include <QMessageBox>
 
 #include "app.h"
 
@@ -45,6 +46,7 @@
 #include "widgets/matrix_widget.h"
 #include "tools/coordinate_transform_tools.h"
 #include "widgets/script_editor.h"
+#include "util/file_util.h"
 
 using namespace std;
 using namespace ug;
@@ -166,18 +168,28 @@ activate(SceneInspector* sceneInspector, LGScene* scene)
 		actEditScript->setStatusTip("Opens a script for editing");
 		connect(actEditScript, SIGNAL(triggered()), this, SLOT(editScript()));
 
-		QAction* actBrowseUserScripts = new QAction(tr("Browse User Scripts"), parentWidget());
-		actBrowseUserScripts->setStatusTip("Opens the path at which user scripts are located.");
+		QAction* actBrowseUserScripts = new QAction(tr("Browse Default User Scripts"), parentWidget());
+		actBrowseUserScripts->setStatusTip("Opens the default path at which user scripts are located.");
 		connect(actBrowseUserScripts, SIGNAL(triggered()), this, SLOT(browseUserScripts()));
 		
 		QAction* actRefreshToolDialogs = new QAction(tr("Refresh Tool Dialogs"), parentWidget());
 		actRefreshToolDialogs->setShortcut(tr("Ctrl+T"));
-		actRefreshToolDialogs->setStatusTip("Refreshes contents of tht tool-dialogs.");
+		actRefreshToolDialogs->setStatusTip("Refreshes contents of the tool-dialogs.");
 		connect(actRefreshToolDialogs, SIGNAL(triggered()), this, SLOT(refreshToolDialogsClicked()));
+
+		QAction* actAddCustomUserScriptDir = new QAction(tr("Add Custom User Script Directory"), parentWidget());
+		actAddCustomUserScriptDir->setStatusTip("Adds Custom User Scripts located in the specified folder to the tool-dialog.");
+		connect(actAddCustomUserScriptDir, SIGNAL(triggered()), this, SLOT(addCustomUserScriptDir()));
+
+		QAction* actRemoveCustomUserScriptDirs = new QAction(tr("Remove Custom User Script Directories"), parentWidget());
+		actRemoveCustomUserScriptDirs->setStatusTip("Removes Custom User Scripts from the tool-dialog.");
+		connect(actRemoveCustomUserScriptDirs, SIGNAL(triggered()), this, SLOT(removeCustomUserScriptDirs()));
 
 		QMenu* sceneMenu = new QMenu("&Scripts", parentWidget());
 		sceneMenu->addAction(actNewScript);
 		sceneMenu->addAction(actEditScript);
+		sceneMenu->addAction(actAddCustomUserScriptDir);
+		sceneMenu->addAction(actRemoveCustomUserScriptDirs);
 		sceneMenu->addSeparator();
 		sceneMenu->addAction(actBrowseUserScripts);
 		sceneMenu->addSeparator();
@@ -287,6 +299,34 @@ void MeshModule::browseUserScripts()
 	QDir scriptDir = app::UserScriptDir();
 	QString path = QDir::toNativeSeparators(app::UserScriptDir().path());
 	QDesktopServices::openUrl(QUrl("file:///" + path));
+}
+
+void MeshModule::addCustomUserScriptDir()
+{
+	QString customUserScriptDirPath = QFileDialog::getExistingDirectory(parentWidget(),
+													tr("Open Directory"),
+													QDir::toNativeSeparators(QDir::home().path()),
+	                                                QFileDialog::ShowDirsOnly
+	                                                | QFileDialog::DontResolveSymlinks);
+
+	if(!customUserScriptDirPath.isEmpty()){
+		QSettings settings;
+		QStringList customUserPaths = settings.value("customUserScriptPaths").toStringList();
+		customUserPaths.push_back(customUserScriptDirPath);
+		settings.setValue("customUserScriptPaths", customUserPaths);
+	}
+
+	refreshToolDialogsClicked();
+}
+
+void MeshModule::removeCustomUserScriptDirs()
+{
+	QSettings settings;
+	settings.remove("customUserScriptPaths");
+
+	QMessageBox msgBox;
+	msgBox.setText("Changes will take effect after restart.");
+	msgBox.exec();
 }
 
 void MeshModule::newScript()
