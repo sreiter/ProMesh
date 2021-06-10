@@ -245,9 +245,9 @@ var NAVTREEINDEX0 =
 "group__ug4__promesh__Selection__Edges.html#ga29630316192fe0b0b46efff646b6f465":[1,0,0,6,1,2],
 "group__ug4__promesh__Selection__Edges.html#ga2cadc6ec309f2181fe59b01cab14014c":[1,0,0,6,1,10],
 "group__ug4__promesh__Selection__Edges.html#ga31e4e719f80d5ba66bcffa65353a2b84":[1,0,0,6,1,1],
+"group__ug4__promesh__Selection__Edges.html#ga377b492be1d238aa3cc3f9b960c9eb06":[1,0,0,6,1,19],
 "group__ug4__promesh__Selection__Edges.html#ga4171ac5ea9095c70339657024d7ff756":[1,0,0,6,1,13],
 "group__ug4__promesh__Selection__Edges.html#ga4a37923a2487dc54633ebf3c1a461485":[1,0,0,6,1,8],
 "group__ug4__promesh__Selection__Edges.html#ga4ec279e35c7c59f83037564e8fea6a5c":[1,0,0,6,1,12],
-"group__ug4__promesh__Selection__Edges.html#ga6971ee68293a198a7cc9a69ffcee920f":[1,0,0,6,1,9],
-"group__ug4__promesh__Selection__Edges.html#ga790b79f1c752555fb02b43a7bbaddccb":[1,0,0,6,1,18]
+"group__ug4__promesh__Selection__Edges.html#ga6971ee68293a198a7cc9a69ffcee920f":[1,0,0,6,1,9]
 };

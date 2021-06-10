@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ProMesh User Manual
-   &#160;<span id="projectnumber">v4.3.18</span>
+   &#160;<span id="projectnumber">v4.3.19</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -104,6 +104,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga28863aa083cd44b0e6a539a4242b04f6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__ugbase.html#classEdge">Edge</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ug4__promesh__Selection__Edges__Coordinate__Based.html#ga28863aa083cd44b0e6a539a4242b04f6">SelectEdgeByCoordinate</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *coordinate)</td></tr>
 <tr class="memdesc:ga28863aa083cd44b0e6a539a4242b04f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects the edge whose center is closest to the specified coordinate.  <a href="#ga28863aa083cd44b0e6a539a4242b04f6">More...</a><br /></td></tr>
 <tr class="separator:ga28863aa083cd44b0e6a539a4242b04f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad06d360b3954cc28f9c6ce81e1959429"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__ugbase.html#classEdge">Edge</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ug4__promesh__Selection__Edges__Coordinate__Based.html#gad06d360b3954cc28f9c6ce81e1959429">SelectClosestEdge</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *coordinate)</td></tr>
+<tr class="memdesc:gad06d360b3954cc28f9c6ce81e1959429"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects the edge closest to the specified coordinate with respect to its perpendicular distance (or distance to the closest edge vertex resp., if the projection lies outside of the line segment).  <a href="#gad06d360b3954cc28f9c6ce81e1959429">More...</a><br /></td></tr>
+<tr class="separator:gad06d360b3954cc28f9c6ce81e1959429"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac39b47ffabddca724c66a3369d15b763"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__ugbase.html#classEdge">Edge</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ug4__promesh__Selection__Edges__Coordinate__Based.html#gac39b47ffabddca724c66a3369d15b763">SelectEdgeByCylindricalCoordinate</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classdouble">double</a> rho, <a class="el" href="group__nativeTypes.html#classdouble">double</a> phi, <a class="el" href="group__nativeTypes.html#classdouble">double</a> z)</td></tr>
 <tr class="memdesc:gac39b47ffabddca724c66a3369d15b763"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects the edge whose center is closest to the specified cylindrical coordinate.  <a href="#gac39b47ffabddca724c66a3369d15b763">More...</a><br /></td></tr>
 <tr class="separator:gac39b47ffabddca724c66a3369d15b763"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -117,6 +120,36 @@ Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Coordinate based edge selection. </p>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="gad06d360b3954cc28f9c6ce81e1959429"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad06d360b3954cc28f9c6ce81e1959429">&#9670;&nbsp;</a></span>SelectClosestEdge()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__ugbase.html#classEdge">Edge</a>* SelectClosestEdge </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>mesh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
+          <td class="paramname"><em>coordinate</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Selects the edge closest to the specified coordinate with respect to its perpendicular distance (or distance to the closest edge vertex resp., if the projection lies outside of the line segment). </p>
+
+</div>
+</div>
 <a id="ga28863aa083cd44b0e6a539a4242b04f6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga28863aa083cd44b0e6a539a4242b04f6">&#9670;&nbsp;</a></span>SelectEdgeByCoordinate()</h2>
 
@@ -273,7 +306,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">(c) Sebastian Reiter. Generated on Mon Apr 6 2020 22:02:49 for ProMesh User Manual by
+    <li class="footer">(c) Sebastian Reiter. Generated on Thu Jun 10 2021 23:07:55 for ProMesh User Manual by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

@@ -18,5 +18,6 @@ var group__ug4__promesh__Selection__Edges =
     [ "SelectNonManifoldEdges", "group__ug4__promesh__Selection__Edges.html#gadbad6866dd8a2b4201f197e85784941d", null ],
     [ "SelectShortEdges", "group__ug4__promesh__Selection__Edges.html#ga9c1b0f4259f27f132da448f200487583", null ],
     [ "SelectShortPolychains", "group__ug4__promesh__Selection__Edges.html#ga7f632ac8e056339eb9ba2534edabbea5", null ],
-    [ "SelectSmoothEdgePath", "group__ug4__promesh__Selection__Edges.html#ga790b79f1c752555fb02b43a7bbaddccb", null ]
+    [ "SelectSmoothEdgePath", "group__ug4__promesh__Selection__Edges.html#ga790b79f1c752555fb02b43a7bbaddccb", null ],
+    [ "SelectSubsetEdgesByDirection", "group__ug4__promesh__Selection__Edges.html#ga377b492be1d238aa3cc3f9b960c9eb06", null ]
 ];

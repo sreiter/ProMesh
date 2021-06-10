@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ProMesh User Manual
-   &#160;<span id="projectnumber">v4.3.18</span>
+   &#160;<span id="projectnumber">v4.3.19</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -156,6 +156,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga4a37923a2487dc54633ebf3c1a461485"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ug4__promesh__Selection__Edges.html#ga4a37923a2487dc54633ebf3c1a461485">SelectEdgesByDirection</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *direction, <a class="el" href="group__nativeTypes.html#classdouble">double</a> min_deviation_angle, <a class="el" href="group__nativeTypes.html#classdouble">double</a> max_deviation_angle, <a class="el" href="group__nativeTypes.html#classbool">bool</a> select_flipped_edges)</td></tr>
 <tr class="memdesc:ga4a37923a2487dc54633ebf3c1a461485"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects all edges which do not deviate further from the specified direction than the given angle. A minimal required deviation angle can also be specified.  <a href="#ga4a37923a2487dc54633ebf3c1a461485">More...</a><br /></td></tr>
 <tr class="separator:ga4a37923a2487dc54633ebf3c1a461485"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga377b492be1d238aa3cc3f9b960c9eb06"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ug4__promesh__Selection__Edges.html#ga377b492be1d238aa3cc3f9b960c9eb06">SelectSubsetEdgesByDirection</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classint">int</a> subset_index, <a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *direction, <a class="el" href="group__nativeTypes.html#classdouble">double</a> min_deviation_angle, <a class="el" href="group__nativeTypes.html#classdouble">double</a> max_deviation_angle, <a class="el" href="group__nativeTypes.html#classbool">bool</a> select_flipped_edges)</td></tr>
+<tr class="memdesc:ga377b492be1d238aa3cc3f9b960c9eb06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects all subset edges which do not deviate further from the specified direction than the given angle. A minimal required deviation angle can also be specified.  <a href="#ga377b492be1d238aa3cc3f9b960c9eb06">More...</a><br /></td></tr>
+<tr class="separator:ga377b492be1d238aa3cc3f9b960c9eb06"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7f632ac8e056339eb9ba2534edabbea5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ug4__promesh__Selection__Edges.html#ga7f632ac8e056339eb9ba2534edabbea5">SelectShortPolychains</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classdouble">double</a> maxChainLength, <a class="el" href="group__nativeTypes.html#classbool">bool</a> closedChainsOnly)</td></tr>
 <tr class="memdesc:ga7f632ac8e056339eb9ba2534edabbea5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects polygonal chains which are shorter than the given threshold.  <a href="#ga7f632ac8e056339eb9ba2534edabbea5">More...</a><br /></td></tr>
 <tr class="separator:ga7f632ac8e056339eb9ba2534edabbea5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -652,13 +655,67 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ga377b492be1d238aa3cc3f9b960c9eb06"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga377b492be1d238aa3cc3f9b960c9eb06">&#9670;&nbsp;</a></span>SelectSubsetEdgesByDirection()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SelectSubsetEdgesByDirection </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>mesh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classint">int</a>&#160;</td>
+          <td class="paramname"><em>subset_index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classconst">const</a> <a class="el" href="group__ugbase.html#classVec3d">Vec3d</a> *&#160;</td>
+          <td class="paramname"><em>direction</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classdouble">double</a>&#160;</td>
+          <td class="paramname"><em>min_deviation_angle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classdouble">double</a>&#160;</td>
+          <td class="paramname"><em>max_deviation_angle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classbool">bool</a>&#160;</td>
+          <td class="paramname"><em>select_flipped_edges</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Selects all subset edges which do not deviate further from the specified direction than the given angle. A minimal required deviation angle can also be specified. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">(c) Sebastian Reiter. Generated on Mon Apr 6 2020 22:02:49 for ProMesh User Manual by
+    <li class="footer">(c) Sebastian Reiter. Generated on Thu Jun 10 2021 23:07:55 for ProMesh User Manual by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ProMesh User Manual
-   &#160;<span id="projectnumber">v4.3.18</span>
+   &#160;<span id="projectnumber">v4.3.19</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -110,10 +110,43 @@ Functions</h2></td></tr>
 <tr class="memitem:ga4d87f86750404954e18150aa2dfc4122"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ug4__promesh__Selection__Subset__Based.html#ga4d87f86750404954e18150aa2dfc4122">SelectUnassignedElements</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classbool">bool</a> vertices, <a class="el" href="group__nativeTypes.html#classbool">bool</a> edges, <a class="el" href="group__nativeTypes.html#classbool">bool</a> faces, <a class="el" href="group__nativeTypes.html#classbool">bool</a> volumes)</td></tr>
 <tr class="memdesc:ga4d87f86750404954e18150aa2dfc4122"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects all elements not assigned to any subset.  <a href="#ga4d87f86750404954e18150aa2dfc4122">More...</a><br /></td></tr>
 <tr class="separator:ga4d87f86750404954e18150aa2dfc4122"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5a03b798c5675cdcd90a3b2f8659c3a7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ug4__promesh__Selection__Subset__Based.html#ga5a03b798c5675cdcd90a3b2f8659c3a7">RestrictSelectionToSubset</a> (<a class="el" href="group__ugbase.html#classMesh">Mesh</a> *mesh, <a class="el" href="group__nativeTypes.html#classint">int</a> subset_index)</td></tr>
+<tr class="memdesc:ga5a03b798c5675cdcd90a3b2f8659c3a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deselects all elements from the selection that are not in the specified subset.  <a href="#ga5a03b798c5675cdcd90a3b2f8659c3a7">More...</a><br /></td></tr>
+<tr class="separator:ga5a03b798c5675cdcd90a3b2f8659c3a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Selection by subsets. </p>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="ga5a03b798c5675cdcd90a3b2f8659c3a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5a03b798c5675cdcd90a3b2f8659c3a7">&#9670;&nbsp;</a></span>RestrictSelectionToSubset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RestrictSelectionToSubset </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__ugbase.html#classMesh">Mesh</a> *&#160;</td>
+          <td class="paramname"><em>mesh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__nativeTypes.html#classint">int</a>&#160;</td>
+          <td class="paramname"><em>subset_index</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Deselects all elements from the selection that are not in the specified subset. </p>
+
+</div>
+</div>
 <a id="gad6fcd224f217f6289dc4c1b15d3b3ac9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gad6fcd224f217f6289dc4c1b15d3b3ac9">&#9670;&nbsp;</a></span>SelectSubset()</h2>
 
@@ -270,7 +303,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">(c) Sebastian Reiter. Generated on Mon Apr 6 2020 22:02:49 for ProMesh User Manual by
+    <li class="footer">(c) Sebastian Reiter. Generated on Thu Jun 10 2021 23:07:55 for ProMesh User Manual by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>
