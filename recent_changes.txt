@@ -9,6 +9,19 @@ Recent changes:
 
 
 -------------------------------------------------------------------------------
+v 4.3.19
+Changes and additions:
+- added Selection-Subset_Based-RestrictSelectionToSubset
+- added Selection-Edges-SelectSubsetEdgesByDirection
+- added Selection-Edges-SelectClosestEdge
+- extended the scripts dialog to support the addition/removal of multiple 
+  custom user script folders.
+
+Fixes:
+
+
+
+-------------------------------------------------------------------------------
 v 4.3.18
 Changes and additions:
 - added Camera-FlyTo (coordinate based)
