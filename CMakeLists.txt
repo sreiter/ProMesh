@@ -147,22 +147,22 @@ endif(USE_WEBKIT)
 add_definitions( -DBOOST_ALL_NO_LIB )
 include_directories(SYSTEM ${UG_ROOT_PATH}/externals/BoostForUG4)
 
-# Qt5 with OpenGL support is required.
+# Qt6 with OpenGL support is required.
 # in order to use a custom installation of QT, specify QT_CMAKE_PATH when running
-# cmake for the first time for your build (e.g. "...pathToQt/5.4/gcc_64/lib/cmake/")
+# cmake for the first time for your build (e.g. "...pathToQt/6.4/gcc_64/lib/cmake/")
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 if(QT_CMAKE_PATH)
-	FIND_PACKAGE(Qt5Widgets REQUIRED PATHS ${QT_CMAKE_PATH}/Qt5Widgets)
-	FIND_PACKAGE(Qt5OpenGL REQUIRED PATHS ${QT_CMAKE_PATH}/Qt5OpenGL)
+	FIND_PACKAGE(Qt6Widgets REQUIRED PATHS ${QT_CMAKE_PATH}/Qt6Widgets)
+	FIND_PACKAGE(Qt6OpenGL REQUIRED PATHS ${QT_CMAKE_PATH}/Qt6OpenGL)
 	if(USE_WEBKIT)
-		FIND_PACKAGE(Qt5WebKitWidgets REQUIRED PATHS ${QT_CMAKE_PATH}/Qt5WebKitWidgets)
+		FIND_PACKAGE(Qt6WebKitWidgets REQUIRED PATHS ${QT_CMAKE_PATH}/Qt6WebKitWidgets)
 	endif(USE_WEBKIT)
 else(QT_CMAKE_PATH)
-	FIND_PACKAGE(Qt5Widgets REQUIRED)
-	FIND_PACKAGE(Qt5OpenGL REQUIRED)
+	FIND_PACKAGE(Qt6Widgets REQUIRED)
+	FIND_PACKAGE(Qt6OpenGL REQUIRED)
 	if(USE_WEBKIT)
-		FIND_PACKAGE(Qt5WebKitWidgets REQUIRED)
+		FIND_PACKAGE(Qt6WebKitWidgets REQUIRED)
 	endif(USE_WEBKIT)
 endif(QT_CMAKE_PATH)
 
@@ -231,7 +231,7 @@ endif(UNIX)
 # resources
 set(ProMeshRESOURCES	ProMesh.qrc
 						docs/html-resources.qrc)
-QT5_ADD_RESOURCES(ProMeshRESOURCES_RCC ${ProMeshRESOURCES})
+QT6_ADD_RESOURCES(ProMeshRESOURCES_RCC ${ProMeshRESOURCES})
 
 SET(allSources ${ProMeshSRC} ${ProMeshRESOURCES_RCC})
 
@@ -268,10 +268,10 @@ else(UNIX)
 	endif(MINGW)
 endif(UNIX)
 
-set(PM_LIBS ${OPENGL_LIBRARIES} Qt5::OpenGL Qt5::Widgets grid_s tet)
+set(PM_LIBS ${OPENGL_LIBRARIES} Qt6::OpenGL Qt6::Widgets grid_s tet)
 
 if(USE_WEBKIT)
-	set(PM_LIBS ${PM_LIBS} Qt5::WebKitWidgets)
+	set(PM_LIBS ${PM_LIBS} Qt6::WebKitWidgets)
 endif(USE_WEBKIT)
 
 TARGET_LINK_LIBRARIES(ProMesh4 ${PM_LIBS} ${Boost_LIBRARIES})
