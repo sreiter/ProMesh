@@ -18,14 +18,25 @@ Please have a look at Tetgen's licensing (www.tetgen.org).
 Please install Qt5, e.g. for Linux from:
     http://download.qt-project.org/official_releases/online_installers/qt-opensource-linux-x64-online.run
 
+or e.g. on Ubuntu simply by calling
+
+    sudo apt install qtbase5-dev
 
 You may then proceed with the compilation of ProMesh, execute e.g. in ProMesh's root directory:
-    mkdir build && cd build && cmake ..
 
-Please specify all the required paths. If you experience any problems please
-have a look at ProMesh/CMakeLists.txt and parse the comments. Required are at least the following options:
+    mkdir build
+    cd build
+    cmake -DCMAKE_BUILD_TYPE=Release -DUG_ROOT_PATH=pathToUG4 ..
 
-- `UG_ROOT_PATH`: The path to ug4, i.e. to the directory containing the ugcore and lib subdirectories
+Where `pathToUG4` should point to the `ug4` path which you created in the first step.
+Unless cmake finds your Qt installation, please also specify the following option, replacing
+`pathToYourQtInstallation` with the path where your Qt installation is located:
+  
+  cmake -DQT_CMAKE_PATH=pathToYourQtInstallation/5.9/gcc_64/lib/cmake .
+
+The important parameters in a nutshell:
+- `CMAKE_BUILD_TYPE`: `Release` or `Debug`. Has to match the CMAKE_BUILD_TYPE you chose when compiling ug4's libgrid (see above)
+- `UG_ROOT_PATH`: The path to ug4, i.e., to the directory containing the ugcore and lib subdirectories
 - `QT_CMAKE_PATH`: Folder containing cmake-modules for the chosen architecture, e.g., "...pathToQt/5.9/gcc_64/lib/cmake""
 
 
@@ -37,20 +48,3 @@ Once ProMesh has been built (e.g. on Windows), please run the following command 
 (`doxygen` is required in your commandline environment for this to work)
 
 This will update the scripting documentation in ProMesh's *docs* folder. ProMesh has to be linked again to reflect the changes (e.g., by calling `make` again).
-
-
-DEPLOY PROMESH ON OSX
-If you'd like to deploy ProMesh4 to older MacOSX systems, you may want to adjust the
-following vars in the build/CMakeCache.txt file of the associated lib_grid and ProMesh build (also Tetgen, if used)
-Please first check which SDKs are actually installed.
-    //Build architectures for OSX
-    CMAKE_OSX_ARCHITECTURES:STRING=i386     // x86_64 would be an alternative option
-
-
-    //Minimum OS X version to target for deployment (at runtime); newer
-    // APIs weak linked. Set to empty string for default value.
-    CMAKE_OSX_DEPLOYMENT_TARGET:STRING=10.5
-
-    //The product will be built against the headers and libraries located
-    // inside the indicated SDK.
-    CMAKE_OSX_SYSROOT:PATH=/Developer/SDKs/MacOSX10.5.sdk
